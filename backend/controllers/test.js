@@ -10,14 +10,10 @@ module.exports = {
         sobrenome,
       })
       .then(() => {
-        return response.json({ message: "Foi pro bdteste!!!!" });
+        return response.json({ message: "Foi pro bd!!" });
       })
       .catch((err) => {
-        return response.json({ message: `deu erro ekew = ${err}` });
+        return response.json({ message: `deu erro: ${err}` });
       });
-
-    // return(response.json({
-    //     nomeCompleto: nome + ' henrique'
-    // }));
   },
 };

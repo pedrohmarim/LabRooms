@@ -1,7 +1,7 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "Backend da aplicação",
+  "description": "Backend da aplicação TCC",
   "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",

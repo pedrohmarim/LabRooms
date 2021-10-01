@@ -1,22 +1,29 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import api from "./services/backAPI";
 
 export default function App() {
-  useEffect(() => {
+  const [message, setMessage] = useState(false);
+
+  function register() {
     api
       .post("/test", {
         headers: {
           DTO: {
             nome: "Pedro",
-            sobrenome: "Marim teste 123",
+            sobrenome: "Marim",
           },
         },
       })
       .then((res) => {
-        const { data } = res;
-        console.log(data);
+        const { message } = res.data;
+        setMessage(message);
       });
-  }, []);
+  }
 
-  return <h1>App</h1>;
+  return (
+    <>
+      <button onClick={register}>Cadastrar</button>
+      {message && <h1>{message}</h1>}
+    </>
+  );
 }
