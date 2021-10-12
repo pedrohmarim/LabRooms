@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <>
-      <button onClick={register}>Cadastrar</button>
+      <button onClick={register}>To testando</button>
       {message && <h1>{message}</h1>}
     </>
   );
