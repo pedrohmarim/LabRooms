@@ -1,29 +1,11 @@
-import React, { useState } from "react";
-import api from "./services/backAPI";
+import React from 'react';
+import Routes from './Routes';
+import 'antd/dist/antd.css';
 
-export default function App() {
-  const [message, setMessage] = useState(false);
-
-  function register() {
-    api
-      .post("/test", {
-        headers: {
-          DTO: {
-            nome: "Pedro",
-            sobrenome: "Marim",
-          },
-        },
-      })
-      .then((res) => {
-        const { message } = res.data;
-        setMessage(message);
-      });
-  }
-
+const App = () =>{
   return (
-    <>
-      <button onClick={register}>To testando</button>
-      {message && <h1>{message}</h1>}
-    </>
+    <Routes />
   );
 }
+
+export default App;
