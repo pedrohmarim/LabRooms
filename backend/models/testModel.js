@@ -11,4 +11,4 @@ const testCase = new Schema({
   },
 });
 
-module.exports = model("testCase", testCase); // oq está em string é o nome da Tabela que vai ser criada armazenando o DTO de segundo parametro
+module.exports = model("registros", testCase); // oq está em string é o nome da Tabela que vai ser criada armazenando o DTO de segundo parametro
