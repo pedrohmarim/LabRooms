@@ -2,7 +2,7 @@ const testModel = require("../models/testModel");
 
 module.exports = {
   async test(request, response) {
-    const { nome, sobrenome } = request.body.headers.DTO;
+    const { nome, sobrenome } = request.body;
 
     testModel
       .create({
