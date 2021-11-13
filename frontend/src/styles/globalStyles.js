@@ -1,5 +1,5 @@
 import { createGlobalStyle } from "styled-components";
-import { darkPallete } from '../styles/pallete';
+import { darkPallete } from "../styles/pallete";
 
 const { greenText } = darkPallete;
 
@@ -11,4 +11,4 @@ export const GlobalStyles = createGlobalStyle`
   * {
     font-family: 'Roboto', sans-serif;
   }
-`
+`;

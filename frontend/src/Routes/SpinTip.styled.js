@@ -5,5 +5,3 @@ export const SpinTip = styled.p`
   font-size: 11pt;
   padding-top: 1.5vh;
 `;
-
-
