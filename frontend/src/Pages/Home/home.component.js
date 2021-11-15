@@ -35,8 +35,8 @@ export default function Home() {
       </p>
       <Button
         onClick={register}
-        backgroundColor={greenText}
-        hoverColor={darkBackground}
+        backgroundcolor={greenText}
+        hovercolor={darkBackground}
         height='45px'
         width='150px'
       >

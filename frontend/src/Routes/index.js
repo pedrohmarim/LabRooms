@@ -21,7 +21,7 @@ const Routes = () => (
           tip={<SpinTip>Carregando...</SpinTip>}
           size='large'
           color={greenText}
-          backgroundColor={darkBackground}
+          backgroundcolor={darkBackground}
         />
       }
     >

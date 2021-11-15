@@ -2,10 +2,8 @@ const express = require("express");
 const app = express();
 const routesUrls = require("./Routes/routes");
 const mongoose = require("mongoose");
-const dotenv = require("dotenv");
 const cors = require("cors");
-
-dotenv.config();
+require("dotenv").config();
 
 mongoose.connect(
   "mongodb+srv://trilp:kaio12345@cluster0.qur6c.mongodb.net/SPROY_TCC_DataBase"

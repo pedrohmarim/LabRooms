@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Button as AntDesignButton } from "antd";
 
 export const Button = styled(AntDesignButton)`
-  color: ${({ hoverColor }) => hoverColor};
-  background-color: ${({ backgroundColor }) => backgroundColor};
+  color: ${({ hovercolor }) => hovercolor};
+  background-color: ${({ backgroundcolor }) => backgroundcolor};
   border: none;
   outline: none;
   width: ${({ width }) => width};
@@ -16,9 +16,10 @@ export const Button = styled(AntDesignButton)`
 
   &&:hover,
   &&:focus {
-    color: ${({ hoverColor }) => hoverColor} !important;
-    background-color: ${({ backgroundColor }) => backgroundColor};
+    color: ${({ hovercolor }) => hovercolor} !important;
+    background-color: ${({ backgroundcolor }) => backgroundcolor};
     border: none;
     opacity: 0.9;
+    cursor: pointer;
   }
 `;
