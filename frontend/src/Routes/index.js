@@ -10,6 +10,9 @@ import { darkPallete } from "../styles/pallete";
 import { GlobalStyles } from "../styles/globalStyles";
 
 const HomeComponent = lazy(() => import("../Pages/Home/home.component"));
+const NotFoundComponent = lazy(() =>
+  import("../Pages/NotFound/notfound.component")
+);
 
 const { darkBackground, greenText } = darkPallete;
 
@@ -27,6 +30,7 @@ const Routes = () => (
     >
       <Switch>
         <Route path='/' element={<HomeComponent />} />
+        <Route path='*' element={<NotFoundComponent />} />
       </Switch>
     </Suspense>
     <GlobalStyles />
