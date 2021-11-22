@@ -6,8 +6,8 @@ const cors = require("cors");
 require("dotenv").config();
 
 mongoose.connect(
-  "mongodb+srv://trilp:kaio12345@cluster0.qur6c.mongodb.net/SPROY_TCC_DataBase"
-); // /userTest é o nome do banco de dados, pode criar outro com um nome que envolva toda a aplicação, e la dentro ficara todas as tabelas
+  "mongodb+srv://trilp:pedroluis@cluster0.qur6c.mongodb.net/SPROY_TCC_DataBase"
+);
 
 app.use(express.json());
 app.use(cors());
