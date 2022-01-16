@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Button as AntDesignButton } from "antd";
 
 export const Button = styled(AntDesignButton)`
-  color: ${({ hovercolor }) => hovercolor};
+  color: ${({ color }) => color};
   background-color: ${({ backgroundcolor }) => backgroundcolor};
   border: none;
   outline: none;
@@ -11,12 +11,11 @@ export const Button = styled(AntDesignButton)`
   border-radius: 4px;
   font-weight: bold;
   font-size: 12pt;
-  margin: 100px;
   opacity: 1;
 
   &&:hover,
   &&:focus {
-    color: ${({ hovercolor }) => hovercolor} !important;
+    color: ${({ color }) => color} !important;
     background-color: ${({ backgroundcolor }) => backgroundcolor};
     border: none;
     opacity: 0.9;

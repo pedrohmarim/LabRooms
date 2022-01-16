@@ -1,7 +1,7 @@
 import { createGlobalStyle } from "styled-components";
 import { darkPallete } from "../styles/pallete";
 
-const { greenText } = darkPallete;
+const { greenText, darkBackground } = darkPallete;
 
 export const GlobalStyles = createGlobalStyle`
   .ant-spin-dot-item{
@@ -10,5 +10,9 @@ export const GlobalStyles = createGlobalStyle`
 
   * {
     font-family: 'Roboto', sans-serif;
+  }
+
+  body{
+    background-color: ${darkBackground};
   }
 `;

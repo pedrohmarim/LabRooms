@@ -3,6 +3,7 @@ import {
   Route,
   BrowserRouter as Router,
   Routes as Switch,
+  Link,
 } from "react-router-dom";
 import { Spin } from "../antd_components";
 import { SpinTip } from "./SpinTip.styled";
@@ -29,9 +30,8 @@ const Routes = () => (
       }
     >
       <Switch>
-        <Route path='/' element={<HomeComponent />} />
-        <Route path='/notfound' element={<NotFoundComponent />} />
-        <Route path='*' element={<NotFoundComponent />} />
+        <Route path='/' element={<HomeComponent Link={Link} />} />
+        <Route path={"/notfound" && "*"} element={<NotFoundComponent />} />
       </Switch>
     </Suspense>
     <GlobalStyles />
