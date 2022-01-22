@@ -1,25 +1,31 @@
 import React from "react";
 import { Typography } from "../../../../antd_components";
 import { InfoContainer } from "./styles";
-import { darkPallete } from "../../../../styles/pallete";
 import SearchInput from "../../../../GlobalComponents/SearchInput/SearchInput.component";
 
-const landingPageInfo = () => {
+const LandingPageInfo = ({ pallete, intoRooms }) => {
   const { Title } = Typography;
-  const { white, lightblue } = darkPallete;
 
   return (
     <InfoContainer span={window.innerWidth > 1024 ? 8 : 20}>
-      <Title style={{ color: white }}>Conecte-se com o mundo</Title>
+      <Title style={{ color: pallete.white }}>Conecte-se com o mundo</Title>
 
-      <Title level={3} style={{ color: white }}>
+      <Title level={3} style={{ color: pallete.white, marginBottom: "15px" }}>
         Navegue por salas que pessoas estão conversando sobre assuntos que te
         interessam.
       </Title>
 
-      <SearchInput background={white} color={lightblue} />
+      <SearchInput
+        background={pallete.white}
+        color={pallete.lightblue}
+        onSearch={(value) => {
+          intoRooms();
+          console.log(value);
+        }}
+        fromLandingPage
+      />
     </InfoContainer>
   );
 };
 
-export default landingPageInfo;
+export default LandingPageInfo;

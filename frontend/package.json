@@ -4,6 +4,7 @@
   "main": "server.js",
   "license": "ISC",
   "dependencies": {
+    "@ant-design/compatible": "^1.1.0",
     "@ant-design/icons": "^4.7.0",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",

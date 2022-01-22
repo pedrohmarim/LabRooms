@@ -9,6 +9,8 @@ import Spin from "./Spin/Spin.component";
 import Typography from "./Typography/Typograph.component";
 import Input from "./Input/Input.component";
 import Tooltip from "./Tooltip/Tooltip.component";
+import Select from "./Select/Select.component";
+import Form from "./FormV3/Form.component";
 
 export {
   Button,
@@ -22,4 +24,6 @@ export {
   Typography,
   Input,
   Tooltip,
+  Select,
+  Form,
 };

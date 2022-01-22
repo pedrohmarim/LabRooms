@@ -20,4 +20,13 @@ export const GlobalStyles = createGlobalStyle`
   #video-container {
     height: 100vh;
   }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #fff;
+    border-radius: 5px;
+  }
 `;

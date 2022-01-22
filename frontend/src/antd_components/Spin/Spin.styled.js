@@ -12,5 +12,4 @@ export const Spin = styled(AntDesignSpin)`
   justify-content: center;
   align-items: center;
   color: ${({ color }) => color};
-  background-color: ${({ backgroundcolor }) => backgroundcolor};
 `;

@@ -15,7 +15,7 @@ const NotFoundComponent = lazy(() =>
   import("../Pages/NotFound/notfound.component")
 );
 
-const { lightblue, white } = darkPallete;
+const { white } = darkPallete;
 
 const Routes = () => (
   <Router>
@@ -25,13 +25,15 @@ const Routes = () => (
           tip={<SpinTip>Carregando...</SpinTip>}
           size='large'
           color={white}
-          backgroundcolor={lightblue}
         />
       }
     >
       <Switch>
         <Route path='/' element={<HomeComponent Link={Link} />} />
-        <Route path={"/notfound" && "*"} element={<NotFoundComponent />} />
+        <Route
+          path={"/notfound" && "*"}
+          element={<NotFoundComponent Link={Link} />}
+        />
       </Switch>
     </Suspense>
     <GlobalStyles />
