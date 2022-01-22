@@ -5,7 +5,7 @@ import lottieWeb from "lottie-web";
 import { darkPallete } from "../../styles/pallete";
 
 export default function NotFound() {
-  const { darkBackground, greenText } = darkPallete;
+  const { lightblue, white } = darkPallete;
 
   useEffect(() => {
     lottieWeb.loadAnimation({
@@ -16,8 +16,8 @@ export default function NotFound() {
 
   return (
     <S.NotFoundContainer
-      color={greenText}
-      backgroundcolor={darkBackground}
+      color={white}
+      backgroundcolor={lightblue}
       id='lottieContainer'
     >
       <S.SpanNotFound>Página não encontrada.</S.SpanNotFound>

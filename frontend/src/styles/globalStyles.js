@@ -1,11 +1,11 @@
 import { createGlobalStyle } from "styled-components";
 import { darkPallete } from "../styles/pallete";
 
-const { greenText, darkBackground } = darkPallete;
+const { white } = darkPallete;
 
 export const GlobalStyles = createGlobalStyle`
   .ant-spin-dot-item{
-    background-color: ${greenText} !important
+    background-color: ${white} !important
   }
 
   * {
@@ -13,6 +13,11 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   body{
-    background-color: ${darkBackground};
+    overflow-x: hidden !important;
+    background-color: #000;
+  }
+
+  #video-container {
+    height: 100vh;
   }
 `;
