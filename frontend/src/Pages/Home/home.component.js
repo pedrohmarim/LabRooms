@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState } from "react";
 // import * as HomeService from "./services/home.service";
 import Header from "../../GlobalComponents/Header/Header.component";
 import Background from "../../assets/videoback.mp4";
@@ -10,6 +10,7 @@ import Rooms from "./components/Rooms/Rooms.component";
 import { darkPallete } from "../../styles/pallete";
 
 export default function Home({ Link }) {
+  const [searchValue, setSearchValue] = useState();
   // const { whiteText, greenText, darkBackground } = darkPallete;
   // const [message, setMessage] = useState(false);
 
@@ -24,7 +25,8 @@ export default function Home({ Link }) {
   //     setMessage(message);
   //   });
   // }
-  function handleScrollToRooms() {
+  function handleScrollToRooms(searchValue) {
+    setSearchValue(searchValue);
     document
       .getElementById("rooms")
       .scrollIntoView({ behavior: "smooth", block: "center" });
@@ -48,7 +50,7 @@ export default function Home({ Link }) {
         <HomeArrow intoRooms={handleScrollToRooms} />
       </Container>
 
-      <Rooms pallete={darkPallete} />
+      <Rooms pallete={darkPallete} searchValue={searchValue} />
     </>
   );
 }

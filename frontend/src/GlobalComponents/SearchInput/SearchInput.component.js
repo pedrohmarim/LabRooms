@@ -1,13 +1,13 @@
 import React from "react";
-import { Tooltip } from "../../antd_components";
+import { Tooltip, Icons } from "../../antd_components";
 import { InputStyled } from "./searchInput.styled";
 
 const SearchInput = ({
-  background,
   color,
   width,
   onSearch,
   fromLandingPage,
+  searchValue
 }) => (
   <Tooltip
     color={color}
@@ -16,10 +16,12 @@ const SearchInput = ({
     defaultVisible={window.innerWidth < 1024 && fromLandingPage}
   >
     <InputStyled
-      onSearch={onSearch}
+      value={searchValue}
+      allowClear
+      prefix={<Icons.SearchOutlined />}
+      onPressEnter={onSearch}
       width={width}
       size='large'
-      background={background}
       placeholder='Procurar tema...'
     />
   </Tooltip>

@@ -4,11 +4,12 @@ import { Row, Select, Tooltip } from "../../../../antd_components";
 
 import SearchInput from "../../../../GlobalComponents/SearchInput/SearchInput.component";
 
-const Rooms = ({ pallete }) => {
+const Rooms = ({ pallete, searchValue }) => {
   return (
     <RoomsContainer background={pallete.white} id='rooms'>
       <Row justify='space-between' align='middle'>
         <SearchInput
+          searchValue={searchValue}
           background={pallete.white}
           color={pallete.lightblue}
           width={window.innerWidth > 1024 ? "25%" : "100%"}
