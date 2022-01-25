@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Input } from "antd";
+import { Input as InputStyled, Form } from "antd";
 
-export const InputStyled = styled(Input)`
+export const Input = styled(InputStyled)`
   width: ${({ width }) => width} !important;
   height: 40px;
   width: 100%;
@@ -16,5 +16,11 @@ export const InputStyled = styled(Input)`
   .ant-input::placeholder {
     color: #000 !important;
     opacity: 0.7 !important;
+  }
+`;
+
+export const FormItem = styled(Form.Item)`
+  .ant-input-affix-wrapper {
+    width: 100% !important;
   }
 `;
