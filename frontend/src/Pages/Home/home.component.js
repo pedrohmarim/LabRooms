@@ -26,7 +26,8 @@ export default function Home({ Link }) {
   //   });
   // }
   function handleScrollToRooms(searchValue) {
-    setSearchValue(searchValue);
+    if(searchValue) setSearchValue(searchValue);
+
     document
       .getElementById("rooms")
       .scrollIntoView({ behavior: "smooth", block: "center" });

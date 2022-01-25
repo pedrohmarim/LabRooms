@@ -6,7 +6,6 @@ const HomeArrow = ({ intoRooms }) => (
   <ArrowContainer onClick={intoRooms}>
     <Icons.DownOutlined
       style={{ color: "#fff", fontSize: "30pt" }}
-      onClick={() => {}}
     />
   </ArrowContainer>
 );

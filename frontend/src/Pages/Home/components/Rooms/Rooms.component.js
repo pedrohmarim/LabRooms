@@ -9,6 +9,7 @@ const Rooms = ({ pallete, searchValue }) => {
     <RoomsContainer background={pallete.white} id='rooms'>
       <Row justify='space-between' align='middle'>
         <SearchInput
+          onSearch={() => console.log('faz req pro back')}
           searchValue={searchValue}
           background={pallete.white}
           color={pallete.lightblue}
