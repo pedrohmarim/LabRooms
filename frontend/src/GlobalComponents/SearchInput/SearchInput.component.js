@@ -8,8 +8,8 @@ const SearchInput = ({
   onSearch,
   fromLandingPage,
   searchValue,
-}) =>
-  searchValue ? (
+}) => {
+  return searchValue ? (
     <Form initialValues={{ roomSearchInput: searchValue }}>
       <Tooltip
         color={color}
@@ -17,10 +17,14 @@ const SearchInput = ({
         placement='bottomLeft'
         defaultVisible={window.innerWidth < 1024 && fromLandingPage}
       >
-        <FormItem name='roomSearchInput'>
+        <FormItem
+          name='roomSearchInput'
+          style={{ marginBottom: 0 }}
+          width={window.innerWidth < 1024 ? window.innerWidth - 50 : 375}
+        >
           <Input
             allowClear
-            prefix={<Icons.SearchOutlined />}
+            suffix={<Icons.SearchOutlined />}
             onPressEnter={onSearch}
             width={width}
             size='large'
@@ -38,7 +42,7 @@ const SearchInput = ({
     >
       <Input
         allowClear
-        prefix={<Icons.SearchOutlined />}
+        suffix={<Icons.SearchOutlined />}
         onPressEnter={onSearch}
         width={width}
         size='large'
@@ -46,5 +50,6 @@ const SearchInput = ({
       />
     </Tooltip>
   );
+};
 
 export default SearchInput;

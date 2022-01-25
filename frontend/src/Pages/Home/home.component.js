@@ -1,4 +1,4 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 // import * as HomeService from "./services/home.service";
 import Header from "../../GlobalComponents/Header/Header.component";
 import Background from "../../assets/videoback.mp4";
@@ -26,7 +26,7 @@ export default function Home({ Link }) {
   //   });
   // }
   function handleScrollToRooms(searchValue) {
-    if(searchValue) setSearchValue(searchValue);
+    if (searchValue) setSearchValue(searchValue);
 
     document
       .getElementById("rooms")

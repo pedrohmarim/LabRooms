@@ -21,6 +21,6 @@ export const Input = styled(InputStyled)`
 
 export const FormItem = styled(Form.Item)`
   .ant-input-affix-wrapper {
-    width: 100% !important;
+    width: ${({ width }) => `${width}px`} !important;
   }
 `;
