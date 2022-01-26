@@ -1,6 +1,7 @@
 import Button from "./Button/Button.component";
 import Breadcrumb from "./Breadcrumb/Breadcrumb.component";
 import Col from "./Col/Col.component";
+import Card from "./Card/Card.component";
 import Divider from "./Divider/Divider.component";
 import Icons from "./Icons/Icons.component";
 import Image from "./Image/Image.component";
@@ -17,6 +18,7 @@ export {
   Spin,
   Row,
   Col,
+  Card,
   Breadcrumb,
   Icons,
   Image,

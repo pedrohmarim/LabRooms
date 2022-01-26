@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense } from "react";
 import {
   Route,
   BrowserRouter as Router,
@@ -9,7 +9,6 @@ import { SpinTip } from "./SpinTip.styled";
 import { darkPallete } from "../styles/pallete";
 import { GlobalStyles } from "../styles/globalStyles";
 import routes from "./routes";
-
 
 const { white } = darkPallete;
 
@@ -26,12 +25,7 @@ const Routes = () => (
     >
       <Switch>
         {routes.map(({ path, Component }, key) => (
-          <Route
-            exact
-            path={path}
-            key={key}
-            element={Component}
-          />
+          <Route exact path={path} key={key} element={Component} />
         ))}
       </Switch>
     </Suspense>

@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import * as S from "./notfound.styled";
+import * as S from "./Notfound.styled";
 import NotFoundAnimation from "../../assets/notfound_animation.json";
 import lottieWeb from "lottie-web";
 import { darkPallete } from "../../styles/pallete";
