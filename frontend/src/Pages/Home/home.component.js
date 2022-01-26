@@ -4,12 +4,12 @@ import Header from "../../GlobalComponents/Header/Header.component";
 import Background from "../../assets/videoback.mp4";
 import BackgroundMobile from "../../assets/backgroundMobile.mp4";
 import LandingPageInfofrom from "./components/LandingPageInfo/LandingPageInfo.component";
-import { Container } from "./home.styled";
+import { Container } from "./Home.styled";
 import HomeArrow from "./components/HomeArrow/HomeArrow.component";
 import Rooms from "./components/Rooms/Rooms.component";
 import { darkPallete } from "../../styles/pallete";
 
-export default function Home({ Link }) {
+export default function Home() {
   const [searchValue, setSearchValue] = useState();
   // const { whiteText, greenText, darkBackground } = darkPallete;
   // const [message, setMessage] = useState(false);
@@ -35,7 +35,7 @@ export default function Home({ Link }) {
 
   return (
     <>
-      <Header Link={Link} />
+      <Header />
 
       <Container>
         <LandingPageInfofrom

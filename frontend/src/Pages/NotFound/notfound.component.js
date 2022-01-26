@@ -5,7 +5,7 @@ import lottieWeb from "lottie-web";
 import { darkPallete } from "../../styles/pallete";
 import Header from "../../GlobalComponents/Header/Header.component";
 
-export default function NotFound({ Link }) {
+export default function NotFound() {
   const { white } = darkPallete;
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function NotFound({ Link }) {
 
   return (
     <>
-      <Header Link={Link} />
+      <Header />
       <S.NotFoundContainer
         color={white}
         backgroundcolor='#000'

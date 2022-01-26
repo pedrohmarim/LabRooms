@@ -3,17 +3,13 @@ import {
   Route,
   BrowserRouter as Router,
   Routes as Switch,
-  Link,
 } from "react-router-dom";
 import { Spin } from "../antd_components";
 import { SpinTip } from "./SpinTip.styled";
 import { darkPallete } from "../styles/pallete";
 import { GlobalStyles } from "../styles/globalStyles";
+import routes from "./routes";
 
-const HomeComponent = lazy(() => import("../Pages/Home/home.component"));
-const NotFoundComponent = lazy(() =>
-  import("../Pages/NotFound/notfound.component")
-);
 
 const { white } = darkPallete;
 
@@ -29,11 +25,14 @@ const Routes = () => (
       }
     >
       <Switch>
-        <Route path='/' element={<HomeComponent Link={Link} />} />
-        <Route
-          path={"/notfound" && "*"}
-          element={<NotFoundComponent Link={Link} />}
-        />
+        {routes.map(({ path, Component }, key) => (
+          <Route
+            exact
+            path={path}
+            key={key}
+            element={Component}
+          />
+        ))}
       </Switch>
     </Suspense>
     <GlobalStyles />
