@@ -7,7 +7,7 @@ import { darkPallete } from "../../styles/pallete";
 const Breadcrumb = ({ crumbs = routes }) => {
   return (
     window.location.pathname !== "/" && (
-      <S.Breadcrumb color={darkPallete.white}>
+      <S.Breadcrumb color='#000'>
         {crumbs?.length &&
           crumbs
             .filter(({ path }) => window.location.pathname.includes(path))
@@ -18,7 +18,7 @@ const Breadcrumb = ({ crumbs = routes }) => {
                     to={{
                       pathname: bc.path,
                     }}
-                    style={{ color: darkPallete.white }}
+                    style={{ color: "#000" }}
                   >
                     {bc.name}
                   </Link>

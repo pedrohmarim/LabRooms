@@ -12,7 +12,11 @@ const Header = () => {
 
   return (
     <HeaderContainer>
-      <Row align='middle' justify='space-between' style={{ padding: "0 15px" }}>
+      <Row
+        align='middle'
+        justify='space-between'
+        style={{ padding: "0 15px", position: "" }}
+      >
         <Link to='/'>
           <Image src={Logo} alt='Logo' height={100} preview={false} />
         </Link>

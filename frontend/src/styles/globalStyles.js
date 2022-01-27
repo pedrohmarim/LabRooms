@@ -12,6 +12,10 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Roboto', sans-serif;
   }
 
+  a{
+    color: #000
+  }
+
   body{
     overflow-x: hidden !important;
     background-color: #000;
@@ -20,7 +24,7 @@ export const GlobalStyles = createGlobalStyle`
   #video-container {
     height: 100vh;
   }
-
+  
   ::-webkit-scrollbar {
     width: 8px;
   }

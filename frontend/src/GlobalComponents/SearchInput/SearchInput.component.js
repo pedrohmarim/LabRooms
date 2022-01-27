@@ -1,6 +1,6 @@
 import React from "react";
-import { Tooltip, Icons, Form } from "../../antd_components";
 import { Input, FormItem } from "./searchInput.styled";
+import { Tooltip, Icons, Form } from "../../antd_components";
 
 const SearchInput = ({
   color,
