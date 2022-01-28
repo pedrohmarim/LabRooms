@@ -1,4 +1,5 @@
 import React from 'react';
+import Background from "../../assets/backStars.mp4";
 import {
   SignFormContainer,
   CenterForm,
@@ -20,6 +21,13 @@ export default function Signin() {
   const { Title } = Typography;
 
   return (
+   <>
+    <video loop autoPlay muted id={window.innerWidth < 1024 ? 'video-form-mobile' : 'video-form'}>
+    <source
+      src={Background}
+      type='video/mp4'
+    />
+  </video>
     <CenterForm height="100vh">
       <Link to='/'>
         <Image src={Logo} alt='Logo' height={100} preview={false} />
@@ -45,5 +53,6 @@ export default function Signin() {
         <SigninForm />
       </SignFormContainer>
     </CenterForm>
+   </>
   );
 }

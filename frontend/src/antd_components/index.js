@@ -13,10 +13,12 @@ import Input from "./Input/Input.component";
 import Tooltip from "./Tooltip/Tooltip.component";
 import Select from "./Select/Select.component";
 import Form from "./FormV3/Form.component";
+import InputMask from "./InputMask/InputMask.component";
 
 export {
   Button,
   Spin,
+  InputMask,
   Row,
   Col,
   Card,

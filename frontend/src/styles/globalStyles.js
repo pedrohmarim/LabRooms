@@ -24,6 +24,19 @@ export const GlobalStyles = createGlobalStyle`
   #video-container {
     height: 100vh;
   }
+
+  #video-form {
+    width: 100%;
+    position: fixed;
+  }
+
+  @media screen and (max-width: 1024px) {
+    #video-form-mobile {
+      height: 100vh;
+      position: fixed;
+      z-index: -1;
+    }
+  }
   
   ::-webkit-scrollbar {
     width: 8px;

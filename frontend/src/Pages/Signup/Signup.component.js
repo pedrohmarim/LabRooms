@@ -10,7 +10,7 @@ import {
 } from "../../antd_components";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo1.png";
-
+import Background from "../../assets/backStars.mp4";
 import {
   SignFormContainer,
   CenterForm,
@@ -22,6 +22,13 @@ export default function Signup() {
   const { Title } = Typography;
 
   return (
+   <>
+    <video loop autoPlay muted id={window.innerWidth < 1024 ? 'video-form-mobile' : 'video-form'}>
+    <source
+      src={Background}
+      type='video/mp4'
+    />
+  </video>
     <CenterForm>
       <Link to='/'>
         <Image src={Logo} alt='Logo' height={100} preview={false} />
@@ -52,5 +59,6 @@ export default function Signup() {
         <SignUpForm />
       </SignFormContainer>
     </CenterForm>
+   </>
   );
 }

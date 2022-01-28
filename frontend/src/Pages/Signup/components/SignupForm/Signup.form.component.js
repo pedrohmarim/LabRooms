@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Icons, Input, Button } from "../../../../antd_components";
+import { Form, Icons, Input, Button, InputMask } from "../../../../antd_components";
 import { FormItem } from "./Signup.form.styled";
 import { darkPallete } from "../../../../styles/pallete";
 
@@ -47,7 +47,8 @@ const SignUpForm = () => {
         name='cpf'
         rules={[{ required: true, message: "Campo obrigatório" }]}
       >
-        <Input
+        <InputMask
+          mask="111.111.111-11"
           style={styleInput}
           allowClear
           prefix={<Icons.CreditCardOutlined />}
@@ -72,7 +73,6 @@ const SignUpForm = () => {
       </FormItem>
 
       <FormItem
-      
         label='Confirmar Senha'
         name='confirmPassword'
         rules={[
