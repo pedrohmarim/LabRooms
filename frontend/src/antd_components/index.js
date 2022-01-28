@@ -1,6 +1,7 @@
 import Button from "./Button/Button.component";
 import Breadcrumb from "./Breadcrumb/Breadcrumb.component";
 import Col from "./Col/Col.component";
+import Checkbox from "./Checkbox/Checkbox.component";
 import Card from "./Card/Card.component";
 import Divider from "./Divider/Divider.component";
 import Icons from "./Icons/Icons.component";
@@ -19,6 +20,7 @@ export {
   Row,
   Col,
   Card,
+  Checkbox,
   Breadcrumb,
   Icons,
   Image,

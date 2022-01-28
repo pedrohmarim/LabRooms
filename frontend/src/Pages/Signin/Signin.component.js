@@ -1,28 +1,26 @@
-import React from "react";
-import SignUpForm from "./components/SignupForm/Signup.form.component";
-import {
-  Typography,
-  Breadcrumb,
-  Icons,
-  Button,
-  Image,
-  Tooltip,
-} from "../../antd_components";
-import { Link } from "react-router-dom";
-import Logo from "../../assets/logo1.png";
-
+import React from 'react';
 import {
   SignFormContainer,
   CenterForm,
   FormHeader,
-} from "./Signup.component.styled";
+} from "../Signup/Signup.component.styled";
+import { Link } from "react-router-dom";
+import Logo from "../../assets/logo1.png";
+import {
+  Typography,
+  Breadcrumb,
+  Icons,
+  Image,
+  Tooltip,
+} from "../../antd_components";
 import { darkPallete } from "../../styles/pallete";
+import SigninForm from './components/SigninForm/Signin.form.component'
 
-export default function Signup() {
+export default function Signin() {
   const { Title } = Typography;
 
   return (
-    <CenterForm>
+    <CenterForm height="100vh">
       <Link to='/'>
         <Image src={Logo} alt='Logo' height={100} preview={false} />
       </Link>
@@ -31,10 +29,10 @@ export default function Signup() {
         title={
           <FormHeader>
             <Title level={3} style={{ marginBottom: 0 }}>
-              Registrar-se
+              Entrar
             </Title>
-            <Tooltip title='Voltar' color={darkPallete.lightblue}>
-              <Link to='/signin'>
+            <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
+              <Link to='/'>
                 <Icons.LeftOutlined style={{ fontSize: 20 }} />
               </Link>
             </Tooltip>
@@ -43,13 +41,8 @@ export default function Signup() {
       >
         <FormHeader margin='0 0 20px 0'>
           <Breadcrumb />
-          {window.innerWidth > 1024 && (
-            <Link to='/signin'>
-              <Button>Possui uma conta? Entrar</Button>
-            </Link>
-          )}
         </FormHeader>
-        <SignUpForm />
+        <SigninForm />
       </SignFormContainer>
     </CenterForm>
   );

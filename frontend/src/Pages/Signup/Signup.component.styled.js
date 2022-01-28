@@ -3,6 +3,7 @@ import { Card } from "../../antd_components";
 
 export const CenterForm = styled.div`
   width: 100%;
+  height: ${({ height }) => height};
   display: flex;
   justify-content: center;
   flex-direction: column;

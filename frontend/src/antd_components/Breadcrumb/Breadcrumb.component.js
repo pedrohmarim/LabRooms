@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import * as S from "./Breadcrumb.styled";
 import routes from "../../Routes/routes";
-import { darkPallete } from "../../styles/pallete";
 
 const Breadcrumb = ({ crumbs = routes }) => {
   return (

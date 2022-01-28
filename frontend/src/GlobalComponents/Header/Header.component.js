@@ -6,8 +6,7 @@ import { HeaderContainer } from "./Header.styled";
 import { Link } from "react-router-dom";
 
 const Header = () => {
-  const [expandLogin, setExpandLogin] = useState();
-  const [expandRegister, setExpandRegister] = useState();
+  const [ExpandLogin, setExpandLogin] = useState();
   const { lightblue, white } = darkPallete;
 
   return (
@@ -23,27 +22,19 @@ const Header = () => {
 
         {window.location.pathname === "/" && (
           <Col>
-            <Link to='/signup'>
+            <Link to='/signin'>
               <Button
                 icon={<Icons.UserOutlined />}
                 color={white}
                 backgroundcolor={lightblue}
                 style={{ marginRight: "10px" }}
-                onMouseEnter={() => setExpandRegister(true)}
-                onMouseLeave={() => setExpandRegister(false)}
+                onMouseEnter={() => setExpandLogin(true)}
+                onMouseLeave={() => setExpandLogin(false)}
               >
-                {expandRegister && "Registrar"}
+                {ExpandLogin && "Entrar"}
               </Button>
             </Link>
-            <Button
-              icon={<Icons.LoginOutlined />}
-              color={white}
-              backgroundcolor={lightblue}
-              onMouseEnter={() => setExpandLogin(true)}
-              onMouseLeave={() => setExpandLogin(false)}
-            >
-              {expandLogin && "Entrar"}
-            </Button>
+        
           </Col>
         )}
       </Row>

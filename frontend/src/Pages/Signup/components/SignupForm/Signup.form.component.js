@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Icons, Input, Button } from "../../../../antd_components";
 import { FormItem } from "./Signup.form.styled";
+import { darkPallete } from "../../../../styles/pallete";
 
 const SignUpForm = () => {
   const styleInput = {
@@ -57,9 +58,9 @@ const SignUpForm = () => {
       <FormItem
         label='Senha'
         name='password'
-        rules={[{ required: true, message: "Campo obrigatório" }]}
+        rules={[{ required: true, message: "Campo obrigatório" }, { type: 'string', min: 6, message: 'Senha deve possuir no mínimo 6 caracteres' }]}
       >
-        <Input
+        <Input.Password
           style={styleInput}
           allowClear
           prefix={<Icons.LockOutlined />}
@@ -71,11 +72,23 @@ const SignUpForm = () => {
       </FormItem>
 
       <FormItem
+      
         label='Confirmar Senha'
         name='confirmPassword'
-        rules={[{ required: true, message: "Campo obrigatório" }]}
+        rules={[
+          { required: true, message: "Campo obrigatório" },
+          { type: 'string', min: 6, message: 'Senha deve possuir no mínimo 6 caracteres' },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('Senhas não coincidem!'));
+            },
+          }),
+        ]}
       >
-        <Input
+        <Input.Password
           style={styleInput}
           allowClear
           prefix={<Icons.LockOutlined />}
@@ -91,6 +104,7 @@ const SignUpForm = () => {
           height: "45px",
           borderRadius: "8px",
           marginTop: "5px",
+          background: darkPallete.lightblue,
         }}
         type='primary'
         htmlType='submit'
