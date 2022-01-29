@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import * as HomeService from "./services/home.service";
 import Header from "../../GlobalComponents/Header/Header.component";
 import Background from "../../assets/videoback.mp4";
 import BackgroundMobile from "../../assets/backgroundMobile.mp4";
@@ -11,20 +10,7 @@ import { darkPallete } from "../../styles/pallete";
 
 export default function Home() {
   const [searchValue, setSearchValue] = useState();
-  // const { whiteText, greenText, darkBackground } = darkPallete;
-  // const [message, setMessage] = useState(false);
 
-  // const DTO = {
-  //   nome: "Pedro",
-  //   sobrenome: "Marim",
-  // };
-
-  // function register() {
-  //   HomeService.register(DTO).then((res) => {
-  //     const { message } = res.data;
-  //     setMessage(message);
-  //   });
-  // }
   function handleScrollToRooms(searchValue) {
     if (searchValue) setSearchValue(searchValue);
 

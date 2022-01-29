@@ -14,11 +14,13 @@ import Tooltip from "./Tooltip/Tooltip.component";
 import Select from "./Select/Select.component";
 import Form from "./FormV3/Form.component";
 import InputMask from "./InputMask/InputMask.component";
+import Notification from "./Notification/Notification.component";
 
 export {
   Button,
   Spin,
   InputMask,
+  Notification,
   Row,
   Col,
   Card,

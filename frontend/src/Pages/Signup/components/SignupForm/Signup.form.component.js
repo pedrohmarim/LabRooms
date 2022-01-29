@@ -1,9 +1,20 @@
 import React from "react";
-import { Form, Icons, Input, Button, InputMask } from "../../../../antd_components";
+import { useNavigate } from "react-router-dom";
+import {
+  Form,
+  Icons,
+  Input,
+  Button,
+  InputMask,
+} from "../../../../antd_components";
 import { FormItem } from "./Signup.form.styled";
 import { darkPallete } from "../../../../styles/pallete";
+import * as SignUpService from "../../services/signup.service";
+import Swal from "sweetalert2";
 
 const SignUpForm = () => {
+  let navigate = useNavigate();
+
   const styleInput = {
     borderRadius: "8px",
     padding: "8px",
@@ -11,8 +22,38 @@ const SignUpForm = () => {
     marginTop: "-5px",
   };
 
+  function onSubmit(values) {
+    const { cpf, email, password, username } = values;
+
+    const dto = {
+      cpf,
+      email,
+      password,
+      username,
+    };
+
+    SignUpService.userRegister(dto).then((res) => {
+      const { message, success } = res.data;
+
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 4000,
+        timerProgressBar: true,
+      });
+
+      Toast.fire({
+        icon: success ? "success" : "error",
+        title: message,
+      }).then(() => {
+        navigate("/signin");
+      });
+    });
+  }
+
   return (
-    <Form layout='vertical'>
+    <Form layout='vertical' onFinish={onSubmit}>
       <FormItem
         label='Nome completo'
         name='username'
@@ -48,7 +89,7 @@ const SignUpForm = () => {
         rules={[{ required: true, message: "Campo obrigatório" }]}
       >
         <InputMask
-          mask="111.111.111-11"
+          mask='111.111.111-11'
           style={styleInput}
           allowClear
           prefix={<Icons.CreditCardOutlined />}
@@ -59,7 +100,14 @@ const SignUpForm = () => {
       <FormItem
         label='Senha'
         name='password'
-        rules={[{ required: true, message: "Campo obrigatório" }, { type: 'string', min: 6, message: 'Senha deve possuir no mínimo 6 caracteres' }]}
+        rules={[
+          { required: true, message: "Campo obrigatório" },
+          {
+            type: "string",
+            min: 6,
+            message: "Senha deve possuir no mínimo 6 caracteres",
+          },
+        ]}
       >
         <Input.Password
           style={styleInput}
@@ -77,13 +125,17 @@ const SignUpForm = () => {
         name='confirmPassword'
         rules={[
           { required: true, message: "Campo obrigatório" },
-          { type: 'string', min: 6, message: 'Senha deve possuir no mínimo 6 caracteres' },
+          {
+            type: "string",
+            min: 6,
+            message: "Senha deve possuir no mínimo 6 caracteres",
+          },
           ({ getFieldValue }) => ({
             validator(_, value) {
-              if (!value || getFieldValue('password') === value) {
+              if (!value || getFieldValue("password") === value) {
                 return Promise.resolve();
               }
-              return Promise.reject(new Error('Senhas não coincidem!'));
+              return Promise.reject(new Error("Senhas não coincidem!"));
             },
           }),
         ]}
