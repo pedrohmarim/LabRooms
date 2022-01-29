@@ -10,9 +10,9 @@ const Header = () => {
   const [ExpandLogin, setExpandLogin] = useState();
   const { lightblue, white } = darkPallete;
 
-  const { loggedUser } = useContext(UserContext);
+  const { currentID } = useContext(UserContext);
 
-  console.log("aqui", loggedUser);
+  console.log("aqui", currentID);
   return (
     <HeaderContainer>
       <Row align='middle' justify='space-between' style={{ padding: "0 15px" }}>

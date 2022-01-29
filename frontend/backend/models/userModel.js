@@ -13,7 +13,7 @@ const userModel = new Schema({
     type: String,
     required: true,
   },
-  password: {
+  hashedPass: {
     type: String,
     required: true,
   },

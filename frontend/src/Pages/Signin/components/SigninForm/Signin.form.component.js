@@ -17,7 +17,7 @@ import Swal from "sweetalert2";
 const SigninForm = () => {
   const [invalidInfo, setInvalidInfo] = useState(false);
 
-  const { setLoggedUser } = useContext(UserContext);
+  const { setCurrentID } = useContext(UserContext);
 
   let navigate = useNavigate();
 
@@ -37,11 +37,12 @@ const SigninForm = () => {
     };
 
     SignUpService.loginUser(dto).then((res) => {
-      const { user, message } = res.data;
+      const { _id, message } = res.data;
 
-      if (user) {
-        setLoggedUser(user);
+      if (_id) {
+        setCurrentID(_id);
         setInvalidInfo(false);
+
         const Toast = Swal.mixin({
           toast: true,
           position: "top-end",

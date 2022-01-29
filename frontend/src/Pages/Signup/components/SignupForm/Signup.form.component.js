@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Form,
   Icons,
   Input,
   Button,
+  Notification,
   InputMask,
 } from "../../../../antd_components";
 import { FormItem } from "./Signup.form.styled";
@@ -13,6 +14,7 @@ import * as SignUpService from "../../services/signup.service";
 import Swal from "sweetalert2";
 
 const SignUpForm = () => {
+  const [validateInput, setValidateInput] = useState();
   let navigate = useNavigate();
 
   const styleInput = {
@@ -33,22 +35,39 @@ const SignUpForm = () => {
     };
 
     SignUpService.userRegister(dto).then((res) => {
-      const { message, success } = res.data;
+      const { message, success, unknow } = res.data;
 
-      const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 4000,
-        timerProgressBar: true,
-      });
+      if (!success && !unknow) {
+        setValidateInput(res.data);
+        Notification.open({
+          type: "error",
+          message: "Erro",
+          description: message,
+        });
+      } else if (success && !unknow) {
+        setValidateInput(null);
 
-      Toast.fire({
-        icon: success ? "success" : "error",
-        title: message,
-      }).then(() => {
-        navigate("/signin");
-      });
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 4000,
+          timerProgressBar: true,
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: message,
+        }).then(() => {
+          navigate("/signin");
+        });
+      } else {
+        Notification.open({
+          type: "error",
+          message: "Erro",
+          description: message,
+        });
+      }
     });
   }
 
@@ -87,6 +106,8 @@ const SignUpForm = () => {
         label='CPF'
         name='cpf'
         rules={[{ required: true, message: "Campo obrigatório" }]}
+        help={validateInput ? validateInput.message : null}
+        validateStatus={validateInput ? "error" : null}
       >
         <InputMask
           mask='111.111.111-11'
