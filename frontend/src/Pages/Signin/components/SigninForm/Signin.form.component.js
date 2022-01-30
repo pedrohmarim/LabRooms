@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import * as SignUpService from "../../services/signin.service";
-import { UserContext } from "../../../../Context/UserContext";
 import { useNavigate } from "react-router-dom";
 import {
   Form,
@@ -13,11 +12,10 @@ import { FormItem } from "../../../Signup/components/SignupForm/Signup.form.styl
 import { Link } from "react-router-dom";
 import { darkPallete } from "../../../../styles/pallete";
 import Swal from "sweetalert2";
+import Cookie from "js-cookie";
 
 const SigninForm = () => {
   const [invalidInfo, setInvalidInfo] = useState(false);
-
-  const { setCurrentID } = useContext(UserContext);
 
   let navigate = useNavigate();
 
@@ -40,7 +38,7 @@ const SigninForm = () => {
       const { _id, message } = res.data;
 
       if (_id) {
-        setCurrentID(_id);
+        Cookie.set("ID", _id);
         setInvalidInfo(false);
 
         const Toast = Swal.mixin({
@@ -73,8 +71,8 @@ const SigninForm = () => {
         label='E-mail'
         name='email'
         rules={[
-          { required: true, message: "Campo obrigatório" },
-          { type: "email", message: "E-mail inválido" },
+          { required: true, message: "Campo obrigatório." },
+          { type: "email", message: "E-mail inválido." },
         ]}
         help={invalidInfo ? "E-mail inválido" : null}
         validateStatus={invalidInfo ? "error" : null}
@@ -88,11 +86,11 @@ const SigninForm = () => {
       </FormItem>
 
       <FormItem
-        help={invalidInfo ? "Senha inválida" : null}
+        help={invalidInfo ? "Senha inválida." : null}
         validateStatus={invalidInfo ? "error" : null}
         label='Senha'
         name='password'
-        rules={[{ required: true, message: "Campo obrigatório" }]}
+        rules={[{ required: true, message: "Campo obrigatório." }]}
       >
         <Input.Password
           style={styleInput}

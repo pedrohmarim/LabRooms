@@ -1,6 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Row, Col, Image, Button, Icons } from "../../antd_components";
-import { UserContext } from "../../Context/UserContext";
 import Logo from "../../assets/logo1.png";
 import { darkPallete } from "../../styles/pallete";
 import { HeaderContainer } from "./Header.styled";
@@ -10,9 +9,6 @@ const Header = () => {
   const [ExpandLogin, setExpandLogin] = useState();
   const { lightblue, white } = darkPallete;
 
-  const { currentID } = useContext(UserContext);
-
-  console.log("aqui", currentID);
   return (
     <HeaderContainer>
       <Row align='middle' justify='space-between' style={{ padding: "0 15px" }}>

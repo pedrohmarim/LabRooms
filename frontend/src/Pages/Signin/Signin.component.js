@@ -1,5 +1,4 @@
 import React from "react";
-import { useContext } from "react";
 import Background from "../../assets/backStars.mp4";
 import {
   SignFormContainer,
@@ -17,10 +16,8 @@ import {
 } from "../../antd_components";
 import { darkPallete } from "../../styles/pallete";
 import SigninForm from "./components/SigninForm/Signin.form.component";
-import { UserContext } from "../../Context/UserContext";
 
 export default function Signin() {
-  const { loggedUser, setLoggedUser } = useContext(UserContext);
   const { Title } = Typography;
 
   return (

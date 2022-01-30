@@ -76,7 +76,7 @@ const SignUpForm = () => {
       <FormItem
         label='Nome completo'
         name='username'
-        rules={[{ required: true, message: "Campo obrigatório" }]}
+        rules={[{ required: true, message: "Campo obrigatório." }]}
       >
         <Input
           style={styleInput}
@@ -90,8 +90,8 @@ const SignUpForm = () => {
         label='E-mail'
         name='email'
         rules={[
-          { required: true, message: "Campo obrigatório" },
-          { type: "email", message: "E-mail inválido" },
+          { required: true, message: "Campo obrigatório." },
+          { type: "email", message: "E-mail inválido." },
         ]}
       >
         <Input
@@ -105,7 +105,7 @@ const SignUpForm = () => {
       <FormItem
         label='CPF'
         name='cpf'
-        rules={[{ required: true, message: "Campo obrigatório" }]}
+        rules={[{ required: true, message: "Campo obrigatório." }]}
         help={validateInput ? validateInput.message : null}
         validateStatus={validateInput ? "error" : null}
       >
@@ -122,11 +122,11 @@ const SignUpForm = () => {
         label='Senha'
         name='password'
         rules={[
-          { required: true, message: "Campo obrigatório" },
+          { required: true, message: "Campo obrigatório." },
           {
             type: "string",
             min: 6,
-            message: "Senha deve possuir no mínimo 6 caracteres",
+            message: "Senha deve possuir no mínimo 6 caracteres.",
           },
         ]}
       >
@@ -145,11 +145,11 @@ const SignUpForm = () => {
         label='Confirmar Senha'
         name='confirmPassword'
         rules={[
-          { required: true, message: "Campo obrigatório" },
+          { required: true, message: "Campo obrigatório." },
           {
             type: "string",
             min: 6,
-            message: "Senha deve possuir no mínimo 6 caracteres",
+            message: "Senha deve possuir no mínimo 6 caracteres.",
           },
           ({ getFieldValue }) => ({
             validator(_, value) {

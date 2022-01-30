@@ -5,7 +5,7 @@ import { ArrowContainer } from "./styles";
 const HomeArrow = ({ intoRooms }) => (
   <ArrowContainer onClick={intoRooms}>
     <Icons.DownOutlined
-      style={{ color: "#fff", fontSize: "30pt" }}
+      style={{ color: "#fff", fontSize: "30pt", cursor: "pointer" }}
     />
   </ArrowContainer>
 );

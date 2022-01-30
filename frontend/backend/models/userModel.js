@@ -23,4 +23,4 @@ const userModel = new Schema({
   },
 });
 
-module.exports = model("usuarios", userModel); // oq está em string é o nome da Tabela que vai ser criada armazenando o DTO de segundo parametro
+module.exports = model("UsersCollection", userModel); // oq está em string é o nome da Tabela que vai ser criada armazenando o DTO de segundo parametro

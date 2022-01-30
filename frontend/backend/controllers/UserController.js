@@ -6,7 +6,6 @@ module.exports = {
     const { cpf, email, password, username } = request.body;
 
     userModel.find({ cpf: cpf }).then(async (res) => {
-      console.log("resposta", res);
       if (res.length === 0) {
         let hashedPass = await bcrypt.hash(password, 10);
 
@@ -54,13 +53,29 @@ module.exports = {
 
       if (validPassword) {
         const { _id } = user;
-
         return response.json({ _id, message: "Logado com sucesso!" });
       } else {
         return response.json({ _id: null });
       }
     } else {
       return response.json({ _id: null });
+    }
+  },
+  async handleGetCurrentUser(request, response) {
+    var user = await userModel.findOne({
+      _id: request.params.id,
+    });
+
+    if (user) {
+      return response.json({
+        username: user.username,
+        pass: user.hashedPass,
+        email: user.email,
+        cpf: user.cpf,
+        createdAt: user.createdAt.toLocaleString("pt-BR"),
+      });
+    } else {
+      return response.json(null);
     }
   },
 };
