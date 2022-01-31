@@ -58,7 +58,7 @@ export default function Signup() {
               </Link>
             )}
           </FormHeader>
-          <SignUpForm />
+          <SignUpForm darkPallete={darkPallete} />
         </SignFormContainer>
       </CenterForm>
     </>

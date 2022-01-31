@@ -17,6 +17,8 @@ import InputMask from "./InputMask/InputMask.component";
 import Notification from "./Notification/Notification.component";
 import Layout from "./Layout/Layout.component";
 import Menu from "./Menu/Menu.component";
+import Modal from "./Modal/Modal.component";
+import Upload from "./Upload/Upload.component";
 
 export {
   Button,
@@ -33,8 +35,10 @@ export {
   Layout,
   Menu,
   Divider,
+  Upload,
   Typography,
   Input,
+  Modal,
   Tooltip,
   Select,
   Form,

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Layout, Menu, Icons } from "../../antd_components";
+import { darkPallete } from "../../styles/pallete";
 
 const Aside = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -7,14 +8,23 @@ const Aside = () => {
   const { SubMenu } = Menu;
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ height: "100vh",position: 'relative' }}>
       <Sider
-        collapsible
         collapsed={collapsed}
         onMouseLeave={() => setCollapsed(true)}
         onMouseEnter={() => setCollapsed(false)}
       >
-        <Menu theme='dark' defaultSelectedKeys={["1"]} mode='inline'>
+        <Menu 
+          // defaultSelectedKeys={["1"]} 
+          mode='inline' 
+          style={{
+            display: 'flex', 
+            flexDirection: 'column', 
+            justifyContent: 'center', 
+            height: '100vh',
+            backgroundColor: '#000',
+            color: darkPallete.white
+          }}>
           <Menu.Item key='1' icon={<Icons.PieChartOutlined />}>
             Option 1
           </Menu.Item>

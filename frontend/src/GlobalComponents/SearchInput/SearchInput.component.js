@@ -10,7 +10,7 @@ const SearchInput = ({
   searchValue,
 }) => {
   return searchValue ? (
-    <Form initialValues={{ roomSearchInput: searchValue && searchValue }}>
+    <Form initialValues={{ roomSearchInput: searchValue }}>
       <Tooltip
         color={color}
         title='Pesquise por um tema para encontrar salas'

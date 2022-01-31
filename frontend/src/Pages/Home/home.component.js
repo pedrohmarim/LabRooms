@@ -12,7 +12,7 @@ import Rooms from "./components/Rooms/Rooms.component";
 import { darkPallete } from "../../styles/pallete";
 
 export default function Home() {
-  const { setUser } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     const _id = Cookie.get("ID");
@@ -28,11 +28,12 @@ export default function Home() {
   const [searchValue, setSearchValue] = useState();
 
   function handleScrollToRooms(searchValue) {
-    if (searchValue) setSearchValue(searchValue);
-
-    document
-      .getElementById("rooms")
-      .scrollIntoView({ behavior: "smooth", block: "center" });
+    if (searchValue) {
+      setSearchValue(searchValue);
+      document
+        .getElementById("rooms")
+        .scrollIntoView({ behavior: "smooth", block: "center" });
+    };
   }
 
   return (
@@ -50,10 +51,10 @@ export default function Home() {
             type='video/mp4'
           />
         </video>
-        <HomeArrow intoRooms={handleScrollToRooms} />
+        <HomeArrow />
       </Container>
 
-      <Rooms pallete={darkPallete} searchValue={searchValue} />
+      <Rooms pallete={darkPallete} searchValue={searchValue} user={user} />
     </>
   );
 }

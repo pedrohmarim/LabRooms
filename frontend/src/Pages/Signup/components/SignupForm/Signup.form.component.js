@@ -9,11 +9,10 @@ import {
   InputMask,
 } from "../../../../antd_components";
 import { FormItem } from "./Signup.form.styled";
-import { darkPallete } from "../../../../styles/pallete";
 import * as SignUpService from "../../services/signup.service";
 import Swal from "sweetalert2";
 
-const SignUpForm = () => {
+const SignUpForm = ({ darkPallete }) => {
   const [validateInput, setValidateInput] = useState();
   let navigate = useNavigate();
 

@@ -10,11 +10,10 @@ import {
 } from "../../../../antd_components";
 import { FormItem } from "../../../Signup/components/SignupForm/Signup.form.styled";
 import { Link } from "react-router-dom";
-import { darkPallete } from "../../../../styles/pallete";
 import Swal from "sweetalert2";
 import Cookie from "js-cookie";
 
-const SigninForm = () => {
+const SigninForm = ({ darkPallete }) => {
   const [invalidInfo, setInvalidInfo] = useState(false);
 
   let navigate = useNavigate();
