@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Input as InputStyled, Form } from "antd";
 
 export const Input = styled(InputStyled)`
+  border: none;
   width: ${({ width }) => width} !important;
   height: 40px;
   width: 100%;

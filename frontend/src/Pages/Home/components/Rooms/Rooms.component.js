@@ -1,6 +1,13 @@
 import React from "react";
 import { RoomsContainer } from "./styles";
-import { Row, Select, Tooltip } from "../../../../antd_components";
+import {
+  Row,
+  Select,
+  Tooltip,
+  Divider,
+  Button,
+  Icons,
+} from "../../../../antd_components";
 
 import SearchInput from "../../../../GlobalComponents/SearchInput/SearchInput.component";
 
@@ -11,7 +18,7 @@ const Rooms = ({ pallete, searchValue }) => {
         <SearchInput
           onSearch={() => console.log("faz req pro back")}
           searchValue={searchValue}
-          background={pallete.white}
+          // background={pallete.white}
           color={pallete.lightblue}
           width={window.innerWidth > 1024 ? "25%" : "100%"}
         />
@@ -31,6 +38,10 @@ const Rooms = ({ pallete, searchValue }) => {
           </Select>
         </Tooltip>
       </Row>
+
+      <Divider
+        style={{ marginTop: "20px", border: "solid 1px rgba(255,255,255,0.1)" }}
+      />
     </RoomsContainer>
   );
 };

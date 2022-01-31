@@ -15,6 +15,8 @@ import Select from "./Select/Select.component";
 import Form from "./FormV3/Form.component";
 import InputMask from "./InputMask/InputMask.component";
 import Notification from "./Notification/Notification.component";
+import Layout from "./Layout/Layout.component";
+import Menu from "./Menu/Menu.component";
 
 export {
   Button,
@@ -28,6 +30,8 @@ export {
   Breadcrumb,
   Icons,
   Image,
+  Layout,
+  Menu,
   Divider,
   Typography,
   Input,

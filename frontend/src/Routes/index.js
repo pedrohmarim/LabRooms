@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense } from "react";
 import {
   Route,
   BrowserRouter as Router,
@@ -9,28 +9,30 @@ import { SpinTip } from "./SpinTip.styled";
 import { darkPallete } from "../styles/pallete";
 import { GlobalStyles } from "../styles/globalStyles";
 import routes from "./routes";
+import Aside from "../GlobalComponents/Aside/Aside.component";
 
 const { white } = darkPallete;
 
-const Routes = () =>  (
-    <Router>
-      <Suspense
-        fallback={
-          <Spin
-            tip={<SpinTip>Carregando...</SpinTip>}
-            size='large'
-            color={white}
-          />
-        }
-      >
-        <Switch>
-          {routes.map(({ path, Component }, key) => (
-            <Route exact path={path} key={key} element={Component} />
-          ))}
-        </Switch>
-      </Suspense>
-      <GlobalStyles />
-    </Router>
-  );
+const Routes = () => (
+  <Router>
+    <Suspense
+      fallback={
+        <Spin
+          tip={<SpinTip>Carregando...</SpinTip>}
+          size='large'
+          color={white}
+        />
+      }
+    >
+      {/* <Aside /> */}
+      <Switch>
+        {routes.map(({ path, Component }, key) => (
+          <Route exact path={path} key={key} element={Component} />
+        ))}
+      </Switch>
+    </Suspense>
+    <GlobalStyles />
+  </Router>
+);
 
 export default Routes;
