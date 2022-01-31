@@ -1,22 +1,21 @@
-const userModel = require("../models/userModel");
+const UserModel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
 
 module.exports = {
   async handleRegister(request, response) {
     const { cpf, email, password, username } = request.body;
 
-    userModel.find({ cpf: cpf }).then(async (res) => {
+    UserModel.find({ cpf: cpf }).then(async (res) => {
       if (res.length === 0) {
         let hashedPass = await bcrypt.hash(password, 10);
 
-        userModel
-          .create({
-            cpf,
-            email,
-            hashedPass,
-            username,
-            createdAt: new Date(),
-          })
+        UserModel.create({
+          cpf,
+          email,
+          hashedPass,
+          username,
+          createdAt: new Date(),
+        })
           .then(() => {
             return response.json({
               message: "Usuário cadastrado com sucesso!",
@@ -41,7 +40,7 @@ module.exports = {
   },
 
   async handleLogin(request, response) {
-    var user = await userModel.findOne({
+    var user = await UserModel.findOne({
       email: request.headers["email"],
     });
 
@@ -62,7 +61,7 @@ module.exports = {
     }
   },
   async handleGetCurrentUser(request, response) {
-    var user = await userModel.findOne({
+    var user = await UserModel.findOne({
       _id: request.params.id,
     });
 

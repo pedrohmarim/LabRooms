@@ -8,6 +8,7 @@ const SearchInput = ({
   onSearch,
   fromLandingPage,
   searchValue,
+  background,
 }) => {
   return searchValue ? (
     <Form initialValues={{ roomSearchInput: searchValue }}>
@@ -23,6 +24,7 @@ const SearchInput = ({
           width={window.innerWidth < 1024 ? window.innerWidth - 50 : 375}
         >
           <Input
+            background={background}
             allowClear
             suffix={<Icons.SearchOutlined />}
             onPressEnter={onSearch}
@@ -42,6 +44,7 @@ const SearchInput = ({
     >
       <Input
         allowClear
+        background={background}
         suffix={<Icons.SearchOutlined />}
         onPressEnter={onSearch}
         width={width}

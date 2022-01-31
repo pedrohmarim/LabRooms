@@ -33,7 +33,7 @@ export default function Home() {
       document
         .getElementById("rooms")
         .scrollIntoView({ behavior: "smooth", block: "center" });
-    };
+    }
   }
 
   return (

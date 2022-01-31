@@ -1,6 +1,6 @@
 const { model, Schema } = require("mongoose");
 
-const userModel = new Schema({
+const UserModel = new Schema({
   username: {
     type: String,
     required: true,
@@ -23,4 +23,4 @@ const userModel = new Schema({
   },
 });
 
-module.exports = model("UsersCollection", userModel); // oq está em string é o nome da Tabela que vai ser criada armazenando o DTO de segundo parametro
+module.exports = model("users", UserModel); // oq está em string é o nome da Tabela que vai ser criada armazenando o DTO de segundo parametro

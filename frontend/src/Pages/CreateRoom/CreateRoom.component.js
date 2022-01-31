@@ -1,36 +1,36 @@
 import React from "react";
-import CreateRoomForm from './components/CreateRoom.form.component';
+import CreateRoomForm from "./components/CreateRoom.form.component";
 import Background from "../../assets/backStars.mp4";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo1.png";
 import { darkPallete } from "../../styles/pallete";
 import {
-    SignFormContainer,
-    CenterForm,
-    FormHeader,
+  SignFormContainer,
+  CenterForm,
+  FormHeader,
 } from "../Signup/Signup.component.styled";
 import {
-    Typography,
-    Breadcrumb,
-    Icons,
-    Image,
-    Tooltip,
-  } from "../../antd_components";
+  Typography,
+  Breadcrumb,
+  Icons,
+  Image,
+  Tooltip,
+} from "../../antd_components";
 
 export default function CreateRoom() {
   const { Title } = Typography;
 
   return (
     <>
-    <video
-      loop
-      autoPlay
-      muted
-      id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
-    >
-      <source src={Background} type='video/mp4' />
-    </video>
-    <CenterForm height='100vh'>
+      <video
+        loop
+        autoPlay
+        muted
+        id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
+      >
+        <source src={Background} type='video/mp4' />
+      </video>
+      <CenterForm height='100vh'>
         <Link to='/'>
           <Image src={Logo} alt='Logo' height={100} preview={false} />
         </Link>

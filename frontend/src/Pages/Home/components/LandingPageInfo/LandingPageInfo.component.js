@@ -16,9 +16,10 @@ const LandingPageInfo = ({ pallete, intoRooms }) => {
       </Title>
 
       <SearchInput
+        background={pallete.white}
         color={pallete.lightblue}
         onSearch={(e) => {
-          e.target.value && intoRooms(e.target.value)
+          e.target.value && intoRooms(e.target.value);
         }}
         fromLandingPage
       />

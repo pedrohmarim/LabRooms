@@ -3,15 +3,15 @@ import { Input as InputStyled, Form } from "antd";
 
 export const Input = styled(InputStyled)`
   border: none;
+  background-color: ${({ background }) => background};
   width: ${({ width }) => width} !important;
   height: 40px;
   width: 100%;
   border-radius: 8px;
   outline: none;
-  background-color: #fff;
 
   .ant-input {
-    background-color: #fff;
+    background-color: ${({ background }) => background};
   }
 
   .ant-input::placeholder {

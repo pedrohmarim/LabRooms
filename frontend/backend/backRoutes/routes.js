@@ -1,10 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const userRegisterController = require("../controllers/UserController");
+const UserRegisterController = require("../controllers/UserController");
+const RoomRegisterController = require("../controllers/RoomController");
 
-router.post("/userRegister", userRegisterController.handleRegister);
-router.get("/userLogin", userRegisterController.handleLogin);
-router.get("/currentUser/:id", userRegisterController.handleGetCurrentUser);
+router.post("/userRegister", UserRegisterController.handleRegister);
+router.get("/userLogin", UserRegisterController.handleLogin);
+router.get("/currentUser/:id", UserRegisterController.handleGetCurrentUser);
+
+router.post("/createRoom", RoomRegisterController.handleCreate);
+router.get("/getRooms", RoomRegisterController.handleGetRooms);
 
 module.exports = router;
