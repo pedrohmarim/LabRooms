@@ -34,7 +34,7 @@ export const RoomTitle = styled.p`
   color: ${({ color }) => color};
   font-weight: bold;
   margin: 0 0 0 10px;
-  font-size: 18pt;
+  font-size: 15pt;
 `;
 
 export const RoomDescription = styled.p`
