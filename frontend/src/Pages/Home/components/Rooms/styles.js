@@ -32,8 +32,9 @@ export const RoomTitle = styled.p`
   text-overflow: ellipsis;
   width: 100%;
   color: ${({ color }) => color};
+  font-weight: bold;
   margin: 0 0 0 10px;
-  font-size: 15pt;
+  font-size: 18pt;
 `;
 
 export const RoomDescription = styled.p`
@@ -44,6 +45,8 @@ export const RoomDescription = styled.p`
   width: 100%;
   color: ${({ color }) => color};
   margin: 0 0 0 10px;
+  font-size: 10pt;
+  font-weight: 500;
 `;
 
 export const UserCount = styled.p`
@@ -52,4 +55,11 @@ export const UserCount = styled.p`
   right: 0;
   margin-right: 10px;
   bottom: -10px;
+`;
+export const RoomCategory = styled.p`
+  color: ${({ color }) => color};
+  position: absolute;
+  top: 10px;
+  right: 0;
+  margin-right: 10px;
 `;

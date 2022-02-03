@@ -1,5 +1,11 @@
-import React, { useEffect } from "react";
-import { RoomItem, RoomTitle, RoomDescription, UserCount } from ".././styles";
+import React from "react";
+import {
+  RoomItem,
+  RoomTitle,
+  RoomDescription,
+  UserCount,
+  RoomCategory,
+} from ".././styles";
 import {
   Row,
   Image,
@@ -10,6 +16,7 @@ import {
 import { darkPallete } from "../../../../../styles/pallete";
 
 const Rooms = ({ rooms, pallete }) => {
+  console.log(rooms);
   const { Title } = Typography;
 
   function loadRoomThumb(thumb) {}
@@ -17,7 +24,7 @@ const Rooms = ({ rooms, pallete }) => {
   return (
     <Row>
       {rooms &&
-        rooms.map(({ title, description, thumb }) => (
+        rooms.map(({ title, description, thumb, category }) => (
           <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
             <RoomItem
               margintop={window.innerWidth < 1024 ? "15px" : "20px"}
@@ -34,6 +41,10 @@ const Rooms = ({ rooms, pallete }) => {
                 </RoomDescription>
               </Col>
 
+              <RoomCategory color={darkPallete.white}>
+                <Icons.UserOutlined />
+              </RoomCategory>
+
               <UserCount color={darkPallete.white}>
                 <Icons.UserOutlined /> 20
               </UserCount>
@@ -42,7 +53,13 @@ const Rooms = ({ rooms, pallete }) => {
         ))}
 
       {rooms && rooms.length === 0 && (
-        <Title level={3} style={{ color: pallete.white }}>
+        <Title
+          level={3}
+          style={{
+            color: pallete.white,
+            marginTop: window.innerWidth < 1024 ? "15px" : "20px",
+          }}
+        >
           Nenhuma sala disponível
         </Title>
       )}

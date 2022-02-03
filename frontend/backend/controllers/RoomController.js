@@ -1,4 +1,5 @@
 const RoomModel = require("../models/RoomModel");
+const CategoriesModel = require("../models/CategoriesModel");
 
 module.exports = {
   async handleCreate(request, response) {
@@ -43,6 +44,10 @@ module.exports = {
   },
   async handleGetRooms(request, response) {
     const result = await RoomModel.find();
+    return response.json(result);
+  },
+  async handleGetCategory(request, response) {
+    const result = await CategoriesModel.find();
     return response.json(result);
   },
 };

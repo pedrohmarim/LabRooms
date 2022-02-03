@@ -8,6 +8,7 @@ router.post("/userRegister", UserRegisterController.handleRegister);
 router.get("/userLogin", UserRegisterController.handleLogin);
 router.get("/currentUser/:id", UserRegisterController.handleGetCurrentUser);
 
+router.get("/categories", RoomRegisterController.handleGetCategory);
 router.post("/createRoom", RoomRegisterController.handleCreate);
 router.get("/getRooms", RoomRegisterController.handleGetRooms);
 

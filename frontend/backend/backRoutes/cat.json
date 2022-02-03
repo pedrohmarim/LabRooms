@@ -1,0 +1,82 @@
+[
+  {
+    "Title": "Segurança",
+    "Icon": "shield",
+    "CategorieKey": "seguranca"
+  },
+  {
+    "Title": "Economia",
+    "Icon": "bar-chart",
+    "CategorieKey": "economia"
+  },
+  {
+    "Title": "Educação",
+    "Icon": "book",
+    "CategorieKey": "educacao"
+  },
+  {
+    "Title": "Saúde",
+    "Icon": "heart",
+    "CategorieKey": "saude"
+  },
+  {
+    "Title": "Compras",
+    "Icon": "shopping-cart",
+    "CategorieKey": "compras"
+  },
+  {
+    "Title": "Transporte",
+    "Icon": "truck",
+    "CategorieKey": "transporte"
+  },
+  {
+    "Title": "Meio Ambiente",
+    "Icon": "sun",
+    "CategorieKey": "meioambiente"
+  },
+  {
+    "Title": "Turismo",
+    "Icon": "compass",
+    "CategorieKey": "turismo"
+  },
+  {
+    "Title": "Gênero",
+    "Icon": "user",
+    "CategorieKey": "genero"
+  },
+  {
+    "Title": "Agricultura",
+    "Icon": "wind",
+    "CategorieKey": "agricultura"
+  },
+  {
+    "Title": "Indústria",
+    "Icon": "home",
+    "CategorieKey": "industria"
+  },
+  {
+    "Title": "Família",
+    "Icon": "users",
+    "CategorieKey": "familia"
+  },
+  {
+    "Title": "Política",
+    "Icon": "globe",
+    "CategorieKey": "politica"
+  },
+  {
+    "Title": "Trabalho",
+    "Icon": "briefcase",
+    "CategorieKey": "trabalho"
+  },
+  {
+    "Title": "Esportes",
+    "Icon": "award",
+    "CategorieKey": "esportes"
+  },
+  {
+    "Title": "Tecnologia",
+    "Icon": "airplay",
+    "CategorieKey": "tecnologia"
+  }
+]

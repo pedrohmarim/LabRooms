@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Form,
@@ -6,7 +6,7 @@ import {
   Input,
   Button,
   Upload,
-  Checkbox,
+  Select,
   Tooltip,
   Notification,
 } from "../../../antd_components";
@@ -17,13 +17,13 @@ import {
   isValidFileSize,
 } from "../Helper/UploadImage.helper";
 import Cookie from "js-cookie";
-import { createRoom } from "../services/createroom.service";
+import * as CreateRoomService from "../services/createroom.service";
 import Swal from "sweetalert2";
 
 const SigninForm = ({ darkPallete }) => {
   const [form] = Form.useForm();
   let navigate = useNavigate();
-  const [disableCategory, setDisableCategory] = useState(false);
+  const [categories, setCategories] = useState();
 
   const styleInput = {
     borderRadius: "8px",
@@ -64,8 +64,6 @@ const SigninForm = ({ darkPallete }) => {
 
     const { uid, name, size, type, lastModified } = file;
 
-    if (!category && disableCategory) category = "$oth";
-
     const dto = {
       uid,
       name,
@@ -78,7 +76,7 @@ const SigninForm = ({ darkPallete }) => {
       owner,
     };
 
-    createRoom(dto).then((res) => {
+    CreateRoomService.createRoom(dto).then((res) => {
       const { message, success } = res.data;
 
       if (success) {
@@ -105,6 +103,12 @@ const SigninForm = ({ darkPallete }) => {
       }
     });
   }
+
+  useEffect(() => {
+    CreateRoomService.getCategories().then(({ data }) => {
+      setCategories(data);
+    });
+  }, []);
 
   return (
     <Form layout='vertical' onFinish={onSubmit} form={form}>
@@ -137,36 +141,23 @@ const SigninForm = ({ darkPallete }) => {
       <FormItem
         label='Categoria'
         name='category'
-        rules={
-          !disableCategory && [
-            { required: true, message: "Campo obrigatório." },
-          ]
-        }
+        rules={[{ required: true, message: "Campo obrigatório." }]}
       >
-        <Input
-          disabled={disableCategory}
-          suffix={
-            <Tooltip
-              defaultVisible={window.innerWidth < 1024}
-              color={darkPallete.lightblue}
-              title='Desabilitar este campo, fará com que sua sala possua e seja filtrada com categoria de "Outros".'
-            >
-              <Checkbox
-                defaultChecked
-                onChange={() => {
-                  form.setFieldsValue({
-                    category: null,
-                  });
-                  setDisableCategory((prev) => !prev);
-                }}
-              />
-            </Tooltip>
-          }
-          style={styleInput}
+        <Select
           allowClear
-          prefix={<Icons.EditOutlined />}
+          getPopupContainer={(trigger) => trigger.parentNode}
+          optionFilterProp='children'
+          showSearch
           placeholder='Ex.: Alimentos'
-        />
+          // onChange={handleChangeCategory}
+        >
+          {categories &&
+            categories.map(({ Title, CategorieKey, Icon }) => (
+              <Select.Option key={CategorieKey} value={CategorieKey}>
+                {Title}
+              </Select.Option>
+            ))}
+        </Select>
       </FormItem>
 
       <FormItem
