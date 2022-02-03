@@ -31,7 +31,7 @@ export default function Signup() {
       >
         <source src={Background} type='video/mp4' />
       </video>
-      <CenterForm>
+      <CenterForm height={window.innerWidth > 1024 && "100vh"}>
         <Link to='/'>
           <Image src={Logo} alt='Logo' height={100} preview={false} />
         </Link>
@@ -42,7 +42,7 @@ export default function Signup() {
               <Title level={3} style={{ marginBottom: 0 }}>
                 Registrar-se
               </Title>
-              <Tooltip title='Voltar' color={darkPallete.lightblue}>
+              <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
                 <Link to='/signin'>
                   <Icons.LeftOutlined style={{ fontSize: 20 }} />
                 </Link>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RoomItem, RoomTitle, RoomDescription, UserCount } from ".././styles";
 import {
   Row,
@@ -18,31 +18,25 @@ const Rooms = ({ rooms, pallete }) => {
     <Row>
       {rooms &&
         rooms.map(({ title, description, thumb }) => (
-          <Col span={window.innerWidth < 1024 ? 24 : 6}>
+          <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
             <RoomItem
               margintop={window.innerWidth < 1024 ? "15px" : "20px"}
               background={darkPallete.lightblueOpacity}
             >
-              <Row>
-                <Col>
-                  <Image src={loadRoomThumb(thumb)} height={60} width={60} />
-                </Col>
+              <Col>
+                <Image src={loadRoomThumb(thumb)} height={60} width={60} />
+              </Col>
+              <Col>
+                <RoomTitle color={darkPallete.white}>{title}</RoomTitle>
 
-                <Col>
-                  <RoomTitle color={darkPallete.white}>
-                    {title.length > 35 ? title.substring(0, 35) + "..." : title}
-                  </RoomTitle>
+                <RoomDescription color={darkPallete.white}>
+                  {description}
+                </RoomDescription>
+              </Col>
 
-                  <RoomDescription color={darkPallete.white}>
-                    {description.length > 40
-                      ? description.substring(0, 40) + "..."
-                      : description}
-                  </RoomDescription>
-                </Col>
-                <UserCount color={darkPallete.white}>
-                  <Icons.UserOutlined /> 20
-                </UserCount>
-              </Row>
+              <UserCount color={darkPallete.white}>
+                <Icons.UserOutlined /> 20
+              </UserCount>
             </RoomItem>
           </Col>
         ))}

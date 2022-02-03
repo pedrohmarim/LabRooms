@@ -4,15 +4,17 @@ export const Container = styled.div`
   border-radius: 4px;
   width: 97%;
   margin: 0 auto;
-  padding: 20px;
+  padding: 15px;
 `;
 
 export const RoomItem = styled.div`
-  position: relative;
-  transform: scale(0.95);
+  display: flex;
+  justify-content: start;
+  align-items: center;
   padding: 10px;
+  transform: scale(0.95);
   background-color: ${({ background }) => background};
-  height: 80px;
+  height: 90px;
   margin-top: ${({ margintop }) => margintop};
   border-radius: 8px;
   transition: all 0.2s ease;
@@ -24,12 +26,22 @@ export const RoomItem = styled.div`
 `;
 
 export const RoomTitle = styled.p`
+  padding: 0 70px 0 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
   color: ${({ color }) => color};
   margin: 0 0 0 10px;
   font-size: 15pt;
 `;
 
 export const RoomDescription = styled.p`
+  padding: 0 115px 0 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  width: 100%;
   color: ${({ color }) => color};
   margin: 0 0 0 10px;
 `;

@@ -8,23 +8,24 @@ const Aside = () => {
   const { SubMenu } = Menu;
 
   return (
-    <Layout style={{ height: "100vh",position: 'relative' }}>
+    <Layout style={{ position: "absolute", zIndex: 999 }}>
       <Sider
         collapsed={collapsed}
         onMouseLeave={() => setCollapsed(true)}
         onMouseEnter={() => setCollapsed(false)}
       >
-        <Menu 
-          // defaultSelectedKeys={["1"]} 
-          mode='inline' 
+        <Menu
+          // defaultSelectedKeys={["1"]}
+          mode='inline'
           style={{
-            display: 'flex', 
-            flexDirection: 'column', 
-            justifyContent: 'center', 
-            height: '100vh',
-            backgroundColor: '#000',
-            color: darkPallete.white
-          }}>
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: "100vh",
+            backgroundColor: "#000",
+            color: darkPallete.white,
+          }}
+        >
           <Menu.Item key='1' icon={<Icons.PieChartOutlined />}>
             Option 1
           </Menu.Item>
