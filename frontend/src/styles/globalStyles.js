@@ -16,10 +16,6 @@ export const GlobalStyles = createGlobalStyle`
     color: #000
   }
 
-  a:hover{
-    text-decoration: underline;
-  }
-
   body{
     overflow-x: hidden !important;
     background-color: #000;

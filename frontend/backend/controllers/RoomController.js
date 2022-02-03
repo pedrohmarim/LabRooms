@@ -6,7 +6,7 @@ module.exports = {
     let {
       title,
       description,
-      category,
+      categoryId,
       owner,
       uid,
       name,
@@ -15,12 +15,10 @@ module.exports = {
       lastModified,
     } = request.body;
 
-    if (category === "$oth") category = "Outros";
-
     RoomModel.create({
       title,
       description,
-      category,
+      categoryId,
       owner,
       thumb: {
         uid,
@@ -46,8 +44,15 @@ module.exports = {
     const result = await RoomModel.find();
     return response.json(result);
   },
+
   async handleGetCategory(request, response) {
     const result = await CategoriesModel.find();
+    return response.json(result);
+  },
+
+  async handleGetRoomsByCategory(request, response) {
+    const { categoryid } = request.headers;
+    const result = await RoomModel.find({ categoryId: categoryid });
     return response.json(result);
   },
 };

@@ -1,7 +1,7 @@
 {
-  "name": "project",
+  "name": "frontend",
   "version": "0.1.0",
-  "main": "server.js",
+  "main": "index.html",
   "license": "ISC",
   "dependencies": {
     "@ant-design/compatible": "^1.1.0",
@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "feather-icons-react": "^0.5.0",
     "js-cookie": "^3.0.1",
     "lottie-web": "^5.8.1",
     "mongoose": "^6.0.8",

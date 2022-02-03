@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, FormItem } from "./searchInput.styled";
-import { Tooltip, Icons, Form } from "../../antd_components";
+import { Tooltip, FeatherIcons, Form } from "../../antd_components";
 
 const SearchInput = ({
   color,
@@ -26,7 +26,7 @@ const SearchInput = ({
           <Input
             background={background}
             allowClear
-            suffix={<Icons.SearchOutlined />}
+            suffix={<FeatherIcons icon='search' size={15} />}
             onPressEnter={onSearch}
             width={width}
             size='large'
@@ -45,7 +45,7 @@ const SearchInput = ({
       <Input
         allowClear
         background={background}
-        suffix={<Icons.SearchOutlined />}
+        suffix={<FeatherIcons icon='search' size={15} />}
         onPressEnter={onSearch}
         width={width}
         size='large'

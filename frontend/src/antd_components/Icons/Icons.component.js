@@ -1,3 +1,3 @@
-import * as Icons from "@ant-design/icons";
+import FeatherIcons from "feather-icons-react";
 
-export default Icons;
+export default FeatherIcons;

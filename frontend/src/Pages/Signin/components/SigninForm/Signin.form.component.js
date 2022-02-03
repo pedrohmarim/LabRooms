@@ -3,7 +3,7 @@ import * as SignUpService from "../../services/signin.service";
 import { useNavigate } from "react-router-dom";
 import {
   Form,
-  Icons,
+  FeatherIcons,
   Input,
   Button,
   Checkbox,
@@ -79,7 +79,7 @@ const SigninForm = ({ darkPallete }) => {
         <Input
           style={styleInput}
           allowClear
-          prefix={<Icons.MailOutlined />}
+          prefix={<FeatherIcons icon='mail' size={15} />}
           placeholder='E-mail'
         />
       </FormItem>
@@ -94,9 +94,13 @@ const SigninForm = ({ darkPallete }) => {
         <Input.Password
           style={styleInput}
           allowClear
-          prefix={<Icons.LockOutlined />}
+          prefix={<FeatherIcons icon='lock' size={15} />}
           iconrRender={(visible) =>
-            visible ? <Icons.EyeTwoTone /> : <Icons.EyeInvisibleOutlined />
+            visible ? (
+              <FeatherIcons icon='eyeoff' size={15} />
+            ) : (
+              <FeatherIcons icon='eye' size={15} />
+            )
           }
           placeholder='Senha'
         />

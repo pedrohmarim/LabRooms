@@ -11,5 +11,9 @@ router.get("/currentUser/:id", UserRegisterController.handleGetCurrentUser);
 router.get("/categories", RoomRegisterController.handleGetCategory);
 router.post("/createRoom", RoomRegisterController.handleCreate);
 router.get("/getRooms", RoomRegisterController.handleGetRooms);
+router.get(
+  "/getRoomsByCategory",
+  RoomRegisterController.handleGetRoomsByCategory
+);
 
 module.exports = router;

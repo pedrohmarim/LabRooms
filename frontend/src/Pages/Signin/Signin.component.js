@@ -10,7 +10,7 @@ import Logo from "../../assets/logo1.png";
 import {
   Typography,
   Breadcrumb,
-  Icons,
+  FeatherIcons,
   Image,
   Tooltip,
 } from "../../antd_components";
@@ -43,7 +43,7 @@ export default function Signin() {
               </Title>
               <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
                 <Link to='/'>
-                  <Icons.LeftOutlined style={{ fontSize: 20 }} />
+                  <FeatherIcons icon='chevron-left' size={30} />
                 </Link>
               </Tooltip>
             </FormHeader>

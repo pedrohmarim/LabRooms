@@ -8,15 +8,15 @@ import {
 } from ".././styles";
 import {
   Row,
+  Button,
   Image,
-  Icons,
+  FeatherIcons,
   Col,
   Typography,
 } from "../../../../../antd_components";
 import { darkPallete } from "../../../../../styles/pallete";
 
 const Rooms = ({ rooms, pallete }) => {
-  console.log(rooms);
   const { Title } = Typography;
 
   function loadRoomThumb(thumb) {}
@@ -24,7 +24,7 @@ const Rooms = ({ rooms, pallete }) => {
   return (
     <Row>
       {rooms &&
-        rooms.map(({ title, description, thumb, category }) => (
+        rooms.map(({ title, description, thumb, categoryId, owner }) => (
           <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
             <RoomItem
               margintop={window.innerWidth < 1024 ? "15px" : "20px"}
@@ -41,12 +41,9 @@ const Rooms = ({ rooms, pallete }) => {
                 </RoomDescription>
               </Col>
 
-              <RoomCategory color={darkPallete.white}>
-                <Icons.UserOutlined />
-              </RoomCategory>
-
               <UserCount color={darkPallete.white}>
-                <Icons.UserOutlined /> 20
+                <FeatherIcons icon='users' size={15} />
+                <span style={{ margin: "2.5px 0 0 3px" }}>20</span>
               </UserCount>
             </RoomItem>
           </Col>
@@ -60,7 +57,7 @@ const Rooms = ({ rooms, pallete }) => {
             marginTop: window.innerWidth < 1024 ? "15px" : "20px",
           }}
         >
-          Nenhuma sala disponível
+          Nenhuma sala encontrada
         </Title>
       )}
     </Row>

@@ -4,7 +4,7 @@ import Col from "./Col/Col.component";
 import Checkbox from "./Checkbox/Checkbox.component";
 import Card from "./Card/Card.component";
 import Divider from "./Divider/Divider.component";
-import Icons from "./Icons/Icons.component";
+import FeatherIcons from "./Icons/Icons.component";
 import Image from "./Image/Image.component";
 import Row from "./Row/Row.component";
 import Spin from "./Spin/Spin.component";
@@ -30,7 +30,7 @@ export {
   Card,
   Checkbox,
   Breadcrumb,
-  Icons,
+  FeatherIcons,
   Image,
   Layout,
   Menu,

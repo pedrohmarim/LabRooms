@@ -3,7 +3,7 @@ import SignUpForm from "./components/SignupForm/Signup.form.component";
 import {
   Typography,
   Breadcrumb,
-  Icons,
+  FeatherIcons,
   Button,
   Image,
   Tooltip,
@@ -44,7 +44,7 @@ export default function Signup() {
               </Title>
               <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
                 <Link to='/signin'>
-                  <Icons.LeftOutlined style={{ fontSize: 20 }} />
+                  <FeatherIcons icon='chevron-left' size={30} />
                 </Link>
               </Tooltip>
             </FormHeader>

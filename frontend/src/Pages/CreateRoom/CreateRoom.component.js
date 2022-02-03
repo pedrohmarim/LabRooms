@@ -12,9 +12,9 @@ import {
 import {
   Typography,
   Breadcrumb,
-  Icons,
   Image,
   Tooltip,
+  FeatherIcons,
 } from "../../antd_components";
 
 export default function CreateRoom() {
@@ -43,7 +43,7 @@ export default function CreateRoom() {
               </Title>
               <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
                 <Link to='/'>
-                  <Icons.LeftOutlined style={{ fontSize: 20 }} />
+                  <FeatherIcons icon='chevron-left' size={30} />
                 </Link>
               </Tooltip>
             </FormHeader>

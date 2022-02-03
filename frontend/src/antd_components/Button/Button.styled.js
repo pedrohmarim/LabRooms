@@ -12,6 +12,9 @@ export const Button = styled(AntDesignButton)`
   font-weight: bold;
   font-size: 12pt;
   opacity: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &&:hover,
   &&:focus {

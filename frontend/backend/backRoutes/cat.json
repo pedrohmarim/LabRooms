@@ -1,82 +1,66 @@
 [
   {
     "Title": "Segurança",
-    "Icon": "shield",
-    "CategorieKey": "seguranca"
+    "Icon": "shield"
   },
   {
     "Title": "Economia",
-    "Icon": "bar-chart",
-    "CategorieKey": "economia"
+    "Icon": "bar-chart"
   },
   {
     "Title": "Educação",
-    "Icon": "book",
-    "CategorieKey": "educacao"
+    "Icon": "book"
   },
   {
     "Title": "Saúde",
-    "Icon": "heart",
-    "CategorieKey": "saude"
+    "Icon": "heart"
   },
   {
     "Title": "Compras",
-    "Icon": "shopping-cart",
-    "CategorieKey": "compras"
+    "Icon": "shopping-cart"
   },
   {
     "Title": "Transporte",
-    "Icon": "truck",
-    "CategorieKey": "transporte"
+    "Icon": "truck"
   },
   {
     "Title": "Meio Ambiente",
-    "Icon": "sun",
-    "CategorieKey": "meioambiente"
+    "Icon": "sun"
   },
   {
     "Title": "Turismo",
-    "Icon": "compass",
-    "CategorieKey": "turismo"
+    "Icon": "compass"
   },
   {
     "Title": "Gênero",
-    "Icon": "user",
-    "CategorieKey": "genero"
+    "Icon": "user"
   },
   {
     "Title": "Agricultura",
-    "Icon": "wind",
-    "CategorieKey": "agricultura"
+    "Icon": "wind"
   },
   {
     "Title": "Indústria",
-    "Icon": "home",
-    "CategorieKey": "industria"
+    "Icon": "home"
   },
   {
     "Title": "Família",
-    "Icon": "users",
-    "CategorieKey": "familia"
+    "Icon": "users"
   },
   {
     "Title": "Política",
-    "Icon": "globe",
-    "CategorieKey": "politica"
+    "Icon": "globe"
   },
   {
     "Title": "Trabalho",
-    "Icon": "briefcase",
-    "CategorieKey": "trabalho"
+    "Icon": "briefcase"
   },
   {
     "Title": "Esportes",
-    "Icon": "award",
-    "CategorieKey": "esportes"
+    "Icon": "award"
   },
   {
     "Title": "Tecnologia",
-    "Icon": "airplay",
-    "CategorieKey": "tecnologia"
+    "Icon": "airplay"
   }
 ]

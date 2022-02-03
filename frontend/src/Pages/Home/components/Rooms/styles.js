@@ -50,16 +50,12 @@ export const RoomDescription = styled.p`
 `;
 
 export const UserCount = styled.p`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: ${({ color }) => color};
   position: absolute;
   right: 0;
   margin-right: 10px;
   bottom: -10px;
-`;
-export const RoomCategory = styled.p`
-  color: ${({ color }) => color};
-  position: absolute;
-  top: 10px;
-  right: 0;
-  margin-right: 10px;
 `;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Row, Col, Image, Button, Icons } from "../../antd_components";
+import { Row, Col, Image, Button, FeatherIcons } from "../../antd_components";
 import Logo from "../../assets/logo1.png";
 import { darkPallete } from "../../styles/pallete";
 import { HeaderContainer } from "./Header.styled";
@@ -20,14 +20,16 @@ const Header = () => {
           <Col>
             <Link to='/signin'>
               <Button
-                icon={<Icons.UserOutlined />}
+                icon={<FeatherIcons icon='log-in' size={18} />}
                 color={white}
                 backgroundcolor={lightblue}
                 style={{ marginRight: "10px" }}
                 onMouseEnter={() => setExpandLogin(true)}
                 onMouseLeave={() => setExpandLogin(false)}
               >
-                {ExpandLogin && "Entrar"}
+                {ExpandLogin && (
+                  <span style={{ marginLeft: "5px" }}>Entrar</span>
+                )}
               </Button>
             </Link>
           </Col>

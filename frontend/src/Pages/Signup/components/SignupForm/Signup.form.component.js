@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Form,
-  Icons,
+  FeatherIcons,
   Input,
   Button,
   Notification,
@@ -80,7 +80,7 @@ const SignUpForm = ({ darkPallete }) => {
         <Input
           style={styleInput}
           allowClear
-          prefix={<Icons.UserOutlined />}
+          prefix={<FeatherIcons icon='user' size={15} />}
           placeholder='Nome completo'
         />
       </FormItem>
@@ -96,7 +96,7 @@ const SignUpForm = ({ darkPallete }) => {
         <Input
           style={styleInput}
           allowClear
-          prefix={<Icons.MailOutlined />}
+          prefix={<FeatherIcons icon='mail' size={15} />}
           placeholder='E-mail'
         />
       </FormItem>
@@ -112,7 +112,7 @@ const SignUpForm = ({ darkPallete }) => {
           mask='111.111.111-11'
           style={styleInput}
           allowClear
-          prefix={<Icons.CreditCardOutlined />}
+          prefix={<FeatherIcons icon='credit-card' size={15} />}
           placeholder='CPF'
         />
       </FormItem>
@@ -132,9 +132,13 @@ const SignUpForm = ({ darkPallete }) => {
         <Input.Password
           style={styleInput}
           allowClear
-          prefix={<Icons.LockOutlined />}
+          prefix={<FeatherIcons icon='lock' size={15} />}
           iconRender={(visible) =>
-            visible ? <Icons.EyeTwoTone /> : <Icons.EyeInvisibleOutlined />
+            visible ? (
+              <FeatherIcons icon='eye' size={15} />
+            ) : (
+              <FeatherIcons icon='eyeoff' size={15} />
+            )
           }
           placeholder='Senha'
         />
@@ -163,9 +167,13 @@ const SignUpForm = ({ darkPallete }) => {
         <Input.Password
           style={styleInput}
           allowClear
-          prefix={<Icons.LockOutlined />}
+          prefix={<FeatherIcons icon='lock' size={15} />}
           iconRender={(visible) =>
-            visible ? <Icons.EyeTwoTone /> : <Icons.EyeInvisibleOutlined />
+            visible ? (
+              <FeatherIcons icon='eye' size={15} />
+            ) : (
+              <FeatherIcons icon='eyeoff' size={15} />
+            )
           }
           placeholder='Confirmar senha'
         />

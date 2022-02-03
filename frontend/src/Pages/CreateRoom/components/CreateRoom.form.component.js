@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Form,
-  Icons,
+  FeatherIcons,
+  Row,
   Input,
   Button,
   Upload,
@@ -24,6 +25,7 @@ const SigninForm = ({ darkPallete }) => {
   const [form] = Form.useForm();
   let navigate = useNavigate();
   const [categories, setCategories] = useState();
+  const [newCategory, setNewCategory] = useState(false);
 
   const styleInput = {
     borderRadius: "8px",
@@ -37,7 +39,6 @@ const SigninForm = ({ darkPallete }) => {
     const extension = nameSplit[nameSplit.length - 1];
 
     if (!isValidExtension(extension)) {
-      console.log(extension);
       Notification.open({
         type: "error",
         message: "Formato de Arquivo Inválido",
@@ -58,7 +59,7 @@ const SigninForm = ({ darkPallete }) => {
 
   function onSubmit(values) {
     const owner = Cookie.get("ID");
-    let { logo, title, description, category } = values;
+    let { logo, title, description, category, newCategory } = values;
 
     const { file } = logo;
 
@@ -72,7 +73,7 @@ const SigninForm = ({ darkPallete }) => {
       lastModified,
       title,
       description,
-      category,
+      categoryId: category === "Outras" ? newCategory : category,
       owner,
     };
 
@@ -110,6 +111,10 @@ const SigninForm = ({ darkPallete }) => {
     });
   }, []);
 
+  function handleOtherCategories(value) {
+    setNewCategory(value === "Outras");
+  }
+
   return (
     <Form layout='vertical' onFinish={onSubmit} form={form}>
       <FormItem
@@ -120,7 +125,7 @@ const SigninForm = ({ darkPallete }) => {
         <Input
           style={styleInput}
           allowClear
-          prefix={<Icons.BankOutlined />}
+          prefix={<FeatherIcons icon='type' size={15} />}
           placeholder='Título'
         />
       </FormItem>
@@ -133,7 +138,7 @@ const SigninForm = ({ darkPallete }) => {
         <Input
           style={styleInput}
           allowClear
-          prefix={<Icons.EditOutlined />}
+          prefix={<FeatherIcons icon='edit' size={15} />}
           placeholder='Ex.: Sala destinada à assuntos sobre saúde'
         />
       </FormItem>
@@ -146,19 +151,53 @@ const SigninForm = ({ darkPallete }) => {
         <Select
           allowClear
           getPopupContainer={(trigger) => trigger.parentNode}
-          optionFilterProp='children'
-          showSearch
           placeholder='Ex.: Alimentos'
-          // onChange={handleChangeCategory}
+          onChange={handleOtherCategories}
         >
           {categories &&
-            categories.map(({ Title, CategorieKey, Icon }) => (
-              <Select.Option key={CategorieKey} value={CategorieKey}>
-                {Title}
-              </Select.Option>
-            ))}
+            categories
+              .sort((a, b) =>
+                a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
+              )
+              .map(({ Title, _id, Icon }) =>
+                Title === "Outras" ? (
+                  <Select.Option key={_id} value={_id}>
+                    <Row align='middle' justify='start'>
+                      <FeatherIcons icon={Icon} size={15} />
+                      <span style={{ margin: "2px 0 0 5px" }}>
+                        {Title}
+                        <i style={{ color: "gray" }}>
+                          - Ao selecionar, poderá criar uma nova categoria
+                        </i>
+                      </span>
+                    </Row>
+                  </Select.Option>
+                ) : (
+                  <Select.Option key={_id} value={_id}>
+                    <Row align='middle' justify='start'>
+                      <FeatherIcons icon={Icon} size={15} />
+                      <span style={{ margin: "2px 0 0 5px" }}>{Title}</span>
+                    </Row>
+                  </Select.Option>
+                )
+              )}
         </Select>
       </FormItem>
+
+      {newCategory && (
+        <FormItem
+          label='Nova Categoria'
+          name='newCategory'
+          rules={[{ required: true, message: "Campo obrigatório." }]}
+        >
+          <Input
+            style={styleInput}
+            allowClear
+            prefix={<FeatherIcons icon='tag' size={15} />}
+            placeholder='Ex.: Construções'
+          />
+        </FormItem>
+      )}
 
       <FormItem
         label='Logo'
@@ -171,8 +210,10 @@ const SigninForm = ({ darkPallete }) => {
           multiple={false}
           maxCount={1}
         >
-          <Tooltip title='Enviar logo da sala'>
-            <Button icon={<Icons.UploadOutlined />}>Enviar imagem</Button>
+          <Tooltip title='Enviar logo da sala' color={darkPallete.lightblue}>
+            <Button icon={<FeatherIcons icon='upload' size={15} />}>
+              <span style={{ marginLeft: "5px" }}>Enviar imagem</span>
+            </Button>
           </Tooltip>
         </Upload>
       </FormItem>
@@ -182,7 +223,7 @@ const SigninForm = ({ darkPallete }) => {
           width: "100%",
           height: "45px",
           borderRadius: "8px",
-          marginTop: "5px",
+          marginTop: "20px",
           background: darkPallete.lightblue,
         }}
         type='primary'

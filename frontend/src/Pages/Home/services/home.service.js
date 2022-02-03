@@ -7,3 +7,11 @@ export async function getCurrentUser(id) {
 export async function getRooms() {
   return api.get("/getRooms");
 }
+
+export async function getRoomsByCategory(categoryId) {
+  return api.get("/getRoomsByCategory", {
+    headers: {
+      categoryId,
+    },
+  });
+}
