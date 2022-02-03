@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { TIPO_CATEGORIA } from "../../../Helpers/TipoCategoria";
 import {
   Form,
   FeatherIcons,
@@ -73,7 +74,8 @@ const SigninForm = ({ darkPallete }) => {
       lastModified,
       title,
       description,
-      categoryId: category === "Outras" ? newCategory : category,
+      categoryId: category,
+      newCategory: newCategory || null,
       owner,
     };
 
@@ -112,7 +114,7 @@ const SigninForm = ({ darkPallete }) => {
   }, []);
 
   function handleOtherCategories(value) {
-    setNewCategory(value === "Outras");
+    setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
   }
 
   return (
@@ -159,28 +161,25 @@ const SigninForm = ({ darkPallete }) => {
               .sort((a, b) =>
                 a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
               )
-              .map(({ Title, _id, Icon }) =>
-                Title === "Outras" ? (
-                  <Select.Option key={_id} value={_id}>
-                    <Row align='middle' justify='start'>
-                      <FeatherIcons icon={Icon} size={15} />
-                      <span style={{ margin: "2px 0 0 5px" }}>
-                        {Title}
-                        <i style={{ color: "gray" }}>
-                          - Ao selecionar, poderá criar uma nova categoria
-                        </i>
-                      </span>
-                    </Row>
-                  </Select.Option>
-                ) : (
-                  <Select.Option key={_id} value={_id}>
-                    <Row align='middle' justify='start'>
-                      <FeatherIcons icon={Icon} size={15} />
-                      <span style={{ margin: "2px 0 0 5px" }}>{Title}</span>
-                    </Row>
-                  </Select.Option>
-                )
-              )}
+              .map(({ Title, _id, Icon }) => (
+                <Select.Option key={_id} value={_id}>
+                  <Row align='middle' justify='start'>
+                    <FeatherIcons icon={Icon} size={15} />
+                    <span style={{ margin: "2px 0 0 5px" }}>{Title}</span>
+                  </Row>
+                </Select.Option>
+              ))}
+          <Select.Option key={11} value={11}>
+            <Row align='middle' justify='start'>
+              <FeatherIcons icon='repeat' size={15} />
+              <span style={{ margin: "2px 0 0 5px" }}>
+                Outras
+                <i style={{ color: "gray" }}>
+                  - Ao selecionar, poderá criar uma nova categoria
+                </i>
+              </span>
+            </Row>
+          </Select.Option>
         </Select>
       </FormItem>
 

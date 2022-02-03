@@ -17,6 +17,10 @@ const RoomModel = new Schema({
     type: String,
     required: true,
   },
+  newCategory: {
+    type: String,
+    required: false,
+  },
   thumb: {
     type: Object,
     required: true,

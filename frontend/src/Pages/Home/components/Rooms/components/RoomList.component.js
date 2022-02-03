@@ -1,14 +1,7 @@
 import React from "react";
-import {
-  RoomItem,
-  RoomTitle,
-  RoomDescription,
-  UserCount,
-  RoomCategory,
-} from ".././styles";
+import { RoomItem, RoomTitle, RoomDescription, UserCount } from ".././styles";
 import {
   Row,
-  Button,
   Image,
   FeatherIcons,
   Col,
@@ -24,8 +17,8 @@ const Rooms = ({ rooms, pallete }) => {
   return (
     <Row>
       {rooms &&
-        rooms.map(({ title, description, thumb, categoryId, owner }) => (
-          <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6}>
+        rooms.map(({ title, description, thumb, categoryId, owner, _id }) => (
+          <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6} key={_id}>
             <RoomItem
               margintop={window.innerWidth < 1024 ? "15px" : "20px"}
               background={darkPallete.lightblueOpacity}

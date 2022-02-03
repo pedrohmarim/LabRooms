@@ -83,13 +83,12 @@ const Rooms = ({ pallete, searchValue, user }) => {
             placeholder='Filtrar...'
             size='middle'
           >
-            {/* <Select.Option key='todas' value='todas'>
+            <Select.Option key={10} value={10}>
               <Row align='middle' justify='start'>
                 <FeatherIcons icon='list' size={15} />
                 <span style={{ margin: "2px 0 0 5px" }}>Todas</span>
               </Row>
-            </Select.Option> */}
-
+            </Select.Option>
             {categories &&
               categories
                 .sort((a, b) =>
@@ -103,12 +102,12 @@ const Rooms = ({ pallete, searchValue, user }) => {
                     </Row>
                   </Select.Option>
                 ))}
-            {/* <Select.Option key='todas' value='todas'>
+            <Select.Option key={11} value={11}>
               <Row align='middle' justify='start'>
                 <FeatherIcons icon='repeat' size={15} />
                 <span style={{ margin: "2px 0 0 5px" }}>Outras</span>
               </Row>
-            </Select.Option> */}
+            </Select.Option>
           </Select>
         </Tooltip>
       </Row>

@@ -7,6 +7,7 @@ module.exports = {
       title,
       description,
       categoryId,
+      newCategory,
       owner,
       uid,
       name,
@@ -19,6 +20,7 @@ module.exports = {
       title,
       description,
       categoryId,
+      newCategory,
       owner,
       thumb: {
         uid,
@@ -52,7 +54,22 @@ module.exports = {
 
   async handleGetRoomsByCategory(request, response) {
     const { categoryid } = request.headers;
-    const result = await RoomModel.find({ categoryId: categoryid });
-    return response.json(result);
+
+    let result = null;
+
+    switch (categoryid) {
+      case "10":
+        result = await RoomModel.find();
+        if (result) return response.json(result); // Filtra todas as salas ao selecionar Categoria = "Todas"
+        break;
+      case "11":
+        result = await RoomModel.find({ categoryId: 11 }); // Filtra todas as salas que possuem Categoria = "Outros"
+        if (result) return response.json(result);
+        break;
+      default:
+        result = await RoomModel.find({ categoryId: categoryid }); // Filtra salas por Categoria
+        if (result) return response.json(result);
+        break;
+    }
   },
 };

@@ -1,0 +1,4 @@
+export const TIPO_CATEGORIA = {
+  CATEGORIA_TODAS: 10,
+  CATEGORIA_OUTRAS: 11,
+};
