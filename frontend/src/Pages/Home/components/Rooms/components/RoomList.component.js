@@ -23,9 +23,8 @@ const Rooms = ({ rooms, pallete }) => {
               margintop={window.innerWidth < 1024 ? "15px" : "20px"}
               background={darkPallete.lightblueOpacity}
             >
-              <Col>
-                <Image src={loadRoomThumb(thumb)} height={60} width={60} />
-              </Col>
+              <Image src={loadRoomThumb(thumb)} height={60} width={60} />
+
               <Col>
                 <RoomTitle color={darkPallete.white}>{title}</RoomTitle>
 

@@ -8,7 +8,8 @@ export const Container = styled.div`
 `;
 
 export const RoomItem = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 85%;
   justify-content: start;
   align-items: center;
   padding: 10px;
@@ -26,25 +27,23 @@ export const RoomItem = styled.div`
 `;
 
 export const RoomTitle = styled.p`
-  padding: 0 70px 0 0;
   overflow: hidden;
+  padding: 0 10px 0 10px;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 100%;
   color: ${({ color }) => color};
   font-weight: bold;
-  margin: 0 0 0 10px;
+  margin: 0 0 0 0;
   font-size: 15pt;
 `;
 
 export const RoomDescription = styled.p`
-  padding: 0 115px 0 0;
+  padding: 0 60px 0 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  width: 100%;
   color: ${({ color }) => color};
-  margin: 0 0 0 10px;
+  margin: 0 0 0 0;
   font-size: 10pt;
   font-weight: 500;
 `;
