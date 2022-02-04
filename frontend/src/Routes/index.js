@@ -9,7 +9,6 @@ import { SpinTip } from "./SpinTip.styled";
 import { darkPallete } from "../styles/pallete";
 import { GlobalStyles } from "../styles/globalStyles";
 import routes from "./routes";
-
 const { white } = darkPallete;
 
 const Routes = () => (

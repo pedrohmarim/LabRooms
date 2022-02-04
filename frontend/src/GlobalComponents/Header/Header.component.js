@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Image, Button, FeatherIcons } from "../../antd_components";
 import Logo from "../../assets/logo1.png";
 import { darkPallete } from "../../styles/pallete";
@@ -7,10 +7,20 @@ import { Link } from "react-router-dom";
 
 const Header = () => {
   const [ExpandLogin, setExpandLogin] = useState();
+  const [solidHeader, setSolidHeader] = useState(false);
   const { lightblue, white } = darkPallete;
 
+  useEffect(() => {
+    const scrollListener = () => {
+      if (window.scrollY > 10) setSolidHeader(true);
+      else setSolidHeader(false);
+    };
+
+    window.addEventListener("scroll", scrollListener);
+  }, []);
+
   return (
-    <HeaderContainer>
+    <HeaderContainer solidHeader={solidHeader}>
       <Row align='middle' justify='space-between' style={{ padding: "0 15px" }}>
         <Link to='/'>
           <Image src={Logo} alt='Logo' height={100} preview={false} />

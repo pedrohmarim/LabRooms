@@ -10,6 +10,8 @@ import { Container } from "./Home.styled";
 import HomeArrow from "./components/HomeArrow/HomeArrow.component";
 import Rooms from "./components/Rooms/Rooms.component";
 import { darkPallete } from "../../styles/pallete";
+import Aside from "../../GlobalComponents/Aside/Aside.component";
+import { Row, Col } from "../../antd_components";
 
 export default function Home() {
   const { user, setUser } = useContext(UserContext);
@@ -55,6 +57,53 @@ export default function Home() {
       </Container>
 
       <Rooms pallete={darkPallete} searchValue={searchValue} user={user} />
+
+      {/* {user ? (
+        <Row>
+          <Col span={1}>
+            <Aside />
+          </Col>
+          <Col span={23} style={{ marginLeft: "-20px" }}>
+            <Container>
+              <LandingPageInfofrom
+                pallete={darkPallete}
+                intoRooms={handleScrollToRooms}
+              />
+              <video loop autoPlay muted id='video-container'>
+                <source
+                  src={window.innerWidth > 1024 ? Background : BackgroundMobile}
+                  type='video/mp4'
+                />
+              </video>
+              <HomeArrow />
+            </Container>
+
+            <Rooms
+              pallete={darkPallete}
+              searchValue={searchValue}
+              user={user}
+            />
+          </Col>
+        </Row>
+      ) : (
+        <>
+          <Container>
+            <LandingPageInfofrom
+              pallete={darkPallete}
+              intoRooms={handleScrollToRooms}
+            />
+            <video loop autoPlay muted id='video-container'>
+              <source
+                src={window.innerWidth > 1024 ? Background : BackgroundMobile}
+                type='video/mp4'
+              />
+            </video>
+            <HomeArrow />
+          </Container>
+
+          <Rooms pallete={darkPallete} searchValue={searchValue} user={user} />
+        </>
+      )} */}
     </>
   );
 }
