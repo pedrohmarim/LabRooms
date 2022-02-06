@@ -46,4 +46,8 @@ export const GlobalStyles = createGlobalStyle`
     background: #fff;
     border-radius: 5px;
   }
+
+  .expandText {
+    white-space: initial !important;
+  }
 `;

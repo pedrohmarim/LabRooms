@@ -1,19 +1,21 @@
 const express = require("express");
 const router = express.Router();
 
-const UserRegisterController = require("../controllers/UserController");
-const RoomRegisterController = require("../controllers/RoomController");
+const UserController = require("../controllers/UserController");
+const RoomController = require("../controllers/RoomController");
+const CategoryController = require("../controllers/CategoryController");
 
-router.post("/userRegister", UserRegisterController.handleRegister);
-router.get("/userLogin", UserRegisterController.handleLogin);
-router.get("/currentUser/:id", UserRegisterController.handleGetCurrentUser);
+router.post("/userRegister", UserController.handleRegister);
+router.get("/userLogin", UserController.handleLogin);
+router.get("/currentUser/:id", UserController.handleGetCurrentUser);
+router.get("/getUserById", UserController.handleGetUserById);
 
-router.get("/categories", RoomRegisterController.handleGetCategory);
-router.post("/createRoom", RoomRegisterController.handleCreate);
-router.get("/getRooms", RoomRegisterController.handleGetRooms);
-router.get(
-  "/getRoomsByCategory",
-  RoomRegisterController.handleGetRoomsByCategory
-);
+router.get("/categories", CategoryController.handleGetCategory);
+router.get("/getCategoryById", CategoryController.handleGetCategoryById);
+
+router.post("/createRoom", RoomController.handleCreate);
+router.get("/getRooms", RoomController.handleGetRooms);
+router.get("/getRoomsByCategory", RoomController.handleGetRoomsByCategory);
+router.get("/getRoomById", RoomController.handleGetRoomsById);
 
 module.exports = router;

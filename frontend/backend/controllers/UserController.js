@@ -5,7 +5,7 @@ module.exports = {
   async handleRegister(request, response) {
     const { cpf, email, password, username } = request.body;
 
-    UserModel.find({ cpf: cpf }).then(async (res) => {
+    UserModel.find({ cpf }).then(async (res) => {
       if (res.length === 0) {
         let hashedPass = await bcrypt.hash(password, 10);
 
@@ -60,6 +60,7 @@ module.exports = {
       return response.json({ _id: null });
     }
   },
+
   async handleGetCurrentUser(request, response) {
     var user = await UserModel.findOne({
       _id: request.params.id,
@@ -72,6 +73,20 @@ module.exports = {
         email: user.email,
         cpf: user.cpf,
         createdAt: user.createdAt.toLocaleString("pt-BR"),
+      });
+    } else {
+      return response.json(null);
+    }
+  },
+
+  async handleGetUserById(request, response) {
+    const { _id } = request.headers;
+
+    const user = await UserModel.findOne({ _id });
+
+    if (user) {
+      return response.json({
+        username: user.username,
       });
     } else {
       return response.json(null);

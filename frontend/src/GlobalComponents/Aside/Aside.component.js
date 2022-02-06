@@ -1,42 +1,38 @@
-import React, { useState } from "react";
-import { Layout, FeatherIcons } from "../../antd_components";
-import { darkPallete } from "../../styles/pallete";
-import { Menu, SiderStyled } from "./styles";
+import React from "react";
+import { Layout, Tooltip } from "../../antd_components";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { Menu, SiderStyled, MenuItem } from "./styles";
+import LogoIcon from "../../assets/logoIcon.png";
+import { Link } from "react-router-dom";
 
-const Aside = () => {
-  const [collapsed, setCollapsed] = useState(true);
-  const { SubMenu } = Menu;
+const Aside = ({ darkPallete }) => {
+  const IconStyle = {
+    fontSize: "18pt",
+    marginTop: "8px",
+  };
 
   return (
     <Layout hasSider>
-      <SiderStyled
-        collapsed={collapsed}
-        onMouseLeave={() => setCollapsed(true)}
-        onMouseEnter={() => setCollapsed(false)}
-      >
-        <Menu
-          // defaultSelectedKeys={["1"]}
-          mode='inline'
-          color={darkPallete.white}
-        >
-          <Menu.Item key='1' icon={<FeatherIcons icon='user' />}>
-            Option 1
-          </Menu.Item>
-          <Menu.Item key='2' icon={<FeatherIcons icon='user' />}>
-            Option 2
-          </Menu.Item>
-          <SubMenu key='sub1' icon={<FeatherIcons icon='user' />} title='User'>
-            <Menu.Item key='3'>Tom</Menu.Item>
-            <Menu.Item key='4'>Bill</Menu.Item>
-            <Menu.Item key='5'>Alex</Menu.Item>
-          </SubMenu>
-          <SubMenu key='sub2' icon={<FeatherIcons icon='user' />} title='Team'>
-            <Menu.Item key='6'>Team 1</Menu.Item>
-            <Menu.Item key='8'>Team 2</Menu.Item>
-          </SubMenu>
-          <Menu.Item key='9' icon={<FeatherIcons icon='user' />}>
-            Files
-          </Menu.Item>
+      <SiderStyled collapsed>
+        <Menu defaultSelectedKeys={["1"]} color={darkPallete.white}>
+          <Link to='/'>
+            <img
+              src={LogoIcon}
+              height={90}
+              alt='Logo'
+              style={{ zIndex: 999, position: "absolute", top: 0, left: 0 }}
+            />
+          </Link>
+          <Tooltip title='Home' placement='right' color={darkPallete.lightblue}>
+            <MenuItem eventKey='1' icon={<HomeOutlined style={IconStyle} />} />
+          </Tooltip>
+          <Tooltip
+            title='Meu perfil'
+            placement='right'
+            color={darkPallete.lightblue}
+          >
+            <MenuItem eventKey='2' icon={<UserOutlined style={IconStyle} />} />
+          </Tooltip>
         </Menu>
       </SiderStyled>
     </Layout>

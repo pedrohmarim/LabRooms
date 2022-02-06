@@ -137,7 +137,7 @@ const SignUpForm = ({ darkPallete }) => {
             visible ? (
               <FeatherIcons icon='eye' size={15} />
             ) : (
-              <FeatherIcons icon='eyeoff' size={15} />
+              <FeatherIcons icon='eye-off' size={15} />
             )
           }
           placeholder='Senha'
@@ -172,7 +172,7 @@ const SignUpForm = ({ darkPallete }) => {
             visible ? (
               <FeatherIcons icon='eye' size={15} />
             ) : (
-              <FeatherIcons icon='eyeoff' size={15} />
+              <FeatherIcons icon='eye-off' size={15} />
             )
           }
           placeholder='Confirmar senha'

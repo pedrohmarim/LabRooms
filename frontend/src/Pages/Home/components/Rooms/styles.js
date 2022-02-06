@@ -33,7 +33,7 @@ export const RoomTitle = styled.p`
   text-overflow: ellipsis;
   color: ${({ color }) => color};
   font-weight: bold;
-  margin: 0 0 0 0;
+  margin: 0;
   font-size: 15pt;
 `;
 
@@ -43,7 +43,7 @@ export const RoomDescription = styled.p`
   white-space: nowrap;
   text-overflow: ellipsis;
   color: ${({ color }) => color};
-  margin: 0 0 0 0;
+  margin: 0;
   font-size: 10pt;
   font-weight: 500;
 `;
