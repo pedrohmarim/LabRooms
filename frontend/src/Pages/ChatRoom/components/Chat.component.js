@@ -8,6 +8,7 @@ import {
   SiderStyled,
   UsernameContainer,
   ExpandButton,
+  TitleStyled,
 } from "./styles";
 import {
   Image,
@@ -353,9 +354,9 @@ export default function Chat({ darkPallete, currentRoom }) {
       >
         {users && ownerRoomName ? (
           <>
-            <Title level={4} style={{ color: darkPallete.white }}>
+            <TitleStyled level={4} color={darkPallete.white}>
               Disponíveis - 9
-            </Title>
+            </TitleStyled>
             <Row gutter={[16, 16]}>
               <Col span={24}>
                 <Image
@@ -365,7 +366,7 @@ export default function Chat({ darkPallete, currentRoom }) {
                 />
                 <UsernameContainer>
                   {ownerRoomName}
-                  <CrownOutlined style={{ fontSize: "20px" }} />
+                  <CrownOutlined style={{ fontSize: "20px", marginLeft: '5px', color: 'yellow' }} />
                 </UsernameContainer>
               </Col>
               {users &&

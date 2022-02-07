@@ -1,10 +1,21 @@
 import styled from "styled-components";
+import { Typography } from "antd";
+
+const { Title } = Typography;
+
 
 export const Container = styled.div`
   border-radius: 4px;
   width: 97%;
   margin: 0 auto;
   padding: 15px;
+`;
+
+export const TitleStyled = styled(Title)`
+  margin-top: ${({ margintop }) => margintop} !important;
+  color: ${({ color }) => color} !important;
+  display: flex;
+  align-items: center;
 `;
 
 export const RoomItem = styled.div`

@@ -1,29 +1,46 @@
 import React from "react";
-import { RoomItem, RoomTitle, RoomDescription, UserCount } from "../styles";
+import { RoomItem, RoomTitle, RoomDescription, UserCount, TitleStyled } from "../styles";
 import {
   Row,
   Image,
   FeatherIcons,
   Col,
-  Typography,
 } from "../../../../../antd_components";
 import { darkPallete } from "../../../../../styles/pallete";
 import { Link } from "react-router-dom";
 
 const Rooms = ({ rooms, pallete }) => {
-  const { Title } = Typography;
 
   function loadRoomThumb(thumb) {}
 
   return (
     <Row>
+      {rooms && rooms.length === 0 ? (
+        <TitleStyled
+          level={3}
+          color={pallete.white}
+          margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+        >
+          Nenhuma sala encontrada
+        </TitleStyled>
+      ) : (
+        <Col span={24}>
+          <TitleStyled
+            level={3}
+            color={pallete.white}
+            margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+          >
+            <FeatherIcons icon='check-circle' size={28} /> 
+            <span style={{marginLeft: '5px'}}>Salas disponíveis</span>
+          </TitleStyled>
+        </Col>
+      )}
       {rooms &&
         rooms.map(({ title, description, thumb, categoryId, owner, _id }) => (
           <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6} key={_id}>
             <Link to={`chatroom/${_id}`}>
               <RoomItem
                 background={darkPallete.lightblueOpacity}
-                margintop={window.innerWidth < 1024 ? "15px" : "20px"}
               >
                 <Image
                   src={loadRoomThumb(thumb)}
@@ -49,17 +66,7 @@ const Rooms = ({ rooms, pallete }) => {
           </Col>
         ))}
 
-      {rooms && rooms.length === 0 && (
-        <Title
-          level={3}
-          style={{
-            color: pallete.white,
-            marginTop: window.innerWidth < 1024 ? "15px" : "20px",
-          }}
-        >
-          Nenhuma sala encontrada
-        </Title>
-      )}
+     
     </Row>
   );
 };
