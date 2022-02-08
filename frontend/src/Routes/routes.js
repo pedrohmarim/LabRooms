@@ -17,7 +17,6 @@ const routes = [
   {
     path: "/createroom",
     name: "Criar Sala",
-    isPrivate: true,
     Component: <CreateRoomComponent />,
   },
   { path: "/signup", name: "Registro", Component: <SignupComponent /> },

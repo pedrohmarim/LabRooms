@@ -17,7 +17,7 @@ export default function NotFound() {
 
   return (
     <>
-      <Header />
+      <Header fromNotFound />
       <S.NotFoundContainer
         color={white}
         backgroundcolor='#000'

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { RoomTitle, RoomDescription } from "../../Home/components/Rooms/styles";
 import * as ChatRoomService from "../services/ChatRoom.service";
 import { CrownOutlined } from "@ant-design/icons";
-import { LoadingOutlined } from "@ant-design/icons";
 import {
   RoomInfoContainer,
   InfoWrapper,
@@ -23,6 +22,7 @@ import {
   Tooltip,
   Col,
 } from "../../../antd_components";
+import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
 
 export default function Chat({ darkPallete, currentRoom }) {
   const [toggle, setToggle] = useState(false);
@@ -280,15 +280,6 @@ export default function Chat({ darkPallete, currentRoom }) {
       }
     }
   }
-
-  const Loading = (
-    <>
-      <LoadingOutlined
-        style={{ marginRight: "5px", color: darkPallete.white }}
-      />
-      <span style={{ color: darkPallete.white }}>Carregando...</span>
-    </>
-  );
 
   return (
     <Layout>

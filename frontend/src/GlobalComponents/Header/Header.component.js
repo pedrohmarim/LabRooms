@@ -1,15 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Row, Col, Image, Button, FeatherIcons } from "../../antd_components";
 import Logo from "../../assets/logo1.png";
-// import LogoIcon from "../../assets/teste123.png";
 import { darkPallete } from "../../styles/pallete";
+import { UserContext } from "../../Context/UserContext";
 import { HeaderContainer } from "./Header.styled";
 import { Link } from "react-router-dom";
+import Cookie from "js-cookie";
 
-const Header = () => {
+const Header = ({ fromNotFound }) => {
   const [ExpandLogin, setExpandLogin] = useState();
   const [solidHeader, setSolidHeader] = useState(false);
   const { lightblue, white } = darkPallete;
+
+  const { user } = useContext(UserContext);
 
   useEffect(() => {
     const scrollListener = () => {
@@ -32,8 +35,8 @@ const Header = () => {
           />
         </Link>
 
-        {window.location.pathname === "/" && (
-          <Col>
+        <Col>
+          {!fromNotFound && !user ? (
             <Link to='/signin'>
               <Button
                 icon={<FeatherIcons icon='log-in' size={18} />}
@@ -48,8 +51,26 @@ const Header = () => {
                 )}
               </Button>
             </Link>
-          </Col>
-        )}
+          ) : (
+            !fromNotFound &&
+            user && (
+              <Button
+                onClick={() => {
+                  window.location.reload();
+                  Cookie.remove("token");
+                }}
+                icon={<FeatherIcons icon='log-out' size={18} />}
+                color={white}
+                backgroundcolor={lightblue}
+                style={{ marginRight: "10px" }}
+                onMouseEnter={() => setExpandLogin(true)}
+                onMouseLeave={() => setExpandLogin(false)}
+              >
+                {ExpandLogin && <span style={{ marginLeft: "5px" }}>Sair</span>}
+              </Button>
+            )
+          )}
+        </Col>
       </Row>
     </HeaderContainer>
   );

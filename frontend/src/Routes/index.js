@@ -1,5 +1,4 @@
-import React, { Suspense, useContext } from "react";
-import { UserContext } from "../Context/UserContext";
+import React, { Suspense } from "react";
 import {
   Route,
   BrowserRouter as Router,
@@ -12,9 +11,7 @@ import { GlobalStyles } from "../styles/globalStyles";
 import routes from "./routes";
 const { white } = darkPallete;
 
-const Routes = () => {
-  const { token } = useContext(UserContext);
-
+export default function Routes() {
   return (
     <Router>
       <Suspense
@@ -27,20 +24,12 @@ const Routes = () => {
         }
       >
         <Switch>
-          {routes.map(({ path, Component, isPrivate }, key) => {
-            if(isPrivate && !token) {
-              return <Route path="/" />
-            }
-  
-            return (
-              <Route path={path} key={key} element={Component} />
-            )
+          {routes.map(({ path, Component }, key) => {
+            return <Route path={path} key={key} element={Component} />;
           })}
         </Switch>
       </Suspense>
       <GlobalStyles />
     </Router>
-  )
-};
-
-export default Routes;
+  );
+}

@@ -1,7 +1,5 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
-import Cookie from "js-cookie";
-import * as HomeService from "./services/home.service";
 import Header from "../../GlobalComponents/Header/Header.component";
 import Background from "../../assets/videoback.mp4";
 import BackgroundMobile from "../../assets/backgroundMobile.mp4";
@@ -12,19 +10,7 @@ import Rooms from "./components/Rooms/Rooms.component";
 import { darkPallete } from "../../styles/pallete";
 
 export default function Home() {
-  const { user, setUser } = useContext(UserContext);
-
-  useEffect(() => {
-    const token = Cookie.get("token");
-
-    if (token) {
-      HomeService.getCurrentUser(token).then((res) => {
-        const { data } = res;
-        setUser(data);
-      });
-    }
-  }, [setUser]);
-
+  const { user } = useContext(UserContext);
   const [searchValue, setSearchValue] = useState();
 
   function handleScrollToRooms(searchValue) {

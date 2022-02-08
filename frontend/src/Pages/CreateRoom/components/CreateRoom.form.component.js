@@ -59,8 +59,9 @@ const SigninForm = ({ darkPallete }) => {
   }
 
   function onSubmit(values) {
-    const owner = Cookie.get("ID");
     let { logo, title, description, category, newCategory } = values;
+
+    const token = Cookie.get("token");
 
     const { file } = logo;
 
@@ -76,10 +77,9 @@ const SigninForm = ({ darkPallete }) => {
       description,
       categoryId: category,
       newCategory: newCategory || null,
-      owner,
     };
 
-    CreateRoomService.createRoom(dto).then((res) => {
+    CreateRoomService.createRoom(dto, token).then((res) => {
       const { message, success } = res.data;
 
       if (success) {

@@ -2,12 +2,13 @@ const RoomModel = require("../models/RoomModel");
 
 module.exports = {
   async handleCreate(request, response) {
+    const { _id } = request.body.decoded;
+
     let {
       title,
       description,
       categoryId,
       newCategory,
-      owner,
       uid,
       name,
       size,
@@ -20,7 +21,7 @@ module.exports = {
       description,
       categoryId,
       newCategory,
-      owner,
+      owner: _id,
       thumb: {
         uid,
         name,

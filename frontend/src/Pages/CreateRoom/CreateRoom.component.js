@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import CreateRoomForm from "./components/CreateRoom.form.component";
 import Background from "../../assets/backStars.mp4";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../../assets/logo1.png";
 import { darkPallete } from "../../styles/pallete";
+import { UserContext } from "../../Context/UserContext";
+import Cookie from "js-cookie";
 import {
   SignFormContainer,
   CenterForm,
@@ -19,6 +21,13 @@ import {
 
 export default function CreateRoom() {
   const { Title } = Typography;
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = Cookie.get("token");
+    if (!user && !token) navigate("/notfound");
+  }, [navigate, user]);
 
   return (
     <>
