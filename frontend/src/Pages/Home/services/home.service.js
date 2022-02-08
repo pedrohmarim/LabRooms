@@ -1,7 +1,11 @@
 import api from "../../../services/api";
 
-export async function getCurrentUser(id) {
-  return api.get(`/currentUser/${id}`);
+export async function getCurrentUser(token) {
+  return api.get('/currentUser', {
+    headers:{
+      Authorization: token,
+    }
+  });
 }
 
 export async function getRooms() {

@@ -1,5 +1,6 @@
 const UserModel = require("../models/UserModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 module.exports = {
   async handleRegister(request, response) {
@@ -52,7 +53,15 @@ module.exports = {
 
       if (validPassword) {
         const { _id } = user;
-        return response.json({ _id, message: "Logado com sucesso!" });
+
+       const token = jwt.sign({
+          _id
+        }, process.env.JWT_KEY,
+        {
+          expiresIn: "1h"
+        });
+
+        return response.json({ token, message: "Logado com sucesso!" });
       } else {
         return response.json({ _id: null });
       }
@@ -62,14 +71,15 @@ module.exports = {
   },
 
   async handleGetCurrentUser(request, response) {
+    const { _id } =  request.body.decoded;
+
     var user = await UserModel.findOne({
-      _id: request.params.id,
+      _id,
     });
 
     if (user) {
       return response.json({
         username: user.username,
-        pass: user.hashedPass,
         email: user.email,
         cpf: user.cpf,
         createdAt: user.createdAt.toLocaleString("pt-BR"),

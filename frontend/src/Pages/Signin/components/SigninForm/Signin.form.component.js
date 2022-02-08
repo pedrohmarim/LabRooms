@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 import * as SignUpService from "../../services/signin.service";
 import { useNavigate } from "react-router-dom";
 import {
@@ -14,6 +15,7 @@ import Swal from "sweetalert2";
 import Cookie from "js-cookie";
 
 const SigninForm = ({ darkPallete }) => {
+  const { setToken } = useContext(UserContext);
   const [invalidInfo, setInvalidInfo] = useState(false);
 
   let navigate = useNavigate();
@@ -26,6 +28,7 @@ const SigninForm = ({ darkPallete }) => {
   };
 
   function onSubmit(values) {
+
     const { email, password } = values;
 
     const dto = {
@@ -34,10 +37,11 @@ const SigninForm = ({ darkPallete }) => {
     };
 
     SignUpService.loginUser(dto).then((res) => {
-      const { _id, message } = res.data;
+      const { token, message } = res.data;
 
-      if (_id) {
-        Cookie.set("ID", _id);
+      if (token) {
+        setToken(token);
+        Cookie.set("token", `Bearer ${token}`);
         setInvalidInfo(false);
 
         const Toast = Swal.mixin({

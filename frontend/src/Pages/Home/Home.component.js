@@ -15,10 +15,10 @@ export default function Home() {
   const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
-    const _id = Cookie.get("ID");
+    const token = Cookie.get("token");
 
-    if (_id) {
-      HomeService.getCurrentUser(_id).then((res) => {
+    if (token) {
+      HomeService.getCurrentUser(token).then((res) => {
         const { data } = res;
         setUser(data);
       });

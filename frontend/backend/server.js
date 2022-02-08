@@ -6,7 +6,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 mongoose.connect(
-  "mongodb+srv://trilp:luispedro@cluster0.qur6c.mongodb.net/LabRoomsDataBase"
+  `mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_PSW}@cluster0.qur6c.mongodb.net/LabRoomsDataBase`
 );
 
 app.use(express.json());
