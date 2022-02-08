@@ -3,7 +3,6 @@ import { Typography } from "antd";
 
 const { Title } = Typography;
 
-
 export const Container = styled.div`
   border-radius: 4px;
   width: 97%;
@@ -27,7 +26,7 @@ export const RoomItem = styled.div`
   transform: scale(0.95);
   background-color: ${({ background }) => background};
   height: 90px;
-  margin-top: ${({ margintop }) => margintop};
+  margin-top: 10px;
   border-radius: 8px;
   transition: all 0.2s ease;
 

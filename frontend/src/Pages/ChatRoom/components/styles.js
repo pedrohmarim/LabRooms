@@ -1,5 +1,9 @@
 import styled from "styled-components";
-import { Layout as LayoutStyled, Button, Typography } from "../../../antd_components";
+import {
+  Layout as LayoutStyled,
+  Button,
+  Typography,
+} from "../../../antd_components";
 
 const { Sider } = LayoutStyled;
 const { Title } = Typography;
@@ -74,4 +78,17 @@ export const UsernameContainer = styled.span`
   width: 135px;
   display: block;
   overflow: hidden;
+`;
+
+export const ChatContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
+
+export const ChatStyled = styled.div`
+  margin: 10px 15px 0 0;
+  text-align: right;
+  height: 100%;
+  background-color: lightblue;
 `;

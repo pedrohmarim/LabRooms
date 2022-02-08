@@ -1,16 +1,16 @@
 import React from "react";
-import { RoomItem, RoomTitle, RoomDescription, UserCount, TitleStyled } from "../styles";
 import {
-  Row,
-  Image,
-  FeatherIcons,
-  Col,
-} from "../../../../../antd_components";
+  RoomItem,
+  RoomTitle,
+  RoomDescription,
+  UserCount,
+  TitleStyled,
+} from "../styles";
+import { Row, Image, FeatherIcons, Col } from "../../../../../antd_components";
 import { darkPallete } from "../../../../../styles/pallete";
 import { Link } from "react-router-dom";
 
 const Rooms = ({ rooms, pallete }) => {
-
   function loadRoomThumb(thumb) {}
 
   return (
@@ -30,8 +30,8 @@ const Rooms = ({ rooms, pallete }) => {
             color={pallete.white}
             margintop={window.innerWidth < 1024 ? "15px" : "20px"}
           >
-            <FeatherIcons icon='check-circle' size={28} /> 
-            <span style={{marginLeft: '5px'}}>Salas disponíveis</span>
+            <FeatherIcons icon='check-circle' size={28} />
+            <span style={{ marginLeft: "5px" }}>Salas disponíveis</span>
           </TitleStyled>
         </Col>
       )}
@@ -39,9 +39,7 @@ const Rooms = ({ rooms, pallete }) => {
         rooms.map(({ title, description, thumb, categoryId, owner, _id }) => (
           <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6} key={_id}>
             <Link to={`chatroom/${_id}`}>
-              <RoomItem
-                background={darkPallete.lightblueOpacity}
-              >
+              <RoomItem background={darkPallete.lightblueOpacity}>
                 <Image
                   src={loadRoomThumb(thumb)}
                   height={60}
@@ -65,8 +63,6 @@ const Rooms = ({ rooms, pallete }) => {
             </Link>
           </Col>
         ))}
-
-     
     </Row>
   );
 };

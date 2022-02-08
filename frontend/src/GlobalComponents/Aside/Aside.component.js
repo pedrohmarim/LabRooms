@@ -3,9 +3,11 @@ import { Layout, Tooltip } from "../../antd_components";
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import { Menu, SiderStyled, MenuItem } from "./styles";
 import LogoIcon from "../../assets/logoIcon.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Aside = ({ darkPallete }) => {
+  const navigate = useNavigate();
+
   const IconStyle = {
     fontSize: "18pt",
     marginTop: "8px",
@@ -24,7 +26,11 @@ const Aside = ({ darkPallete }) => {
             />
           </Link>
           <Tooltip title='Home' placement='right' color={darkPallete.lightblue}>
-            <MenuItem eventKey='1' icon={<HomeOutlined style={IconStyle} />} />
+            <MenuItem
+              eventKey='1'
+              icon={<HomeOutlined style={IconStyle} />}
+              onClick={() => navigate("/")}
+            />
           </Tooltip>
           <Tooltip
             title='Meu perfil'
