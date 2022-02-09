@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { RoomTitle, RoomDescription } from "../../Home/components/Rooms/styles";
 import * as ChatRoomService from "../services/ChatRoom.service";
 import { CrownOutlined } from "@ant-design/icons";
+import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
 import {
   RoomInfoContainer,
   InfoWrapper,
@@ -18,21 +19,28 @@ import {
   HourMessage,
   MessageOwner,
   TextMessage,
+  InputMessage,
+  SendMessage,
 } from "./styles";
 import {
   Image,
   FeatherIcons,
   Row,
-  Tooltip,
   Col,
+  Tooltip,
+  Input,
 } from "../../../antd_components";
-import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
 
 export default function Chat({ darkPallete, currentRoom }) {
   const [toggle, setToggle] = useState(false);
   const [RoomCategoryData, setRoomCategoryData] = useState();
   const [ownerRoomName, setOwnerRoomName] = useState();
   const { Content } = Layout;
+
+  const styleInput = {
+    borderRadius: "4px",
+    marginLeft: "-10px",
+  };
 
   const users = [
     {
@@ -45,211 +53,52 @@ export default function Chat({ darkPallete, currentRoom }) {
       name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedroedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Ped Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pe Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro PedroPedroPedroPedroPedroPedroPedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedo Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "utlima",
     },
   ];
 
@@ -350,11 +199,28 @@ export default function Chat({ darkPallete, currentRoom }) {
                           Pedro Henrique Marim Cavelani
                         </MessageOwner>
                         <TextMessage>{name}</TextMessage>
-                        <HourMessage>12:22</HourMessage>
+                        <HourMessage justify='end' align='bottom'>
+                          12:22
+                        </HourMessage>
                       </Message>
                     </Col>
                   ))}
               </Row>
+              <InputMessage
+                gutter={[15, 15]}
+                justify='space-around'
+                align='bottom'
+                background={darkPallete.lightblue}
+              >
+                <Col span={23}>
+                  <Input placeholder='Mensagem' style={styleInput} />
+                </Col>
+                <Tooltip title='Enviar' color={darkPallete.lightblue}>
+                  <SendMessage span={1} background='lightgray'>
+                    <FeatherIcons icon='send' size={25} />
+                  </SendMessage>
+                </Tooltip>
+              </InputMessage>
             </ChatStyled>
           </ChatContainer>
         ) : (

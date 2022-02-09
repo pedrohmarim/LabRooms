@@ -4,6 +4,7 @@ import {
   Button,
   Typography,
   Row,
+  Col,
 } from "../../../antd_components";
 
 const { Sider } = LayoutStyled;
@@ -88,13 +89,14 @@ export const ChatContainer = styled.div`
 `;
 
 export const ChatStyled = styled.div`
+  position: relative;
   display: flex;
+  flex-direction: column;
   overflow-y: scroll;
   overflow-x: hidden;
   height: 100%;
-  justify-content: center;
-  padding: 15px;
   margin: 10px 15px 0 0;
+  padding-top: 15px;
   text-align: center;
   background-color: ${({ background }) => background};
 
@@ -113,16 +115,14 @@ export const Message = styled.div`
   border-radius: 8px;
   background-color: lightblue;
   width: fit-content;
-  max-width: 420px;
-  padding: 8px;
+  height: fit-content;
+  max-width: 45%;
+  padding: 0.2vw 0.5vw;
+  margin: 0 15px;
 `;
 
-export const HourMessage = styled.p`
-  font-size: 8pt;
-  height: 11px;
-  text-align: right;
-  margin: 0;
-  padding: 0;
+export const HourMessage = styled(Row)`
+  font-size: 0.7vw;
 `;
 
 export const MessageOwner = styled(Row)`
@@ -133,4 +133,31 @@ export const MessageOwner = styled(Row)`
 
 export const TextMessage = styled(Row)`
   font-size: 0.9vw;
+`;
+
+export const InputMessage = styled(Row)`
+  z-index: 999;
+  position: sticky;
+  bottom: 0;
+  margin-top: 11px;
+  height: auto;
+  width: 100% !important;
+  margin-left: 0px !important;
+  padding: 10px;
+  background-color: ${({ background }) => background};
+`;
+
+export const SendMessage = styled(Col)`
+  display: flex;
+  padding-top: 3px;
+  justify-content: center;
+  height: 100%;
+  background-color: ${({ background }) => background};
+  border-radius: 4px;
+  transition: all 0.2s;
+
+  &&:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
 `;
