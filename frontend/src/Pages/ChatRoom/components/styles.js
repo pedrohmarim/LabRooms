@@ -3,6 +3,7 @@ import {
   Layout as LayoutStyled,
   Button,
   Typography,
+  Row,
 } from "../../../antd_components";
 
 const { Sider } = LayoutStyled;
@@ -87,8 +88,49 @@ export const ChatContainer = styled.div`
 `;
 
 export const ChatStyled = styled.div`
-  margin: 10px 15px 0 0;
-  text-align: right;
+  display: flex;
+  overflow-y: scroll;
+  overflow-x: hidden;
   height: 100%;
+  justify-content: center;
+  padding: 15px;
+  margin: 10px 15px 0 0;
+  text-align: center;
+  background-color: ${({ background }) => background};
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+  }
+`;
+
+export const Message = styled.div`
+  text-align: left;
+  border-radius: 8px;
   background-color: lightblue;
+  width: fit-content;
+  max-width: 420px;
+  padding: 8px;
+`;
+
+export const HourMessage = styled.p`
+  font-size: 8pt;
+  height: 11px;
+  text-align: right;
+  margin: 0;
+  padding: 0;
+`;
+
+export const MessageOwner = styled(Row)`
+  font-size: 0.9vw;
+  font-weight: bold;
+  color: ;
+`;
+
+export const TextMessage = styled(Row)`
+  font-size: 0.9vw;
 `;

@@ -14,6 +14,10 @@ import {
   TitleStyled,
   ChatContainer,
   ChatStyled,
+  Message,
+  HourMessage,
+  MessageOwner,
+  TextMessage,
 } from "./styles";
 import {
   Image,
@@ -32,7 +36,25 @@ export default function Chat({ darkPallete, currentRoom }) {
 
   const users = [
     {
+      name: "o ",
+    },
+    {
+      name: "Pedro Pedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Peedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro Pedro ",
+    },
+    {
+      name: "Pedo Pedro Pedro ",
+    },
+    {
       name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+    },
+    {
+      name: "Pedroedro Pedro ",
+    },
+    {
+      name: "Ped Pedro Pedro ",
+    },
+    {
+      name: "Pe Pedro ",
     },
     {
       name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
@@ -50,25 +72,7 @@ export default function Chat({ darkPallete, currentRoom }) {
       name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
     },
     {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
-    },
-    {
-      name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
+      name: "Pedro Pedro Pedro Pedro Pedro PedroPedroPedroPedroPedroPedroPedro ",
     },
     {
       name: "Pedro Pedro Pedro Pedro Pedro Pedro ",
@@ -336,7 +340,22 @@ export default function Chat({ darkPallete, currentRoom }) {
               </InfoWrapper>
             </RoomInfoContainer>
 
-            <ChatStyled>fasfsafaf</ChatStyled>
+            <ChatStyled background={darkPallete.lightblueOpacity}>
+              <Row gutter={[16, 16]}>
+                {users &&
+                  users.map(({ name }) => (
+                    <Col span={24}>
+                      <Message>
+                        <MessageOwner>
+                          Pedro Henrique Marim Cavelani
+                        </MessageOwner>
+                        <TextMessage>{name}</TextMessage>
+                        <HourMessage>12:22</HourMessage>
+                      </Message>
+                    </Col>
+                  ))}
+              </Row>
+            </ChatStyled>
           </ChatContainer>
         ) : (
           Loading

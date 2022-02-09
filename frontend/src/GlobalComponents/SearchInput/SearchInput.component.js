@@ -30,7 +30,7 @@ const SearchInput = ({
             onPressEnter={onSearch}
             width={width}
             size='large'
-            placeholder='Procurar tema...'
+            placeholder='Procurar sala'
           />
         </FormItem>
       </Tooltip>
@@ -49,7 +49,7 @@ const SearchInput = ({
         onPressEnter={onSearch}
         width={width}
         size='large'
-        placeholder='Procurar tema...'
+        placeholder='Procurar sala'
       />
     </Tooltip>
   );

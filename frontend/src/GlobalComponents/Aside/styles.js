@@ -8,7 +8,7 @@ export const Menu = styled(MenuStyled)`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border: solid 1px rgba(255, 255, 255, 0.1);
+  border-right: solid 1px rgba(255, 255, 255, 0.1);
   background-color: #000;
   color: ${({ color }) => color};
 
