@@ -9,7 +9,7 @@ const SignupComponent = lazy(() => import("../Pages/Signup/Signup.component"));
 const SigninComponent = lazy(() => import("../Pages/Signin/Signin.component"));
 const ChatRoom = lazy(() => import("../Pages/ChatRoom/ChatRoom.component"));
 const NotFoundComponent = lazy(() =>
-  import("../Pages/NotFound/notfound.component")
+  import("../Pages/NotFound/Notfound.component")
 );
 
 const routes = [
