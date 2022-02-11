@@ -8,3 +8,13 @@ export const HeaderContainer = styled.div`
   width: 100%;
   transition: all 0.3s;
 `;
+
+export const HeaderMenu = styled.div`
+  cursor: pointer;
+  color: #fff;
+`;
+
+export const MenuLabelItem = styled.div`
+  margin-left: 5px;
+  margin-top: 3px;
+`;

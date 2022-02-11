@@ -13,6 +13,8 @@ export const UserProvider = ({ children }) => {
       HomeService.getCurrentUser(token).then(({ data }) => {
         setUser(data);
       });
+    } else {
+      setUser(null);
     }
   }, [token]);
 

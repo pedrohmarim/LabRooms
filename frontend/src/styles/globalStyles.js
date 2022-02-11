@@ -50,4 +50,8 @@ export const GlobalStyles = createGlobalStyle`
   .expandText {
     white-space: initial !important;
   }
+
+  .szh-menu{
+    left: -128px !important;
+  }
 `;
