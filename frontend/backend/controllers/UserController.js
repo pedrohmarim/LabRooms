@@ -1,4 +1,6 @@
 const UserModel = require("../models/UserModel");
+const RoomsModel = require("../models/RoomModel");
+const CategoriesModel = require("../models/CategoriesModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -54,12 +56,15 @@ module.exports = {
       if (validPassword) {
         const { _id } = user;
 
-       const token = jwt.sign({
-          _id
-        }, process.env.JWT_KEY,
-        {
-          expiresIn: "1h"
-        });
+        const token = jwt.sign(
+          {
+            _id,
+          },
+          process.env.JWT_KEY,
+          {
+            expiresIn: "1h",
+          }
+        );
 
         return response.json({ token, message: "Logado com sucesso!" });
       } else {
@@ -71,7 +76,7 @@ module.exports = {
   },
 
   async handleGetCurrentUser(request, response) {
-    const { _id } =  request.body.decoded;
+    const { _id } = request.body.decoded;
 
     var user = await UserModel.findOne({
       _id,
@@ -79,6 +84,7 @@ module.exports = {
 
     if (user) {
       return response.json({
+        _id: user._id,
         username: user.username,
         email: user.email,
         cpf: user.cpf,
@@ -101,5 +107,35 @@ module.exports = {
     } else {
       return response.json(null);
     }
+  },
+
+  async handleGetRoomsByOwnerId(request, response) {
+    const { owner } = request.headers;
+
+    const rooms = await RoomsModel.find({ owner: owner });
+
+    let roomWithIcon = [];
+
+    rooms.forEach((room) => {
+      const { categoryId, newCategory } = room;
+
+      if (categoryId) {
+        CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
+          roomWithIcon.push({ ...room._doc, Icon, CategorieTitle: Title });
+
+          if (rooms.length === roomWithIcon.length)
+            return response.json(roomWithIcon);
+        });
+      } else if (newCategory) {
+        roomWithIcon.push({
+          ...room._doc,
+          Icon: "repeat",
+          CategorieTitle: newCategory,
+        });
+
+        if (rooms.length === roomWithIcon.length)
+          return response.json(roomWithIcon);
+      }
+    });
   },
 };

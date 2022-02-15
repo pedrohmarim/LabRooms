@@ -54,4 +54,12 @@ export const GlobalStyles = createGlobalStyle`
   .szh-menu{
     left: -128px !important;
   }
+
+  .iconMargin {
+    margin-top: 6px;
+  }
+
+  .iconMarginRight {
+    margin-right: 4px;
+  }
 `;

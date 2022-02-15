@@ -1,10 +1,9 @@
 import React from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { darkPallete } from "../../styles/pallete";
 
-export const Loading = (
+export const Loading = (color) => (
   <>
-    <LoadingOutlined style={{ marginRight: "5px", color: darkPallete.white }} />
-    <span style={{ color: darkPallete.white }}>Carregando...</span>
+    <LoadingOutlined style={{ marginRight: "5px", color: color }} />
+    <span style={{ color: color }}>Carregando...</span>
   </>
 );

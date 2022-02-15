@@ -8,8 +8,11 @@ module.exports = {
 
   async handleGetCategoryById(request, response) {
     const { _id } = request.headers;
-    const result = await CategoriesModel.findOne({ _id });
-    const { Title, Icon } = result;
-    return response.json({ Title, Icon });
+
+    if (_id) {
+      const result = await CategoriesModel.findOne({ _id });
+      const { Title, Icon } = result;
+      return response.json({ Title, Icon });
+    }
   },
 };

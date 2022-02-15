@@ -8,22 +8,25 @@ const Breadcrumb = ({ crumbs = routes }) => {
     <S.Breadcrumb color='#000'>
       {crumbs?.length &&
         crumbs
-          .filter(({ path }) => window.location.pathname.includes(path))
-          .map((bc) =>
-            bc.path ? (
-              <S.Breadcrumb.Item key={bc.name}>
-                <Link
-                  to={{
-                    pathname: bc.path,
-                  }}
-                  style={{ color: "#000" }}
-                >
-                  {bc.name}
-                </Link>
-              </S.Breadcrumb.Item>
-            ) : (
-              <S.Breadcrumb.Item key={bc.name}>{bc.name}</S.Breadcrumb.Item>
-            )
+          .filter(({ path, breadcrumb }) =>
+            breadcrumb
+              ? window.location.pathname.includes(breadcrumb)
+              : window.location.pathname.includes(path)
+          )
+          .map(
+            (bc) =>
+              bc.path && (
+                <S.Breadcrumb.Item key={bc.name}>
+                  <Link
+                    to={{
+                      pathname: bc.path,
+                    }}
+                    style={{ color: "#000" }}
+                  >
+                    {bc.name}
+                  </Link>
+                </S.Breadcrumb.Item>
+              )
           )}
     </S.Breadcrumb>
   );

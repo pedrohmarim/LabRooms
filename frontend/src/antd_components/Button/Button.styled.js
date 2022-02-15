@@ -6,8 +6,8 @@ export const Button = styled(AntDesignButton)`
   background-color: ${({ backgroundcolor }) => backgroundcolor};
   border: none;
   outline: none;
-  width: ${({ width }) => width};
-  height: ${({ height }) => height};
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
   border-radius: 4px;
   font-weight: bold;
   font-size: 12pt;

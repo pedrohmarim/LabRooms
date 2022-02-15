@@ -23,9 +23,7 @@ export const Menu = styled(MenuStyled)`
   }
 
   .ant-menu-item-selected {
-    background-color: #000 !important;
-  }
-  .ant-menu-item-only-child {
+    background-color: rgba(255, 255, 255, 0.1) !important;
   }
 `;
 

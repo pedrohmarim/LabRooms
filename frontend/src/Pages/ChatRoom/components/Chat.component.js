@@ -104,11 +104,15 @@ export default function Chat({ darkPallete, currentRoom }) {
 
   useEffect(() => {
     if (currentRoom) {
-      const { categoryId, owner } = currentRoom;
+      const { categoryId, owner, newCategory } = currentRoom;
 
-      ChatRoomService.getCategoryById(categoryId).then(({ data }) => {
-        setRoomCategoryData(data);
-      });
+      if (!newCategory && categoryId) {
+        ChatRoomService.getCategoryById(categoryId).then(({ data }) => {
+          setRoomCategoryData(data);
+        });
+      } else if (newCategory && !categoryId) {
+        setRoomCategoryData({ Icon: "repeat", Title: newCategory });
+      }
 
       ChatRoomService.getUserById(owner).then(({ data }) => {
         const { username } = data;
@@ -224,7 +228,7 @@ export default function Chat({ darkPallete, currentRoom }) {
             </ChatStyled>
           </ChatContainer>
         ) : (
-          Loading
+          Loading(darkPallete.white)
         )}
       </Content>
 
@@ -269,7 +273,7 @@ export default function Chat({ darkPallete, currentRoom }) {
             </Row>
           </>
         ) : (
-          Loading
+          Loading(darkPallete.white)
         )}
       </SiderStyled>
     </Layout>

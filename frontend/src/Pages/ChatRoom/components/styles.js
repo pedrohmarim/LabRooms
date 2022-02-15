@@ -51,7 +51,7 @@ export const TitleStyled = styled(Title)`
 `;
 
 export const Layout = styled(LayoutStyled)`
-  margin: 25px 120px 25px 25px;
+  margin: 25px 105px 25px 25px;
   background-color: #000;
 `;
 
@@ -128,7 +128,6 @@ export const HourMessage = styled(Row)`
 export const MessageOwner = styled(Row)`
   font-size: 0.9vw;
   font-weight: bold;
-  color: ;
 `;
 
 export const TextMessage = styled(Row)`

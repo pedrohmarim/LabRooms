@@ -80,4 +80,36 @@ module.exports = {
       return response.json(null);
     }
   },
+
+  handleUpdateRoom(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { roomTitle, roomCategory, roomDescription, newCategory, _id } =
+        request.body;
+
+      RoomModel.findByIdAndUpdate(
+        { _id },
+        {
+          title: roomTitle && roomTitle,
+          description: roomDescription && roomDescription,
+          categoryId: roomCategory && roomCategory,
+          newCategory: newCategory && newCategory,
+        },
+        { new: true },
+        function (err) {
+          if (err) {
+            return response.json({
+              message: "Erro ao atualizar informações.",
+            });
+          } else {
+            response.json({
+              message: "Informações atualizadas com sucesso.",
+              status: 200,
+            });
+          }
+        }
+      );
+    }
+  },
 };

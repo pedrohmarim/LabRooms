@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Layout, Tooltip } from "../../antd_components";
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { HomeOutlined, UserOutlined, LoginOutlined } from "@ant-design/icons";
 import { Menu, SiderStyled, MenuItem } from "./styles";
 import LogoIcon from "../../assets/logoIcon.png";
 import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../../Context/UserContext";
 
-const Aside = ({ darkPallete }) => {
+const Aside = ({ darkPallete, SelectedItem }) => {
   const navigate = useNavigate();
 
   const IconStyle = {
@@ -13,10 +14,12 @@ const Aside = ({ darkPallete }) => {
     marginTop: "8px",
   };
 
+  const { user } = useContext(UserContext);
+
   return (
     <Layout hasSider>
       <SiderStyled collapsed>
-        <Menu defaultSelectedKeys={["1"]} color={darkPallete.white}>
+        <Menu defaultSelectedKeys={[SelectedItem]} color={darkPallete.white}>
           <Link to='/'>
             <img
               src={LogoIcon}
@@ -27,18 +30,39 @@ const Aside = ({ darkPallete }) => {
           </Link>
           <Tooltip title='Home' placement='right' color={darkPallete.lightblue}>
             <MenuItem
+              key='1'
               eventKey='1'
               icon={<HomeOutlined style={IconStyle} />}
               onClick={() => navigate("/")}
             />
           </Tooltip>
-          <Tooltip
-            title='Meu perfil'
-            placement='right'
-            color={darkPallete.lightblue}
-          >
-            <MenuItem eventKey='2' icon={<UserOutlined style={IconStyle} />} />
-          </Tooltip>
+          {user !== null ? (
+            <Tooltip
+              title='Meu perfil'
+              placement='right'
+              color={darkPallete.lightblue}
+            >
+              <MenuItem
+                key='2'
+                eventKey='2'
+                icon={<UserOutlined style={IconStyle} />}
+                onClick={() => navigate(`/profile/${user?.username}`)}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip
+              title='Fazer login'
+              placement='right'
+              color={darkPallete.lightblue}
+            >
+              <MenuItem
+                key='2'
+                eventKey='2'
+                icon={<LoginOutlined style={IconStyle} />}
+                onClick={() => navigate("/signin")}
+              />
+            </Tooltip>
+          )}
         </Menu>
       </SiderStyled>
     </Layout>

@@ -77,10 +77,12 @@ const Header = ({ fromNotFound }) => {
                   onMouseLeave={() => toggleMenu(false)}
                   onClose={() => toggleMenu(false)}
                 >
-                  <MenuItem>
-                    <FeatherIcons icon='user' size={15} />
-                    <MenuLabelItem>Perfil</MenuLabelItem>
-                  </MenuItem>
+                  <Link to={`/profile/${user?.username}`}>
+                    <MenuItem>
+                      <FeatherIcons icon='user' size={15} />
+                      <MenuLabelItem>Perfil</MenuLabelItem>
+                    </MenuItem>
+                  </Link>
                   <MenuItem
                     onClick={() => {
                       window.location.reload();

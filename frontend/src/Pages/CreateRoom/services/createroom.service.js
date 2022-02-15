@@ -11,3 +11,11 @@ export async function createRoom(dto, token) {
 export async function getCategories() {
   return api.get("/categories");
 }
+
+export async function UpdateRoom(dto, token) {
+  return api.post("/updateRoom", dto, {
+    headers: {
+      Authorization: token,
+    },
+  });
+}

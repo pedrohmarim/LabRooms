@@ -75,7 +75,7 @@ const SigninForm = ({ darkPallete }) => {
       lastModified,
       title,
       description,
-      categoryId: category,
+      categoryId: newCategory ? null : category,
       newCategory: newCategory || null,
     };
 
