@@ -83,19 +83,15 @@ const SigninForm = ({ darkPallete }) => {
       const { message, success } = res.data;
 
       if (success) {
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-        });
+        navigate("/");
 
-        Toast.fire({
-          icon: "success",
-          title: message,
-        }).then(() => {
-          navigate("/");
+        Notification.open({
+          type: "success",
+          message,
+          style: {
+            zIndex: 999,
+          },
+          duration: 2,
         });
       } else {
         Notification.open({

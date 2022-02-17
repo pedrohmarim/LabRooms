@@ -9,6 +9,7 @@ import {
   Input,
   Button,
   Checkbox,
+  Notification,
 } from "../../../../antd_components";
 import { FormItem } from "../../../Signup/components/SignupForm/Signup.form.styled";
 import { Link } from "react-router-dom";
@@ -48,19 +49,15 @@ const SigninForm = ({ darkPallete }) => {
         Cookie.set("token", `Bearer ${token}`);
         setInvalidInfo(false);
 
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 3000,
-          timerProgressBar: true,
-        });
+        navigate("/");
 
-        Toast.fire({
-          icon: "success",
-          title: message,
-        }).then(() => {
-          navigate("/");
+        Notification.open({
+          type: "success",
+          message,
+          style: {
+            zIndex: 999,
+          },
+          duration: 2,
         });
       } else {
         setInvalidInfo(true);

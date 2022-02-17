@@ -46,19 +46,15 @@ const SignUpForm = ({ darkPallete }) => {
       } else if (success && !unknow) {
         setValidateInput(null);
 
-        const Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 4000,
-          timerProgressBar: true,
-        });
+        navigate("/signin");
 
-        Toast.fire({
-          icon: "success",
-          title: message,
-        }).then(() => {
-          navigate("/signin");
+        Notification.open({
+          type: "success",
+          message,
+          style: {
+            zIndex: 999,
+          },
+          duration: 2,
         });
       } else {
         Notification.open({
