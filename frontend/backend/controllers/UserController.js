@@ -114,28 +114,37 @@ module.exports = {
 
     const rooms = await RoomsModel.find({ owner: owner });
 
-    let roomWithIcon = [];
+    if (rooms.length > 0) {
+      let roomWithIcon = [];
 
-    rooms.forEach((room) => {
-      const { categoryId, newCategory } = room;
+      rooms.forEach((room) => {
+        const { categoryId, newCategory } = room;
 
-      if (categoryId) {
-        CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
-          roomWithIcon.push({ ...room._doc, Icon, CategorieTitle: Title });
+        if (categoryId) {
+          CategoriesModel.findOne({ _id: categoryId }).then(
+            ({ Icon, Title }) => {
+              roomWithIcon.push({ ...room._doc, Icon, CategorieTitle: Title });
+
+              if (rooms.length === roomWithIcon.length)
+                return response.json({ roomWithIcon, loading: false });
+            }
+          );
+        } else if (newCategory) {
+          roomWithIcon.push({
+            ...room._doc,
+            Icon: "repeat",
+            CategorieTitle: newCategory,
+          });
 
           if (rooms.length === roomWithIcon.length)
-            return response.json(roomWithIcon);
-        });
-      } else if (newCategory) {
-        roomWithIcon.push({
-          ...room._doc,
-          Icon: "repeat",
-          CategorieTitle: newCategory,
-        });
-
-        if (rooms.length === roomWithIcon.length)
-          return response.json(roomWithIcon);
-      }
-    });
+            return response.json({ roomWithIcon, loading: false });
+        }
+      });
+    } else {
+      return response.json({
+        errorMessage: "Nenhuma sala encontrada",
+        loading: false,
+      });
+    }
   },
 };

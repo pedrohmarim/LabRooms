@@ -17,7 +17,7 @@ const Rooms = ({ rooms, pallete }) => {
     <Row>
       {rooms && rooms.length === 0 ? (
         <TitleStyled
-          level={3}
+          level={4}
           color={pallete.white}
           margintop={window.innerWidth < 1024 ? "15px" : "20px"}
         >
