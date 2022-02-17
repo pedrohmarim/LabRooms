@@ -20,5 +20,6 @@ router.get("/getRooms", RoomController.handleGetRooms);
 router.get("/getRoomsByCategory", RoomController.handleGetRoomsByCategory);
 router.get("/getRoomById", RoomController.handleGetRoomsById);
 router.post("/updateRoom", checkAuth, RoomController.handleUpdateRoom);
+router.post("/deleteRoom", checkAuth, RoomController.handleDeleteRoom);
 
 module.exports = router;

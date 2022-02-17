@@ -18,6 +18,9 @@ import {
   Typography,
   Input,
   Button,
+  Menu,
+  Dropdown,
+  PopConfirm,
 } from "../../../antd_components";
 
 export default function TabUserInfo({ user, darkPallete, navigate, token }) {
@@ -27,7 +30,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
   const [showConfirmButton, setShowConfirmButton] = useState(false);
   const [categories, setCategories] = useState();
   const [hasntRooms, setHasntRooms] = useState();
-  const [newCategory, setNewCategory] = useState(false);
+  const [newCategoryState, setNewCategory] = useState(false);
   const { TabPane } = Tabs;
   const { Title } = Typography;
 
@@ -37,6 +40,24 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
     marginTop: "-15px",
     marginBottom: "-20px",
   };
+
+  const createRoomButton = (marginleft) => (
+    <Link to='/createroom'>
+      <Tooltip title='Crie uma nova sala' color={darkPallete.lightblue}>
+        <Button
+          style={{
+            fontWeight: 400,
+            marginLeft: marginleft || "15px",
+            background: darkPallete.lightblue,
+            color: darkPallete.white,
+          }}
+          icon={<FeatherIcons icon='plus' size={20} />}
+        >
+          <span style={{ marginLeft: "5px" }}>Criar sala</span>
+        </Button>
+      </Tooltip>
+    </Link>
+  );
 
   const getRoomsByOwnerId = useCallback(() => {
     if (user) {
@@ -57,6 +78,52 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
   useEffect(() => {
     getRoomsByOwnerId();
   }, [getRoomsByOwnerId]);
+
+  function handleDeleteRoom(_id) {
+    RoomService.DeleteRoom(_id, token).then(({ data }) => {
+      const { message, status } = data;
+
+      if (status === 200) {
+        Notification.open({
+          type: "success",
+          message,
+        });
+        getRoomsByOwnerId();
+      } else {
+        Notification.open({
+          type: "error",
+          message,
+        });
+      }
+    });
+  }
+
+  const menu = (_id, title) => (
+    <Menu>
+      <Menu.Item
+        key='1'
+        onClick={() => navigate(`/chatroom/${_id}`)}
+        icon={<FeatherIcons icon='share' size={15} />}
+      >
+        Ir para sala
+      </Menu.Item>
+      <PopConfirm
+        placement='topRight'
+        title={
+          <span>
+            Deseja realmente excluir a sala <b>{title}</b> ?
+          </span>
+        }
+        onConfirm={() => handleDeleteRoom(_id)}
+        okText='Sim'
+        cancelText='Não'
+      >
+        <Menu.Item key='2' icon={<FeatherIcons icon='trash-2' size={15} />}>
+          Excluir
+        </Menu.Item>
+      </PopConfirm>
+    </Menu>
+  );
 
   useEffect(() => {
     RoomService.getCategories().then(({ data }) => {
@@ -123,7 +190,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
             <Card bordered={false}>
               <>
                 <Row justify='space-between'>
-                  {rooms?.array && !rooms.loading ? (
+                  {!hasntRooms && rooms?.array && !rooms.loading ? (
                     <>
                       <Col span={window.innerWidth > 1024 ? 18 : 24}>
                         <Row>
@@ -132,26 +199,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                             {rooms?.array ? rooms?.array.length : "0"})
                           </Title>
 
-                          <Link to='/createroom'>
-                            <Tooltip
-                              title='Crie uma nova sala'
-                              color={darkPallete.lightblue}
-                            >
-                              <Button
-                                style={{
-                                  fontWeight: 400,
-                                  marginLeft: "15px",
-                                  background: darkPallete.lightblue,
-                                  color: darkPallete.white,
-                                }}
-                                icon={<FeatherIcons icon='plus' size={20} />}
-                              >
-                                <span style={{ marginLeft: "5px" }}>
-                                  Criar sala
-                                </span>
-                              </Button>
-                            </Tooltip>
-                          </Link>
+                          {createRoomButton()}
                         </Row>
                       </Col>
 
@@ -219,17 +267,23 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                   )}
                 </Row>
 
-                <Row gutter={[2, 3]}>
+                <Row gutter={[15, 15]}>
                   {hasntRooms && (
-                    <TitleStyled
-                      level={5}
-                      color='#000'
-                      margintop={window.innerWidth < 1024 ? "15px" : "20px"}
-                    >
-                      {hasntRooms?.errorMessage}
-                    </TitleStyled>
+                    <Row align='middle'>
+                      <Col span={24}>
+                        <TitleStyled
+                          level={5}
+                          color='#000'
+                          margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+                        >
+                          {hasntRooms?.errorMessage}
+                        </TitleStyled>
+                      </Col>
+                      <Col span={24}>{createRoomButton("0px")}</Col>
+                    </Row>
                   )}
-                  {rooms?.array &&
+                  {!hasntRooms &&
+                    rooms?.array &&
                     rooms?.array.map(
                       ({
                         _id,
@@ -238,6 +292,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                         CategorieTitle,
                         Icon,
                         categoryId,
+                        newCategory,
                       }) => (
                         <Col span={24}>
                           <Form
@@ -258,51 +313,30 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                   {title}
                                 </Title>
 
-                                <Row gutter={[0, 0]}>
+                                <Row>
                                   <Col>
                                     <Tooltip
-                                      title='Ir para sala'
+                                      title='Mais Opções'
                                       color={darkPallete.lightblue}
                                     >
-                                      <Button
-                                        ghost
-                                        onClick={() =>
-                                          navigate(`/chatroom/${_id}`)
-                                        }
-                                        icon={
-                                          <FeatherIcons
-                                            size={18}
-                                            icon='share'
-                                          />
-                                        }
-                                        style={{
-                                          marginTop: "-5px",
-                                          color: "#000",
-                                        }}
-                                      />
-                                    </Tooltip>
-                                  </Col>
-                                  <Col>
-                                    <Tooltip
-                                      title='Excluir sala'
-                                      color={darkPallete.lightblue}
-                                    >
-                                      <Button
-                                        ghost
-                                        onClick={() =>
-                                          navigate(`/chatroom/${_id}`)
-                                        }
-                                        icon={
-                                          <FeatherIcons
-                                            size={18}
-                                            icon='trash-2'
-                                          />
-                                        }
-                                        style={{
-                                          marginTop: "-5px",
-                                          color: "red",
-                                        }}
-                                      />
+                                      <Dropdown
+                                        overlay={menu(_id, title)}
+                                        placement='bottomRight'
+                                      >
+                                        <Button
+                                          ghost
+                                          icon={
+                                            <FeatherIcons
+                                              size={18}
+                                              icon='more-vertical'
+                                            />
+                                          }
+                                          style={{
+                                            marginTop: "-5px",
+                                            color: "#000",
+                                          }}
+                                        />
+                                      </Dropdown>
                                     </Tooltip>
                                   </Col>
                                 </Row>
@@ -366,7 +400,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                 >
                                   <Select
                                     style={{
-                                      marginBottom: !newCategory
+                                      marginBottom: !newCategoryState
                                         ? "25px"
                                         : "-25px",
                                     }}
@@ -377,24 +411,26 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                     placeholder='Ex.: Alimentos'
                                     onChange={handleOtherCategories}
                                   >
-                                    <Select.Option key={12} value={12}>
-                                      <Row align='middle' justify='start'>
-                                        <FeatherIcons
-                                          icon={Icon}
-                                          size={15}
-                                          className='iconMarginRight'
-                                        />
-                                        {CategorieTitle}
-                                        <i
-                                          style={{
-                                            color: "gray",
-                                            marginLeft: "4px",
-                                          }}
-                                        >
-                                          - Categoria criada por você
-                                        </i>
-                                      </Row>
-                                    </Select.Option>
+                                    {newCategory && !categoryId && (
+                                      <Select.Option key={12} value={12}>
+                                        <Row align='middle' justify='start'>
+                                          <FeatherIcons
+                                            icon={Icon}
+                                            size={15}
+                                            className='iconMarginRight'
+                                          />
+                                          {CategorieTitle}
+                                          <i
+                                            style={{
+                                              color: "gray",
+                                              marginLeft: "4px",
+                                            }}
+                                          >
+                                            - Categoria criada por você
+                                          </i>
+                                        </Row>
+                                      </Select.Option>
+                                    )}
                                     {categories &&
                                       categories
                                         .sort((a, b) =>
@@ -437,7 +473,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                 </Form.Item>
                               </Col>
 
-                              {newCategory && (
+                              {newCategoryState && (
                                 <Col span={24}>
                                   <Form.Item
                                     label='Nova Categoria'
@@ -446,7 +482,8 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                     <Input
                                       style={{
                                         ...styleInput,
-                                        marginBottom: newCategory && "25px",
+                                        marginBottom:
+                                          newCategoryState && "25px",
                                       }}
                                       allowClear
                                       prefix={

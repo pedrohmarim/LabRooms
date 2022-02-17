@@ -19,3 +19,15 @@ export async function UpdateRoom(dto, token) {
     },
   });
 }
+
+export async function DeleteRoom(_id, token) {
+  return api.post(
+    "/deleteRoom",
+    { _id: _id },
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+}

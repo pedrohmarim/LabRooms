@@ -20,6 +20,8 @@ import Layout from "./Layout/Layout.component";
 import Menu from "./Menu/Menu.component";
 import Modal from "./Modal/Modal.component";
 import Upload from "./Upload/Upload.component";
+import Dropdown from "./Dropdown/Dropdown.component";
+import PopConfirm from "./PopConfirm/PopConfirm.component";
 
 export {
   Button,
@@ -44,4 +46,6 @@ export {
   Tooltip,
   Select,
   Form,
+  Dropdown,
+  PopConfirm,
 };

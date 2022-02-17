@@ -112,4 +112,24 @@ module.exports = {
       );
     }
   },
+
+  handleDeleteRoom(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { _id } = request.body;
+      RoomModel.findByIdAndRemove({ _id }, { new: true }, function (err) {
+        if (err) {
+          return response.json({
+            message: "Erro ao excluir sala.",
+          });
+        } else {
+          response.json({
+            message: "Sala excluída com sucesso.",
+            status: 200,
+          });
+        }
+      });
+    }
+  },
 };
