@@ -42,8 +42,6 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
   const styleInput = {
     borderRadius: "8px",
     padding: "8px",
-    marginTop: "-15px",
-    marginBottom: "-20px",
   };
 
   const createRoomButton = (marginleft) => (
@@ -114,11 +112,14 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
       </Menu.Item>
       <Menu.Item
         key='1'
-        onClick={() =>
+        onClick={() => {
           setViewMode({
             _id,
-          })
-        }
+          });
+          setShowConfirmButton({
+            _id,
+          });
+        }}
         icon={<FeatherIcons icon='edit-2' size={15} />}
       >
         Editar
@@ -166,10 +167,14 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
     if (_id) {
       const dto = {
         roomTitle,
-        roomCategory: newCategory ? null : roomCategory,
+        roomCategory:
+          roomCategory === TIPO_CATEGORIA.CATEGORIA_OUTRAS ||
+          roomCategory === TIPO_CATEGORIA.CATEGORIA_CRIADA
+            ? null
+            : roomCategory,
         roomDescription,
         _id,
-        newCategory: newCategory || null,
+        newCategory: newCategory,
       };
 
       RoomService.UpdateRoom(dto, token).then(({ data }) => {
@@ -321,11 +326,12 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                           <Form
                             onFinish={handleSubmit}
                             layout='vertical'
-                            onFieldsChange={() =>
-                              setShowConfirmButton({
-                                _id,
-                              })
-                            }
+                            initialValues={{
+                              roomTitle: title,
+                              roomDescription: description,
+                              roomCategory:
+                                categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
+                            }}
                           >
                             <RoomContainer>
                               <Row align='middle' justify='space-between'>
@@ -371,6 +377,12 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
 
                               <Col span={24}>
                                 <Form.Item
+                                  rules={[
+                                    {
+                                      required: viewMode._id === _id,
+                                      message: "Campo obrigatório.",
+                                    },
+                                  ]}
                                   label={
                                     <Title
                                       level={5}
@@ -396,6 +408,12 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
 
                               <Col span={24}>
                                 <Form.Item
+                                  rules={[
+                                    {
+                                      required: viewMode._id === _id,
+                                      message: "Campo obrigatório.",
+                                    },
+                                  ]}
                                   label={
                                     <Title
                                       level={5}
@@ -421,6 +439,12 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
 
                               <Col span={24}>
                                 <Form.Item
+                                  rules={[
+                                    {
+                                      required: viewMode._id === _id,
+                                      message: "Campo obrigatório.",
+                                    },
+                                  ]}
                                   label={
                                     <Title
                                       level={5}
@@ -434,15 +458,6 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                   <Select
                                     disabled={
                                       viewMode._id === _id ? false : true
-                                    }
-                                    style={{
-                                      marginBottom: !newCategoryState
-                                        ? "25px"
-                                        : "-25px",
-                                    }}
-                                    defaultValue={
-                                      categoryId ||
-                                      TIPO_CATEGORIA.CATEGORIA_CRIADA
                                     }
                                     getPopupContainer={(trigger) =>
                                       trigger.parentNode
@@ -504,7 +519,12 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                         <FeatherIcons icon='repeat' size={15} />
                                         <span style={{ margin: "2px 0 0 5px" }}>
                                           Outras
-                                          <i style={{ color: "gray" }}>
+                                          <i
+                                            style={{
+                                              color: "gray",
+                                              marginLeft: "4px",
+                                            }}
+                                          >
                                             - Ao selecionar, poderá criar uma
                                             nova categoria
                                           </i>
@@ -515,18 +535,30 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                 </Form.Item>
                               </Col>
 
-                              {newCategoryState && (
+                              {newCategoryState && viewMode._id === _id && (
                                 <Col span={24}>
                                   <Form.Item
-                                    label='Nova Categoria'
+                                    rules={[
+                                      {
+                                        required: newCategoryState,
+                                        message: "Campo obrigatório.",
+                                      },
+                                    ]}
+                                    label={
+                                      <Title
+                                        level={5}
+                                        style={{ marginBottom: "0" }}
+                                      >
+                                        Nova Categoria
+                                      </Title>
+                                    }
                                     name='newCategory'
                                   >
                                     <Input
-                                      style={{
-                                        ...styleInput,
-                                        marginBottom:
-                                          newCategoryState && "25px",
-                                      }}
+                                      disabled={
+                                        viewMode._id === _id ? false : true
+                                      }
+                                      style={styleInput}
                                       allowClear
                                       prefix={
                                         <FeatherIcons icon='tag' size={15} />
@@ -547,8 +579,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                     width='200'
                                     color={darkPallete.white}
                                     style={{
-                                      marginTop: "-25px",
-                                      marginBottom: "25px",
+                                      marginBottom: "15px",
                                     }}
                                   >
                                     Confirmar

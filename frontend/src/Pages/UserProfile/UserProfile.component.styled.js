@@ -41,6 +41,6 @@ export const RightFormContainer = styled(Col)`
 export const RoomContainer = styled.div`
   background-color: #eee;
   width: 100%;
-  padding: 10px 20px 0 20px;
+  padding: 10px 20px 10px 20px;
   border-radius: 10px;
 `;
