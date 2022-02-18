@@ -59,7 +59,7 @@ module.exports = {
         if (result) return response.json(result); // Filtra todas as salas ao selecionar Categoria = "Todas"
         break;
       case "11":
-        result = await RoomModel.find({ categoryId: 11 }); // Filtra todas as salas que possuem Categoria = "Outros"
+        result = await RoomModel.find({ categoryId: null }); // Filtra todas as salas que possuem Categoria = "Outros"
         if (result) return response.json(result);
         break;
       default:

@@ -36,7 +36,7 @@ const Rooms = ({ rooms, pallete }) => {
         </Col>
       )}
       {rooms &&
-        rooms.map(({ title, description, thumb, categoryId, owner, _id }) => (
+        rooms.map(({ title, description, thumb, _id }) => (
           <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6} key={_id}>
             <Link to={`chatroom/${_id}`}>
               <RoomItem background={darkPallete.lightblueOpacity}>

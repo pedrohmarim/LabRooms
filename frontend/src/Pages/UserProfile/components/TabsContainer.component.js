@@ -27,10 +27,15 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
   const [rooms, setRooms] = useState();
   const [allRooms, setAllRooms] = useState();
   const [_id, setRoomId] = useState();
-  const [showConfirmButton, setShowConfirmButton] = useState(false);
+  const [showConfirmButton, setShowConfirmButton] = useState({
+    _id: null,
+  });
   const [categories, setCategories] = useState();
   const [hasntRooms, setHasntRooms] = useState();
   const [newCategoryState, setNewCategory] = useState(false);
+  const [viewMode, setViewMode] = useState({
+    _id: null,
+  });
   const { TabPane } = Tabs;
   const { Title } = Typography;
 
@@ -98,7 +103,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
     });
   }
 
-  const menu = (_id, title) => (
+  const MoreActionsRoom = (_id, title) => (
     <Menu>
       <Menu.Item
         key='1'
@@ -106,6 +111,17 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
         icon={<FeatherIcons icon='share' size={15} />}
       >
         Ir para sala
+      </Menu.Item>
+      <Menu.Item
+        key='1'
+        onClick={() =>
+          setViewMode({
+            _id,
+          })
+        }
+        icon={<FeatherIcons icon='edit-2' size={15} />}
+      >
+        Editar
       </Menu.Item>
       <PopConfirm
         placement='topRight'
@@ -169,7 +185,14 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
             message,
           });
         }
-        setShowConfirmButton(false);
+
+        setShowConfirmButton({
+          _id: null,
+        });
+
+        setViewMode({
+          _id: null,
+        });
       });
     }
   }
@@ -298,7 +321,11 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                           <Form
                             onFinish={handleSubmit}
                             layout='vertical'
-                            onFieldsChange={() => setShowConfirmButton(true)}
+                            onFieldsChange={() =>
+                              setShowConfirmButton({
+                                _id,
+                              })
+                            }
                           >
                             <RoomContainer>
                               <Row align='middle' justify='space-between'>
@@ -320,7 +347,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                       color={darkPallete.lightblue}
                                     >
                                       <Dropdown
-                                        overlay={menu(_id, title)}
+                                        overlay={MoreActionsRoom(_id, title)}
                                         placement='bottomRight'
                                       >
                                         <Button
@@ -355,6 +382,9 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                   name='roomTitle'
                                 >
                                   <Input
+                                    disabled={
+                                      viewMode._id === _id ? false : true
+                                    }
                                     style={styleInput}
                                     defaultValue={title}
                                     prefix={
@@ -377,6 +407,9 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                   name='roomDescription'
                                 >
                                   <Input
+                                    disabled={
+                                      viewMode._id === _id ? false : true
+                                    }
                                     style={styleInput}
                                     defaultValue={description}
                                     prefix={
@@ -399,12 +432,18 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                   name='roomCategory'
                                 >
                                   <Select
+                                    disabled={
+                                      viewMode._id === _id ? false : true
+                                    }
                                     style={{
                                       marginBottom: !newCategoryState
                                         ? "25px"
                                         : "-25px",
                                     }}
-                                    defaultValue={categoryId || 12}
+                                    defaultValue={
+                                      categoryId ||
+                                      TIPO_CATEGORIA.CATEGORIA_CRIADA
+                                    }
                                     getPopupContainer={(trigger) =>
                                       trigger.parentNode
                                     }
@@ -412,7 +451,10 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                     onChange={handleOtherCategories}
                                   >
                                     {newCategory && !categoryId && (
-                                      <Select.Option key={12} value={12}>
+                                      <Select.Option
+                                        key={TIPO_CATEGORIA.CATEGORIA_CRIADA}
+                                        value={TIPO_CATEGORIA.CATEGORIA_CRIADA}
+                                      >
                                         <Row align='middle' justify='start'>
                                           <FeatherIcons
                                             icon={Icon}
@@ -495,7 +537,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                                 </Col>
                               )}
 
-                              {showConfirmButton && (
+                              {showConfirmButton._id === _id && (
                                 <Row justify='end'>
                                   <Button
                                     htmlType='submit'
