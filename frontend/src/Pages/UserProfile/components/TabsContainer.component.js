@@ -174,7 +174,8 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
             : roomCategory,
         roomDescription,
         _id,
-        newCategory: newCategory,
+        newCategory:
+          roomCategory === TIPO_CATEGORIA.CATEGORIA_OUTRAS ? newCategory : null,
       };
 
       RoomService.UpdateRoom(dto, token).then(({ data }) => {
