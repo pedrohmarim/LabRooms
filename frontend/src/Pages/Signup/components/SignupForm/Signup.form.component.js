@@ -10,7 +10,6 @@ import {
 } from "../../../../antd_components";
 import { FormItem } from "./Signup.form.styled";
 import * as SignUpService from "../../services/signup.service";
-import Swal from "sweetalert2";
 
 const SignUpForm = ({ darkPallete }) => {
   const [validateInput, setValidateInput] = useState();

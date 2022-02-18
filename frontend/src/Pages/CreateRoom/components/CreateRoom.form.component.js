@@ -20,7 +20,6 @@ import {
 } from "../Helper/UploadImage.helper";
 import Cookie from "js-cookie";
 import * as CreateRoomService from "../services/createroom.service";
-import Swal from "sweetalert2";
 
 const SigninForm = ({ darkPallete }) => {
   const [form] = Form.useForm();

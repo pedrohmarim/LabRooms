@@ -13,7 +13,6 @@ import {
 } from "../../../../antd_components";
 import { FormItem } from "../../../Signup/components/SignupForm/Signup.form.styled";
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
 import Cookie from "js-cookie";
 
 const SigninForm = ({ darkPallete }) => {
