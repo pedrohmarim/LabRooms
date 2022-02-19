@@ -167,15 +167,10 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
     if (_id) {
       const dto = {
         roomTitle,
-        roomCategory:
-          roomCategory === TIPO_CATEGORIA.CATEGORIA_OUTRAS ||
-          roomCategory === TIPO_CATEGORIA.CATEGORIA_CRIADA
-            ? null
-            : roomCategory,
+        roomCategory,
         roomDescription,
         _id,
-        newCategory:
-          roomCategory === TIPO_CATEGORIA.CATEGORIA_OUTRAS ? newCategory : null,
+        newCategory,
       };
 
       RoomService.UpdateRoom(dto, token).then(({ data }) => {
@@ -332,6 +327,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
                               roomDescription: description,
                               roomCategory:
                                 categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
+                              newCategory,
                             }}
                           >
                             <RoomContainer>

@@ -91,10 +91,10 @@ module.exports = {
       RoomModel.findByIdAndUpdate(
         { _id },
         {
-          title: roomTitle && roomTitle,
-          description: roomDescription && roomDescription,
-          categoryId: roomCategory && roomCategory,
-          newCategory: newCategory && newCategory,
+          title: roomTitle,
+          description: roomDescription,
+          categoryId: roomCategory === 11 ? null : roomCategory, //11 = categoria "outras"
+          newCategory: roomCategory && roomCategory !== 11 ? null : newCategory,
         },
         { new: true },
         function (err) {
