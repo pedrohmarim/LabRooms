@@ -1,20 +1,23 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Logo from "../../assets/logo1.png";
 import { darkPallete } from "../../styles/pallete";
 import { UserContext } from "../../Context/UserContext";
-import { HeaderContainer, HeaderMenu, MenuLabelItem } from "./Header.styled";
+import { HeaderContainer, MenuLabelItem } from "./Header.styled";
 import { Link } from "react-router-dom";
 import Cookie from "js-cookie";
-import { Row, Col, Image, Button, FeatherIcons } from "../../antd_components";
-import { ControlledMenu, MenuItem, useMenuState } from "@szhsin/react-menu";
-import "@szhsin/react-menu/dist/index.css";
-import "@szhsin/react-menu/dist/transitions/slide.css";
+import {
+  Row,
+  Col,
+  Image,
+  Button,
+  FeatherIcons,
+  Menu,
+  Dropdown,
+} from "../../antd_components";
 
 const Header = ({ fromNotFound }) => {
   const [ExpandLogin, setExpandLogin] = useState();
   const [solidHeader, setSolidHeader] = useState(false);
-  const ref = useRef(null);
-  const { toggleMenu, ...menuProps } = useMenuState({ transition: true });
   const { lightblue, white } = darkPallete;
 
   const { user } = useContext(UserContext);
@@ -27,6 +30,30 @@ const Header = ({ fromNotFound }) => {
 
     window.addEventListener("scroll", scrollListener);
   }, [user]);
+
+  const MoreActionsRoom = (
+    <Menu>
+      <Link to={`/profile/${user?.username}`}>
+        <Menu.Item>
+          <Row align='middle' justify='start'>
+            <FeatherIcons icon='user' size={15} />
+            <MenuLabelItem>Perfil</MenuLabelItem>
+          </Row>
+        </Menu.Item>
+      </Link>
+      <Menu.Item
+        onClick={() => {
+          window.location.reload();
+          Cookie.remove("token");
+        }}
+      >
+        <Row align='middle'>
+          <FeatherIcons icon='log-out' size={15} />
+          <MenuLabelItem>Sair</MenuLabelItem>
+        </Row>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <HeaderContainer solidHeader={solidHeader}>
@@ -59,41 +86,16 @@ const Header = ({ fromNotFound }) => {
           ) : (
             !fromNotFound &&
             user && (
-              <>
-                <HeaderMenu ref={ref} onMouseEnter={() => toggleMenu(true)}>
-                  <Button
-                    icon={<FeatherIcons icon='user' size={18} />}
-                    color={white}
-                    backgroundcolor={lightblue}
-                    style={{ marginRight: "10px" }}
-                    onMouseEnter={() => setExpandLogin(true)}
-                    onMouseLeave={() => setExpandLogin(false)}
-                  />
-                </HeaderMenu>
-
-                <ControlledMenu
-                  {...menuProps}
-                  anchorRef={ref}
-                  onMouseLeave={() => toggleMenu(false)}
-                  onClose={() => toggleMenu(false)}
-                >
-                  <Link to={`/profile/${user?.username}`}>
-                    <MenuItem>
-                      <FeatherIcons icon='user' size={15} />
-                      <MenuLabelItem>Perfil</MenuLabelItem>
-                    </MenuItem>
-                  </Link>
-                  <MenuItem
-                    onClick={() => {
-                      window.location.reload();
-                      Cookie.remove("token");
-                    }}
-                  >
-                    <FeatherIcons icon='log-out' size={15} />
-                    <MenuLabelItem>Sair</MenuLabelItem>
-                  </MenuItem>
-                </ControlledMenu>
-              </>
+              <Dropdown overlay={MoreActionsRoom}>
+                <Button
+                  icon={<FeatherIcons icon='user' size={18} />}
+                  color={white}
+                  backgroundcolor={lightblue}
+                  style={{ marginRight: "10px" }}
+                  onMouseEnter={() => setExpandLogin(true)}
+                  onMouseLeave={() => setExpandLogin(false)}
+                />
+              </Dropdown>
             )
           )}
         </Col>
