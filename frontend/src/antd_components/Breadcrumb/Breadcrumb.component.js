@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import * as S from "./Breadcrumb.styled";
 import routes from "../../Routes/routes";
+import { Tooltip } from "antd";
+import { darkPallete } from "../../styles/pallete";
 
 const Breadcrumb = ({ crumbs = routes }) => {
   return (
@@ -17,14 +19,27 @@ const Breadcrumb = ({ crumbs = routes }) => {
             (bc) =>
               bc.path && (
                 <S.Breadcrumb.Item key={bc.name}>
-                  <Link
-                    to={{
-                      pathname: bc.path,
-                    }}
-                    style={{ color: "#000" }}
+                  <Tooltip
+                    color={darkPallete.lightblue}
+                    title={
+                      window.location.pathname === bc.path
+                        ? "Você está aqui"
+                        : bc.path === "/"
+                        ? "Ir para Home"
+                        : bc.path === "/profile/:username"
+                        ? "Você está aqui"
+                        : `Ir para ${bc.path}`
+                    }
                   >
-                    {bc.name}
-                  </Link>
+                    <Link
+                      to={{
+                        pathname: bc.path,
+                      }}
+                      style={{ color: "#000" }}
+                    >
+                      {bc.name}
+                    </Link>
+                  </Tooltip>
                 </S.Breadcrumb.Item>
               )
           )}

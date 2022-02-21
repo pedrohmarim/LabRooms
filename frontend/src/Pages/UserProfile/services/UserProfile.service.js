@@ -7,3 +7,10 @@ export async function getRoomsByOwnerId(owner) {
     },
   });
 }
+export async function UpdateUserInfo(dto, token) {
+  return api.post("/updateUserInfo", dto, {
+    headers: {
+      Authorization: token,
+    },
+  });
+}

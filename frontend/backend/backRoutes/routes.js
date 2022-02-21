@@ -11,6 +11,7 @@ router.get("/userLogin", UserController.handleLogin);
 router.get("/currentUser", checkAuth, UserController.handleGetCurrentUser);
 router.get("/getUserById", UserController.handleGetUserById);
 router.get("/getRoomsByOwnerId", UserController.handleGetRoomsByOwnerId);
+router.post("/updateUserInfo", checkAuth, UserController.handleUpdateUser);
 
 router.get("/categories", CategoryController.handleGetCategory);
 router.get("/getCategoryById", CategoryController.handleGetCategoryById);

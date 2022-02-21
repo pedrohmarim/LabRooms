@@ -17,6 +17,14 @@ const UserModel = new Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: String,
+    required: false,
+  },
+  celphone: {
+    type: String,
+    required: false,
+  },
   createdAt: {
     type: Date,
     required: true,

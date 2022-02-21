@@ -27,12 +27,7 @@ export default function ProfileSocials({ darkPallete, user }) {
 
           <Col span={24} style={{ textAlign: "center" }}>
             <Title level={4}>{user?.username}</Title>
-            <Typography style={{ color: "#A0ACBC" }}>
-              Junior developer
-            </Typography>
-            <Typography style={{ color: "#A0ACBC" }}>
-              Porto Ferreira, SP
-            </Typography>
+
             <Typography style={{ color: "#A0ACBC" }}>
               Membro desde{" "}
               {new Intl.DateTimeFormat("pt-BR").format(user?.createdAt.format)}

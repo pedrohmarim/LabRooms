@@ -85,18 +85,10 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     RoomService.DeleteRoom(_id, token).then(({ data }) => {
       const { message, status } = data;
 
-      if (status === 200) {
-        Notification.open({
-          type: "success",
-          message,
-        });
-        getRoomsByOwnerId();
-      } else {
-        Notification.open({
-          type: "error",
-          message,
-        });
-      }
+      Notification.open({
+        type: status === 200 ? "success" : "error",
+        message,
+      });
     });
   }
 

@@ -88,6 +88,8 @@ module.exports = {
         username: user.username,
         email: user.email,
         cpf: user.cpf,
+        phone: user.phone,
+        celphone: user.celphone,
         createdAt: user.createdAt.toLocaleString("pt-BR"),
       });
     } else {
@@ -145,6 +147,38 @@ module.exports = {
         errorMessage: "Nenhuma sala encontrada",
         loading: false,
       });
+    }
+  },
+
+  async handleUpdateUser(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { username, email, cpf, phone, celphone } = request.body;
+
+      UserModel.findByIdAndUpdate(
+        { _id },
+        {
+          username,
+          email,
+          cpf,
+          phone,
+          celphone,
+        },
+        { new: true },
+        function (err) {
+          if (err) {
+            return response.json({
+              message: "Erro ao atualizar informações.",
+            });
+          } else {
+            response.json({
+              message: "Informações atualizadas com sucesso.",
+              status: 200,
+            });
+          }
+        }
+      );
     }
   },
 };
