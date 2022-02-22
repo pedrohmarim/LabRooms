@@ -5,6 +5,7 @@ import { UserContext } from "../../Context/UserContext";
 import { HeaderContainer, MenuLabelItem } from "./Header.styled";
 import { Link, useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
+import { HomeOutlined } from "@ant-design/icons";
 import {
   Row,
   Col,
@@ -34,6 +35,14 @@ const Header = ({ fromNotFound }) => {
 
   const MoreActionsRoom = (
     <Menu>
+      <Link to='/'>
+        <Menu.Item>
+          <Row align='middle' justify='start'>
+            <HomeOutlined />
+            <MenuLabelItem>Home</MenuLabelItem>
+          </Row>
+        </Menu.Item>
+      </Link>
       <Link to={`/profile/${user?.username}`}>
         <Menu.Item>
           <Row align='middle' justify='start'>

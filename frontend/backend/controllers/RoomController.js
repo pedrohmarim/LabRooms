@@ -118,6 +118,7 @@ module.exports = {
 
     if (_id) {
       const { _id } = request.body;
+
       RoomModel.findByIdAndRemove({ _id }, { new: true }, function (err) {
         if (err) {
           return response.json({

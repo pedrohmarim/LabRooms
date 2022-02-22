@@ -170,7 +170,7 @@ const SigninForm = ({ darkPallete }) => {
               <span style={{ margin: "2px 0 0 5px" }}>
                 Outras
                 <i style={{ color: "gray" }}>
-                  - Ao selecionar, poderá criar uma nova categoria
+                  - Poderá criar uma nova categoria
                 </i>
               </span>
             </Row>

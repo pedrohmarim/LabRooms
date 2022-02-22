@@ -125,7 +125,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
         placement='topRight'
         title={
           <span>
-            Deseja realmente excluir a sala <b>{title}</b> ?
+            Deseja realmente excluir a sala{" "}
+            <b>{title.lenght > 10 ? title.substr(0, 10) + "..." : title}</b> ?
           </span>
         }
         onConfirm={() => handleDeleteRoom(_id)}
@@ -318,19 +319,21 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                   >
                     <RoomContainer>
                       <Row align='middle' justify='space-between'>
-                        <Title
-                          level={3}
-                          style={{
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          {title}
-                        </Title>
+                        <Col span={23}>
+                          <Title
+                            level={3}
+                            style={{
+                              overflow: "hidden",
+                              whiteSpace: "nowrap",
+                              textOverflow: "ellipsis",
+                            }}
+                          >
+                            {title}
+                          </Title>
+                        </Col>
 
-                        <Row>
-                          <Col>
+                        <Col span={1}>
+                          <Row justify='end'>
                             <Tooltip
                               title='Mais Opções'
                               color={darkPallete.lightblue}
@@ -354,8 +357,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                                 />
                               </Dropdown>
                             </Tooltip>
-                          </Col>
-                        </Row>
+                          </Row>
+                        </Col>
                       </Row>
 
                       <Col span={24}>
@@ -488,8 +491,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                                       marginLeft: "4px",
                                     }}
                                   >
-                                    - Ao selecionar, poderá criar uma nova
-                                    categoria
+                                    - Poderá criar uma nova categoria
                                   </i>
                                 </span>
                               </Row>
