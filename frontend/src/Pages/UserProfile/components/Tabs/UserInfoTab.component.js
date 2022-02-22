@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Card } from "../../UserProfile.component.styled";
+import { FormStyled } from "../../UserProfile.component.styled";
 import * as UserProfileService from "../../services/UserProfile.service";
 import {
   Col,
@@ -43,7 +44,8 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
   return (
     <Card bordered={false}>
       {user && (
-        <Form
+        <FormStyled
+          background={darkPallete.white}
           onFinish={handleSubmit}
           layout='vertical'
           initialValues={{
@@ -57,9 +59,16 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
           <Row>
             <Col span={24} style={{ marginBottom: "15px" }}>
               <Row justify='space-between'>
-                <Title level={4}>Informações Pessoais</Title>
-                <Tooltip color={darkPallete.lightblue} title='Editar Perfil'>
+                <Title level={4} style={{}}>
+                  Informações Pessoais
+                </Title>
+                <Tooltip
+                  color={darkPallete.lightblue}
+                  title='Editar Perfil'
+                  defaultVisible={window.innerWidth < 1024}
+                >
                   <Button
+                    backgroundcolor={window.innerWidth < 1024 && "transparent"}
                     icon={<FeatherIcons icon='edit' />}
                     onClick={() => setEditMode(true)}
                   />
@@ -75,13 +84,18 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
                 name='username'
                 label={
                   <Typography>
-                    <span style={{ fontWeight: "bold" }}>Nome Completo</span>
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Nome Completo
+                    </span>
                   </Typography>
                 }
               >
                 <Input
                   disabled={!editMode}
-                  // bordered={false}
                   style={styleInput}
                   placeholder='Nome Completo'
                 />
@@ -97,13 +111,18 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
                 name='email'
                 label={
                   <Typography>
-                    <span style={{ fontWeight: "bold" }}>E-mail</span>
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      E-mail
+                    </span>
                   </Typography>
                 }
               >
                 <Input
                   disabled={!editMode}
-                  // bordered={false}
                   style={styleInput}
                   placeholder='E-mail'
                 />
@@ -121,14 +140,19 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
                 name='cpf'
                 label={
                   <Typography>
-                    <span style={{ fontWeight: "bold" }}>CPF</span>
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      CPF
+                    </span>
                   </Typography>
                 }
               >
                 <Input
                   disabled={!editMode}
                   Mask
-                  // bordered={false}
                   style={styleInput}
                   placeholder='CPF'
                   mask='111.111.111-11'
@@ -141,14 +165,19 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
                 name='phone'
                 label={
                   <Typography>
-                    <span style={{ fontWeight: "bold" }}>Telefone Fixo</span>
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Telefone Fixo
+                    </span>
                   </Typography>
                 }
               >
                 <InputMask
                   disabled={!editMode}
                   Mask
-                  // bordered={false}
                   autoComplete='off'
                   mask='(11) 1111-1111'
                   style={styleInput}
@@ -162,14 +191,19 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
                 name='celphone'
                 label={
                   <Typography>
-                    <span style={{ fontWeight: "bold" }}>Celular</span>
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Celular
+                    </span>
                   </Typography>
                 }
               >
                 <InputMask
                   disabled={!editMode}
                   Mask
-                  // bordered={false}
                   autoComplete='off'
                   mask='(11) 11111-1111'
                   style={styleInput}
@@ -195,7 +229,7 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
               </Button>
             </Row>
           )}
-        </Form>
+        </FormStyled>
       )}
     </Card>
   );

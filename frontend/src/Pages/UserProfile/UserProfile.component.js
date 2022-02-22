@@ -4,6 +4,8 @@ import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
 import Aside from "../../GlobalComponents/Aside/Aside.component";
 import { darkPallete } from "../../styles/pallete";
+import ProfileSocials from "./components/ProfileSocials.component";
+import TabsContainer from "./components/TabsContainer.component";
 import {
   ProfileContainer,
   Row,
@@ -11,8 +13,7 @@ import {
   LeftFormContainer,
   RightFormContainer,
 } from "./UserProfile.component.styled";
-import ProfileSocials from "./components/ProfileSocials.component";
-import TabsContainer from "./components/TabsContainer.component";
+import Header from "../../GlobalComponents/Header/Header.component";
 
 export default function UserProfile() {
   const { user } = useContext(UserContext);
@@ -25,31 +26,61 @@ export default function UserProfile() {
   }, [navigate, token, user]);
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "auto 100%",
-        height: "100vh",
-      }}
-    >
-      <Aside darkPallete={darkPallete} SelectedItem='2' />
-      <ProfileContainer>
-        <Row>
-          <LeftFormContainer span={window.innerWidth > 1024 ? 6 : 24}>
-            <Card bordered={false}>
-              <ProfileSocials darkPallete={darkPallete} user={user} />
-            </Card>
-          </LeftFormContainer>
-          <RightFormContainer span={window.innerWidth > 1024 ? 18 : 24}>
-            <TabsContainer
-              darkPallete={darkPallete}
-              user={user}
-              navigate={navigate}
-              token={token}
-            />
-          </RightFormContainer>
-        </Row>
-      </ProfileContainer>
-    </div>
+    <>
+      <div
+        style={
+          window.innerWidth > 1024
+            ? {
+                display: "grid",
+                gridTemplateColumns: "auto 100%",
+                height: "100vh",
+              }
+            : null
+        }
+      >
+        {window.innerWidth > 1024 && (
+          <Aside darkPallete={darkPallete} SelectedItem='2' />
+        )}
+        <ProfileContainer>
+          <Row>
+            {window.innerWidth > 1024 ? (
+              <>
+                <LeftFormContainer span={window.innerWidth > 1024 ? 6 : 24}>
+                  <Card bordered={false}>
+                    <ProfileSocials darkPallete={darkPallete} user={user} />
+                  </Card>
+                </LeftFormContainer>
+                <RightFormContainer span={window.innerWidth > 1024 ? 18 : 24}>
+                  <TabsContainer
+                    darkPallete={darkPallete}
+                    user={user}
+                    navigate={navigate}
+                    token={token}
+                  />
+                </RightFormContainer>
+              </>
+            ) : (
+              <>
+                <Header />
+                <LeftFormContainer
+                  span={window.innerWidth > 1024 ? 6 : 24}
+                  tabcolor={darkPallete.white}
+                >
+                  <Card bordered={false}>
+                    <ProfileSocials darkPallete={darkPallete} user={user} />
+                    <TabsContainer
+                      darkPallete={darkPallete}
+                      user={user}
+                      navigate={navigate}
+                      token={token}
+                    />
+                  </Card>
+                </LeftFormContainer>
+              </>
+            )}
+          </Row>
+        </ProfileContainer>
+      </div>
+    </>
   );
 }

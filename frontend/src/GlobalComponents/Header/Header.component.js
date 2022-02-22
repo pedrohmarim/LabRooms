@@ -3,7 +3,7 @@ import Logo from "../../assets/logo1.png";
 import { darkPallete } from "../../styles/pallete";
 import { UserContext } from "../../Context/UserContext";
 import { HeaderContainer, MenuLabelItem } from "./Header.styled";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
 import {
   Row,
@@ -16,6 +16,7 @@ import {
 } from "../../antd_components";
 
 const Header = ({ fromNotFound }) => {
+  const navigate = useNavigate();
   const [ExpandLogin, setExpandLogin] = useState();
   const [solidHeader, setSolidHeader] = useState(false);
   const { lightblue, white } = darkPallete;
@@ -43,8 +44,9 @@ const Header = ({ fromNotFound }) => {
       </Link>
       <Menu.Item
         onClick={() => {
-          window.location.reload();
           Cookie.remove("token");
+          navigate("/");
+          window.location.reload();
         }}
       >
         <Row align='middle'>

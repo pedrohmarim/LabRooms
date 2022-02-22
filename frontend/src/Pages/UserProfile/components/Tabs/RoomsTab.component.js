@@ -61,6 +61,20 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     </Link>
   );
 
+  const handleDeleteRoom = useCallback(
+    (_id) => {
+      RoomService.DeleteRoom(_id, token).then(({ data }) => {
+        const { message, status } = data;
+
+        Notification.open({
+          type: status === 200 ? "success" : "error",
+          message,
+        });
+      });
+    },
+    [token]
+  );
+
   const getRoomsByOwnerId = useCallback(() => {
     if (user) {
       const { _id } = user;
@@ -80,17 +94,6 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
   useEffect(() => {
     getRoomsByOwnerId();
   }, [getRoomsByOwnerId]);
-
-  function handleDeleteRoom(_id) {
-    RoomService.DeleteRoom(_id, token).then(({ data }) => {
-      const { message, status } = data;
-
-      Notification.open({
-        type: status === 200 ? "success" : "error",
-        message,
-      });
-    });
-  }
 
   const MoreActionsRoom = (_id, title) => (
     <Menu>
@@ -197,12 +200,17 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
   return (
     <Card bordered={false}>
       <>
-        <Row justify='space-between'>
+        <Row justify='space-between' gutter={[10, 10]}>
           {!hasntRooms && rooms?.array && !rooms.loading ? (
             <>
               <Col span={window.innerWidth > 1024 ? 18 : 24}>
-                <Row>
-                  <Title level={4}>
+                <Row justify='space-between'>
+                  <Title
+                    level={4}
+                    style={{
+                      color: window.innerWidth < 1024 && darkPallete.white,
+                    }}
+                  >
                     Minhas Salas ({rooms?.array ? rooms?.array.length : "0"})
                   </Title>
 
@@ -230,7 +238,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                         style={{
                           marginLeft: "5px",
                           position: "relative",
-                          top: "-3px",
+                          top: window.innerWidth < 1024 ? "-4px" : "-3px",
                         }}
                       >
                         Todas
@@ -270,14 +278,13 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           )}
         </Row>
 
-        <Row gutter={[15, 15]}>
+        <Row gutter={window.innerWidth > 1024 && [15, 15]}>
           {hasntRooms && (
-            <Row align='middle'>
+            <Row align='middle' justify='center' style={{ width: "100%" }}>
               <Col span={24}>
                 <TitleStyled
                   level={5}
-                  color='#000'
-                  margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+                  color={window.innerWidth < 1024 ? darkPallete.white : "#000"}
                 >
                   {hasntRooms?.errorMessage}
                 </TitleStyled>
