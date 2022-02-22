@@ -25,9 +25,9 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
   };
 
   function handleSubmit(values) {
-    const { username, email, cpf, phone, celphone } = values;
+    const { username, email, cpf, phone, celphone, biography } = values;
 
-    const dto = { username, email, cpf, phone, celphone };
+    const dto = { username, email, cpf, phone, celphone, biography };
 
     UserProfileService.UpdateUserInfo(dto, token).then(({ data }) => {
       const { message, status } = data;
@@ -50,6 +50,7 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
           layout='vertical'
           initialValues={{
             username: user.username,
+            biography: user.biography,
             email: user.email,
             cpf: user.cpf,
             phone: user.phone,
@@ -78,7 +79,7 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
           </Row>
 
           <Row gutter={window.innerWidth < 1024 ? 0 : [16, 16]}>
-            <Col span={window.innerWidth < 1024 ? 24 : 12}>
+            <Col span={window.innerWidth < 1024 ? 24 : 8}>
               <Form.Item
                 rules={[{ required: true, message: "Campo obrigatório." }]}
                 name='username'
@@ -102,7 +103,7 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
               </Form.Item>
             </Col>
 
-            <Col span={window.innerWidth < 1024 ? 24 : 12}>
+            <Col span={window.innerWidth < 1024 ? 24 : 8}>
               <Form.Item
                 rules={[
                   { required: true, message: "Campo obrigatório." },
@@ -128,12 +129,7 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
                 />
               </Form.Item>
             </Col>
-          </Row>
 
-          <Row
-            gutter={window.innerWidth < 1024 ? 0 : [16, 16]}
-            justify='space-between'
-          >
             <Col span={window.innerWidth < 1024 ? 24 : 8}>
               <Form.Item
                 rules={[{ required: true, message: "Campo obrigatório." }]}
@@ -156,6 +152,34 @@ const UserInfoTab = ({ darkPallete, user, token, navigate }) => {
                   style={styleInput}
                   placeholder='CPF'
                   mask='111.111.111-11'
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+
+          <Row
+            gutter={window.innerWidth < 1024 ? 0 : [16, 16]}
+            justify='space-between'
+          >
+            <Col span={window.innerWidth < 1024 ? 24 : 8}>
+              <Form.Item
+                name='biography'
+                label={
+                  <Typography>
+                    <span
+                      style={{
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Biografia
+                    </span>
+                  </Typography>
+                }
+              >
+                <Input
+                  disabled={!editMode}
+                  style={styleInput}
+                  placeholder='Biografia'
                 />
               </Form.Item>
             </Col>

@@ -5,9 +5,9 @@ import routes from "../../Routes/routes";
 import { Tooltip } from "antd";
 import { darkPallete } from "../../styles/pallete";
 
-const Breadcrumb = ({ crumbs = routes }) => {
+const Breadcrumb = ({ crumbs = routes, color }) => {
   return (
-    <S.Breadcrumb color='#000'>
+    <S.Breadcrumb color={color || "#000"}>
       {crumbs?.length &&
         crumbs
           .filter(({ path, breadcrumb }) =>
@@ -35,7 +35,7 @@ const Breadcrumb = ({ crumbs = routes }) => {
                       to={{
                         pathname: bc.path,
                       }}
-                      style={{ color: "#000" }}
+                      style={{ color: color || "#000" }}
                     >
                       {bc.name}
                     </Link>

@@ -90,6 +90,7 @@ module.exports = {
         cpf: user.cpf,
         phone: user.phone,
         celphone: user.celphone,
+        biography: user.biography,
         createdAt: user.createdAt.toLocaleString("pt-BR"),
       });
     } else {
@@ -154,7 +155,7 @@ module.exports = {
     const { _id } = request.body.decoded;
 
     if (_id) {
-      const { username, email, cpf, phone, celphone } = request.body;
+      const { username, email, cpf, phone, celphone, biography } = request.body;
 
       UserModel.findByIdAndUpdate(
         { _id },
@@ -164,6 +165,7 @@ module.exports = {
           cpf,
           phone,
           celphone,
+          biography,
         },
         { new: true },
         function (err) {

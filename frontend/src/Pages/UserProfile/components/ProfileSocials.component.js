@@ -21,7 +21,7 @@ export default function ProfileSocials({ darkPallete, user }) {
       {user ? (
         <>
           <StyledBreadCrumb span={24}>
-            <Breadcrumb />
+            <Breadcrumb color={window.innerWidth < 1024 && darkPallete.white} />
           </StyledBreadCrumb>
 
           <Image src={UserImage} height={120} />
@@ -34,13 +34,16 @@ export default function ProfileSocials({ darkPallete, user }) {
               {user?.username}
             </Title>
 
-            <Typography
-              style={{
-                color: window.innerWidth < 1024 ? darkPallete.white : "#A0ACBC",
-              }}
-            >
-              sou muito legal esta é minha biografia
-            </Typography>
+            {user?.biography && (
+              <Typography
+                style={{
+                  color:
+                    window.innerWidth < 1024 ? darkPallete.white : "#A0ACBC",
+                }}
+              >
+                {user.biography}
+              </Typography>
+            )}
 
             <Typography
               style={{

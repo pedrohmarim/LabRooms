@@ -25,6 +25,10 @@ const UserModel = new Schema({
     type: String,
     required: false,
   },
+  biography: {
+    type: String,
+    required: false,
+  },
   createdAt: {
     type: Date,
     required: true,

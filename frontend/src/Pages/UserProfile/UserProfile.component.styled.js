@@ -69,11 +69,15 @@ export const RoomContainer = styled.div`
   width: 100%;
   padding: 10px 20px 10px 20px;
   border-radius: 10px;
+
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 15px;
+  }
 `;
 
 export const StyledBreadCrumb = styled(Col)`
   @media screen and (max-width: 1024px) {
-    margin: 15px 0 0 25px;
+    margin: 15px 0 0 40px;
   }
 `;
 

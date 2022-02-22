@@ -35,6 +35,7 @@ export default function Signup() {
         <Link to='/'>
           <Image src={Logo} alt='Logo' height={100} preview={false} />
         </Link>
+
         <SignFormContainer
           width={window.innerWidth > 1024 ? "40%" : "90%"}
           title={
@@ -52,12 +53,14 @@ export default function Signup() {
         >
           <FormHeader margin='0 0 20px 0'>
             <Breadcrumb />
+
             {window.innerWidth > 1024 && (
               <Link to='/signin'>
                 <Button>Possui uma conta? Entrar</Button>
               </Link>
             )}
           </FormHeader>
+
           <SignUpForm darkPallete={darkPallete} />
         </SignFormContainer>
       </CenterForm>

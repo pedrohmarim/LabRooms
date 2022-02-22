@@ -198,6 +198,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
       });
     }
   }
+
   return (
     <Card bordered={false}>
       <>
@@ -212,7 +213,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                       color: window.innerWidth < 1024 && darkPallete.white,
                     }}
                   >
-                    Minhas Salas ({rooms?.array ? rooms?.array.length : "0"})
+                    Minhas Salas ({rooms?.array.length})
                   </Title>
 
                   {createRoomButton()}
