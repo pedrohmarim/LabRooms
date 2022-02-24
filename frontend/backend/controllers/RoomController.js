@@ -93,8 +93,12 @@ module.exports = {
         {
           title: roomTitle,
           description: roomDescription,
-          categoryId: roomCategory === 11 ? null : roomCategory, //11 = categoria "outras"
-          newCategory: roomCategory && roomCategory !== 11 ? null : newCategory,
+          categoryId:
+            roomCategory === 11 || roomCategory === 12 ? null : roomCategory, //11 = categoria "outras"
+          newCategory:
+            roomCategory && roomCategory !== 11 && roomCategory !== 12
+              ? null
+              : newCategory,
         },
         { new: true },
         function (err) {

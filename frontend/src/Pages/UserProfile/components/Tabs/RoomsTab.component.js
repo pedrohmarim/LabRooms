@@ -100,6 +100,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
       setRooms({ array: allRooms });
     } else {
       const filteredRoom = allRooms[position];
+      // const { _id } = filteredRoom;
+      // setRoomId(_id);
       setRooms({ array: [filteredRoom] });
     }
   }
@@ -271,6 +273,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
 
                 <Col span={24}>
                   <Form.Item
+                    sho
                     rules={[
                       {
                         required: viewMode._id === _id,
