@@ -1,11 +1,12 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { Card, RoomContainer } from "../../UserProfile.component.styled";
+import { Card } from "../../UserProfile.component.styled";
 import { Link } from "react-router-dom";
 import * as UserProfileService from "../../services/UserProfile.service";
 import * as RoomService from "../../../CreateRoom/services/createroom.service";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
 import { TitleStyled } from "../../../Home/components/Rooms/styles";
+import RoomForm from "./RoomForm.component";
 import {
   Select,
   Form,
@@ -15,10 +16,8 @@ import {
   FeatherIcons,
   Notification,
   Typography,
-  Input,
   Button,
   Menu,
-  Dropdown,
   PopConfirm,
 } from "../../../../antd_components";
 
@@ -27,8 +26,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
   const [rooms, setRooms] = useState();
   const [allRooms, setAllRooms] = useState();
   const [_id, setRoomId] = useState();
-  const [categories, setCategories] = useState();
   const [hasntRooms, setHasntRooms] = useState();
+  const [categories, setCategories] = useState();
   const [newCategoryState, setNewCategory] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState({
     _id: null,
@@ -95,14 +94,15 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     });
   }, []);
 
-  function handleFilterRoom(position) {
-    if (position === TIPO_CATEGORIA.CATEGORIA_TODAS) {
+  function handleFilterRoom(roomSelectId) {
+    if (roomSelectId === TIPO_CATEGORIA.CATEGORIA_TODAS) {
       setRooms({ array: allRooms });
+      setRoomId(null);
     } else {
-      const filteredRoom = allRooms[position];
-      // const { _id } = filteredRoom;
-      // setRoomId(_id);
+      const filteredRoom = allRooms.find(({ _id }) => _id === roomSelectId);
+      const { _id } = filteredRoom;
       setRooms({ array: [filteredRoom] });
+      setRoomId(_id);
     }
   }
 
@@ -111,11 +111,6 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
   }
 
   const listRooms = useMemo(() => {
-    const styleInput = {
-      borderRadius: "8px",
-      padding: "8px",
-    };
-
     function handleSubmit(values) {
       let { roomTitle, roomCategory, roomDescription, newCategory } = values;
 
@@ -219,252 +214,37 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           categoryId,
           newCategory,
         }) => (
-          <Col span={24}>
-            <Form
-              onFinish={handleSubmit}
-              layout='vertical'
-              initialValues={{
-                roomTitle: title,
-                roomDescription: description,
-                roomCategory: categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
-                newCategory,
-              }}
-            >
-              <RoomContainer>
-                <Row align='middle' justify='space-between'>
-                  <Col span={23}>
-                    <Title
-                      level={3}
-                      style={{
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {title}
-                    </Title>
-                  </Col>
-
-                  <Col span={1}>
-                    <Row justify='end'>
-                      <Tooltip
-                        title='Mais Opções'
-                        color={darkPallete.lightblue}
-                      >
-                        <Dropdown
-                          overlay={MoreActionsRoom(_id, title)}
-                          placement='bottomRight'
-                        >
-                          <Button
-                            ghost
-                            icon={
-                              <FeatherIcons size={18} icon='more-vertical' />
-                            }
-                            style={{
-                              marginTop: "-5px",
-                              color: "#000",
-                            }}
-                          />
-                        </Dropdown>
-                      </Tooltip>
-                    </Row>
-                  </Col>
-                </Row>
-
-                <Col span={24}>
-                  <Form.Item
-                    sho
-                    rules={[
-                      {
-                        required: viewMode._id === _id,
-                        message: "Campo obrigatório.",
-                      },
-                    ]}
-                    label={
-                      <Typography>
-                        <span style={{ fontWeight: "bold" }}>Título</span>
-                      </Typography>
-                    }
-                    name='roomTitle'
-                  >
-                    <Input
-                      disabled={viewMode._id === _id ? false : true}
-                      style={styleInput}
-                      prefix={<FeatherIcons size={18} icon='type' />}
-                    />
-                  </Form.Item>
-                </Col>
-
-                <Col span={24}>
-                  <Form.Item
-                    rules={[
-                      {
-                        required: viewMode._id === _id,
-                        message: "Campo obrigatório.",
-                      },
-                    ]}
-                    label={
-                      <Typography>
-                        <span style={{ fontWeight: "bold" }}>Descrição</span>
-                      </Typography>
-                    }
-                    name='roomDescription'
-                  >
-                    <Input
-                      disabled={viewMode._id === _id ? false : true}
-                      style={styleInput}
-                      prefix={<FeatherIcons size={18} icon='edit' />}
-                    />
-                  </Form.Item>
-                </Col>
-
-                <Col span={24}>
-                  <Form.Item
-                    rules={[
-                      {
-                        required: viewMode._id === _id,
-                        message: "Campo obrigatório.",
-                      },
-                    ]}
-                    label={
-                      <Typography>
-                        <span style={{ fontWeight: "bold" }}>Categoria</span>
-                      </Typography>
-                    }
-                    name='roomCategory'
-                  >
-                    <Select
-                      disabled={viewMode._id === _id ? false : true}
-                      getPopupContainer={(trigger) => trigger.parentNode}
-                      placeholder='Ex.: Alimentos'
-                      onChange={handleOtherCategories}
-                    >
-                      {newCategory && !categoryId && (
-                        <Select.Option
-                          key={TIPO_CATEGORIA.CATEGORIA_CRIADA}
-                          value={TIPO_CATEGORIA.CATEGORIA_CRIADA}
-                        >
-                          <Row align='middle' justify='start'>
-                            <FeatherIcons
-                              icon={Icon}
-                              size={15}
-                              className='iconMarginRight'
-                            />
-                            {CategorieTitle}
-                            <i
-                              style={{
-                                color: "gray",
-                                marginLeft: "4px",
-                              }}
-                            >
-                              - Categoria criada por você
-                            </i>
-                          </Row>
-                        </Select.Option>
-                      )}
-
-                      {categories &&
-                        categories
-                          .sort((a, b) =>
-                            a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
-                          )
-                          .map(({ Title, _id, Icon }) => (
-                            <Select.Option key={_id} value={_id}>
-                              <Row align='middle' justify='start'>
-                                <FeatherIcons icon={Icon} size={15} />
-                                <span
-                                  style={{
-                                    margin: "2px 0 0 5px",
-                                  }}
-                                >
-                                  {Title}
-                                </span>
-                              </Row>
-                            </Select.Option>
-                          ))}
-
-                      <Select.Option key={11} value={11}>
-                        <Row align='middle' justify='start'>
-                          <FeatherIcons icon='repeat' size={15} />
-                          <span style={{ margin: "2px 0 0 5px" }}>
-                            Outras
-                            <i
-                              style={{
-                                color: "gray",
-                                marginLeft: "4px",
-                              }}
-                            >
-                              - Poderá criar uma nova categoria
-                            </i>
-                          </span>
-                        </Row>
-                      </Select.Option>
-                    </Select>
-                  </Form.Item>
-                </Col>
-
-                {newCategoryState && viewMode._id === _id && (
-                  <Col span={24}>
-                    <Form.Item
-                      rules={[
-                        {
-                          required: newCategoryState,
-                          message: "Campo obrigatório.",
-                        },
-                      ]}
-                      label={
-                        <Typography>
-                          <span style={{ fontWeight: "bold" }}>
-                            Nova Categoria
-                          </span>
-                        </Typography>
-                      }
-                      name='newCategory'
-                    >
-                      <Input
-                        disabled={viewMode._id === _id ? false : true}
-                        style={styleInput}
-                        allowClear
-                        prefix={<FeatherIcons icon='tag' size={15} />}
-                        placeholder='Ex.: Construções'
-                      />
-                    </Form.Item>
-                  </Col>
-                )}
-
-                {showConfirmButton._id === _id && (
-                  <Row justify='end'>
-                    <Button
-                      htmlType='submit'
-                      backgroundcolor={darkPallete.lightblue}
-                      height='35'
-                      width='200'
-                      color={darkPallete.white}
-                      style={{
-                        marginBottom: "15px",
-                      }}
-                    >
-                      Confirmar
-                    </Button>
-                  </Row>
-                )}
-              </RoomContainer>
-            </Form>
-          </Col>
+          <RoomForm
+            handleOtherCategories={handleOtherCategories}
+            MoreActionsRoom={MoreActionsRoom}
+            handleSubmit={handleSubmit}
+            categories={categories}
+            newCategoryState={newCategoryState}
+            viewMode={viewMode}
+            showConfirmButton={showConfirmButton}
+            darkPallete={darkPallete}
+            Icon={Icon}
+            title={title}
+            description={description}
+            categoryId={categoryId}
+            newCategory={newCategory}
+            _id={_id}
+            CategorieTitle={CategorieTitle}
+          />
         )
       )
     );
   }, [
-    _id,
-    categories,
-    hasntRooms,
-    newCategoryState,
-    rooms,
-    showConfirmButton,
-    viewMode,
+    token,
     navigate,
     darkPallete,
-    token,
+    hasntRooms,
+    rooms,
+    _id,
+    newCategoryState,
+    viewMode,
+    showConfirmButton,
+    categories,
     handleDeleteRoom,
   ]);
 
@@ -521,8 +301,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                         // .sort((a, b) =>
                         //   a.title > b.title ? 1 : b.title > a.title ? -1 : 0
                         // )
-                        .map(({ title, _id, Icon }, index) => (
-                          <Select.Option key={_id} value={index}>
+                        .map(({ title, _id, Icon }) => (
+                          <Select.Option key={_id} value={_id}>
                             <FeatherIcons
                               icon={Icon}
                               size={18}
