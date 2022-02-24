@@ -97,7 +97,10 @@ const Header = ({ fromNotFound }) => {
           ) : (
             !fromNotFound &&
             user && (
-              <Dropdown overlay={MoreActionsRoom}>
+              <Dropdown
+                overlay={MoreActionsRoom}
+                trigger={window.innerWidth < 1024 ? "click" : "hover"}
+              >
                 <Button
                   icon={<FeatherIcons icon='user' size={18} />}
                   color={white}
