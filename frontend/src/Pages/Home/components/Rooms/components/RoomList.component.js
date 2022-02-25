@@ -11,7 +11,9 @@ import { darkPallete } from "../../../../../styles/pallete";
 import { Link } from "react-router-dom";
 
 const Rooms = ({ rooms, pallete }) => {
-  function loadRoomThumb(thumb) {}
+  async function loadRoomThumb(thumb) {
+    console.log(thumb);
+  }
 
   return (
     <Row>

@@ -4,17 +4,7 @@ module.exports = {
   async handleCreate(request, response) {
     const { _id } = request.body.decoded;
 
-    let {
-      title,
-      description,
-      categoryId,
-      newCategory,
-      uid,
-      name,
-      size,
-      type,
-      lastModified,
-    } = request.body;
+    let { title, description, categoryId, newCategory, thumb } = request.body;
 
     RoomModel.create({
       title,
@@ -22,13 +12,7 @@ module.exports = {
       categoryId,
       newCategory,
       owner: _id,
-      thumb: {
-        uid,
-        name,
-        size,
-        type,
-        lastModified,
-      },
+      thumb,
     })
       .then(() => {
         return response.json({

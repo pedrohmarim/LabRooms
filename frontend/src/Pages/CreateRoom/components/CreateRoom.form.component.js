@@ -1,6 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TIPO_CATEGORIA } from "../../../Helpers/TipoCategoria";
+import ImgCrop from "antd-img-crop";
+import Cookie from "js-cookie";
+import * as CreateRoomService from "../services/createroom.service";
+import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
+import {
+  acceptedFileTypes,
+  isValidExtension,
+  isValidFileSize,
+} from "../Helper/UploadImage.helper";
 import {
   Form,
   FeatherIcons,
@@ -9,23 +18,16 @@ import {
   Button,
   Upload,
   Select,
-  Tooltip,
   Notification,
 } from "../../../antd_components";
-import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
-import {
-  acceptedFileTypes,
-  isValidExtension,
-  isValidFileSize,
-} from "../Helper/UploadImage.helper";
-import Cookie from "js-cookie";
-import * as CreateRoomService from "../services/createroom.service";
 
 const SigninForm = ({ darkPallete }) => {
   const [form] = Form.useForm();
   let navigate = useNavigate();
   const [categories, setCategories] = useState();
   const [newCategory, setNewCategory] = useState(false);
+  const [fileList, setFileList] = useState([]);
+  const [invalidType, setInvalidType] = useState(false);
 
   const styleInput = {
     borderRadius: "8px",
@@ -43,7 +45,8 @@ const SigninForm = ({ darkPallete }) => {
         type: "error",
         message: "Formato de Arquivo Inválido",
       });
-      return Upload.LIST_IGNORE;
+      setInvalidType(true);
+      return false;
     }
 
     if (!isValidFileSize(file.size, 3)) {
@@ -51,27 +54,41 @@ const SigninForm = ({ darkPallete }) => {
         type: "error",
         message: "Arquivos de imagem devem ser menores que 3MB!",
       });
-      return Upload.LIST_IGNORE;
+      setInvalidType(true);
+      return false;
     }
 
-    return false;
+    setInvalidType(false);
+    return true;
   }
 
   function onSubmit(values) {
-    let { logo, title, description, category, newCategory } = values;
+    let { title, description, category, newCategory } = values;
+    const { originFileObj } = fileList[0];
 
     const token = Cookie.get("token");
+    console.log(originFileObj);
 
-    const { file } = logo;
-
-    const { uid, name, size, type, lastModified } = file;
-
-    const dto = {
+    const {
       uid,
+      lastModified,
+      lastModifiedDate,
       name,
       size,
       type,
-      lastModified,
+      webkitRelativePath,
+    } = originFileObj;
+
+    const dto = {
+      thumb: {
+        uid,
+        lastModified,
+        lastModifiedDate,
+        name,
+        size,
+        type,
+        webkitRelativePath,
+      },
       title,
       description,
       categoryId: newCategory ? null : category,
@@ -111,6 +128,25 @@ const SigninForm = ({ darkPallete }) => {
   function handleOtherCategories(value) {
     setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
   }
+
+  const onChange = ({ fileList: newFileList }) => {
+    !invalidType && setFileList(newFileList);
+  };
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow.document.write(image.outerHTML);
+  };
 
   return (
     <Form layout='vertical' onFinish={onSubmit} form={form}>
@@ -193,23 +229,20 @@ const SigninForm = ({ darkPallete }) => {
         </FormItem>
       )}
 
-      <FormItem
-        label='Logo'
-        name='logo'
-        rules={[{ required: true, message: "Campo obrigatório." }]}
-      >
-        <Upload
-          accept={acceptedFileTypes}
-          beforeUpload={beforeUpload}
-          multiple={false}
-          maxCount={1}
-        >
-          <Tooltip title='Enviar logo da sala' color={darkPallete.lightblue}>
-            <Button icon={<FeatherIcons icon='upload' size={15} />}>
-              <span style={{ marginLeft: "5px" }}>Enviar imagem</span>
-            </Button>
-          </Tooltip>
-        </Upload>
+      <FormItem label='Logo'>
+        <ImgCrop rotate beforeCrop={beforeUpload}>
+          <Upload
+            multiple={false}
+            maxCount={1}
+            accept={acceptedFileTypes}
+            listType='picture-card'
+            fileList={fileList}
+            onChange={onChange}
+            onPreview={onPreview}
+          >
+            {fileList.length < 1 && "Enviar imagem"}
+          </Upload>
+        </ImgCrop>
       </FormItem>
 
       <Button

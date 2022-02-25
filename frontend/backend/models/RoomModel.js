@@ -23,7 +23,7 @@ const RoomModel = new Schema({
   },
   thumb: {
     type: Object,
-    required: true,
+    required: false,
   },
 });
 
