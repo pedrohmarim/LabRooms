@@ -297,28 +297,24 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                     </Select.Option>
 
                     {allRooms &&
-                      allRooms
-                        // .sort((a, b) =>
-                        //   a.title > b.title ? 1 : b.title > a.title ? -1 : 0
-                        // )
-                        .map(({ title, _id, Icon }) => (
-                          <Select.Option key={_id} value={_id}>
-                            <FeatherIcons
-                              icon={Icon}
-                              size={18}
-                              className='iconMargin'
-                            />
-                            <span
-                              style={{
-                                marginLeft: "5px",
-                                position: "relative",
-                                top: "-3px",
-                              }}
-                            >
-                              {title}
-                            </span>
-                          </Select.Option>
-                        ))}
+                      allRooms.map(({ title, _id, Icon }) => (
+                        <Select.Option key={_id} value={_id}>
+                          <FeatherIcons
+                            icon={Icon}
+                            size={18}
+                            className='iconMargin'
+                          />
+                          <span
+                            style={{
+                              marginLeft: "5px",
+                              position: "relative",
+                              top: "-3px",
+                            }}
+                          >
+                            {title}
+                          </span>
+                        </Select.Option>
+                      ))}
                   </Select>
                 </Form.Item>
               </Col>

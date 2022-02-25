@@ -32,17 +32,17 @@ const SignUpForm = ({ darkPallete }) => {
       username,
     };
 
-    SignUpService.userRegister(dto).then((res) => {
-      const { message, success, unknow } = res.data;
+    SignUpService.userRegister(dto).then(({ data }) => {
+      const { message, success } = data;
 
-      if (!success && !unknow) {
-        setValidateInput(res.data);
+      if (!success) {
+        setValidateInput(data);
         Notification.open({
           type: "error",
           message: "Erro",
           description: message,
         });
-      } else if (success && !unknow) {
+      } else if (success) {
         setValidateInput(null);
 
         navigate("/signin");
@@ -87,6 +87,8 @@ const SignUpForm = ({ darkPallete }) => {
           { required: true, message: "Campo obrigatório." },
           { type: "email", message: "E-mail inválido." },
         ]}
+        help={validateInput?.field === "email" ? validateInput.message : null}
+        validateStatus={validateInput?.field === "email" ? "error" : null}
       >
         <Input
           style={styleInput}
@@ -100,8 +102,8 @@ const SignUpForm = ({ darkPallete }) => {
         label='CPF'
         name='cpf'
         rules={[{ required: true, message: "Campo obrigatório." }]}
-        help={validateInput ? validateInput.message : null}
-        validateStatus={validateInput ? "error" : null}
+        help={validateInput?.field === "cpf" ? validateInput.message : null}
+        validateStatus={validateInput?.field === "cpf" ? "error" : null}
       >
         <InputMask
           mask='111.111.111-11'

@@ -35,6 +35,7 @@ const Rooms = ({ rooms, pallete }) => {
           </TitleStyled>
         </Col>
       )}
+
       {rooms &&
         rooms.map(({ title, description, thumb, _id }) => (
           <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6} key={_id}>

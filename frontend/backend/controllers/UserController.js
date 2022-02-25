@@ -8,7 +8,7 @@ module.exports = {
   async handleRegister(request, response) {
     const { cpf, email, password, username } = request.body;
 
-    UserModel.find({ cpf }).then(async (res) => {
+    UserModel.find({ $or: [{ cpf }, { email }] }).then(async (res) => {
       if (res.length === 0) {
         let hashedPass = await bcrypt.hash(password, 10);
 
@@ -23,7 +23,6 @@ module.exports = {
             return response.json({
               message: "Usuário cadastrado com sucesso!",
               success: true,
-              unknow: false,
             });
           })
           .catch(() => {
@@ -33,11 +32,19 @@ module.exports = {
             });
           });
       } else {
-        return response.json({
-          message: "CPF já cadastrado!",
-          success: false,
-          unknow: false,
-        });
+        if (res[0].email === email) {
+          return response.json({
+            message: "E-mail já cadastrado!",
+            field: "email",
+          });
+        }
+
+        if (res[0].cpf === cpf) {
+          return response.json({
+            message: "CPF já cadastrado!",
+            field: "cpf",
+          });
+        }
       }
     });
   },
