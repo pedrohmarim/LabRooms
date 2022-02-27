@@ -8,6 +8,10 @@ export const CenterForm = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+
+  @media screen and (min-width: 1024px) and (min-height: 800px) {
+    height: 100vh;
+  }
 `;
 
 export const SignFormContainer = styled(Card)`

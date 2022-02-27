@@ -35,20 +35,20 @@ module.exports = {
   async handleGetRoomsByCategory(request, response) {
     const { categoryid } = request.headers;
 
-    let result = null;
+    let rooms = null;
 
     switch (categoryid) {
       case "10":
-        result = await RoomModel.find();
-        if (result) return response.json(result); // Filtra todas as salas ao selecionar Categoria = "Todas"
+        rooms = await RoomModel.find();
+        if (rooms) return response.json({ rooms, loading: false }); // Filtra todas as salas ao selecionar Categoria = "Todas"
         break;
       case "11":
-        result = await RoomModel.find({ categoryId: null }); // Filtra todas as salas que possuem Categoria = "Outros"
-        if (result) return response.json(result);
+        rooms = await RoomModel.find({ categoryId: null }); // Filtra todas as salas que possuem Categoria = "Outros"
+        if (rooms) return response.json({ rooms, loading: false });
         break;
       default:
-        result = await RoomModel.find({ categoryId: categoryid }); // Filtra salas por Categoria
-        if (result) return response.json(result);
+        rooms = await RoomModel.find({ categoryId: categoryid }); // Filtra salas por Categoria
+        if (rooms) return response.json({ rooms, loading: false });
         break;
     }
   },

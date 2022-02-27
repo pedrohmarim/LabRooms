@@ -321,7 +321,14 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
             </>
           ) : (
             !rooms?.loading &&
-            !hasntRooms && <Row>{Loading(darkPallete.color)}</Row>
+            !hasntRooms && (
+              <Row>
+                {Loading(
+                  window.innerWidth < 1024 ? darkPallete.white : "#000",
+                  "0 0 0 10px"
+                )}
+              </Row>
+            )
           )}
         </Row>
 

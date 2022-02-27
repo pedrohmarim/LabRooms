@@ -98,7 +98,11 @@ module.exports = {
         phone: user.phone,
         celphone: user.celphone,
         biography: user.biography,
-        createdAt: user.createdAt.toLocaleString("pt-BR"),
+        createdAt: user.createdAt.toLocaleString("pt-BR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "numeric",
+        }),
       });
     } else {
       return response.json(null);

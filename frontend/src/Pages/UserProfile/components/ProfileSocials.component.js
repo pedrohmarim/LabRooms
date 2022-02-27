@@ -50,8 +50,7 @@ export default function ProfileSocials({ darkPallete, user }) {
                 color: window.innerWidth < 1024 ? darkPallete.white : "#A0ACBC",
               }}
             >
-              Membro desde{" "}
-              {new Intl.DateTimeFormat("pt-BR").format(user?.createdAt.format)}
+              Membro desde {user?.createdAt}
             </Typography>
           </Col>
 

@@ -19,8 +19,10 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
   return (
     <>
       {loadingRooms && (
-        <Row justify='center' style={{ marginTop: "20px" }}>
-          {Loading("#fff")}
+        <Row justify='center'>
+          <TitleStyled level={4} color={pallete.white} margintop='28px'>
+            {Loading("#fff")}
+          </TitleStyled>
         </Row>
       )}
       <Row>

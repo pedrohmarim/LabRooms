@@ -36,8 +36,12 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
   }, []);
 
   function handleFilterRoom(categoryId) {
+    setLoadingRooms(true);
+
     HomeService.getRoomsByCategory(categoryId).then(({ data }) => {
-      setRooms(data);
+      const { rooms, loading } = data;
+      setRooms(rooms);
+      setLoadingRooms(loading);
     });
   }
 
@@ -76,28 +80,28 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
           )}
         </Col>
 
-        <Tooltip
-          title='Filtrar salas'
-          placement='left'
-          color={pallete.lightblue}
-        >
-          <Select
-            id='rooms'
-            onChange={handleFilterRoom}
-            width={window.innerWidth > 1024 ? "12%" : "100%"}
-            margintop={window.innerWidth < 1024 ? "10px" : "0"}
-            getPopupContainer={(trigger) => trigger.parentNode}
-            placeholder='Filtrar...'
-            size='middle'
+        {categories ? (
+          <Tooltip
+            title='Filtrar salas'
+            placement='left'
+            color={pallete.lightblue}
           >
-            <Select.Option key={10} value={10}>
-              <Row align='middle' justify='start'>
-                <FeatherIcons icon='list' size={15} />
-                <span style={{ margin: "2px 0 0 5px" }}>Todas</span>
-              </Row>
-            </Select.Option>
-            {categories &&
-              categories
+            <Select
+              id='rooms'
+              onChange={handleFilterRoom}
+              width={window.innerWidth > 1024 ? "12%" : "100%"}
+              margintop={window.innerWidth < 1024 ? "10px" : "0"}
+              getPopupContainer={(trigger) => trigger.parentNode}
+              placeholder='Filtrar...'
+              size='middle'
+            >
+              <Select.Option key={10} value={10}>
+                <Row align='middle' justify='start'>
+                  <FeatherIcons icon='list' size={15} />
+                  <span style={{ margin: "2px 0 0 5px" }}>Todas</span>
+                </Row>
+              </Select.Option>
+              {categories
                 .sort((a, b) =>
                   a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
                 )
@@ -109,14 +113,17 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
                     </Row>
                   </Select.Option>
                 ))}
-            <Select.Option key={11} value={11}>
-              <Row align='middle' justify='start'>
-                <FeatherIcons icon='repeat' size={15} />
-                <span style={{ margin: "2px 0 0 5px" }}>Outras</span>
-              </Row>
-            </Select.Option>
-          </Select>
-        </Tooltip>
+              <Select.Option key={11} value={11}>
+                <Row align='middle' justify='start'>
+                  <FeatherIcons icon='repeat' size={15} />
+                  <span style={{ margin: "2px 0 0 5px" }}>Outras</span>
+                </Row>
+              </Select.Option>
+            </Select>
+          </Tooltip>
+        ) : (
+          Loading(darkPallete.white)
+        )}
       </Row>
 
       <Divider

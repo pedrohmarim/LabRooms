@@ -19,6 +19,7 @@ import {
 import { darkPallete } from "../../styles/pallete";
 
 export default function Signup() {
+  console.log(window.innerHeight);
   const { Title } = Typography;
 
   return (
@@ -31,7 +32,7 @@ export default function Signup() {
       >
         <source src={Background} type='video/mp4' />
       </video>
-      <CenterForm height={window.innerWidth > 1024 && "100vh"}>
+      <CenterForm>
         <Link to='/'>
           <Image src={Logo} alt='Logo' height={100} preview={false} />
         </Link>
