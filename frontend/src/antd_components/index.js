@@ -18,7 +18,6 @@ import InputMask from "./InputMask/InputMask.component";
 import Notification from "./Notification/Notification.component";
 import Layout from "./Layout/Layout.component";
 import Menu from "./Menu/Menu.component";
-import Modal from "./Modal/Modal.component";
 import Upload from "./Upload/Upload.component";
 import Dropdown from "./Dropdown/Dropdown.component";
 import PopConfirm from "./PopConfirm/PopConfirm.component";
@@ -42,7 +41,6 @@ export {
   Upload,
   Typography,
   Input,
-  Modal,
   Tooltip,
   Select,
   Form,

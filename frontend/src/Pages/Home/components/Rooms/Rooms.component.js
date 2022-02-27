@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { darkPallete } from "../../../../styles/pallete";
 import SearchInput from "../../../../GlobalComponents/SearchInput/SearchInput.component";
 import RoomList from "./components/RoomList.component";
+import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import {
   Row,
   Select,
@@ -16,13 +17,17 @@ import {
 } from "../../../../antd_components";
 import * as CreateRoomService from "../../../CreateRoom/services/createroom.service";
 
-const Rooms = ({ pallete, searchValue, user }) => {
+const Rooms = ({ pallete, searchValue, userContext }) => {
   const [rooms, setRooms] = useState();
+  const [loadingRooms, setLoadingRooms] = useState(true);
   const [categories, setCategories] = useState();
+  const { user, loading } = userContext;
 
   useEffect(() => {
-    HomeService.getRooms().then((res) => {
-      setRooms(res.data);
+    HomeService.getRooms().then(({ data }) => {
+      const { rooms, loading } = data;
+      setRooms(rooms);
+      setLoadingRooms(loading);
     });
 
     CreateRoomService.getCategories().then(({ data }) => {
@@ -50,7 +55,7 @@ const Rooms = ({ pallete, searchValue, user }) => {
             color={pallete.lightblue}
             width={window.innerWidth > 1024 ? "25%" : "100%"}
           />
-          {user && (
+          {user && !loading ? (
             <Link to='/createroom'>
               <Tooltip title='Crie uma nova sala' color={pallete.lightblue}>
                 <Button
@@ -66,6 +71,8 @@ const Rooms = ({ pallete, searchValue, user }) => {
                 </Button>
               </Tooltip>
             </Link>
+          ) : (
+            !user && loading && Loading(pallete.white, "0 0 0 10px")
           )}
         </Col>
 
@@ -119,7 +126,7 @@ const Rooms = ({ pallete, searchValue, user }) => {
         }}
       />
 
-      <RoomList rooms={rooms} pallete={pallete} />
+      <RoomList rooms={rooms} loadingRooms={loadingRooms} pallete={pallete} />
     </Container>
   );
 };

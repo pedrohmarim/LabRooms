@@ -28,8 +28,8 @@ module.exports = {
   },
 
   async handleGetRooms(request, response) {
-    const result = await RoomModel.find();
-    return response.json(result);
+    const rooms = await RoomModel.find();
+    return response.json({ rooms, loading: false });
   },
 
   async handleGetRoomsByCategory(request, response) {

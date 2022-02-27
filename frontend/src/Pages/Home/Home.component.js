@@ -10,7 +10,7 @@ import Rooms from "./components/Rooms/Rooms.component";
 import { darkPallete } from "../../styles/pallete";
 
 export default function Home() {
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
   const [searchValue, setSearchValue] = useState();
 
   function handleScrollToRooms(searchValue) {
@@ -40,7 +40,11 @@ export default function Home() {
         <HomeArrow />
       </Container>
 
-      <Rooms pallete={darkPallete} searchValue={searchValue} user={user} />
+      <Rooms
+        pallete={darkPallete}
+        searchValue={searchValue}
+        userContext={{ user, loading }}
+      />
     </>
   );
 }

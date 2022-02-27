@@ -6,15 +6,18 @@ export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [loading, setLoading] = useState(true);
   const token = Cookie.get("token");
 
   useEffect(() => {
     if (token) {
       HomeService.getCurrentUser(token).then(({ data }) => {
         setUser(data);
+        setLoading(false);
       });
     } else {
       setUser(null);
+      setLoading(false);
     }
   }, [token]);
 
@@ -23,6 +26,7 @@ export const UserProvider = ({ children }) => {
       value={{
         user,
         setUser,
+        loading,
       }}
     >
       {children}
