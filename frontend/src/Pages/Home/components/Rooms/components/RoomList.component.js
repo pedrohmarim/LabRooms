@@ -48,7 +48,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
                   margintop={window.innerWidth < 1024 ? "15px" : "20px"}
                 >
                   <FeatherIcons icon='check-circle' size={28} />
-                  <ButtonText>Salas disponíveis</ButtonText>
+                  <ButtonText>Salas disponíveis ({rooms.length})</ButtonText>
                 </TitleStyled>
               </Col>
 

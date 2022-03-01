@@ -14,7 +14,7 @@ const { Title } = Typography;
 
 export const ProfileContainer = styled(Layout)`
   margin: 25px 105px 25px 25px;
-  background-color: #000;
+  background-color: transparent;
 
   @media screen and (max-width: 1024px) {
     width: 100%;
@@ -51,7 +51,7 @@ export const Card = styled(CardStyled)`
 export const LeftFormContainer = styled(Col)`
   height: 100%;
   padding: 10px;
-  background-color: #000;
+  background-color: transparent;
 
   @media screen and (max-width: 1024px) {
     padding: 0px;
@@ -65,7 +65,7 @@ export const LeftFormContainer = styled(Col)`
 
 export const RightFormContainer = styled(Col)`
   height: 100%;
-  background-color: #000;
+  background-color: transparent;
   padding: 10px;
 `;
 
@@ -170,7 +170,6 @@ export const StyledSocial = styled.span`
 `;
 
 export const SocialContainer = styled(Typography)`
-  color: #000;
-  display: flex;
   align-items: center;
+  display: flex;
 `;

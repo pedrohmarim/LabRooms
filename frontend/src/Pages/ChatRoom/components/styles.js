@@ -34,7 +34,6 @@ export const SiderStyled = styled(Sider)`
 
 export const RoomInfoContainer = styled.span`
   padding-bottom: 5px;
-  border-bottom: solid 1px rgba(255, 255, 255, 0.1);
   margin-right: 15px;
   display: flex;
   align-items: center;
@@ -44,6 +43,7 @@ export const RoomInfoContainer = styled.span`
 
 export const InfoWrapper = styled.div`
   width: 100%;
+  z-index: 999;
 `;
 
 export const TitleStyled = styled(Title)`
@@ -52,7 +52,6 @@ export const TitleStyled = styled(Title)`
 
 export const Layout = styled(LayoutStyled)`
   margin: 25px 105px 25px 25px;
-  background-color: #000;
 `;
 
 export const RoomCategory = styled.span`
@@ -113,7 +112,7 @@ export const ChatStyled = styled.div`
 export const Message = styled.div`
   text-align: left;
   border-radius: 8px;
-  background-color: lightblue;
+  background-color: ${({ background }) => background};
   width: fit-content;
   height: fit-content;
   max-width: 45%;

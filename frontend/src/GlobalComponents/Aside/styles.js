@@ -9,12 +9,12 @@ export const Menu = styled(MenuStyled)`
   flex-direction: column;
   justify-content: center;
   border-right: solid 1px rgba(255, 255, 255, 0.1);
-  background-color: #000;
+  background-color: transparent;
   color: ${({ color }) => color};
 
   .ant-menu-item {
     color: ${({ color }) => color};
-    background-color: #000;
+    background-color: transparent;
   }
 
   .ant-menu-item:hover {
@@ -28,7 +28,7 @@ export const Menu = styled(MenuStyled)`
 `;
 
 export const SiderStyled = styled(Sider)`
-  background-color: #000;
+  background-color: transparent;
   height: 100vh;
   position: relative;
   z-index: 999;
@@ -38,6 +38,7 @@ export const MenuItem = styled(MenuStyled.Item)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 !important;
 `;
 
 export const AsideLogo = styled.img`

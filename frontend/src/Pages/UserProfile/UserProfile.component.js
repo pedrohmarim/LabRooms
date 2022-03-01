@@ -6,6 +6,7 @@ import Aside from "../../GlobalComponents/Aside/Aside.component";
 import { darkPallete } from "../../styles/pallete";
 import ProfileSocials from "./components/ProfileSocials.component";
 import TabsContainer from "./components/TabsContainer.component";
+import Background from "../../assets/backStars.mp4";
 import {
   ProfileContainer,
   Row,
@@ -27,6 +28,14 @@ export default function UserProfile() {
 
   return (
     <>
+      <video
+        loop
+        autoPlay
+        muted
+        id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
+      >
+        <source src={Background} type='video/mp4' />
+      </video>
       <div
         style={
           window.innerWidth > 1024

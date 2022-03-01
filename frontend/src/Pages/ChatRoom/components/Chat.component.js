@@ -121,8 +121,6 @@ export default function Chat({ darkPallete, currentRoom }) {
     }
   }, [currentRoom]);
 
-  function loadRoomThumb(thumb) {}
-
   function expandInfo() {
     const elements = document.getElementsByClassName("expandable");
     setToggle((prev) => !prev);
@@ -147,11 +145,7 @@ export default function Chat({ darkPallete, currentRoom }) {
               margintop={window.innerWidth < 1024 ? "15px" : "20px"}
               background={darkPallete.lightblueOpacity}
             >
-              <Image
-                src={loadRoomThumb(currentRoom.thumb)}
-                height={70}
-                width={70}
-              />
+              <Image src={currentRoom.thumb} height={70} width={70} preview />
 
               <InfoWrapper>
                 <RoomTitle
@@ -198,7 +192,7 @@ export default function Chat({ darkPallete, currentRoom }) {
                 {users &&
                   users.map(({ name }) => (
                     <Col span={24}>
-                      <Message>
+                      <Message background={darkPallete.backgroundBlue}>
                         <MessageOwner>
                           Pedro Henrique Marim Cavelani
                         </MessageOwner>
@@ -214,13 +208,13 @@ export default function Chat({ darkPallete, currentRoom }) {
                 gutter={[15, 15]}
                 justify='space-around'
                 align='bottom'
-                background={darkPallete.lightblue}
+                background={darkPallete.backgroundBlue}
               >
                 <Col span={23}>
                   <Input placeholder='Mensagem' style={styleInput} />
                 </Col>
                 <Tooltip title='Enviar' color={darkPallete.lightblue}>
-                  <SendMessage span={1} background='lightgray'>
+                  <SendMessage span={1} background={darkPallete.white}>
                     <FeatherIcons icon='send' size={25} />
                   </SendMessage>
                 </Tooltip>
@@ -243,27 +237,24 @@ export default function Chat({ darkPallete, currentRoom }) {
             </TitleStyled>
             <Row gutter={[16, 16]}>
               <Col span={24}>
-                <Image
-                  src={loadRoomThumb(currentRoom.thumb)}
-                  height={35}
-                  width={35}
-                />
+                <Image src={currentRoom.thumb} preview height={35} width={35} />
                 <UsernameContainer>
-                  {ownerRoomName}
                   <CrownOutlined
                     style={{
                       fontSize: "20px",
-                      marginLeft: "5px",
+                      marginRight: "5px",
                       color: "yellow",
                     }}
                   />
+                  {ownerRoomName}
                 </UsernameContainer>
               </Col>
               {users &&
                 users.map(({ name }) => (
                   <Col span={24}>
                     <Image
-                      src={loadRoomThumb(currentRoom.thumb)}
+                      src={currentRoom.thumb}
+                      preview
                       height={35}
                       width={35}
                     />
