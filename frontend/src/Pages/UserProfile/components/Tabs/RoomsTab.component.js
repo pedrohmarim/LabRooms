@@ -1,12 +1,18 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { Card } from "../../UserProfile.component.styled";
 import { Link } from "react-router-dom";
 import * as UserProfileService from "../../services/UserProfile.service";
 import * as RoomService from "../../../CreateRoom/services/createroom.service";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
-import { TitleStyled } from "../../../Home/components/Rooms/styles";
+import { TitleStyled, ButtonText } from "../../../Home/components/Rooms/styles";
 import RoomForm from "./RoomForm.component";
+import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
+import {
+  Card,
+  UserInfoTitle,
+  StyledOption,
+  StyledRow,
+} from "../../UserProfile.component.styled";
 import {
   Select,
   Form,
@@ -15,14 +21,12 @@ import {
   Col,
   FeatherIcons,
   Notification,
-  Typography,
   Button,
   Menu,
   PopConfirm,
 } from "../../../../antd_components";
 
 const RoomsTab = ({ darkPallete, user, token, navigate }) => {
-  const { Title } = Typography;
   const [rooms, setRooms] = useState();
   const [allRooms, setAllRooms] = useState();
   const [_id, setRoomId] = useState();
@@ -40,15 +44,12 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     <Link to='/createroom'>
       <Tooltip title='Crie uma nova sala' color={darkPallete.lightblue}>
         <Button
-          style={{
-            fontWeight: 400,
-            marginLeft: marginleft || "15px",
-            background: darkPallete.lightblue,
-            color: darkPallete.white,
-          }}
+          margin={`0 0 ${marginleft || "15px"} 0px`}
+          color={darkPallete.white}
+          backgroundcolor={darkPallete.lightblue}
           icon={<FeatherIcons icon='plus' size={20} />}
         >
-          <span style={{ marginLeft: "5px" }}>Criar sala</span>
+          <ButtonText>Criar sala</ButtonText>
         </Button>
       </Tooltip>
     </Link>
@@ -153,9 +154,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
         <Menu.Item key='1' onClick={() => navigate(`/chatroom/${_id}`)}>
           <Row align='middle'>
             <FeatherIcons icon='share' size={15} />
-            <span style={{ marginTop: "3px", marginLeft: "5px" }}>
-              Ir para sala
-            </span>
+            <MenuLabelItem>Ir para sala</MenuLabelItem>
           </Row>
         </Menu.Item>
         <Menu.Item
@@ -174,7 +173,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
         >
           <Row align='middle'>
             <FeatherIcons icon='edit-2' size={15} />
-            <span style={{ marginTop: "3px", marginLeft: "5px" }}>Editar</span>
+            <MenuLabelItem>Editar</MenuLabelItem>
           </Row>
         </Menu.Item>
         <PopConfirm
@@ -192,9 +191,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           <Menu.Item key='2'>
             <Row align='middle'>
               <FeatherIcons icon='trash-2' size={15} />
-              <span style={{ marginTop: "3px", marginLeft: "5px" }}>
-                Excluir
-              </span>
+              <MenuLabelItem>Excluir</MenuLabelItem>
             </Row>
           </Menu.Item>
         </PopConfirm>
@@ -256,14 +253,9 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
             <>
               <Col span={window.innerWidth > 1024 ? 18 : 24}>
                 <Row justify='space-between'>
-                  <Title
-                    level={4}
-                    style={{
-                      color: window.innerWidth < 1024 && darkPallete.white,
-                    }}
-                  >
+                  <UserInfoTitle level={4} color={darkPallete.white}>
                     Minhas Salas ({rooms?.array.length})
-                  </Title>
+                  </UserInfoTitle>
 
                   {createRoomButton()}
                 </Row>
@@ -285,15 +277,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                         size={18}
                         className='iconMargin'
                       />
-                      <span
-                        style={{
-                          marginLeft: "5px",
-                          position: "relative",
-                          top: window.innerWidth < 1024 ? "-4px" : "-3px",
-                        }}
-                      >
-                        Todas
-                      </span>
+                      <StyledOption>Todas</StyledOption>
                     </Select.Option>
 
                     {allRooms &&
@@ -304,15 +288,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                             size={18}
                             className='iconMargin'
                           />
-                          <span
-                            style={{
-                              marginLeft: "5px",
-                              position: "relative",
-                              top: "-3px",
-                            }}
-                          >
-                            {title}
-                          </span>
+                          <StyledOption>{title}</StyledOption>
                         </Select.Option>
                       ))}
                   </Select>
@@ -334,7 +310,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
 
         <Row gutter={window.innerWidth > 1024 && [15, 15]}>
           {hasntRooms && (
-            <Row align='middle' justify='center' style={{ width: "100%" }}>
+            <StyledRow align='middle' justify='center'>
               <Col span={24}>
                 <TitleStyled
                   level={5}
@@ -344,7 +320,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                 </TitleStyled>
               </Col>
               <Col span={24}>{createRoomButton("0px")}</Col>
-            </Row>
+            </StyledRow>
           )}
 
           {listRooms}

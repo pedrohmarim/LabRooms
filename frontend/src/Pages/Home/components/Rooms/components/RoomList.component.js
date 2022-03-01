@@ -1,15 +1,17 @@
 import React from "react";
+import { Row, Image, FeatherIcons, Col } from "../../../../../antd_components";
+import { darkPallete } from "../../../../../styles/pallete";
+import { Link } from "react-router-dom";
+import { Loading } from "../../../../../GlobalComponents/Loading/Loading.component";
 import {
   RoomItem,
   RoomTitle,
   RoomDescription,
   UserCount,
   TitleStyled,
+  ButtonText,
+  UsersNumber,
 } from "../styles";
-import { Row, Image, FeatherIcons, Col } from "../../../../../antd_components";
-import { darkPallete } from "../../../../../styles/pallete";
-import { Link } from "react-router-dom";
-import { Loading } from "../../../../../GlobalComponents/Loading/Loading.component";
 
 const Rooms = ({ rooms, loadingRooms, pallete }) => {
   function loadRoomThumb(thumb) {
@@ -46,7 +48,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
                   margintop={window.innerWidth < 1024 ? "15px" : "20px"}
                 >
                   <FeatherIcons icon='check-circle' size={28} />
-                  <span style={{ marginLeft: "5px" }}>Salas disponíveis</span>
+                  <ButtonText>Salas disponíveis</ButtonText>
                 </TitleStyled>
               </Col>
 
@@ -74,7 +76,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
 
                         <UserCount color={darkPallete.white}>
                           <FeatherIcons icon='users' size={15} />
-                          <span style={{ margin: "2.5px 0 0 3px" }}>20</span>
+                          <UsersNumber>20</UsersNumber>
                         </UserCount>
                       </RoomItem>
                     </Link>

@@ -2,7 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import Logo from "../../assets/logo1.png";
 import { darkPallete } from "../../styles/pallete";
 import { UserContext } from "../../Context/UserContext";
-import { HeaderContainer, MenuLabelItem } from "./Header.styled";
+import { ButtonText } from "../../Pages/Home/components/Rooms/styles";
+import { HeaderContainer, MenuLabelItem, StyledRow } from "./Header.styled";
 import { Link, useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
 import { HomeOutlined } from "@ant-design/icons";
@@ -14,6 +15,7 @@ import {
   FeatherIcons,
   Menu,
   Dropdown,
+  Tooltip,
 } from "../../antd_components";
 
 const Header = ({ fromNotFound }) => {
@@ -68,7 +70,7 @@ const Header = ({ fromNotFound }) => {
 
   return (
     <HeaderContainer solidHeader={solidHeader}>
-      <Row align='middle' justify='space-between' style={{ padding: "0 15px" }}>
+      <StyledRow align='middle' justify='space-between'>
         <Link to='/'>
           <Image
             src={Logo}
@@ -81,18 +83,21 @@ const Header = ({ fromNotFound }) => {
         <Col>
           {!fromNotFound && user === null ? (
             <Link to='/signin'>
-              <Button
-                icon={<FeatherIcons icon='log-in' size={18} />}
-                color={white}
-                backgroundcolor={lightblue}
-                style={{ marginRight: "10px" }}
-                onMouseEnter={() => setExpandLogin(true)}
-                onMouseLeave={() => setExpandLogin(false)}
+              <Tooltip
+                title={window.innerWidth < 1024 && "Entrar"}
+                defaultVisible={window.innerWidth < 1024}
+                color={darkPallete.lightblue}
               >
-                {ExpandLogin && (
-                  <span style={{ marginLeft: "5px" }}>Entrar</span>
-                )}
-              </Button>
+                <Button
+                  icon={<FeatherIcons icon='log-in' size={18} />}
+                  color={white}
+                  backgroundcolor={lightblue}
+                  onMouseEnter={() => setExpandLogin(true)}
+                  onMouseLeave={() => setExpandLogin(false)}
+                >
+                  {ExpandLogin && <ButtonText>Entrar</ButtonText>}
+                </Button>
+              </Tooltip>
             </Link>
           ) : (
             !fromNotFound &&
@@ -105,7 +110,6 @@ const Header = ({ fromNotFound }) => {
                   icon={<FeatherIcons icon='user' size={18} />}
                   color={white}
                   backgroundcolor={lightblue}
-                  style={{ marginRight: "10px" }}
                   onMouseEnter={() => setExpandLogin(true)}
                   onMouseLeave={() => setExpandLogin(false)}
                 />
@@ -113,7 +117,7 @@ const Header = ({ fromNotFound }) => {
             )
           )}
         </Col>
-      </Row>
+      </StyledRow>
     </HeaderContainer>
   );
 };

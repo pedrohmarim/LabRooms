@@ -5,6 +5,8 @@ import ImgCrop from "antd-img-crop";
 import Cookie from "js-cookie";
 import * as CreateRoomService from "../services/createroom.service";
 import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
+import { CategoryTitle, CategoryInfo, StyledInput } from "../CreateRoom.styled";
+import { StyledButton } from "../../Signup/components/SignupForm/Signup.form.styled";
 import {
   acceptedFileTypes,
   isValidExtension,
@@ -14,8 +16,6 @@ import {
   Form,
   FeatherIcons,
   Row,
-  Input,
-  Button,
   Upload,
   Select,
   Notification,
@@ -28,13 +28,6 @@ const SigninForm = ({ darkPallete }) => {
   const [newCategory, setNewCategory] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [invalidType, setInvalidType] = useState(false);
-
-  const styleInput = {
-    borderRadius: "8px",
-    padding: "8px",
-    marginBottom: "4px",
-    marginTop: "-5px",
-  };
 
   function beforeUpload(file) {
     const nameSplit = file.name.trim().split(".");
@@ -155,8 +148,7 @@ const SigninForm = ({ darkPallete }) => {
         name='title'
         rules={[{ required: true, message: "Campo obrigatório." }]}
       >
-        <Input
-          style={styleInput}
+        <StyledInput
           allowClear
           prefix={<FeatherIcons icon='type' size={15} />}
           placeholder='Título'
@@ -168,8 +160,7 @@ const SigninForm = ({ darkPallete }) => {
         name='description'
         rules={[{ required: true, message: "Campo obrigatório." }]}
       >
-        <Input
-          style={styleInput}
+        <StyledInput
           allowClear
           prefix={<FeatherIcons icon='edit' size={15} />}
           placeholder='Ex.: Sala destinada à assuntos sobre saúde'
@@ -196,19 +187,17 @@ const SigninForm = ({ darkPallete }) => {
                 <Select.Option key={_id} value={_id}>
                   <Row align='middle' justify='start'>
                     <FeatherIcons icon={Icon} size={15} />
-                    <span style={{ margin: "2px 0 0 5px" }}>{Title}</span>
+                    <CategoryTitle>{Title}</CategoryTitle>
                   </Row>
                 </Select.Option>
               ))}
           <Select.Option key={11} value={11}>
             <Row align='middle' justify='start'>
               <FeatherIcons icon='repeat' size={15} />
-              <span style={{ margin: "2px 0 0 5px" }}>
+              <CategoryTitle>
                 Outras
-                <i style={{ color: "gray" }}>
-                  - Poderá criar uma nova categoria
-                </i>
-              </span>
+                <CategoryInfo>- Poderá criar uma nova categoria</CategoryInfo>
+              </CategoryTitle>
             </Row>
           </Select.Option>
         </Select>
@@ -220,8 +209,7 @@ const SigninForm = ({ darkPallete }) => {
           name='newCategory'
           rules={[{ required: true, message: "Campo obrigatório." }]}
         >
-          <Input
-            style={styleInput}
+          <StyledInput
             allowClear
             prefix={<FeatherIcons icon='tag' size={15} />}
             placeholder='Ex.: Construções'
@@ -245,19 +233,13 @@ const SigninForm = ({ darkPallete }) => {
         </ImgCrop>
       </FormItem>
 
-      <Button
-        style={{
-          width: "100%",
-          height: "45px",
-          borderRadius: "8px",
-          marginTop: "20px",
-          background: darkPallete.lightblue,
-        }}
+      <StyledButton
         type='primary'
         htmlType='submit'
+        backgroundcolor={darkPallete.lightblue}
       >
         Confirmar
-      </Button>
+      </StyledButton>
     </Form>
   );
 };

@@ -1,27 +1,24 @@
 import React from "react";
 import SignUpForm from "./components/SignupForm/Signup.form.component";
+import { Link } from "react-router-dom";
+import Logo from "../../assets/logo1.png";
+import Background from "../../assets/backStars.mp4";
+import { darkPallete } from "../../styles/pallete";
+import { TitleStyled } from "../CreateRoom/CreateRoom.styled";
 import {
-  Typography,
   Breadcrumb,
   FeatherIcons,
   Button,
   Image,
   Tooltip,
 } from "../../antd_components";
-import { Link } from "react-router-dom";
-import Logo from "../../assets/logo1.png";
-import Background from "../../assets/backStars.mp4";
 import {
   SignFormContainer,
   CenterForm,
   FormHeader,
 } from "./Signup.component.styled";
-import { darkPallete } from "../../styles/pallete";
 
 export default function Signup() {
-  console.log(window.innerHeight);
-  const { Title } = Typography;
-
   return (
     <>
       <video
@@ -38,12 +35,9 @@ export default function Signup() {
         </Link>
 
         <SignFormContainer
-          width={window.innerWidth > 1024 ? "40%" : "90%"}
           title={
             <FormHeader>
-              <Title level={3} style={{ marginBottom: 0 }}>
-                Registrar-se
-              </Title>
+              <TitleStyled level={3}>Registrar-se</TitleStyled>
               <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
                 <Link to='/signin'>
                   <FeatherIcons icon='chevron-left' size={30} />

@@ -3,22 +3,28 @@ import { Card } from "../../antd_components";
 
 export const CenterForm = styled.div`
   width: 100%;
-  height: ${({ height }) => height};
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
 
+  @media screen and (max-width: 1024px) {
+    height: 100vh !important;
+  }
   @media screen and (min-width: 1024px) and (min-height: 800px) {
-    height: 100vh;
+    height: 100vh !important;
   }
 `;
 
 export const SignFormContainer = styled(Card)`
-  width: ${({ width }) => width};
   border-radius: 5px;
   background-color: #eeeeee;
   margin-bottom: 50px;
+  width: 90%;
+
+  @media screen and (min-width: 1024px) {
+    width: 40%;
+  }
 `;
 
 export const FormHeader = styled.div`

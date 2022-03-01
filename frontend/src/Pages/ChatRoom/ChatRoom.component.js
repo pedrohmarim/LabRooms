@@ -4,6 +4,7 @@ import Aside from "../../GlobalComponents/Aside/Aside.component";
 import { darkPallete } from "../../styles/pallete";
 import Chat from "./components/Chat.component";
 import * as ChatRoomService from "./services/ChatRoom.service";
+import { ChatContainer } from "./ChatRoom.styled";
 
 export default function ChatRoom() {
   const [currentRoom, setCurrentRoom] = useState();
@@ -18,15 +19,9 @@ export default function ChatRoom() {
   }, [_id]);
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: "auto 100%",
-        height: "100vh",
-      }}
-    >
+    <ChatContainer>
       <Aside darkPallete={darkPallete} />
       <Chat darkPallete={darkPallete} currentRoom={currentRoom} />
-    </div>
+    </ChatContainer>
   );
 }

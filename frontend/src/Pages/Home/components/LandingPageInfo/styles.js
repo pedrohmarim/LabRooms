@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { Col } from "antd";
+import { Col, Typography } from "antd";
+
+const { Title } = Typography;
 
 export const InfoContainer = styled(Col)`
   margin-left: 40px;
@@ -11,4 +13,9 @@ export const InfoContainer = styled(Col)`
     top: 50%;
     transform: translate(0, -50%);
   }
+`;
+
+export const StyledTitle = styled(Title)`
+  color: ${({ color }) => color} !important;
+  margin-bottom: ${({ marginbottom }) => marginbottom} !important;
 `;

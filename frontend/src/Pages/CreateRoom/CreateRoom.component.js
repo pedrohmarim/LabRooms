@@ -6,13 +6,13 @@ import Logo from "../../assets/logo1.png";
 import { darkPallete } from "../../styles/pallete";
 import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
+import { TitleStyled } from "./CreateRoom.styled";
 import {
   SignFormContainer,
   CenterForm,
   FormHeader,
 } from "../Signup/Signup.component.styled";
 import {
-  Typography,
   Breadcrumb,
   Image,
   Tooltip,
@@ -20,7 +20,6 @@ import {
 } from "../../antd_components";
 
 export default function CreateRoom() {
-  const { Title } = Typography;
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -39,7 +38,7 @@ export default function CreateRoom() {
       >
         <source src={Background} type='video/mp4' />
       </video>
-      <CenterForm height='100vh'>
+      <CenterForm>
         <Link to='/'>
           <Image src={Logo} alt='Logo' height={100} preview={false} />
         </Link>
@@ -47,9 +46,7 @@ export default function CreateRoom() {
           width={window.innerWidth > 1024 ? "40%" : "90%"}
           title={
             <FormHeader>
-              <Title level={3} style={{ marginBottom: 0 }}>
-                Criar sala
-              </Title>
+              <TitleStyled level={3}>Criar sala</TitleStyled>
               <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
                 <Link to='/'>
                   <FeatherIcons icon='chevron-left' size={30} />

@@ -3,16 +3,18 @@ import { UserContext } from "../../../../Context/UserContext";
 import * as SignUpService from "../../services/signin.service";
 import { useNavigate } from "react-router-dom";
 import * as HomeService from "../../../Home/services/home.service";
+import { FormItemStyled, LinkStyled } from "../../Signin.component.styled";
 import {
   Form,
   FeatherIcons,
   Input,
-  Button,
   Checkbox,
   Notification,
 } from "../../../../antd_components";
-import { FormItem } from "../../../Signup/components/SignupForm/Signup.form.styled";
-import { Link } from "react-router-dom";
+import {
+  FormItem,
+  StyledButton,
+} from "../../../Signup/components/SignupForm/Signup.form.styled";
 import Cookie from "js-cookie";
 
 const SigninForm = ({ darkPallete }) => {
@@ -77,7 +79,7 @@ const SigninForm = ({ darkPallete }) => {
           { required: true, message: "Campo obrigatório." },
           { type: "email", message: "E-mail inválido." },
         ]}
-        help={invalidInfo ? "E-mail inválido" : null}
+        help={invalidInfo ? "E-mail inválido." : null}
         validateStatus={invalidInfo ? "error" : null}
       >
         <Input
@@ -110,33 +112,24 @@ const SigninForm = ({ darkPallete }) => {
         />
       </FormItem>
 
-      <Form.Item
-        name='remember'
-        valuePropName='checked'
-        style={{ float: "right" }}
-      >
+      <FormItemStyled name='remember' valuePropName='checked'>
         <Checkbox>Lembrar senha</Checkbox>
-      </Form.Item>
+      </FormItemStyled>
 
-      <Button
-        style={{
-          width: "100%",
-          height: "45px",
-          borderRadius: "8px",
-          margin: "-15px 0 5px 0",
-          background: darkPallete.lightblue,
-        }}
+      <StyledButton
+        margin='-15px 0 5px 0'
+        backgroundcolor={darkPallete.lightblue}
         type='primary'
         htmlType='submit'
       >
         Confirmar
-      </Button>
+      </StyledButton>
 
       <span>
         ou{" "}
-        <Link to='/signup' style={{ color: "#1890ff" }}>
+        <LinkStyled to='/signup'>
           <span>Crie uma conta</span>
-        </Link>
+        </LinkStyled>
       </span>
     </Form>
   );

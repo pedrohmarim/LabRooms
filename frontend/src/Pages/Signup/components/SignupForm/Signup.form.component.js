@@ -4,11 +4,10 @@ import {
   Form,
   FeatherIcons,
   Input,
-  Button,
   Notification,
   InputMask,
 } from "../../../../antd_components";
-import { FormItem } from "./Signup.form.styled";
+import { FormItem, StyledButton } from "./Signup.form.styled";
 import * as SignUpService from "../../services/signup.service";
 
 const SignUpForm = ({ darkPallete }) => {
@@ -175,19 +174,15 @@ const SignUpForm = ({ darkPallete }) => {
           placeholder='Confirmar senha'
         />
       </FormItem>
-      <Button
-        style={{
-          width: "100%",
-          height: "45px",
-          borderRadius: "8px",
-          marginTop: "5px",
-          background: darkPallete.lightblue,
-        }}
+      <StyledButton
+        height='45px'
+        margin='5px 0 0 0'
+        backgroundcolor={darkPallete.lightblue}
         type='primary'
         htmlType='submit'
       >
         Confirmar
-      </Button>
+      </StyledButton>
     </Form>
   );
 };

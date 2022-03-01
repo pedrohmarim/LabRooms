@@ -2,14 +2,15 @@ import styled from "styled-components";
 import { Button as AntDesignButton } from "antd";
 
 export const Button = styled(AntDesignButton)`
-  color: ${({ color }) => color};
+  color: ${({ color }) => color} !important;
   background-color: ${({ backgroundcolor }) => backgroundcolor};
   border: none;
   outline: none;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
+  margin: ${({ margin }) => margin};
   border-radius: 4px;
-  font-weight: bold;
+  font-weight: 400;
   font-size: 12pt;
   opacity: 1;
   display: flex;

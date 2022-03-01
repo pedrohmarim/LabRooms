@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Typography } from "antd";
+import { Typography, Col, Divider as StyledDivider } from "antd";
 
 const { Title } = Typography;
 
@@ -67,4 +67,26 @@ export const UserCount = styled.p`
   right: 0;
   margin-right: 10px;
   bottom: -10px;
+`;
+
+export const StyledCol = styled(Col)`
+  display: flex;
+  align-items: center;
+`;
+
+export const ButtonText = styled.span`
+  margin-left: 5px;
+`;
+
+export const Divider = styled(StyledDivider)`
+  border: solid 1px rgba(255, 255, 255, 0.1);
+  margin: 25px 0 0 0;
+
+  @media screen and (max-width: 1024px) {
+    margin: 20px 0 5px 0;
+  }
+`;
+
+export const UsersNumber = styled.span`
+  margin: 2.5px 0 0 3px;
 `;

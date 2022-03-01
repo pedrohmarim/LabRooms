@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Layout, Tooltip } from "../../antd_components";
 import { HomeOutlined, UserOutlined, LoginOutlined } from "@ant-design/icons";
-import { Menu, SiderStyled, MenuItem } from "./styles";
+import { Menu, SiderStyled, MenuItem, AsideLogo } from "./styles";
 import LogoIcon from "../../assets/logoIcon.png";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
@@ -21,12 +21,7 @@ const Aside = ({ darkPallete, SelectedItem }) => {
       <SiderStyled collapsed>
         <Menu defaultSelectedKeys={[SelectedItem]} color={darkPallete.white}>
           <Link to='/'>
-            <img
-              src={LogoIcon}
-              height={90}
-              alt='Logo'
-              style={{ zIndex: 999, position: "absolute", top: 0, left: 0 }}
-            />
+            <AsideLogo src={LogoIcon} height={90} alt='Logo' />
           </Link>
           <Tooltip title='Home' placement='right' color={darkPallete.lightblue}>
             <MenuItem

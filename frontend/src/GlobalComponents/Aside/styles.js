@@ -39,3 +39,10 @@ export const MenuItem = styled(MenuStyled.Item)`
   justify-content: center;
   align-items: center;
 `;
+
+export const AsideLogo = styled.img`
+  z-index: 999;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;

@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import * as S from "./Breadcrumb.styled";
 import routes from "../../Routes/routes";
 import { Tooltip } from "antd";
@@ -31,14 +30,14 @@ const Breadcrumb = ({ crumbs = routes, color }) => {
                         : `Ir para ${bc.path}`
                     }
                   >
-                    <Link
+                    <S.StyledLink
                       to={{
                         pathname: bc.path,
                       }}
-                      style={{ color: color || "#000" }}
+                      color={color || "#000"}
                     >
                       {bc.name}
-                    </Link>
+                    </S.StyledLink>
                   </Tooltip>
                 </S.Breadcrumb.Item>
               )

@@ -4,18 +4,22 @@ import {
   Breadcrumb,
   Image,
   Col,
-  Typography,
-  Button,
-  Divider,
   FeatherIcons,
 } from "../../../antd_components";
 import UserImage from "../../../assets/userImage.jpg";
 import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
-import { StyledBreadCrumb } from "../UserProfile.component.styled";
+import {
+  StyledBreadCrumb,
+  StyledCol,
+  UserInfoTitle,
+  StyledButton,
+  UserInfoSpan,
+  StyledDivider,
+  SocialContainer,
+  StyledSocial,
+} from "../UserProfile.component.styled";
 
 export default function ProfileSocials({ darkPallete, user }) {
-  const { Title } = Typography;
-
   return (
     <Row justify='center' gutter={[16, 16]}>
       {user ? (
@@ -26,67 +30,42 @@ export default function ProfileSocials({ darkPallete, user }) {
 
           <Image src={UserImage} height={120} />
 
-          <Col span={24} style={{ textAlign: "center" }}>
-            <Title
-              level={4}
-              style={{ color: window.innerWidth < 1024 && darkPallete.white }}
-            >
+          <StyledCol span={24}>
+            <UserInfoTitle level={4} color={darkPallete.white}>
               {user?.username}
-            </Title>
+            </UserInfoTitle>
 
             {user?.biography && (
-              <Typography
-                style={{
-                  color:
-                    window.innerWidth < 1024 ? darkPallete.white : "#A0ACBC",
-                }}
-              >
+              <UserInfoSpan color={darkPallete.white}>
                 {user.biography}
-              </Typography>
+              </UserInfoSpan>
             )}
 
-            <Typography
-              style={{
-                color: window.innerWidth < 1024 ? darkPallete.white : "#A0ACBC",
-              }}
-            >
+            <UserInfoSpan color={darkPallete.white}>
               Membro desde {user?.createdAt}
-            </Typography>
-          </Col>
+            </UserInfoSpan>
+          </StyledCol>
 
-          <Button
-            style={{ marginBottom: window.innerWidth < 1024 && "10px" }}
+          <StyledButton
+            margin='0 0 10px 0'
             color={darkPallete.white}
             backgroundcolor={darkPallete.lightblue}
             width={200}
             height={35}
           >
             Enviar Mensagem
-          </Button>
+          </StyledButton>
 
-          {window.innerWidth > 1024 && (
-            <Divider
-              style={{
-                margin: "5px 0 0 0",
-                border: "solid 1px rgba(191, 191, 191, 0.7)",
-              }}
-            />
-          )}
+          <StyledDivider />
 
           {window.innerWidth > 1024 && (
             <Col span={24}>
               <Row justify='space-around'>
-                <Typography
-                  style={{
-                    color: "#000",
-                    display: "flex",
-                    alignItems: "center",
-                  }}
-                >
+                <SocialContainer>
                   <FeatherIcons icon='github' size={16} />
-                  <span style={{ margin: "2px 0 0 2px" }}> GitHub</span>
-                </Typography>
-                <Typography style={{ color: "#A0ACBC" }}>trilp123</Typography>
+                  <StyledSocial>GitHub</StyledSocial>
+                </SocialContainer>
+                <UserInfoSpan>trilp123</UserInfoSpan>
               </Row>
             </Col>
           )}

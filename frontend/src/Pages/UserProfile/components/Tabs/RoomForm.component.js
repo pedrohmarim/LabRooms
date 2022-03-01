@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { RoomContainer } from "../../UserProfile.component.styled";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
+import { TitleStyled, CategoryInfo } from "../../UserProfile.component.styled";
+import { CategoryTitle } from "../../../CreateRoom/CreateRoom.styled";
 import {
   Select,
   Form,
@@ -31,7 +33,6 @@ export default function RoomForm({
   categories,
   CategorieTitle,
 }) {
-  const { Title } = Typography;
   const [form] = Form.useForm();
 
   const styleInput = {
@@ -54,16 +55,7 @@ export default function RoomForm({
         <RoomContainer>
           <Row align='middle' justify='space-between'>
             <Col span={23}>
-              <Title
-                level={3}
-                style={{
-                  overflow: "hidden",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
-                }}
-              >
-                {title}
-              </Title>
+              <TitleStyled level={3}>{title}</TitleStyled>
             </Col>
 
             <Col span={1}>
@@ -76,10 +68,8 @@ export default function RoomForm({
                     <Button
                       ghost
                       icon={<FeatherIcons size={18} icon='more-vertical' />}
-                      style={{
-                        marginTop: "-5px",
-                        color: "#000",
-                      }}
+                      margin='-5px 0 0 0'
+                      color='#000'
                     />
                   </Dropdown>
                 </Tooltip>
@@ -97,7 +87,7 @@ export default function RoomForm({
               ]}
               label={
                 <Typography>
-                  <span style={{ fontWeight: "bold" }}>Título</span>
+                  <b>Título</b>
                 </Typography>
               }
               name='roomTitle'
@@ -120,7 +110,7 @@ export default function RoomForm({
               ]}
               label={
                 <Typography>
-                  <span style={{ fontWeight: "bold" }}>Descrição</span>
+                  <b>Descrição</b>
                 </Typography>
               }
               name='roomDescription'
@@ -143,7 +133,7 @@ export default function RoomForm({
               ]}
               label={
                 <Typography>
-                  <span style={{ fontWeight: "bold" }}>Categoria</span>
+                  <b>Categoria</b>
                 </Typography>
               }
               name='roomCategory'
@@ -166,14 +156,7 @@ export default function RoomForm({
                         className='iconMarginRight'
                       />
                       {CategorieTitle}
-                      <i
-                        style={{
-                          color: "gray",
-                          marginLeft: "4px",
-                        }}
-                      >
-                        - Categoria criada por você
-                      </i>
+                      <CategoryInfo>- Categoria criada por você</CategoryInfo>
                     </Row>
                   </Select.Option>
                 )}
@@ -187,13 +170,7 @@ export default function RoomForm({
                       <Select.Option key={_id} value={_id}>
                         <Row align='middle' justify='start'>
                           <FeatherIcons icon={Icon} size={15} />
-                          <span
-                            style={{
-                              margin: "2px 0 0 5px",
-                            }}
-                          >
-                            {Title}
-                          </span>
+                          <CategoryTitle>{Title}</CategoryTitle>
                         </Row>
                       </Select.Option>
                     ))}
@@ -201,17 +178,12 @@ export default function RoomForm({
                 <Select.Option key={11} value={11}>
                   <Row align='middle' justify='start'>
                     <FeatherIcons icon='repeat' size={15} />
-                    <span style={{ margin: "2px 0 0 5px" }}>
+                    <CategoryTitle>
                       Outras
-                      <i
-                        style={{
-                          color: "gray",
-                          marginLeft: "4px",
-                        }}
-                      >
+                      <CategoryInfo>
                         - Poderá criar uma nova categoria
-                      </i>
-                    </span>
+                      </CategoryInfo>
+                    </CategoryTitle>
                   </Row>
                 </Select.Option>
               </Select>
@@ -229,7 +201,7 @@ export default function RoomForm({
                 ]}
                 label={
                   <Typography>
-                    <span style={{ fontWeight: "bold" }}>Nova Categoria</span>
+                    <b>Nova Categoria</b>
                   </Typography>
                 }
                 name='newCategory'
@@ -253,9 +225,7 @@ export default function RoomForm({
                 height='35'
                 width='200'
                 color={darkPallete.white}
-                style={{
-                  marginBottom: "15px",
-                }}
+                margin='0 0 15px 0'
               >
                 Confirmar
               </Button>

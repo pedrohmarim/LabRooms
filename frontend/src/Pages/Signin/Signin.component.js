@@ -1,25 +1,23 @@
 import React from "react";
 import Background from "../../assets/backStars.mp4";
+import { Link } from "react-router-dom";
+import Logo from "../../assets/logo1.png";
+import { TitleStyled } from "../CreateRoom/CreateRoom.styled";
+import { darkPallete } from "../../styles/pallete";
+import SigninForm from "./components/SigninForm/Signin.form.component";
 import {
   SignFormContainer,
   CenterForm,
   FormHeader,
 } from "../Signup/Signup.component.styled";
-import { Link } from "react-router-dom";
-import Logo from "../../assets/logo1.png";
 import {
-  Typography,
   Breadcrumb,
   FeatherIcons,
   Image,
   Tooltip,
 } from "../../antd_components";
-import { darkPallete } from "../../styles/pallete";
-import SigninForm from "./components/SigninForm/Signin.form.component";
 
 export default function Signin() {
-  const { Title } = Typography;
-
   return (
     <>
       <video
@@ -30,7 +28,7 @@ export default function Signin() {
       >
         <source src={Background} type='video/mp4' />
       </video>
-      <CenterForm height='100vh'>
+      <CenterForm>
         <Link to='/'>
           <Image src={Logo} alt='Logo' height={100} preview={false} />
         </Link>
@@ -38,9 +36,7 @@ export default function Signin() {
           width={window.innerWidth > 1024 ? "40%" : "90%"}
           title={
             <FormHeader>
-              <Title level={3} style={{ marginBottom: 0 }}>
-                Entrar
-              </Title>
+              <TitleStyled level={3}>Entrar</TitleStyled>
               <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
                 <Link to='/'>
                   <FeatherIcons icon='chevron-left' size={30} />

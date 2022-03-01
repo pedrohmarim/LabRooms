@@ -1,21 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "./styles";
+import { Container, StyledCol, ButtonText, Divider } from "./styles";
 import * as HomeService from "../../services/home.service";
 import { Link } from "react-router-dom";
 import { darkPallete } from "../../../../styles/pallete";
 import SearchInput from "../../../../GlobalComponents/SearchInput/SearchInput.component";
 import RoomList from "./components/RoomList.component";
+import { CategoryTitle } from "../../../CreateRoom/CreateRoom.styled";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
+import * as CreateRoomService from "../../../CreateRoom/services/createroom.service";
 import {
   Row,
   Select,
   Tooltip,
-  Divider,
   Button,
   FeatherIcons,
-  Col,
 } from "../../../../antd_components";
-import * as CreateRoomService from "../../../CreateRoom/services/createroom.service";
 
 const Rooms = ({ pallete, searchValue, userContext }) => {
   const [rooms, setRooms] = useState();
@@ -48,10 +47,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
   return (
     <Container background={pallete.white}>
       <Row justify='space-between' align='middle'>
-        <Col
-          span={window.innerWidth > 1024 ? 21 : 24}
-          style={{ display: "flex", alignItems: "center" }}
-        >
+        <StyledCol span={window.innerWidth > 1024 ? 21 : 24}>
           <SearchInput
             background={pallete.white}
             onSearch={() => console.log("faz req pro back")}
@@ -63,22 +59,19 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
             <Link to='/createroom'>
               <Tooltip title='Crie uma nova sala' color={pallete.lightblue}>
                 <Button
-                  style={{
-                    fontWeight: 400,
-                    marginLeft: "15px",
-                    background: darkPallete.lightblueOpacity,
-                    color: darkPallete.white,
-                  }}
+                  margin='0 0 0 15px'
+                  color={darkPallete.white}
+                  backgroundcolor={darkPallete.lightblueOpacity}
                   icon={<FeatherIcons icon='plus' size={20} />}
                 >
-                  <span style={{ marginLeft: "5px" }}>Criar sala</span>
+                  <ButtonText>Criar sala</ButtonText>
                 </Button>
               </Tooltip>
             </Link>
           ) : (
             !user && loading && Loading(pallete.white, "0 0 0 10px")
           )}
-        </Col>
+        </StyledCol>
 
         {categories ? (
           <Tooltip
@@ -98,7 +91,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
               <Select.Option key={10} value={10}>
                 <Row align='middle' justify='start'>
                   <FeatherIcons icon='list' size={15} />
-                  <span style={{ margin: "2px 0 0 5px" }}>Todas</span>
+                  <CategoryTitle>Todas</CategoryTitle>
                 </Row>
               </Select.Option>
               {categories
@@ -109,14 +102,14 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
                   <Select.Option key={_id} value={_id}>
                     <Row align='middle' justify='start'>
                       <FeatherIcons icon={Icon} size={15} />
-                      <span style={{ margin: "2px 0 0 5px" }}>{Title}</span>
+                      <CategoryTitle>{Title}</CategoryTitle>
                     </Row>
                   </Select.Option>
                 ))}
               <Select.Option key={11} value={11}>
                 <Row align='middle' justify='start'>
                   <FeatherIcons icon='repeat' size={15} />
-                  <span style={{ margin: "2px 0 0 5px" }}>Outras</span>
+                  <CategoryTitle>Outras</CategoryTitle>
                 </Row>
               </Select.Option>
             </Select>
@@ -126,12 +119,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
         )}
       </Row>
 
-      <Divider
-        style={{
-          margin: window.innerWidth < 1024 ? "20px 0 5px 0" : "25px 0 0 0",
-          border: "solid 1px rgba(255,255,255,0.1)",
-        }}
-      />
+      <Divider />
 
       <RoomList rooms={rooms} loadingRooms={loadingRooms} pallete={pallete} />
     </Container>
