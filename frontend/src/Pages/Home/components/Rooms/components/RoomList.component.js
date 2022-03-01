@@ -14,10 +14,6 @@ import {
 } from "../styles";
 
 const Rooms = ({ rooms, loadingRooms, pallete }) => {
-  function loadRoomThumb(thumb) {
-    console.log(thumb);
-  }
-
   return (
     <>
       {loadingRooms && (
@@ -58,7 +54,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
                     <Link to={`chatroom/${_id}`}>
                       <RoomItem background={darkPallete.lightblueOpacity}>
                         <Image
-                          src={loadRoomThumb(thumb)}
+                          src={thumb}
                           height={60}
                           width={60}
                           preview={false}

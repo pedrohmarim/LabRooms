@@ -18,6 +18,8 @@ import {
 } from "../../antd_components";
 
 export default function Signin() {
+  document.getElementsByTagName("title")[0].innerText = "LabRooms | Entrar";
+
   return (
     <>
       <video

@@ -23,6 +23,8 @@ export default function CreateRoom() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
+  document.getElementsByTagName("title")[0].innerText = "LabRooms | Criar sala";
+
   useEffect(() => {
     const token = Cookie.get("token");
     if (!user && !token) navigate("/notfound");

@@ -19,6 +19,7 @@ import {
 } from "./Signup.component.styled";
 
 export default function Signup() {
+  document.getElementsByTagName("title")[0].innerText = "LabRooms | Registro";
   return (
     <>
       <video

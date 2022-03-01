@@ -8,6 +8,9 @@ import Header from "../../GlobalComponents/Header/Header.component";
 export default function NotFound() {
   const { white } = darkPallete;
 
+  document.getElementsByTagName("title")[0].innerText =
+    "LabRooms | Página não encontrada";
+
   useEffect(() => {
     lottieWeb.loadAnimation({
       container: document.getElementById("lottieContainer"),

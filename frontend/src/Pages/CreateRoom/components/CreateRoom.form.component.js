@@ -60,7 +60,6 @@ const SigninForm = ({ darkPallete }) => {
     const { originFileObj } = fileList[0];
 
     const token = Cookie.get("token");
-    console.log(originFileObj);
 
     const {
       uid,

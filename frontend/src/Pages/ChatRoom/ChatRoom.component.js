@@ -10,8 +10,9 @@ import Background from "../../assets/backStars.mp4";
 export default function ChatRoom() {
   const [currentRoom, setCurrentRoom] = useState();
   const params = useParams();
-
   const { _id } = params;
+
+  document.getElementsByTagName("title")[0].innerText = "LabRooms | Chat";
 
   useEffect(() => {
     ChatRoomService.getRoomById(_id).then(({ data }) => {

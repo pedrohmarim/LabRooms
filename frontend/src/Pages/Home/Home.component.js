@@ -13,6 +13,8 @@ export default function Home() {
   const { user, loading } = useContext(UserContext);
   const [searchValue, setSearchValue] = useState();
 
+  document.getElementsByTagName("title")[0].innerText = "LabRooms | Home";
+
   function handleScrollToRooms(searchValue) {
     if (searchValue) {
       setSearchValue(searchValue);
