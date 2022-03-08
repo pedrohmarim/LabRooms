@@ -55,20 +55,6 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     </Link>
   );
 
-  const handleDeleteRoom = useCallback(
-    (_id) => {
-      RoomService.DeleteRoom(_id, token).then(({ data }) => {
-        const { message, status } = data;
-
-        Notification.open({
-          type: status === 200 ? "success" : "error",
-          message,
-        });
-      });
-    },
-    [token]
-  );
-
   const getRoomsByOwnerId = useCallback(() => {
     if (user) {
       const { _id } = user;
@@ -147,6 +133,19 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           });
         });
       }
+    }
+
+    function handleDeleteRoom(_id) {
+      RoomService.DeleteRoom(_id, token).then(({ data }) => {
+        const { message, status } = data;
+
+        getRoomsByOwnerId();
+
+        Notification.open({
+          type: status === 200 ? "success" : "error",
+          message,
+        });
+      });
     }
 
     const MoreActionsRoom = (_id, title) => (
@@ -232,17 +231,17 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
       )
     );
   }, [
-    token,
-    navigate,
-    darkPallete,
     hasntRooms,
     rooms,
     _id,
+    token,
+    getRoomsByOwnerId,
+    navigate,
+    categories,
     newCategoryState,
     viewMode,
     showConfirmButton,
-    categories,
-    handleDeleteRoom,
+    darkPallete,
   ]);
 
   return (

@@ -17,11 +17,11 @@ module.exports = {
           email,
           hashedPass,
           username,
-          createdAt: new Date(),
+          createdAt: new Date().setHours(new Date().getHours() - 3),
         })
           .then(() => {
             return response.json({
-              message: "Usuário cadastrado com sucesso!",
+              message: "Usuário cadastrado com sucesso.",
               success: true,
             });
           })
@@ -34,14 +34,14 @@ module.exports = {
       } else {
         if (res[0].email === email) {
           return response.json({
-            message: "E-mail já cadastrado!",
+            message: "E-mail já cadastrado.",
             field: "email",
           });
         }
 
         if (res[0].cpf === cpf) {
           return response.json({
-            message: "CPF já cadastrado!",
+            message: "CPF já cadastrado.",
             field: "cpf",
           });
         }
@@ -73,7 +73,7 @@ module.exports = {
           }
         );
 
-        return response.json({ token, message: "Logado com sucesso!" });
+        return response.json({ token, message: "Logado com sucesso." });
       } else {
         return response.json({ _id: null });
       }
@@ -101,7 +101,7 @@ module.exports = {
         createdAt: user.createdAt.toLocaleString("pt-BR", {
           year: "numeric",
           month: "2-digit",
-          day: "numeric",
+          day: "2-digit",
         }),
       });
     } else {

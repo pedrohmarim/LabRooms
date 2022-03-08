@@ -45,7 +45,7 @@ const SigninForm = ({ darkPallete }) => {
     if (!isValidFileSize(file.size, 3)) {
       Notification.open({
         type: "error",
-        message: "Arquivos de imagem devem ser menores que 3MB!",
+        message: "Arquivos de imagem devem ser menores que 3MB.",
       });
       setInvalidType(true);
       return false;

@@ -155,7 +155,7 @@ const SignUpForm = ({ darkPallete }) => {
               if (!value || getFieldValue("password") === value) {
                 return Promise.resolve();
               }
-              return Promise.reject(new Error("Senhas não coincidem!"));
+              return Promise.reject(new Error("Senhas não coincidem."));
             },
           }),
         ]}
