@@ -62,4 +62,8 @@ export const GlobalStyles = createGlobalStyle`
   .iconMarginRight {
     margin-right: 4px;
   }
+
+  .ant-dropdown  {
+    z-index: 9999 !important;
+  }
 `;
