@@ -12,7 +12,7 @@ export const Container = styled.div`
 
 export const RoomImage = styled(Image)`
   width: 100% !important;
-  height: 175px;
+  height: 150px;
   border-radius: 8px;
   margin-bottom: 10px;
 `;
