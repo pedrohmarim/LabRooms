@@ -151,7 +151,7 @@ export default function Chat({ darkPallete, currentRoom }) {
                 <RoomTitle
                   className='expandable'
                   color={darkPallete.white}
-                  style={{ marginRight: "60px" }}
+                  style={{ margin: " 0 30px 0 10px" }}
                 >
                   {currentRoom.title}
                 </RoomTitle>
@@ -159,7 +159,7 @@ export default function Chat({ darkPallete, currentRoom }) {
                 <RoomDescription
                   className='expandable'
                   color={darkPallete.white}
-                  style={{ marginRight: "10px" }}
+                  style={{ margin: " 0 75px 0 10px" }}
                 >
                   {currentRoom.description}
                 </RoomDescription>

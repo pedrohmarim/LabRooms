@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Typography, Col, Divider as StyledDivider } from "antd";
+import { Typography, Col, Divider as StyledDivider, Image } from "antd";
 
 const { Title } = Typography;
 
@@ -8,6 +8,13 @@ export const Container = styled.div`
   width: 97%;
   margin: 0 auto;
   padding: 15px;
+`;
+
+export const RoomImage = styled(Image)`
+  width: 100% !important;
+  height: 175px;
+  border-radius: 8px;
+  margin-bottom: 10px;
 `;
 
 export const TitleStyled = styled(Title)`
@@ -19,13 +26,12 @@ export const TitleStyled = styled(Title)`
 
 export const RoomItem = styled.div`
   display: grid;
-  grid-template-columns: auto 85%;
+  grid-template-columns: 100%;
   justify-content: start;
   align-items: center;
-  padding: 10px;
   transform: scale(0.95);
   background-color: ${({ background }) => background};
-  height: 90px;
+  padding: 10px;
   margin-top: 10px;
   border-radius: 8px;
   transition: all 0.2s ease;
@@ -38,7 +44,7 @@ export const RoomItem = styled.div`
 
 export const RoomTitle = styled.p`
   overflow: hidden;
-  padding: 0 10px 0 10px;
+  padding-right: 45px;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: ${({ color }) => color};
@@ -48,7 +54,6 @@ export const RoomTitle = styled.p`
 `;
 
 export const RoomDescription = styled.p`
-  padding: 0 60px 0 10px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -66,7 +71,7 @@ export const UserCount = styled.p`
   position: absolute;
   right: 0;
   margin-right: 10px;
-  bottom: -10px;
+  bottom: 20px;
 `;
 
 export const StyledCol = styled(Col)`

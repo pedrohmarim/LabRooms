@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Image, FeatherIcons, Col } from "../../../../../antd_components";
+import { Row, FeatherIcons, Col } from "../../../../../antd_components";
 import { darkPallete } from "../../../../../styles/pallete";
 import { Link } from "react-router-dom";
 import { Loading } from "../../../../../GlobalComponents/Loading/Loading.component";
@@ -11,6 +11,7 @@ import {
   TitleStyled,
   ButtonText,
   UsersNumber,
+  RoomImage,
 } from "../styles";
 
 const Rooms = ({ rooms, loadingRooms, pallete }) => {
@@ -53,22 +54,18 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
                   <Col xs={24} sm={24} md={12} lg={8} xl={8} xxl={6} key={_id}>
                     <Link to={`chatroom/${_id}`}>
                       <RoomItem background={darkPallete.lightblueOpacity}>
-                        <Image
-                          src={thumb}
-                          height={60}
-                          width={60}
+                        <RoomImage
+                          src="https://img.r7.com/images/cachorro-que-parece-pompom-13012022171412951?dimensions=771x420"
                           preview={false}
                         />
 
-                        <Col>
-                          <RoomTitle color={darkPallete.white}>
-                            {title}
-                          </RoomTitle>
+                        <RoomTitle color={darkPallete.white}>
+                          {title}
+                        </RoomTitle>
 
-                          <RoomDescription color={darkPallete.white}>
-                            {description}
-                          </RoomDescription>
-                        </Col>
+                        <RoomDescription color={darkPallete.white}>
+                          {description}
+                        </RoomDescription>
 
                         <UserCount color={darkPallete.white}>
                           <FeatherIcons icon='users' size={15} />
