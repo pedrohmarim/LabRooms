@@ -51,7 +51,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
 
               {rooms &&
                 rooms.map(({ title, description, thumb, _id }) => (
-                  <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={6} key={_id}>
+                  <Col xs={24} sm={24} md={12} lg={6} xl={6} xxl={4} key={_id}>
                     <Link to={`chatroom/${_id}`}>
                       <RoomItem background={darkPallete.lightblueOpacity}>
                         <RoomImage
