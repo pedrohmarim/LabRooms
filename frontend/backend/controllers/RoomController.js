@@ -16,7 +16,7 @@ module.exports = {
     })
       .then(() => {
         return response.json({
-          message: "Sala criada com succeso.",
+          message: "Sala criada com sucesso.",
           success: true,
         });
       })
