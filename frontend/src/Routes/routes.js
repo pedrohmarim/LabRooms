@@ -16,29 +16,47 @@ const UserProfile = lazy(() =>
 );
 
 const routes = [
-  { path: "/", name: <HomeOutlined />, Component: <HomeComponent /> },
+  {
+    path: "/",
+    name: <HomeOutlined />,
+    tooltip: "Ir para Home",
+    Component: <HomeComponent />,
+  },
   {
     path: "*",
     name: "Página não Encontrada",
     Component: <NotFoundComponent />,
   },
-  { path: "/signup", name: "Registro", Component: <SignupComponent /> },
-  { path: "/signin", name: "Entrar", Component: <SigninComponent /> },
+  {
+    path: "/signup",
+    name: "Registro",
+    tooltip: "Ir para Página de Registro",
+    Component: <SignupComponent />,
+  },
+  {
+    path: "/signin",
+    name: "Entrar",
+    tooltip: "Ir para Página de Login",
+    Component: <SigninComponent />,
+  },
   {
     breadcrumb: "/chatroom",
     path: "/chatroom/:_id",
     name: "Chat",
+    tooltip: "Ir para Página de Chat",
     Component: <ChatRoom />,
   },
   {
     path: "/createroom",
     name: "Criar Sala",
+    tooltip: "Ir para Página de Criação de Salas",
     Component: <CreateRoomComponent />,
   },
   {
     breadcrumb: "/profile",
     path: "/profile/:username",
     name: "Perfil",
+    tooltip: "Ir para Meu Perfil",
     Component: <UserProfile />,
   },
 ];
