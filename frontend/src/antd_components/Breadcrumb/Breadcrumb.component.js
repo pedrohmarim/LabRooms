@@ -5,6 +5,15 @@ import { Tooltip } from "antd";
 import { darkPallete } from "../../styles/pallete";
 
 const Breadcrumb = ({ crumbs = routes, color }) => {
+  function handleCompareProps(bc, linkTo) {
+    let pathname = `/${window.location.pathname.split("/")[1]}`;
+
+    if (pathname === bc.breadcrumb || pathname === bc.path)
+      return !linkTo ? "Você Está Aqui." : null;
+
+    return !linkTo ? bc.tooltip : bc.path || bc.breadcrumb;
+  }
+
   return (
     <S.Breadcrumb color={color || "#000"}>
       {crumbs?.length &&
@@ -20,10 +29,12 @@ const Breadcrumb = ({ crumbs = routes, color }) => {
                 <S.Breadcrumb.Item key={bc.name}>
                   <Tooltip
                     color={darkPallete.lightblue}
-                    title={window.location.pathname.split('/')[1] === `/${bc.breadcrumb || bc.path}` ? "Você Está Aqui." : bc.tooltip }
+                    title={handleCompareProps(bc)}
                   >
                     <S.StyledLink
-                      to={{ pathname: window.location.pathname.split('/')[1] === `/${bc.breadcrumb || bc.path}` ? null : bc.path || bc.breadcrumb }}
+                      to={{
+                        pathname: handleCompareProps(bc, true),
+                      }}
                       color={color || "#000"}
                     >
                       {bc.name}

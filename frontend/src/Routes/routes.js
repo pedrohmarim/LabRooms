@@ -16,24 +16,24 @@ const UserProfile = lazy(() =>
 );
 
 const routes = [
-  { 
+  {
     path: "/",
     name: <HomeOutlined />,
     tooltip: "Ir para Home",
-    Component: <HomeComponent />
+    Component: <HomeComponent />,
   },
   {
     path: "*",
     name: "Página não Encontrada",
     Component: <NotFoundComponent />,
   },
-  { 
+  {
     path: "/signup",
     name: "Registro",
     tooltip: "Ir para Página de Registro",
     Component: <SignupComponent />,
   },
-  { 
+  {
     path: "/signin",
     name: "Entrar",
     tooltip: "Ir para Página de Login",
