@@ -20,20 +20,10 @@ const Breadcrumb = ({ crumbs = routes, color }) => {
                 <S.Breadcrumb.Item key={bc.name}>
                   <Tooltip
                     color={darkPallete.lightblue}
-                    title={
-                      window.location.pathname === bc.path
-                        ? "Você está aqui"
-                        : bc.path === "/"
-                        ? "Ir para Home"
-                        : bc.path === "/profile/:username"
-                        ? "Você está aqui"
-                        : `Ir para ${bc.path}`
-                    }
+                    title={window.location.pathname.split('/')[1] === `/${bc.breadcrumb || bc.path}` ? "Você Está Aqui." : bc.tooltip }
                   >
                     <S.StyledLink
-                      to={{
-                        pathname: bc.path,
-                      }}
+                      to={{ pathname: window.location.pathname.split('/')[1] === `/${bc.breadcrumb || bc.path}` ? null : bc.path || bc.breadcrumb }}
                       color={color || "#000"}
                     >
                       {bc.name}
