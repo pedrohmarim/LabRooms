@@ -12,6 +12,7 @@ import {
   ButtonText,
   UsersNumber,
   RoomImage,
+  RoomOwnerImg,
 } from "../styles";
 
 const Rooms = ({ rooms, loadingRooms, pallete }) => {
@@ -55,22 +56,27 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
                     <Link to={`chatroom/${_id}`}>
                       <RoomItem background={darkPallete.lightblueOpacity}>
                         <RoomImage
-                          src="https://img.r7.com/images/cachorro-que-parece-pompom-13012022171412951?dimensions=771x420"
+                          src='https://img.r7.com/images/cachorro-que-parece-pompom-13012022171412951?dimensions=771x420'
                           preview={false}
                         />
 
-                        <RoomTitle color={darkPallete.white}>
-                          {title}
-                        </RoomTitle>
+                        <RoomOwnerImg
+                          alt='RoomOwnerProfilePhoto'
+                          gap={2}
+                          src='https://media.istockphoto.com/photos/red-squirrel-looking-around-a-tree-picture-id466395505?k=20&m=466395505&s=612x612&w=0&h=ELSnLKu_E2-pc0q_bfGRadTZwYE1f7jq4TWTyHu1gkI='
+                          preview={false}
+                        />
 
-                        <RoomDescription color={darkPallete.white}>
-                          {description}
-                        </RoomDescription>
+                        <RoomTitle color={darkPallete.white}>{title}</RoomTitle>
 
                         <UserCount color={darkPallete.white}>
                           <FeatherIcons icon='users' size={15} />
                           <UsersNumber>20</UsersNumber>
                         </UserCount>
+
+                        <RoomDescription color={darkPallete.white}>
+                          {description}
+                        </RoomDescription>
                       </RoomItem>
                     </Link>
                   </Col>

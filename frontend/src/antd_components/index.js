@@ -1,3 +1,4 @@
+import Avatar from "./Avatar/Avatar.component";
 import Button from "./Button/Button.component";
 import Breadcrumb from "./Breadcrumb/Breadcrumb.component";
 import Col from "./Col/Col.component";
@@ -23,6 +24,7 @@ import Dropdown from "./Dropdown/Dropdown.component";
 import PopConfirm from "./PopConfirm/PopConfirm.component";
 
 export {
+  Avatar,
   Button,
   Spin,
   InputMask,

@@ -1,5 +1,11 @@
 import styled from "styled-components";
-import { Typography, Col, Divider as StyledDivider, Image } from "antd";
+import {
+  Typography,
+  Col,
+  Divider as StyledDivider,
+  Image,
+  Avatar,
+} from "../../../../antd_components";
 
 const { Title } = Typography;
 
@@ -72,6 +78,14 @@ export const UserCount = styled.p`
   right: 0;
   margin-right: 10px;
   bottom: 20px;
+`;
+
+export const RoomOwnerImg = styled(Avatar)`
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
 `;
 
 export const StyledCol = styled(Col)`
