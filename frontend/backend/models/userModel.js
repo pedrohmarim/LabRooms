@@ -29,6 +29,28 @@ const UserModel = new Schema({
     type: String,
     required: false,
   },
+  socials: {
+    facebook: {
+      type: String,
+      required: false,
+    },
+    instagram: {
+      type: String,
+      required: false,
+    },
+    twitter: {
+      type: String,
+      required: false,
+    },
+    linkedin: {
+      type: String,
+      required: false,
+    },
+    github: {
+      type: String,
+      required: false,
+    },
+  },
   createdAt: {
     type: Date,
     required: true,

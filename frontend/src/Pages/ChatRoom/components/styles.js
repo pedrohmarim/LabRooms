@@ -95,7 +95,7 @@ export const ChatContainer = styled(Collapse)`
     font-size: 16pt !important;
   }
 
-  .ant-collapse-item{
+  .ant-collapse-item {
     margin-right: 15px !important;
     border-color: rgba(191, 191, 191, 0.7);
   }

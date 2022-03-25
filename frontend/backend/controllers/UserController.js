@@ -98,6 +98,7 @@ module.exports = {
         phone: user.phone,
         celphone: user.celphone,
         biography: user.biography,
+        socials: user.socials,
         createdAt: user.createdAt.toLocaleString("pt-BR", {
           year: "numeric",
           month: "2-digit",
@@ -166,8 +167,10 @@ module.exports = {
     const { _id } = request.body.decoded;
 
     if (_id) {
-      const { username, email, cpf, phone, celphone, biography } = request.body;
+      const { username, email, cpf, phone, celphone, biography, socials } =
+        request.body;
 
+      console.log(request.body);
       UserModel.findByIdAndUpdate(
         { _id },
         {
@@ -177,6 +180,7 @@ module.exports = {
           phone,
           celphone,
           biography,
+          socials,
         },
         { new: true },
         function (err) {

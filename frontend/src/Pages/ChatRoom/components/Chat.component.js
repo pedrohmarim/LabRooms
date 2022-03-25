@@ -126,15 +126,20 @@ export default function Chat({ darkPallete, currentRoom }) {
     <Layout>
       <Content>
         {currentRoom && RoomCategoryData && ownerRoomName ? (
-          <ChatContainer  bordered={false} expandIconPosition="right" >
-            <Panel 
+          <ChatContainer bordered={false} expandIconPosition='right'>
+            <Panel
               header={
                 <RoomInfoContainer
                   margintop={window.innerWidth < 1024 ? "15px" : "20px"}
                   background={darkPallete.lightblueOpacity}
                 >
-                  <Image src={currentRoom.thumb} height={70} width={70} preview />
-  
+                  <Image
+                    src={currentRoom.thumb}
+                    height={70}
+                    width={70}
+                    preview
+                  />
+
                   <InfoWrapper>
                     <RoomTitle
                       color={darkPallete.white}
@@ -142,24 +147,22 @@ export default function Chat({ darkPallete, currentRoom }) {
                     >
                       {currentRoom.title}
                     </RoomTitle>
-  
+
                     <RoomCategory color={darkPallete.white}>
                       <Row align='middle'>
                         <FeatherIcons icon={RoomCategoryData?.Icon} size={15} />
-  
+
                         <CategoryText>{RoomCategoryData?.Title}</CategoryText>
                       </Row>
                     </RoomCategory>
                   </InfoWrapper>
                 </RoomInfoContainer>
-            }
-            key="1"
+              }
+              key='1'
             >
-       <RoomDescription
-              color={darkPallete.white}
-            >
-              {currentRoom?.description}
-            </RoomDescription>
+              <RoomDescription color={darkPallete.white}>
+                {currentRoom?.description}
+              </RoomDescription>
             </Panel>
 
             <ChatStyled background={darkPallete.lightblueOpacity}>

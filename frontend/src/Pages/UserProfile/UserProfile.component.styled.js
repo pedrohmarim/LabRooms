@@ -94,6 +94,15 @@ export const FormStyled = styled(Form)`
   }
 `;
 
+export const SocialIcon = styled.a`
+  font-size: 20pt;
+  margin: 0 0 0 10px;
+
+  :nth-child(1) {
+    margin: 0;
+  }
+`;
+
 export const TitleStyled = styled(Title)`
   overflow: hidden;
   white-space: nowrap;

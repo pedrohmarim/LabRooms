@@ -1,13 +1,5 @@
 import React from "react";
-import {
-  Row,
-  Breadcrumb,
-  Image,
-  Col,
-  FeatherIcons,
-} from "../../../antd_components";
-import UserImage from "../../../assets/userImage.jpg";
-import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
+
 import {
   StyledBreadCrumb,
   StyledCol,
@@ -15,9 +7,12 @@ import {
   StyledButton,
   UserInfoSpan,
   StyledDivider,
-  SocialContainer,
-  StyledSocial,
+  SocialIcon,
 } from "../UserProfile.component.styled";
+import UserImage from "../../../assets/userImage.jpg";
+import { SocialList } from "./Tabs/sessions/SocialList.component";
+import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
+import { Row, Breadcrumb, Image, Col, Tooltip } from "../../../antd_components";
 
 export default function ProfileSocials({ darkPallete, user }) {
   return (
@@ -47,7 +42,6 @@ export default function ProfileSocials({ darkPallete, user }) {
           </StyledCol>
 
           <StyledButton
-            margin='0 0 10px 0'
             color={darkPallete.white}
             backgroundcolor={darkPallete.lightblue}
             width={200}
@@ -56,19 +50,31 @@ export default function ProfileSocials({ darkPallete, user }) {
             Enviar Mensagem
           </StyledButton>
 
-          <StyledDivider />
+          <Col span={24}>
+            <Row justify='center'>
+              {SocialList &&
+                SocialList(user?.socials).map(
+                  (item) =>
+                    item.link && (
+                      <SocialIcon
+                        href={item.link}
+                        target='_blank'
+                        rel='noreferrer'
+                      >
+                        <Tooltip
+                          placement='bottom'
+                          title={`Ir para ${item.tooltip}`}
+                          color={darkPallete.lightblue}
+                        >
+                          {item.icon}
+                        </Tooltip>
+                      </SocialIcon>
+                    )
+                )}
+            </Row>
+          </Col>
 
-          {window.innerWidth > 1024 && (
-            <Col span={24}>
-              <Row justify='space-around'>
-                <SocialContainer>
-                  <FeatherIcons icon='github' size={16} />
-                  <StyledSocial>GitHub</StyledSocial>
-                </SocialContainer>
-                <UserInfoSpan>trilp123</UserInfoSpan>
-              </Row>
-            </Col>
-          )}
+          <StyledDivider />
         </>
       ) : (
         Loading("#000")
