@@ -17,7 +17,7 @@ export const SocialList = ({
   const socialsArray = [
     {
       icon: <FacebookFilled style={{ color: "#1877F2" }} />,
-      link: facebook || null,
+      link: facebook,
       tooltip: "Facebook",
     },
     {
@@ -28,22 +28,22 @@ export const SocialList = ({
           }}
         />
       ),
-      link: instagram || null,
+      link: instagram,
       tooltip: "Instagram",
     },
     {
       icon: <TwitterOutlined style={{ color: "#1DA1F2" }} />,
-      link: twitter || null,
+      link: twitter,
       tooltip: "Twitter",
     },
     {
       icon: <LinkedinFilled style={{ color: "#0A66C2" }} />,
-      link: linkedin || null,
+      link: linkedin,
       tooltip: "LinkedIn",
     },
     {
       icon: <GithubFilled style={{ color: "#333" }} />,
-      link: github || null,
+      link: github,
       tooltip: "Github",
     },
   ];
