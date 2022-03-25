@@ -9,12 +9,11 @@ export const Menu = styled(MenuStyled)`
   flex-direction: column;
   justify-content: center;
   border-right: solid 1px rgba(255, 255, 255, 0.1);
-  background-color: transparent;
+  background-color: #000 !important;
   color: ${({ color }) => color};
 
   .ant-menu-item {
     color: ${({ color }) => color};
-    background-color: transparent;
   }
 
   .ant-menu-item:hover {
@@ -28,7 +27,6 @@ export const Menu = styled(MenuStyled)`
 `;
 
 export const SiderStyled = styled(Sider)`
-  background-color: transparent;
   height: 100vh;
   position: relative;
   z-index: 999;

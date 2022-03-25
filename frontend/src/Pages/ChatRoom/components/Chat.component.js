@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { RoomTitle, RoomDescription } from "../../Home/components/Rooms/styles";
+import { RoomTitle } from "../../Home/components/Rooms/styles";
 import * as ChatRoomService from "../services/ChatRoom.service";
 import { CrownOutlined } from "@ant-design/icons";
 import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
@@ -11,7 +11,6 @@ import {
   CategoryText,
   SiderStyled,
   UsernameContainer,
-  ExpandButton,
   TitleStyled,
   ChatContainer,
   ChatStyled,
@@ -21,6 +20,7 @@ import {
   TextMessage,
   InputMessage,
   SendMessage,
+  RoomDescription,
 } from "./styles";
 import {
   Image,
@@ -29,13 +29,14 @@ import {
   Col,
   Tooltip,
   Input,
+  Collapse,
 } from "../../../antd_components";
 
 export default function Chat({ darkPallete, currentRoom }) {
-  const [toggle, setToggle] = useState(false);
   const [RoomCategoryData, setRoomCategoryData] = useState();
   const [ownerRoomName, setOwnerRoomName] = useState();
   const { Content } = Layout;
+  const { Panel } = Collapse;
 
   const styleInput = {
     borderRadius: "4px",
@@ -121,71 +122,45 @@ export default function Chat({ darkPallete, currentRoom }) {
     }
   }, [currentRoom]);
 
-  function expandInfo() {
-    const elements = document.getElementsByClassName("expandable");
-    setToggle((prev) => !prev);
-
-    if (!toggle) {
-      for (var i = 0; i < elements.length; i++) {
-        elements[i].className += " expandText";
-      }
-    } else {
-      for (i = 0; i < elements.length; i++) {
-        elements[i].classList.remove("expandText");
-      }
-    }
-  }
-
   return (
     <Layout>
       <Content>
         {currentRoom && RoomCategoryData && ownerRoomName ? (
-          <ChatContainer>
-            <RoomInfoContainer
-              margintop={window.innerWidth < 1024 ? "15px" : "20px"}
-              background={darkPallete.lightblueOpacity}
+          <ChatContainer  bordered={false} expandIconPosition="right" >
+            <Panel 
+              header={
+                <RoomInfoContainer
+                  margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+                  background={darkPallete.lightblueOpacity}
+                >
+                  <Image src={currentRoom.thumb} height={70} width={70} preview />
+  
+                  <InfoWrapper>
+                    <RoomTitle
+                      color={darkPallete.white}
+                      style={{ margin: "0 30px 0 10px" }}
+                    >
+                      {currentRoom.title}
+                    </RoomTitle>
+  
+                    <RoomCategory color={darkPallete.white}>
+                      <Row align='middle'>
+                        <FeatherIcons icon={RoomCategoryData?.Icon} size={15} />
+  
+                        <CategoryText>{RoomCategoryData?.Title}</CategoryText>
+                      </Row>
+                    </RoomCategory>
+                  </InfoWrapper>
+                </RoomInfoContainer>
+            }
+            key="1"
             >
-              <Image src={currentRoom.thumb} height={70} width={70} preview />
-
-              <InfoWrapper>
-                <RoomTitle
-                  className='expandable'
-                  color={darkPallete.white}
-                  style={{ margin: " 0 30px 0 10px" }}
-                >
-                  {currentRoom.title}
-                </RoomTitle>
-
-                <RoomDescription
-                  className='expandable'
-                  color={darkPallete.white}
-                  style={{ margin: " 0 75px 0 10px" }}
-                >
-                  {currentRoom.description}
-                </RoomDescription>
-
-                <RoomCategory color={darkPallete.white}>
-                  <Row align='middle'>
-                    <FeatherIcons icon={RoomCategoryData.Icon} size={15} />
-
-                    <CategoryText>{RoomCategoryData.Title}</CategoryText>
-                  </Row>
-
-                  <Tooltip
-                    title={toggle ? "Retrair" : "Expandir"}
-                    color={darkPallete.lightblue}
-                    placement='bottom'
-                  >
-                    <ExpandButton ghost onClick={expandInfo}>
-                      <FeatherIcons
-                        icon={toggle ? "chevron-up" : "chevron-down"}
-                        size={25}
-                      />
-                    </ExpandButton>
-                  </Tooltip>
-                </RoomCategory>
-              </InfoWrapper>
-            </RoomInfoContainer>
+       <RoomDescription
+              color={darkPallete.white}
+            >
+              {currentRoom?.description}
+            </RoomDescription>
+            </Panel>
 
             <ChatStyled background={darkPallete.lightblueOpacity}>
               <Row gutter={[16, 16]}>

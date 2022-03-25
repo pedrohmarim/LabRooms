@@ -28,13 +28,14 @@ export const GlobalStyles = createGlobalStyle`
   #video-form {
     width: 100%;
     position: fixed;
+    z-index: -1 !important;
   }
 
   @media screen and (max-width: 1024px) {
     #video-form-mobile {
       height: 100vh;
       position: fixed;
-      z-index: -1;
+      z-index: -1 !important;
     }
   }
   

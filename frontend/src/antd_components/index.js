@@ -2,6 +2,7 @@ import Avatar from "./Avatar/Avatar.component";
 import Button from "./Button/Button.component";
 import Breadcrumb from "./Breadcrumb/Breadcrumb.component";
 import Col from "./Col/Col.component";
+import Collapse from "./Collapse/Collapse.component";
 import Checkbox from "./Checkbox/Checkbox.component";
 import Card from "./Card/Card.component";
 import Divider from "./Divider/Divider.component";
@@ -31,6 +32,7 @@ export {
   Notification,
   Row,
   Col,
+  Collapse,
   Card,
   Checkbox,
   Breadcrumb,

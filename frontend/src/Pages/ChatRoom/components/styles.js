@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import {
   Layout as LayoutStyled,
-  Button,
   Typography,
   Row,
   Col,
+  Collapse,
 } from "../../../antd_components";
 
 const { Sider } = LayoutStyled;
@@ -52,6 +52,14 @@ export const TitleStyled = styled(Title)`
 
 export const Layout = styled(LayoutStyled)`
   margin: 25px 105px 25px 25px;
+  background-color: transparent;
+`;
+
+export const RoomDescription = styled.p`
+  color: ${({ color }) => color};
+  font-size: 10pt;
+  font-weight: 500;
+  word-break: break-all;
 `;
 
 export const RoomCategory = styled.span`
@@ -66,11 +74,6 @@ export const CategoryText = styled.span`
   margin-left: 5px;
 `;
 
-export const ExpandButton = styled(Button)`
-  padding: 0;
-  height: fit-content;
-`;
-
 export const UsernameContainer = styled.span`
   margin-top: 6px;
   float: right;
@@ -81,10 +84,21 @@ export const UsernameContainer = styled.span`
   overflow: hidden;
 `;
 
-export const ChatContainer = styled.div`
+export const ChatContainer = styled(Collapse)`
   display: flex;
   flex-direction: column;
   height: 100%;
+  background-color: transparent;
+
+  .ant-collapse-arrow {
+    color: #fff;
+    font-size: 16pt !important;
+  }
+
+  .ant-collapse-item{
+    margin-right: 15px !important;
+    border-color: rgba(191, 191, 191, 0.7);
+  }
 `;
 
 export const ChatStyled = styled.div`
