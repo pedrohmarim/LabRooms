@@ -170,7 +170,6 @@ module.exports = {
       const { username, email, cpf, phone, celphone, biography, socials } =
         request.body;
 
-      console.log(request.body);
       UserModel.findByIdAndUpdate(
         { _id },
         {
