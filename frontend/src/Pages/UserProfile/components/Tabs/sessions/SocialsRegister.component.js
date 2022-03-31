@@ -25,6 +25,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
             name='facebook'
+            rules={[{ type: "url", message: "URL inválida." }]}
             label={
               <Typography>
                 <b>Facebook</b>
@@ -42,6 +43,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
             name='instagram'
+            rules={[{ type: "url", message: "URL inválida." }]}
             label={
               <Typography>
                 <b>Instagram</b>
@@ -58,6 +60,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
 
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
+            rules={[{ type: "url", message: "URL inválida." }]}
             name='twitter'
             label={
               <Typography>
@@ -80,6 +83,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
             name='linkedin'
+            rules={[{ type: "url", message: "URL inválida." }]}
             label={
               <Typography>
                 <b>LinkedIn</b>
@@ -97,6 +101,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
             name='github'
+            rules={[{ type: "url", message: "URL inválida." }]}
             label={
               <Typography>
                 <b>Github</b>

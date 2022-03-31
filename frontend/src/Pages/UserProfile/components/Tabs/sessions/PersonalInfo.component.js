@@ -1,5 +1,6 @@
 import React from "react";
 import { StyledCol, StyledButton } from "../../../UserProfile.component.styled";
+import { validateBr } from 'js-brasil';
 import {
   Col,
   Row,
@@ -77,7 +78,17 @@ const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
 
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
-            rules={[{ required: true, message: "Campo obrigatório." }]}
+             rules={[
+              { required: true, message: "Campo obrigatório." },
+              () => ({
+                validator(_, value) {
+                  if (!value || validateBr.cpf(value)) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('CPF Inválido.'));
+                },
+              })
+            ]}
             name='cpf'
             label={
               <Typography>
@@ -119,6 +130,16 @@ const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
             name='phone'
+            rules={[
+              () => ({
+                validator(_, value) {
+                  if (!value || validateBr.telefone(value)) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('Telefone Inválido.'));
+                },
+              })
+            ]}
             label={
               <Typography>
                 <b>Telefone Fixo</b>
@@ -139,6 +160,16 @@ const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
             name='celphone'
+            rules={[
+              () => ({
+                validator(_, value) {
+                  if (!value || validateBr.celular(value)) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(new Error('Celular Inválido.'));
+                },
+              })
+            ]}
             label={
               <Typography>
                 <b>Celular</b>

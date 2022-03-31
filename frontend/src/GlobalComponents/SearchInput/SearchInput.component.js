@@ -9,12 +9,14 @@ const SearchInput = ({
   fromLandingPage,
   searchValue,
   background,
+  title = 'Pesquise por um Tema para Encontrar Projetos',
+  placeholder = 'Procurar projeto'
 }) => {
   return searchValue ? (
     <Form initialValues={{ roomSearchInput: searchValue }}>
       <Tooltip
         color={color}
-        title='Pesquise por um tema para encontrar salas'
+        title={title}
         placement='bottomLeft'
         defaultVisible={window.innerWidth < 1024 && fromLandingPage}
       >
@@ -30,7 +32,7 @@ const SearchInput = ({
             onPressEnter={onSearch}
             width={width}
             size='large'
-            placeholder='Procurar sala'
+            placeholder={placeholder}
           />
         </FormItem>
       </Tooltip>
@@ -38,7 +40,7 @@ const SearchInput = ({
   ) : (
     <Tooltip
       color={color}
-      title='Pesquise por um tema para encontrar salas'
+      title={title}
       placement='bottomLeft'
       defaultVisible={window.innerWidth < 1024 && fromLandingPage}
     >
@@ -49,7 +51,7 @@ const SearchInput = ({
         onPressEnter={onSearch}
         width={width}
         size='large'
-        placeholder='Procurar sala'
+        placeholder={placeholder}
       />
     </Tooltip>
   );

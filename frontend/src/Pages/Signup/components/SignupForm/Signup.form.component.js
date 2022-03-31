@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { validateBr } from 'js-brasil';
 import {
   Form,
   FeatherIcons,
@@ -100,7 +101,17 @@ const SignUpForm = ({ darkPallete }) => {
       <FormItem
         label='CPF'
         name='cpf'
-        rules={[{ required: true, message: "Campo obrigatório." }]}
+        rules={[
+          { required: true, message: "Campo obrigatório." },
+          () => ({
+            validator(_, value) {
+              if (!value || validateBr.cpf(value)) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('CPF Inválido.'));
+            },
+          })
+        ]}
         help={validateInput?.field === "cpf" ? validateInput.message : null}
         validateStatus={validateInput?.field === "cpf" ? "error" : null}
       >

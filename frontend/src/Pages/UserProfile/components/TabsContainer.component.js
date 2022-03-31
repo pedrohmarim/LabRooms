@@ -22,7 +22,7 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
             />
           </TabPane>
 
-          <TabPane tab='Minhas Salas' key='2'>
+          <TabPane tab='Meus Projetos' key='2'>
             <RoomsTab
               darkPallete={darkPallete}
               user={user}

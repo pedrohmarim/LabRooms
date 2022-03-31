@@ -42,14 +42,14 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
 
   const createRoomButton = (marginleft) => (
     <Link to='/createroom'>
-      <Tooltip title='Crie uma nova sala' color={darkPallete.lightblue}>
+      <Tooltip title='Crie um Novo Projeto' color={darkPallete.lightblue}>
         <Button
           margin={`0 0 ${marginleft || "15px"} 0px`}
           color={darkPallete.white}
           backgroundcolor={darkPallete.lightblue}
           icon={<FeatherIcons icon='plus' size={20} />}
         >
-          <ButtonText>Criar sala</ButtonText>
+          <ButtonText>Criar Proejto</ButtonText>
         </Button>
       </Tooltip>
     </Link>
@@ -155,7 +155,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
         <Menu.Item key='1' onClick={() => navigate(`/chatroom/${_id}`)}>
           <Row align='middle'>
             <FeatherIcons icon='share' size={15} />
-            <MenuLabelItem>Ir para sala</MenuLabelItem>
+            <MenuLabelItem>Ver o Projeto</MenuLabelItem>
           </Row>
         </Menu.Item>
         <Menu.Item
@@ -181,7 +181,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           placement='topRight'
           title={
             <span>
-              Deseja realmente excluir a sala{" "}
+              Deseja realmente excluir o projeto{" "}
               <b>{title.lenght > 10 ? title.substr(0, 10) + "..." : title}</b> ?
             </span>
           }
@@ -255,7 +255,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
               <Col span={window.innerWidth > 1024 ? 18 : 24}>
                 <Row justify='space-between'>
                   <UserInfoTitle level={4} color={darkPallete.white}>
-                    Minhas Salas ({rooms?.array.length})
+                    Meus Projetos ({rooms?.array.length})
                   </UserInfoTitle>
 
                   {createRoomButton()}

@@ -49,7 +49,7 @@ const routes = [
   {
     path: "/createroom",
     name: "Criar Projeto",
-    tooltip: "Ir para Página de Criação de Salas",
+    tooltip: "Ir para Página de Criação de Projetos",
     Component: <CreateRoomComponent />,
   },
   {

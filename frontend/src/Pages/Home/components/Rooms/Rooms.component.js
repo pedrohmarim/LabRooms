@@ -57,14 +57,14 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
           />
           {user && !loading ? (
             <Link to='/createroom'>
-              <Tooltip title='Crie uma nova sala' color={pallete.lightblue}>
+              <Tooltip title='Crie um Novo Projeto' color={pallete.lightblue}>
                 <Button
                   margin='0 0 0 15px'
                   color={darkPallete.white}
                   backgroundcolor={darkPallete.lightblueOpacity}
                   icon={<FeatherIcons icon='plus' size={20} />}
                 >
-                  <ButtonText>Criar sala</ButtonText>
+                  <ButtonText>Criar Projeto</ButtonText>
                 </Button>
               </Tooltip>
             </Link>
@@ -75,7 +75,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
 
         {categories ? (
           <Tooltip
-            title='Filtrar salas'
+            title='Filtrar projetos'
             placement='left'
             color={pallete.lightblue}
           >

@@ -16,13 +16,13 @@ module.exports = {
     })
       .then(() => {
         return response.json({
-          message: "Sala criada com sucesso.",
+          message: "Projeto Criado com Sucesso.",
           success: true,
         });
       })
       .catch(() => {
         return response.json({
-          message: "Erro ao criar sala.",
+          message: "Erro ao Criar Projeto.",
         });
       });
   },
@@ -40,14 +40,14 @@ module.exports = {
     switch (categoryid) {
       case "10":
         rooms = await RoomModel.find();
-        if (rooms) return response.json({ rooms, loading: false }); // Filtra todas as salas ao selecionar Categoria = "Todas"
+        if (rooms) return response.json({ rooms, loading: false }); // Filtra todas os projetos ao selecionar Categoria = "Todas"
         break;
       case "11":
-        rooms = await RoomModel.find({ categoryId: null }); // Filtra todas as salas que possuem Categoria = "Outros"
+        rooms = await RoomModel.find({ categoryId: null }); // Filtra todas os projetos que possuem Categoria = "Outros"
         if (rooms) return response.json({ rooms, loading: false });
         break;
       default:
-        rooms = await RoomModel.find({ categoryId: categoryid }); // Filtra salas por Categoria
+        rooms = await RoomModel.find({ categoryId: categoryid }); // Filtra projetos por Categoria
         if (rooms) return response.json({ rooms, loading: false });
         break;
     }
@@ -110,11 +110,11 @@ module.exports = {
       RoomModel.findByIdAndRemove({ _id }, { new: true }, function (err) {
         if (err) {
           return response.json({
-            message: "Erro ao excluir sala.",
+            message: "Erro ao Excluir Projeto.",
           });
         } else {
           response.json({
-            message: "Sala excluída com sucesso.",
+            message: "Projeto Excluído com Sucesso.",
             status: 200,
           });
         }

@@ -30,7 +30,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
             color={pallete.white}
             margintop={window.innerWidth < 1024 ? "15px" : "20px"}
           >
-            Nenhuma sala encontrada
+            Nenhum Projeto Encontrado.
           </TitleStyled>
         ) : (
           rooms &&

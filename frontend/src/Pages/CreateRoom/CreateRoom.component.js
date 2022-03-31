@@ -23,7 +23,7 @@ export default function CreateRoom() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  document.getElementsByTagName("title")[0].innerText = "LabRooms | Criar sala";
+  document.getElementsByTagName("title")[0].innerText = "LabRooms | Criar Projeto";
 
   useEffect(() => {
     const token = Cookie.get("token");

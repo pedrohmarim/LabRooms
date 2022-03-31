@@ -157,7 +157,7 @@ module.exports = {
       });
     } else {
       return response.json({
-        errorMessage: "Nenhuma sala encontrada",
+        errorMessage: "Nenhum Projeto Encontrado.",
         loading: false,
       });
     }
