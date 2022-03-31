@@ -48,7 +48,7 @@ export default function CreateRoom() {
           width={window.innerWidth > 1024 ? "40%" : "90%"}
           title={
             <FormHeader>
-              <TitleStyled level={3}>Criar sala</TitleStyled>
+              <TitleStyled level={3}>Criar Projeto</TitleStyled>
               <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
                 <Link to='/'>
                   <FeatherIcons icon='chevron-left' size={30} />

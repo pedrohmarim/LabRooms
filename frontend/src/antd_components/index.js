@@ -2,6 +2,7 @@ import Avatar from "./Avatar/Avatar.component";
 import Button from "./Button/Button.component";
 import Breadcrumb from "./Breadcrumb/Breadcrumb.component";
 import Col from "./Col/Col.component";
+import BraftEditor from "./BraftEditor/BraftEditor.component";
 import Collapse from "./Collapse/Collapse.component";
 import Checkbox from "./Checkbox/Checkbox.component";
 import Card from "./Card/Card.component";
@@ -35,6 +36,7 @@ export {
   Collapse,
   Card,
   Checkbox,
+  BraftEditor,
   Breadcrumb,
   FeatherIcons,
   Image,

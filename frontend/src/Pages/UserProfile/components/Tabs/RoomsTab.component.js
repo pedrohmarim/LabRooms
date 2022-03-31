@@ -105,7 +105,9 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
         const dto = {
           roomTitle,
           roomCategory,
-          roomDescription,
+          roomDescription: roomDescription.isEmpty()
+            ? null
+            : roomDescription.toHTML(),
           _id,
           newCategory,
         };

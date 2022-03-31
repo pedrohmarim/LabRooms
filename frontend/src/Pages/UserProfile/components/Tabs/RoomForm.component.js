@@ -13,6 +13,7 @@ import {
   Typography,
   Input,
   Button,
+  BraftEditor,
   Dropdown,
 } from "../../../../antd_components";
 
@@ -43,7 +44,7 @@ export default function RoomForm({
   useEffect(() => {
     form.setFieldsValue({
       roomTitle: title,
-      roomDescription: description,
+      roomDescription: BraftEditor.Editor.createEditorState(description),
       roomCategory: categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
       newCategory,
     });
@@ -96,29 +97,6 @@ export default function RoomForm({
                 disabled={viewMode._id === _id ? false : true}
                 style={styleInput}
                 prefix={<FeatherIcons size={18} icon='type' />}
-              />
-            </Form.Item>
-          </Col>
-
-          <Col span={24}>
-            <Form.Item
-              rules={[
-                {
-                  required: viewMode._id === _id,
-                  message: "Campo obrigatório.",
-                },
-              ]}
-              label={
-                <Typography>
-                  <b>Descrição</b>
-                </Typography>
-              }
-              name='roomDescription'
-            >
-              <Input
-                disabled={viewMode._id === _id ? false : true}
-                style={styleInput}
-                prefix={<FeatherIcons size={18} icon='edit' />}
               />
             </Form.Item>
           </Col>
@@ -216,6 +194,30 @@ export default function RoomForm({
               </Form.Item>
             </Col>
           )}
+
+          <Col span={24}>
+            <Form.Item
+              rules={[
+                {
+                  required: viewMode._id === _id,
+                  message: "Campo obrigatório.",
+                },
+              ]}
+              label={
+                <Typography>
+                  <b>Descrição</b>
+                </Typography>
+              }
+              name='roomDescription'
+            >
+              <BraftEditor.Editor
+                readOnly={viewMode._id === _id ? false : true}
+                excludeControls={["media"]}
+                language={() => BraftEditor.language}
+                textBackgroundColor={false}
+              />
+            </Form.Item>
+          </Col>
 
           {showConfirmButton._id === _id && (
             <Row justify='end'>

@@ -69,17 +69,6 @@ export const RoomDescription = styled.p`
   font-weight: 500;
 `;
 
-export const UserCount = styled.p`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: ${({ color }) => color};
-  position: absolute;
-  right: 0;
-  margin-right: 10px;
-  bottom: 20px;
-`;
-
 export const RoomOwnerImg = styled(Avatar)`
   width: 35px;
   height: 35px;
@@ -104,8 +93,4 @@ export const Divider = styled(StyledDivider)`
   @media screen and (max-width: 1024px) {
     margin: 20px 0 5px 0;
   }
-`;
-
-export const UsersNumber = styled.span`
-  margin: 2.5px 0 0 3px;
 `;

@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TIPO_CATEGORIA } from "../../../Helpers/TipoCategoria";
-import ImgCrop from "antd-img-crop";
 import Cookie from "js-cookie";
 import * as CreateRoomService from "../services/createroom.service";
 import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
-import { CategoryTitle, CategoryInfo, StyledInput } from "../CreateRoom.styled";
+import { InboxOutlined } from "@ant-design/icons";
+import {
+  CategoryTitle,
+  CategoryInfo,
+  StyledInput,
+  Form,
+} from "../CreateRoom.styled";
 import { StyledButton } from "../../Signup/components/SignupForm/Signup.form.styled";
 import {
   acceptedFileTypes,
@@ -13,21 +18,42 @@ import {
   isValidFileSize,
 } from "../Helper/UploadImage.helper";
 import {
-  Form,
   FeatherIcons,
   Row,
   Upload,
   Select,
+  BraftEditor,
   Notification,
 } from "../../../antd_components";
 
 const SigninForm = ({ darkPallete }) => {
+  const { Dragger } = Upload;
   const [form] = Form.useForm();
   let navigate = useNavigate();
   const [categories, setCategories] = useState();
   const [newCategory, setNewCategory] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [invalidType, setInvalidType] = useState(false);
+
+  const draggerProps = {
+    name: "file",
+    multiple: true,
+    // action: "https://www.mocky.io/v2/5cc8019d300000980a055e76", aqui vai a url pra post da imgaem
+    onChange(info) {
+      const { status } = info.file;
+      if (status !== "uploading") {
+        console.log(info.file, info.fileList);
+      }
+      // if (status === "done") {
+      //   Notification.success(`${info.file.name} file uploaded successfully.`);
+      // } else if (status === "error") {
+      //   Notification.error(`${info.file.name} file upload failed.`);
+      // }
+    },
+    onDrop(e) {
+      console.log("Dropped files", e.dataTransfer.files);
+    },
+  };
 
   function beforeUpload(file) {
     const nameSplit = file.name.trim().split(".");
@@ -57,35 +83,26 @@ const SigninForm = ({ darkPallete }) => {
 
   function onSubmit(values) {
     let { title, description, category, newCategory } = values;
-    const { originFileObj } = fileList[0];
 
     const token = Cookie.get("token");
 
-    const {
-      uid,
-      lastModified,
-      lastModifiedDate,
-      name,
-      size,
-      type,
-      webkitRelativePath,
-    } = originFileObj;
-
     const dto = {
-      thumb: {
-        uid,
-        lastModified,
-        lastModifiedDate,
-        name,
-        size,
-        type,
-        webkitRelativePath,
-      },
+      // thumb: {
+      //   uid,
+      //   lastModified,
+      //   lastModifiedDate,
+      //   name,
+      //   size,
+      //   type,
+      //   webkitRelativePath,
+      // },
       title,
-      description,
+      description: description.isEmpty() ? null : description.toHTML(),
       categoryId: newCategory ? null : category,
       newCategory: newCategory || null,
     };
+
+    console.log(dto);
 
     CreateRoomService.createRoom(dto, token).then((res) => {
       const { message, success } = res.data;
@@ -155,19 +172,7 @@ const SigninForm = ({ darkPallete }) => {
       </FormItem>
 
       <FormItem
-        label='Descrição'
-        name='description'
-        rules={[{ required: true, message: "Campo obrigatório." }]}
-      >
-        <StyledInput
-          allowClear
-          prefix={<FeatherIcons icon='edit' size={15} />}
-          placeholder='Ex.: Sala destinada à assuntos sobre saúde'
-        />
-      </FormItem>
-
-      <FormItem
-        label='Categoria'
+        label='Categoria Principal'
         name='category'
         rules={[{ required: true, message: "Campo obrigatório." }]}
       >
@@ -216,20 +221,42 @@ const SigninForm = ({ darkPallete }) => {
         </FormItem>
       )}
 
+      <FormItem
+        tooltip='Descreva Aqui Objetivos a Serem Alcançados, Requisitos de Habilidades Obrigatórias e Desejáveis para Realização do Projeto, Etapas a Serem seguidas,etc.'
+        label='Descrição'
+        name='description'
+        rules={[{ required: true, message: "Campo obrigatório." }]}
+      >
+        <BraftEditor.Editor
+          excludeControls={["media"]}
+          language={() => BraftEditor.language}
+          textBackgroundColor={false}
+        />
+      </FormItem>
+
       <FormItem label='Logo'>
-        <ImgCrop rotate beforeCrop={beforeUpload}>
-          <Upload
-            multiple={false}
-            maxCount={1}
-            accept={acceptedFileTypes}
-            listType='picture-card'
-            fileList={fileList}
-            onChange={onChange}
-            onPreview={onPreview}
-          >
-            {fileList.length < 1 && "Enviar imagem"}
-          </Upload>
-        </ImgCrop>
+        <Dragger
+          {...draggerProps}
+          multiple={false}
+          list
+          maxCount={1}
+          fileList={fileList}
+          onChange={onChange}
+          onPreview={onPreview}
+          accept={acceptedFileTypes}
+          beforeUpload={beforeUpload}
+        >
+          <p className='ant-upload-drag-icon'>
+            <InboxOutlined />
+          </p>
+          <p className='ant-upload-text'>
+            Click or drag file to this area to upload
+          </p>
+          <p className='ant-upload-hint'>
+            Support for a single or bulk upload. Strictly prohibit from
+            uploading company data or other band files
+          </p>
+        </Dragger>
       </FormItem>
 
       <StyledButton

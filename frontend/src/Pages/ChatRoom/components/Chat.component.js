@@ -160,9 +160,10 @@ export default function Chat({ darkPallete, currentRoom }) {
               }
               key='1'
             >
-              <RoomDescription color={darkPallete.white}>
-                {currentRoom?.description}
-              </RoomDescription>
+              <RoomDescription
+                color={darkPallete.white}
+                dangerouslySetInnerHTML={{ __html: currentRoom?.description }}
+              ></RoomDescription>
             </Panel>
 
             <ChatStyled background={darkPallete.lightblueOpacity}>

@@ -7,10 +7,8 @@ import {
   RoomItem,
   RoomTitle,
   RoomDescription,
-  UserCount,
   TitleStyled,
   ButtonText,
-  UsersNumber,
   RoomImage,
   RoomOwnerImg,
 } from "../styles";
@@ -46,7 +44,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
                   margintop={window.innerWidth < 1024 ? "15px" : "20px"}
                 >
                   <FeatherIcons icon='check-circle' size={28} />
-                  <ButtonText>Salas disponíveis ({rooms.length})</ButtonText>
+                  <ButtonText>Projetos disponíveis ({rooms.length})</ButtonText>
                 </TitleStyled>
               </Col>
 
@@ -68,11 +66,6 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
                         />
 
                         <RoomTitle color={darkPallete.white}>{title}</RoomTitle>
-
-                        <UserCount color={darkPallete.white}>
-                          <FeatherIcons icon='users' size={15} />
-                          <UsersNumber>20</UsersNumber>
-                        </UserCount>
 
                         <RoomDescription color={darkPallete.white}>
                           {description}
