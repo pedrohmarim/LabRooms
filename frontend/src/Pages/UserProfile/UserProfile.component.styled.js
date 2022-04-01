@@ -129,9 +129,7 @@ export const StyledCol = styled(Col)`
 `;
 
 export const UserInfoTitle = styled(Title)`
-  @media screen and (max-width: 1024px) {
-    color: ${({ color }) => color} !important;
-  }
+  color: ${({ color }) => color} !important;
 `;
 
 export const UserInfoSpan = styled(Typography)`

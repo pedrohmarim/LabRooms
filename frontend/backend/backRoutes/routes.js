@@ -10,6 +10,7 @@ router.post("/userRegister", UserController.handleRegister);
 router.get("/userLogin", UserController.handleLogin);
 router.get("/currentUser", checkAuth, UserController.handleGetCurrentUser);
 router.get("/getUserById", UserController.handleGetUserById);
+router.get("/getUserByName", UserController.handleGetUserByName);
 router.get("/getRoomsByOwnerId", UserController.handleGetRoomsByOwnerId);
 router.post("/updateUserInfo", checkAuth, UserController.handleUpdateUser);
 

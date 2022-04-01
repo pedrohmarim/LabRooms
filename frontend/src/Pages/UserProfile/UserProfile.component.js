@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
 import Aside from "../../GlobalComponents/Aside/Aside.component";
@@ -7,6 +7,7 @@ import { darkPallete } from "../../styles/pallete";
 import ProfileSocials from "./components/ProfileSocials.component";
 import TabsContainer from "./components/TabsContainer.component";
 import Background from "../../assets/backStars.mp4";
+import * as ChatRoomService from '../ChatRoom/services/ChatRoom.service'
 import {
   ProfileContainer,
   Row,
@@ -19,13 +20,25 @@ import Header from "../../GlobalComponents/Header/Header.component";
 export default function UserProfile() {
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Perfil";
   const { user } = useContext(UserContext);
+  const [viewUser, setViewUser] = useState();
+  const [viewMode, setIsViewMode] = useState(false);
   const navigate = useNavigate();
-
+  const params = useParams();
   const token = Cookie.get("token");
-
+  const { username } = params;
+  
   useEffect(() => {
-    if (!user && !token) navigate("/notfound");
-  }, [navigate, token, user]);
+    //aqui
+    if (!user && username === user?.username) {
+      setViewUser(user);
+     setIsViewMode(false);
+    } else {
+      ChatRoomService.getUserByName(username).then(({ data }) => {
+        setViewUser(data);
+        setIsViewMode(true);
+      })
+    }
+  }, [params, user, username]);
 
   return (
     <>
@@ -57,15 +70,16 @@ export default function UserProfile() {
               <>
                 <LeftFormContainer span={window.innerWidth > 1024 ? 6 : 24}>
                   <Card bordered={false}>
-                    <ProfileSocials darkPallete={darkPallete} user={user} />
+                    <ProfileSocials darkPallete={darkPallete} user={viewUser} />
                   </Card>
                 </LeftFormContainer>
                 <RightFormContainer span={window.innerWidth > 1024 ? 18 : 24}>
                   <TabsContainer
                     darkPallete={darkPallete}
-                    user={user}
+                    user={viewUser}
                     navigate={navigate}
                     token={token}
+                    viewMode={viewMode}
                   />
                 </RightFormContainer>
               </>
@@ -77,12 +91,13 @@ export default function UserProfile() {
                   tabcolor={darkPallete.white}
                 >
                   <Card bordered={false}>
-                    <ProfileSocials darkPallete={darkPallete} user={user} />
+                    <ProfileSocials darkPallete={darkPallete} user={viewUser} />
                     <TabsContainer
                       darkPallete={darkPallete}
-                      user={user}
+                      user={viewUser}
                       navigate={navigate}
                       token={token}
+                      viewMode={viewMode}
                     />
                   </Card>
                 </LeftFormContainer>

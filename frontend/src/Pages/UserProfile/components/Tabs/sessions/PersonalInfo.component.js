@@ -12,29 +12,31 @@ import {
   Tooltip,
 } from "../../../../../antd_components";
 
-const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
+const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMode }) => {
   const { Title } = Typography;
 
   return (
     <>
-      <Row>
-        <StyledCol span={24} marginbottom='0 0 15px 0'>
-          <Row justify='space-between'>
-            <Title level={4}>Informações Pessoais</Title>
-            <Tooltip
-              color={darkPallete.lightblue}
-              title='Editar Perfil'
-              defaultVisible={window.innerWidth < 1024}
-            >
-              <StyledButton
-                backgroundcolor='transparent'
-                icon={<FeatherIcons icon='edit' />}
-                onClick={() => setEditMode(true)}
-              />
-            </Tooltip>
-          </Row>
-        </StyledCol>
+      {!viewMode && (
+        <Row>
+          <StyledCol span={24} marginbottom='0 0 15px 0'>
+            <Row justify='space-between'>
+              <Title level={4}>Informações Pessoais</Title>
+              <Tooltip
+                color={darkPallete.lightblue}
+                title='Editar Perfil'
+                defaultVisible={window.innerWidth < 1024}
+              >
+                <StyledButton
+                  backgroundcolor='transparent'
+                  icon={<FeatherIcons icon='edit' />}
+                  onClick={() => setEditMode(true)}
+                />
+              </Tooltip>
+            </Row>
+          </StyledCol>
       </Row>
+      )}
 
       <Row gutter={window.innerWidth < 1024 ? 0 : [16, 16]}>
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
@@ -48,7 +50,8 @@ const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
             }
           >
             <Input
-              disabled={!editMode}
+              readOnly={viewMode}
+              disabled={!editMode && !viewMode}
               style={styleInput}
               placeholder='Nome Completo'
             />
@@ -69,6 +72,7 @@ const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
             }
           >
             <Input
+              readOnly={viewMode}
               disabled={!editMode}
               style={styleInput}
               placeholder='E-mail'
@@ -97,6 +101,7 @@ const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
             }
           >
             <InputMask
+              readOnly={viewMode}
               disabled={!editMode}
               style={styleInput}
               placeholder='CPF'
@@ -120,6 +125,7 @@ const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
             }
           >
             <Input
+              readOnly={viewMode}
               disabled={!editMode}
               style={styleInput}
               placeholder='Biografia'
@@ -147,6 +153,7 @@ const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
             }
           >
             <InputMask
+              readOnly={viewMode}
               disabled={!editMode}
               Mask
               autoComplete='off'
@@ -177,6 +184,7 @@ const SocialRegister = ({ editMode, styleInput, darkPallete, setEditMode }) => {
             }
           >
             <InputMask
+              readOnly={viewMode}
               disabled={!editMode}
               Mask
               autoComplete='off'

@@ -4,7 +4,7 @@ import { Tabs } from "../../../antd_components";
 import UserInfoTab from "./Tabs/UserInfoTab.component";
 import RoomsTab from "./Tabs/RoomsTab.component";
 
-export default function TabUserInfo({ user, darkPallete, navigate, token }) {
+export default function TabUserInfo({ user, darkPallete, navigate, token, viewMode }) {
   const { TabPane } = Tabs;
 
   return (
@@ -19,17 +19,20 @@ export default function TabUserInfo({ user, darkPallete, navigate, token }) {
               user={user}
               token={token}
               navigate={navigate}
+              viewMode={viewMode}
             />
           </TabPane>
 
-          <TabPane tab='Meus Projetos' key='2'>
-            <RoomsTab
-              darkPallete={darkPallete}
-              user={user}
-              token={token}
-              navigate={navigate}
-            />
+          {!viewMode && (
+            <TabPane tab='Meus Projetos' key='2'>
+              <RoomsTab
+                darkPallete={darkPallete}
+                user={user}
+                token={token}
+                navigate={navigate}
+              />
           </TabPane>
+          )}
         </Tabs>
       }
     />

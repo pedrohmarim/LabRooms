@@ -8,7 +8,7 @@ import SocialRegister from "./sessions/SocialsRegister.component";
 import UserSkills from "./sessions/UserSkills.component";
 import { Row, Notification } from "../../../../antd_components";
 
-const UserInfoTab = ({ darkPallete, user, token }) => {
+const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const [editMode, setEditMode] = useState(false);
 
   const styleInput = {
@@ -82,6 +82,7 @@ const UserInfoTab = ({ darkPallete, user, token }) => {
         >
           <PersonalInfo
             editMode={editMode}
+            viewMode={viewMode}
             styleInput={styleInput}
             darkPallete={darkPallete}
             setEditMode={(value) => setEditMode(value)}
@@ -89,12 +90,12 @@ const UserInfoTab = ({ darkPallete, user, token }) => {
 
           <UserSkills
             editMode={editMode}
+            viewMode={viewMode}
             styleInput={styleInput}
             darkPallete={darkPallete}
-            setEditMode={(value) => setEditMode(value)}
           />
 
-          <SocialRegister editMode={editMode} styleInput={styleInput} />
+          <SocialRegister editMode={editMode} viewMode={viewMode} styleInput={styleInput} />
 
           {editMode && (
             <Row justify='end'>

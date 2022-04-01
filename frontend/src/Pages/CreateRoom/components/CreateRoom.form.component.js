@@ -103,8 +103,6 @@ const SigninForm = ({ darkPallete, user }) => {
       newCategory: newCategory || null,
     };
 
-    console.log(dto);
-
     CreateRoomService.createRoom(dto, token).then((res) => {
       const { message, success } = res.data;
 

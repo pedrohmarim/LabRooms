@@ -8,7 +8,7 @@ import {
   Input,
 } from "../../../../../antd_components";
 
-const SocialRegister = ({ editMode, styleInput }) => {
+const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMode }) => {
   const { Title } = Typography;
 
   return (

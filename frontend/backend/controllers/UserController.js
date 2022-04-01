@@ -117,7 +117,45 @@ module.exports = {
 
     if (user) {
       return response.json({
+        _id: user._id,
         username: user.username,
+        email: user.email,
+        cpf: user.cpf,
+        phone: user.phone,
+        celphone: user.celphone,
+        biography: user.biography,
+        socials: user.socials,
+        createdAt: user.createdAt.toLocaleString("pt-BR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }),
+      });
+    } else {
+      return response.json(null);
+    }
+  },
+
+  async handleGetUserByName(request, response) {
+    const { username } = request.headers;
+
+    const user = await UserModel.findOne({ username });
+
+    if (user) {
+      return response.json({
+        _id: user._id,
+        username: user.username,
+        email: user.email,
+        cpf: user.cpf,
+        phone: user.phone,
+        celphone: user.celphone,
+        biography: user.biography,
+        socials: user.socials,
+        createdAt: user.createdAt.toLocaleString("pt-BR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }),
       });
     } else {
       return response.json(null);

@@ -63,7 +63,7 @@ const routes = [
     Component: <UserProfile />,
   },
   {
-    breadcrumb: "/view/project",
+    breadcrumb: "/view",
     path: "/view/project/:_id",
     name: "Visualizar Projeto",
     tooltip: "Ir para Vizualizar Projeto",

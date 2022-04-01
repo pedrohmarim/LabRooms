@@ -19,8 +19,7 @@ export const ProjectTitle = styled(Typography)`
 
 export const ProjectDescription = styled.div`
   background-color: rgba(255, 255, 255, 0.85);
-  padding: 0 10px;
+  padding: 5px 15px;
   width: fit-content;
-  max-width: 65%;
   border-radius: 4px;
 `;

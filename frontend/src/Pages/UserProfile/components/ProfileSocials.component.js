@@ -1,5 +1,8 @@
 import React from "react";
-
+import UserImage from "../../../assets/userImage.jpg";
+import { Link } from 'react-router-dom';
+import { SocialList } from "./Tabs/sessions/SocialList.component";
+import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
 import {
   StyledBreadCrumb,
   StyledCol,
@@ -10,24 +13,21 @@ import {
   UserInfoBio,
   SocialIcon,
 } from "../UserProfile.component.styled";
-import UserImage from "../../../assets/userImage.jpg";
-import { SocialList } from "./Tabs/sessions/SocialList.component";
-import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
 import { Row, Breadcrumb, Image, Col, Tooltip } from "../../../antd_components";
 
-export default function ProfileSocials({ darkPallete, user }) {
+export default function ProfileSocials({ darkPallete, user, isViewProject, ownerName }) {
   return (
-    <Row justify='center' gutter={[16, 16]}>
+    <Row justify='center' gutter={[16, 16]} style={isViewProject && { maxWidth: '400px', position: 'fixed' }}>
       {user ? (
         <>
           <StyledBreadCrumb span={24}>
-            <Breadcrumb color={window.innerWidth < 1024 && darkPallete.white} />
+            <Breadcrumb color={(window.innerWidth < 1024 || isViewProject) && darkPallete.white} />
           </StyledBreadCrumb>
 
           <Image src={UserImage} height={120} />
 
           <StyledCol span={24}>
-            <UserInfoTitle level={4} color={darkPallete.white}>
+            <UserInfoTitle level={4} color={(window.innerWidth < 1024 || isViewProject) && darkPallete.white} isViewProject={isViewProject}>
               {user?.username}
             </UserInfoTitle>
             {user?.biography && (
@@ -64,26 +64,30 @@ export default function ProfileSocials({ darkPallete, user }) {
             </Row>
           </Col>
 
-          <Tooltip
-            title='Ir para o Perfil do Usuário'
-            color={darkPallete.lightblue}
-            placement='bottom'
-          >
-            <StyledButton
-              htmlType='submit'
-              backgroundcolor={darkPallete.lightblue}
-              height='35'
-              width='200'
-              color={darkPallete.white}
+          {isViewProject && (
+            <Tooltip
+              title='Ir para o Perfil do Usuário'
+              color={darkPallete.lightblue}
+              placement='bottom'
             >
-              Ver Perfil
-            </StyledButton>
-          </Tooltip>
+              <Link to={`/profile/${ownerName}`}>
+                <StyledButton
+                  htmlType='submit'
+                  backgroundcolor={darkPallete.lightblue}
+                  height='35'
+                  width='200'
+                  color={darkPallete.white}
+                >
+                  Ver Perfil
+                </StyledButton>
+              </Link>
+            </Tooltip>
+          )}
 
-          <StyledDivider />
+          {!isViewProject && <StyledDivider />}
         </>
       ) : (
-        Loading("#000")
+        Loading(isViewProject ? "#fff" : "#000")
       )}
     </Row>
   );

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const ChatContainer = styled.div`
-  display: grid;
-  grid-template-columns: auto 100%;
+  display: flex;
   height: 100vh;
 `;

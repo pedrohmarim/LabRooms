@@ -8,7 +8,7 @@ import {
   Input,
 } from "../../../../../antd_components";
 
-const SocialRegister = ({ editMode, styleInput }) => {
+const SocialRegister = ({ editMode, viewMode, styleInput }) => {
   const { Title } = Typography;
 
   return (
@@ -33,6 +33,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
             }
           >
             <Input
+              readOnly={viewMode}
               disabled={!editMode}
               style={styleInput}
               placeholder='www.facebook.com/user'
@@ -51,6 +52,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
             }
           >
             <Input
+              readOnly={viewMode}
               disabled={!editMode}
               style={styleInput}
               placeholder='www.instagram.com/user'
@@ -69,6 +71,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
             }
           >
             <Input
+              readOnly={viewMode}
               disabled={!editMode}
               Mask
               style={styleInput}
@@ -91,6 +94,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
             }
           >
             <Input
+              readOnly={viewMode}
               disabled={!editMode}
               style={styleInput}
               placeholder='www.linkedin.com/user'
@@ -109,6 +113,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
             }
           >
             <Input
+              readOnly={viewMode}
               disabled={!editMode}
               style={styleInput}
               placeholder='www.github.com/user'
