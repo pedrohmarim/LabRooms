@@ -18,8 +18,7 @@ export const ProjectTitle = styled(Typography)`
 `;
 
 export const ProjectDescription = styled.div`
-  position: relative;
-  background-color: rgba(255, 255, 255, 0.85);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 10px 15px;
   width: 100%;
   border-radius: 4px;
