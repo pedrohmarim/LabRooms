@@ -14,6 +14,7 @@ import {
   Tooltip,
   Button,
   FeatherIcons,
+  BackTop,
 } from "../../../../antd_components";
 
 const Rooms = ({ pallete, searchValue, userContext }) => {
@@ -46,6 +47,8 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
 
   return (
     <Container background={pallete.white}>
+      <BackTop pallete={pallete} />
+
       <Row justify='space-between' align='middle'>
         <StyledCol span={window.innerWidth > 1024 ? 21 : 24}>
           <SearchInput
@@ -55,6 +58,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
             color={pallete.lightblue}
             width={window.innerWidth > 1024 ? "25%" : "100%"}
           />
+
           {user && !loading ? (
             <Link to='/createroom'>
               <Tooltip title='Crie um Novo Projeto' color={pallete.lightblue}>
@@ -75,7 +79,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
 
         {categories ? (
           <Tooltip
-            title='Filtrar projetos'
+            title='Filtrar Projetos'
             placement='left'
             color={pallete.lightblue}
           >
@@ -85,7 +89,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
               width={window.innerWidth > 1024 ? "12%" : "100%"}
               margintop={window.innerWidth < 1024 ? "10px" : "0"}
               getPopupContainer={(trigger) => trigger.parentNode}
-              placeholder='Filtrar...'
+              placeholder='Filtrar por Categoria'
               size='middle'
             >
               <Select.Option key={10} value={10}>
@@ -118,9 +122,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
           Loading(darkPallete.white)
         )}
       </Row>
-
       <Divider />
-
       <RoomList rooms={rooms} loadingRooms={loadingRooms} pallete={pallete} />
     </Container>
   );

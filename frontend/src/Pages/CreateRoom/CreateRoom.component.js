@@ -23,7 +23,8 @@ export default function CreateRoom() {
   const { user } = useContext(UserContext);
   const navigate = useNavigate();
 
-  document.getElementsByTagName("title")[0].innerText = "LabRooms | Criar Projeto";
+  document.getElementsByTagName("title")[0].innerText =
+    "LabRooms | Criar Projeto";
 
   useEffect(() => {
     const token = Cookie.get("token");
@@ -60,7 +61,7 @@ export default function CreateRoom() {
           <FormHeader margin='0 0 20px 0'>
             <Breadcrumb />
           </FormHeader>
-          <CreateRoomForm darkPallete={darkPallete} />
+          <CreateRoomForm darkPallete={darkPallete} user={user} />
         </SignFormContainer>
       </CenterForm>
     </>

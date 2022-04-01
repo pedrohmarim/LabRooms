@@ -49,7 +49,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           backgroundcolor={darkPallete.lightblue}
           icon={<FeatherIcons icon='plus' size={20} />}
         >
-          <ButtonText>Criar Proejto</ButtonText>
+          <ButtonText>Criar Projeto</ButtonText>
         </Button>
       </Tooltip>
     </Link>
@@ -248,85 +248,83 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
 
   return (
     <Card bordered={false}>
-      <>
-        <Row justify='space-between' gutter={[10, 10]}>
-          {!hasntRooms && rooms?.array && !rooms.loading ? (
-            <>
-              <Col span={window.innerWidth > 1024 ? 18 : 24}>
-                <Row justify='space-between'>
-                  <UserInfoTitle level={4} color={darkPallete.white}>
-                    Meus Projetos ({rooms?.array.length})
-                  </UserInfoTitle>
+      <Row justify='space-between' gutter={[10, 10]}>
+        {!hasntRooms && rooms?.array && !rooms.loading ? (
+          <>
+            <Col span={window.innerWidth > 1024 ? 18 : 24}>
+              <Row justify='space-between'>
+                <UserInfoTitle level={4} color={darkPallete.white}>
+                  Meus Projetos ({rooms?.array.length})
+                </UserInfoTitle>
 
-                  {createRoomButton()}
-                </Row>
-              </Col>
-
-              <Col span={window.innerWidth > 1024 ? 6 : 24}>
-                <Form.Item name='roomFilter'>
-                  <Select
-                    defaultValue={TIPO_CATEGORIA.CATEGORIA_TODAS}
-                    getPopupContainer={(trigger) => trigger.parentNode}
-                    onChange={handleFilterRoom}
-                  >
-                    <Select.Option
-                      key={TIPO_CATEGORIA.CATEGORIA_TODAS}
-                      value={TIPO_CATEGORIA.CATEGORIA_TODAS}
-                    >
-                      <FeatherIcons
-                        icon='list'
-                        size={18}
-                        className='iconMargin'
-                      />
-                      <StyledOption>Todas</StyledOption>
-                    </Select.Option>
-
-                    {allRooms &&
-                      allRooms.map(({ title, _id, Icon }) => (
-                        <Select.Option key={_id} value={_id}>
-                          <FeatherIcons
-                            icon={Icon}
-                            size={18}
-                            className='iconMargin'
-                          />
-                          <StyledOption>{title}</StyledOption>
-                        </Select.Option>
-                      ))}
-                  </Select>
-                </Form.Item>
-              </Col>
-            </>
-          ) : (
-            !rooms?.loading &&
-            !hasntRooms && (
-              <Row>
-                {Loading(
-                  window.innerWidth < 1024 ? darkPallete.white : "#000",
-                  "0 0 0 10px"
-                )}
+                {createRoomButton()}
               </Row>
-            )
-          )}
-        </Row>
+            </Col>
 
-        <Row gutter={window.innerWidth > 1024 && [15, 15]}>
-          {hasntRooms && (
-            <StyledRow align='middle' justify='center'>
-              <Col span={24}>
-                <TitleStyled
-                  level={5}
-                  color={window.innerWidth < 1024 ? darkPallete.white : "#000"}
+            <Col span={window.innerWidth > 1024 ? 6 : 24}>
+              <Form.Item name='roomFilter'>
+                <Select
+                  defaultValue={TIPO_CATEGORIA.CATEGORIA_TODAS}
+                  getPopupContainer={(trigger) => trigger.parentNode}
+                  onChange={handleFilterRoom}
                 >
-                  {hasntRooms?.errorMessage}
-                </TitleStyled>
-              </Col>
-              <Col span={24}>{createRoomButton("0px")}</Col>
-            </StyledRow>
-          )}
+                  <Select.Option
+                    key={TIPO_CATEGORIA.CATEGORIA_TODAS}
+                    value={TIPO_CATEGORIA.CATEGORIA_TODAS}
+                  >
+                    <FeatherIcons
+                      icon='list'
+                      size={18}
+                      className='iconMargin'
+                    />
+                    <StyledOption>Todas</StyledOption>
+                  </Select.Option>
 
-          {listRooms}
-        </Row>
-      </>
+                  {allRooms &&
+                    allRooms.map(({ title, _id, Icon }) => (
+                      <Select.Option key={_id} value={_id}>
+                        <FeatherIcons
+                          icon={Icon}
+                          size={18}
+                          className='iconMargin'
+                        />
+                        <StyledOption>{title}</StyledOption>
+                      </Select.Option>
+                    ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </>
+        ) : (
+          !rooms?.loading &&
+          !hasntRooms && (
+            <Row>
+              {Loading(
+                window.innerWidth < 1024 ? darkPallete.white : "#000",
+                "0 0 0 10px"
+              )}
+            </Row>
+          )
+        )}
+      </Row>
+
+      <Row gutter={window.innerWidth > 1024 && [15, 15]}>
+        {hasntRooms && (
+          <StyledRow align='middle' justify='center'>
+            <Col span={24}>
+              <TitleStyled
+                level={5}
+                color={window.innerWidth < 1024 ? darkPallete.white : "#000"}
+              >
+                {hasntRooms?.errorMessage}
+              </TitleStyled>
+            </Col>
+            <Col span={24}>{createRoomButton("0px")}</Col>
+          </StyledRow>
+        )}
+
+        {listRooms}
+      </Row>
     </Card>
   );
 };

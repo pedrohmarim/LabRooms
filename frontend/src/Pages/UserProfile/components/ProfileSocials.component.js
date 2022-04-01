@@ -4,9 +4,10 @@ import {
   StyledBreadCrumb,
   StyledCol,
   UserInfoTitle,
-  StyledButton,
   UserInfoSpan,
   StyledDivider,
+  StyledButton,
+  UserInfoBio,
   SocialIcon,
 } from "../UserProfile.component.styled";
 import UserImage from "../../../assets/userImage.jpg";
@@ -29,26 +30,15 @@ export default function ProfileSocials({ darkPallete, user }) {
             <UserInfoTitle level={4} color={darkPallete.white}>
               {user?.username}
             </UserInfoTitle>
-
             {user?.biography && (
-              <UserInfoSpan color={darkPallete.white}>
+              <UserInfoBio color={darkPallete.white}>
                 {user.biography}
-              </UserInfoSpan>
+              </UserInfoBio>
             )}
-
             <UserInfoSpan color={darkPallete.white}>
               Membro desde {user?.createdAt}
             </UserInfoSpan>
           </StyledCol>
-
-          <StyledButton
-            color={darkPallete.white}
-            backgroundcolor={darkPallete.lightblue}
-            width={200}
-            height={35}
-          >
-            Enviar Mensagem
-          </StyledButton>
 
           <Col span={24}>
             <Row justify='center'>
@@ -73,6 +63,22 @@ export default function ProfileSocials({ darkPallete, user }) {
                 )}
             </Row>
           </Col>
+
+          <Tooltip
+            title='Ir para o Perfil do Usuário'
+            color={darkPallete.lightblue}
+            placement='bottom'
+          >
+            <StyledButton
+              htmlType='submit'
+              backgroundcolor={darkPallete.lightblue}
+              height='35'
+              width='200'
+              color={darkPallete.white}
+            >
+              Ver Perfil
+            </StyledButton>
+          </Tooltip>
 
           <StyledDivider />
         </>

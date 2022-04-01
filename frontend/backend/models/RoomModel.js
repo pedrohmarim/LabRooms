@@ -5,6 +5,10 @@ const RoomModel = new Schema({
     type: String,
     required: true,
   },
+  ownerName: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,

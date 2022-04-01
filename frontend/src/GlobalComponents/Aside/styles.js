@@ -28,7 +28,7 @@ export const Menu = styled(MenuStyled)`
 
 export const SiderStyled = styled(Sider)`
   height: 100vh;
-  position: relative;
+  position: fixed;
   z-index: 999;
 `;
 

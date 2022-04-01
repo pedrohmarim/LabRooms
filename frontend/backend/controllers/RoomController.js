@@ -4,7 +4,8 @@ module.exports = {
   async handleCreate(request, response) {
     const { _id } = request.body.decoded;
 
-    let { title, description, categoryId, newCategory, thumb } = request.body;
+    let { title, description, categoryId, newCategory, thumb, ownerName } =
+      request.body;
 
     RoomModel.create({
       title,
@@ -13,6 +14,7 @@ module.exports = {
       newCategory,
       owner: _id,
       thumb,
+      ownerName,
     })
       .then(() => {
         return response.json({
@@ -46,8 +48,8 @@ module.exports = {
         rooms = await RoomModel.find({ categoryId: null }); // Filtra todas os projetos que possuem Categoria = "Outros"
         if (rooms) return response.json({ rooms, loading: false });
         break;
-      default:
-        rooms = await RoomModel.find({ categoryId: categoryid }); // Filtra projetos por Categoria
+      default: // Filtra projetos por Categoria
+        rooms = await RoomModel.find({ categoryId: categoryid });
         if (rooms) return response.json({ rooms, loading: false });
         break;
     }

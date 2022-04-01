@@ -13,7 +13,7 @@ import {
 const { Title } = Typography;
 
 export const ProfileContainer = styled(Layout)`
-  margin: 25px 105px 25px 25px;
+  margin: 25px 25px 25px 100px;
   background-color: transparent;
 
   @media screen and (max-width: 1024px) {
@@ -31,6 +31,15 @@ export const Card = styled(CardStyled)`
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+  }
 
   .ant-card-head-title {
     padding-top: 5px;
@@ -126,6 +135,18 @@ export const UserInfoTitle = styled(Title)`
 `;
 
 export const UserInfoSpan = styled(Typography)`
+  color: #a0acbc;
+  text-align: right;
+  font-size: 10pt;
+  margin-top: 10px;
+
+  @media screen and (max-width: 1024px) {
+    text-align: center;
+    color: ${({ color }) => color} !important;
+  }
+`;
+
+export const UserInfoBio = styled(Typography)`
   color: #a0acbc;
 
   @media screen and (max-width: 1024px) {

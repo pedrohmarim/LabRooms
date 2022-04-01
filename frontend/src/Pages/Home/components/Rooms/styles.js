@@ -17,8 +17,8 @@ export const Container = styled.div`
 `;
 
 export const RoomImage = styled(Image)`
-  width: 100% !important;
-  height: 150px;
+  width: 100%;
+  height: auto;
   border-radius: 8px;
   margin-bottom: 10px;
 `;
@@ -37,7 +37,7 @@ export const RoomItem = styled.div`
   align-items: center;
   transform: scale(0.95);
   background-color: ${({ background }) => background};
-  padding: 10px;
+  padding: 8px;
   margin-top: 10px;
   border-radius: 8px;
   transition: all 0.2s ease;
@@ -48,33 +48,33 @@ export const RoomItem = styled.div`
   }
 `;
 
+export const RoomOwner = styled.p`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: ${({ color }) => color};
+  font-style: italic;
+  margin: 0 0 15px 30px;
+  padding-top: 5px;
+  font-size: 10pt;
+`;
+
 export const RoomTitle = styled.p`
   overflow: hidden;
-  padding-right: 45px;
   white-space: nowrap;
   text-overflow: ellipsis;
   color: ${({ color }) => color};
   font-weight: bold;
-  margin: 0;
+  margin: 0 0 5px 0px;
   font-size: 15pt;
 `;
 
-export const RoomDescription = styled.p`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  color: ${({ color }) => color};
-  margin: 0;
-  font-size: 10pt;
-  font-weight: 500;
-`;
-
 export const RoomOwnerImg = styled(Avatar)`
-  width: 35px;
-  height: 35px;
+  width: 28px;
+  height: 28px;
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 45px;
+  left: 5px;
 `;
 
 export const StyledCol = styled(Col)`

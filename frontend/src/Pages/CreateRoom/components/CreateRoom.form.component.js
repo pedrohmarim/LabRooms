@@ -26,7 +26,7 @@ import {
   Notification,
 } from "../../../antd_components";
 
-const SigninForm = ({ darkPallete }) => {
+const SigninForm = ({ darkPallete, user }) => {
   const { Dragger } = Upload;
   const [form] = Form.useForm();
   let navigate = useNavigate();
@@ -96,6 +96,7 @@ const SigninForm = ({ darkPallete }) => {
       //   type,
       //   webkitRelativePath,
       // },
+      ownerName: user?.username,
       title,
       description: description.isEmpty() ? null : description.toHTML(),
       categoryId: newCategory ? null : category,

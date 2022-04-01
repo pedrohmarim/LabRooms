@@ -14,6 +14,9 @@ const ChatRoom = lazy(() => import("../Pages/ChatRoom/ChatRoom.component"));
 const UserProfile = lazy(() =>
   import("../Pages/UserProfile/UserProfile.component")
 );
+const ViewProject = lazy(() =>
+  import("../Pages/ViewProject/ViewProject.component")
+);
 
 const routes = [
   {
@@ -58,6 +61,13 @@ const routes = [
     name: "Perfil",
     tooltip: "Ir para Meu Perfil",
     Component: <UserProfile />,
+  },
+  {
+    breadcrumb: "/view/project",
+    path: "/view/project/:_id",
+    name: "Visualizar Projeto",
+    tooltip: "Ir para Vizualizar Projeto",
+    Component: <ViewProject />,
   },
 ];
 

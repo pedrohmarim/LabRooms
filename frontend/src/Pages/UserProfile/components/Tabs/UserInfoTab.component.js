@@ -5,6 +5,7 @@ import { StyledButton } from "../../UserProfile.component.styled";
 import * as UserProfileService from "../../services/UserProfile.service";
 import PersonalInfo from "./sessions/PersonalInfo.component";
 import SocialRegister from "./sessions/SocialsRegister.component";
+import UserSkills from "./sessions/UserSkills.component";
 import { Row, Notification } from "../../../../antd_components";
 
 const UserInfoTab = ({ darkPallete, user, token }) => {
@@ -80,6 +81,13 @@ const UserInfoTab = ({ darkPallete, user, token }) => {
           }}
         >
           <PersonalInfo
+            editMode={editMode}
+            styleInput={styleInput}
+            darkPallete={darkPallete}
+            setEditMode={(value) => setEditMode(value)}
+          />
+
+          <UserSkills
             editMode={editMode}
             styleInput={styleInput}
             darkPallete={darkPallete}
