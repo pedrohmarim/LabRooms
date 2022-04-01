@@ -6,7 +6,6 @@ import { ButtonText } from "../../Pages/Home/components/Rooms/styles";
 import { HeaderContainer, MenuLabelItem, StyledRow } from "./Header.styled";
 import { Link, useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
-import { HomeOutlined } from "@ant-design/icons";
 import {
   Row,
   Col,
@@ -37,19 +36,19 @@ const Header = ({ fromNotFound }) => {
 
   const MoreActionsRoom = (
     <Menu>
-      <Link to='/'>
-        <Menu.Item>
-          <Row align='middle' justify='start'>
-            <HomeOutlined />
-            <MenuLabelItem>Home</MenuLabelItem>
-          </Row>
-        </Menu.Item>
-      </Link>
       <Link to={`/profile/${user?._id}`}>
         <Menu.Item>
           <Row align='middle' justify='start'>
             <FeatherIcons icon='user' size={15} />
             <MenuLabelItem>Perfil</MenuLabelItem>
+          </Row>
+        </Menu.Item>
+      </Link>
+      <Link to={{ pathname: `/profile/${user?._id}`, search: "projects=true" }}>
+        <Menu.Item>
+          <Row align='middle' justify='start'>
+            <FeatherIcons icon='folder' size={15} />
+            <MenuLabelItem>Projetos</MenuLabelItem>
           </Row>
         </Menu.Item>
       </Link>

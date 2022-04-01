@@ -7,7 +7,7 @@ const LandingPageInfo = ({ pallete, intoRooms }) => (
     <StyledTitle color={pallete.white}>Conecte-se com o mundo</StyledTitle>
 
     <StyledTitle level={3} color={pallete.white} marginbottom='15px'>
-      Navegue por Salas de Projetos para ncontrar o que mais se adequa à você.
+      Navegue por Salas de Projetos para encontrar o que mais se adequa à você.
     </StyledTitle>
 
     <SearchInput

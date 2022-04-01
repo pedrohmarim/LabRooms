@@ -86,7 +86,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
                   margintop={window.innerWidth < 1024 ? "15px" : "20px"}
                 >
                   <FeatherIcons icon='check-circle' size={28} />
-                  <ButtonText>Projetos disponíveis ({rooms.length})</ButtonText>
+                  <ButtonText>Disponíveis ({rooms.length})</ButtonText>
                 </TitleStyled>
               </Col>
             </>
