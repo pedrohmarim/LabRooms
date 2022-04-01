@@ -23,10 +23,3 @@ export async function getUserById(_id) {
     },
   });
 }
-export async function getUserByName(username) {
-  return api.get("/getUserByName", {
-    headers: {
-      username,
-    },
-  });
-}

@@ -253,7 +253,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           <>
             <Col span={window.innerWidth > 1024 ? 18 : 24}>
               <Row justify='space-between'>
-                <UserInfoTitle level={4} color={darkPallete.white}>
+                <UserInfoTitle level={4}>
                   Meus Projetos ({rooms?.array.length})
                 </UserInfoTitle>
 

@@ -7,7 +7,7 @@ import { darkPallete } from "../../styles/pallete";
 import ProfileSocials from "./components/ProfileSocials.component";
 import TabsContainer from "./components/TabsContainer.component";
 import Background from "../../assets/backStars.mp4";
-import * as ChatRoomService from '../ChatRoom/services/ChatRoom.service'
+import * as ChatRoomService from "../ChatRoom/services/ChatRoom.service";
 import {
   ProfileContainer,
   Row,
@@ -21,24 +21,30 @@ export default function UserProfile() {
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Perfil";
   const { user } = useContext(UserContext);
   const [viewUser, setViewUser] = useState();
-  const [viewMode, setIsViewMode] = useState(false);
+  const [viewMode, setIsViewMode] = useState(true);
   const navigate = useNavigate();
   const params = useParams();
   const token = Cookie.get("token");
-  const { username } = params;
-  
+  const { _id } = params;
+
   useEffect(() => {
-    //aqui
-    if (!user && username === user?.username) {
-      setViewUser(user);
-     setIsViewMode(false);
-    } else {
-      ChatRoomService.getUserByName(username).then(({ data }) => {
+    function getUserByName() {
+      ChatRoomService.getUserById(_id).then(({ data }) => {
         setViewUser(data);
-        setIsViewMode(true);
-      })
+      });
     }
-  }, [params, user, username]);
+
+    if (!user) {
+      getUserByName();
+    } else {
+      if (user && _id === user?._id) {
+        setViewUser(user);
+        setIsViewMode(false);
+      } else {
+        getUserByName();
+      }
+    }
+  }, [_id, params, user]);
 
   return (
     <>

@@ -57,7 +57,7 @@ const routes = [
   },
   {
     breadcrumb: "/profile",
-    path: "/profile/:username",
+    path: "/profile/:_id",
     name: "Perfil",
     tooltip: "Ir para Meu Perfil",
     Component: <UserProfile />,

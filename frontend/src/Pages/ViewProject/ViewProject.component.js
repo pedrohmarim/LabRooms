@@ -5,7 +5,7 @@ import Aside from "../../GlobalComponents/Aside/Aside.component";
 import ViewProjectComponent from "./components/ViewProject.component";
 import { ChatContainer as ViewProjectContainer } from "../ChatRoom/ChatRoom.styled";
 import Background from "../../assets/backStars.mp4";
-import { Row, Col } from '../../antd_components'
+import { Row, Col } from "../../antd_components";
 import ProfileSocials from "../UserProfile/components/ProfileSocials.component";
 import * as ChatRoomService from "../ChatRoom/services/ChatRoom.service";
 
@@ -37,9 +37,9 @@ export default function ViewProject() {
         setRoomCategoryData({ Icon: "repeat", Title: newCategory });
       }
 
-      ChatRoomService.getUserById(owner).then(({data}) => {
-        setUser(data)
-      })
+      ChatRoomService.getUserById(owner).then(({ data }) => {
+        setUser(data);
+      });
     }
   }, [currentRoom]);
 
@@ -66,12 +66,16 @@ export default function ViewProject() {
         </Col>
 
         <Col span={8}>
-          <Row justify="center" align="middle" style={{height: "100vh"}}>
-            <ProfileSocials darkPallete={darkPallete} user={user} isViewProject ownerName={currentRoom?.ownerName} />
+          <Row justify='center' align='middle' style={{ height: "100vh" }}>
+            <ProfileSocials
+              darkPallete={darkPallete}
+              user={user}
+              isViewProject
+              ownerId={currentRoom?.owner}
+            />
           </Row>
         </Col>
       </Row>
-
     </ViewProjectContainer>
   );
 }

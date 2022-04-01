@@ -136,32 +136,6 @@ module.exports = {
     }
   },
 
-  async handleGetUserByName(request, response) {
-    const { username } = request.headers;
-
-    const user = await UserModel.findOne({ username });
-
-    if (user) {
-      return response.json({
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        cpf: user.cpf,
-        phone: user.phone,
-        celphone: user.celphone,
-        biography: user.biography,
-        socials: user.socials,
-        createdAt: user.createdAt.toLocaleString("pt-BR", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        }),
-      });
-    } else {
-      return response.json(null);
-    }
-  },
-
   async handleGetRoomsByOwnerId(request, response) {
     const { owner } = request.headers;
 
@@ -208,17 +182,9 @@ module.exports = {
       const { username, email, cpf, phone, celphone, biography, socials } =
         request.body;
 
-      UserModel.findByIdAndUpdate(
-        { _id },
-        {
-          username,
-          email,
-          cpf,
-          phone,
-          celphone,
-          biography,
-          socials,
-        },
+      RoomsModel.findOneAndUpdate(
+        { owner: _id },
+        { ownerName: username },
         { new: true },
         function (err) {
           if (err) {
@@ -226,10 +192,31 @@ module.exports = {
               message: "Erro ao atualizar informações.",
             });
           } else {
-            response.json({
-              message: "Informações atualizadas com sucesso.",
-              status: 200,
-            });
+            UserModel.findByIdAndUpdate(
+              { _id },
+              {
+                username,
+                email,
+                cpf,
+                phone,
+                celphone,
+                biography,
+                socials,
+              },
+              { new: true },
+              function (err) {
+                if (err) {
+                  return response.json({
+                    message: "Erro ao atualizar informações.",
+                  });
+                } else {
+                  response.json({
+                    message: "Informações atualizadas com sucesso.",
+                    status: 200,
+                  });
+                }
+              }
+            );
           }
         }
       );

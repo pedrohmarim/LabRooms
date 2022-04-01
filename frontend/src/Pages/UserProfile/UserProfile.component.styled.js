@@ -129,7 +129,7 @@ export const StyledCol = styled(Col)`
 `;
 
 export const UserInfoTitle = styled(Title)`
-  color: ${({ color }) => color} !important;
+  color: ${({ color }) => color || "#000"} !important;
 `;
 
 export const UserInfoSpan = styled(Typography)`

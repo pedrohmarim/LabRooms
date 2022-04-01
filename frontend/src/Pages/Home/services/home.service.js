@@ -1,10 +1,10 @@
 import api from "../../../services/api";
 
 export async function getCurrentUser(token) {
-  return api.get('/currentUser', {
-    headers:{
+  return api.get("/currentUser", {
+    headers: {
       Authorization: token,
-    }
+    },
   });
 }
 

@@ -1,6 +1,6 @@
 import React from "react";
 import UserImage from "../../../assets/userImage.jpg";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import { SocialList } from "./Tabs/sessions/SocialList.component";
 import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
 import {
@@ -15,19 +15,38 @@ import {
 } from "../UserProfile.component.styled";
 import { Row, Breadcrumb, Image, Col, Tooltip } from "../../../antd_components";
 
-export default function ProfileSocials({ darkPallete, user, isViewProject, ownerName }) {
+export default function ProfileSocials({
+  darkPallete,
+  user,
+  isViewProject,
+  ownerId,
+}) {
   return (
-    <Row justify='center' gutter={[16, 16]} style={isViewProject && { maxWidth: '400px', position: 'fixed' }}>
+    <Row
+      justify='center'
+      gutter={[16, 16]}
+      style={isViewProject && { maxWidth: "400px", position: "fixed" }}
+    >
       {user ? (
         <>
           <StyledBreadCrumb span={24}>
-            <Breadcrumb color={(window.innerWidth < 1024 || isViewProject) && darkPallete.white} />
+            <Breadcrumb
+              color={
+                (window.innerWidth < 1024 || isViewProject) && darkPallete.white
+              }
+            />
           </StyledBreadCrumb>
 
           <Image src={UserImage} height={120} />
 
           <StyledCol span={24}>
-            <UserInfoTitle level={4} color={(window.innerWidth < 1024 || isViewProject) && darkPallete.white} isViewProject={isViewProject}>
+            <UserInfoTitle
+              level={4}
+              color={
+                (window.innerWidth < 1024 || isViewProject) && darkPallete.white
+              }
+              isViewProject={isViewProject}
+            >
               {user?.username}
             </UserInfoTitle>
             {user?.biography && (
@@ -43,7 +62,7 @@ export default function ProfileSocials({ darkPallete, user, isViewProject, owner
           <Col span={24}>
             <Row justify='center'>
               {SocialList &&
-                SocialList(user?.socials).map(
+                SocialList(user?.socials, isViewProject).map(
                   (item) =>
                     item.link && (
                       <SocialIcon
@@ -70,7 +89,7 @@ export default function ProfileSocials({ darkPallete, user, isViewProject, owner
               color={darkPallete.lightblue}
               placement='bottom'
             >
-              <Link to={`/profile/${ownerName}`}>
+              <Link to={`/profile/${ownerId}`}>
                 <StyledButton
                   htmlType='submit'
                   backgroundcolor={darkPallete.lightblue}

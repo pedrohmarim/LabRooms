@@ -45,7 +45,7 @@ const Header = ({ fromNotFound }) => {
           </Row>
         </Menu.Item>
       </Link>
-      <Link to={`/profile/${user?.username}`}>
+      <Link to={`/profile/${user?._id}`}>
         <Menu.Item>
           <Row align='middle' justify='start'>
             <FeatherIcons icon='user' size={15} />

@@ -1,6 +1,6 @@
 import React from "react";
 import { StyledCol, StyledButton } from "../../../UserProfile.component.styled";
-import { validateBr } from 'js-brasil';
+import { validateBr } from "js-brasil";
 import {
   Col,
   Row,
@@ -12,7 +12,13 @@ import {
   Tooltip,
 } from "../../../../../antd_components";
 
-const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMode }) => {
+const SocialRegister = ({
+  editMode,
+  viewMode,
+  styleInput,
+  darkPallete,
+  setEditMode,
+}) => {
   const { Title } = Typography;
 
   return (
@@ -35,13 +41,15 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
               </Tooltip>
             </Row>
           </StyledCol>
-      </Row>
+        </Row>
       )}
 
       <Row gutter={window.innerWidth < 1024 ? 0 : [16, 16]}>
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
-            rules={[{ required: true, message: "Campo obrigatório." }]}
+            rules={
+              !viewMode && [{ required: true, message: "Campo obrigatório." }]
+            }
             name='username'
             label={
               <Typography>
@@ -60,10 +68,12 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
 
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
-            rules={[
-              { required: true, message: "Campo obrigatório." },
-              { type: "email", message: "E-mail inválido." },
-            ]}
+            rules={
+              !viewMode && [
+                { required: true, message: "Campo obrigatório." },
+                { type: "email", message: "E-mail inválido." },
+              ]
+            }
             name='email'
             label={
               <Typography>
@@ -73,7 +83,7 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
           >
             <Input
               readOnly={viewMode}
-              disabled={!editMode}
+              disabled={!editMode && !viewMode}
               style={styleInput}
               placeholder='E-mail'
             />
@@ -82,17 +92,19 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
 
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
-             rules={[
-              { required: true, message: "Campo obrigatório." },
-              () => ({
-                validator(_, value) {
-                  if (!value || validateBr.cpf(value)) {
-                    return Promise.resolve();
-                  }
-                  return Promise.reject(new Error('CPF Inválido.'));
-                },
-              })
-            ]}
+            rules={
+              !viewMode && [
+                { required: true, message: "Campo obrigatório." },
+                () => ({
+                  validator(_, value) {
+                    if (!value || validateBr.cpf(value)) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(new Error("CPF Inválido."));
+                  },
+                }),
+              ]
+            }
             name='cpf'
             label={
               <Typography>
@@ -102,7 +114,7 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
           >
             <InputMask
               readOnly={viewMode}
-              disabled={!editMode}
+              disabled={!editMode && !viewMode}
               style={styleInput}
               placeholder='CPF'
               mask='111.111.111-11'
@@ -126,7 +138,7 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
           >
             <Input
               readOnly={viewMode}
-              disabled={!editMode}
+              disabled={!editMode && !viewMode}
               style={styleInput}
               placeholder='Biografia'
             />
@@ -142,9 +154,9 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
                   if (!value || validateBr.telefone(value)) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error('Telefone Inválido.'));
+                  return Promise.reject(new Error("Telefone Inválido."));
                 },
-              })
+              }),
             ]}
             label={
               <Typography>
@@ -154,7 +166,7 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
           >
             <InputMask
               readOnly={viewMode}
-              disabled={!editMode}
+              disabled={!editMode && !viewMode}
               Mask
               autoComplete='off'
               mask='(11) 1111-1111'
@@ -173,9 +185,9 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
                   if (!value || validateBr.celular(value)) {
                     return Promise.resolve();
                   }
-                  return Promise.reject(new Error('Celular Inválido.'));
+                  return Promise.reject(new Error("Celular Inválido."));
                 },
-              })
+              }),
             ]}
             label={
               <Typography>
@@ -185,7 +197,7 @@ const SocialRegister = ({ editMode, viewMode, styleInput, darkPallete, setEditMo
           >
             <InputMask
               readOnly={viewMode}
-              disabled={!editMode}
+              disabled={!editMode && !viewMode}
               Mask
               autoComplete='off'
               mask='(11) 11111-1111'

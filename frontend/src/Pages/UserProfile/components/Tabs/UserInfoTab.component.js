@@ -14,6 +14,8 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const styleInput = {
     color: "gray",
     marginTop: "-1px",
+    border: viewMode && "none",
+    borderBottom: viewMode && "solid 1px rgba(0, 0, 0, 0.1)",
   };
 
   function handleSubmit(values) {
@@ -95,7 +97,9 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
             darkPallete={darkPallete}
           />
 
-          <SocialRegister editMode={editMode} viewMode={viewMode} styleInput={styleInput} />
+          {!viewMode && (
+            <SocialRegister editMode={editMode} styleInput={styleInput} />
+          )}
 
           {editMode && (
             <Row justify='end'>
