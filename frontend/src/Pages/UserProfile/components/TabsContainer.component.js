@@ -31,7 +31,7 @@ export default function TabUserInfo({
             setActiveKey(activeKey);
           }}
         >
-          <TabPane tab='Meu Perfil' key='1'>
+          <TabPane tab={viewMode ? "Perfil" : "Meu Perfil"} key='1'>
             <UserInfoTab
               darkPallete={darkPallete}
               user={user}
