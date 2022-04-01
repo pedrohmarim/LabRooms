@@ -68,7 +68,7 @@ export default function UserProfile() {
         }
       >
         {window.innerWidth > 1024 && (
-          <Aside darkPallete={darkPallete} SelectedItem='2' />
+          <Aside darkPallete={darkPallete} SelectedItem={user && "2"} />
         )}
         <ProfileContainer>
           <Row>

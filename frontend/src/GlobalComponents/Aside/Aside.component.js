@@ -8,7 +8,6 @@ import { UserContext } from "../../Context/UserContext";
 
 const Aside = ({ darkPallete, SelectedItem }) => {
   const navigate = useNavigate();
-
   const IconStyle = {
     fontSize: "18pt",
     marginTop: "8px",
@@ -31,20 +30,23 @@ const Aside = ({ darkPallete, SelectedItem }) => {
               onClick={() => navigate("/")}
             />
           </Tooltip>
-          {user !== null ? (
-            <Tooltip
-              title='Meu perfil'
-              placement='right'
-              color={darkPallete.lightblue}
-            >
-              <MenuItem
-                key='2'
-                eventKey='2'
-                icon={<UserOutlined style={IconStyle} />}
-                onClick={() => navigate(`/profile/${user?.username}`)}
-              />
-            </Tooltip>
-          ) : (
+          {user !== null &&
+            window.location.pathname.split("/")[1] !== "profile" && (
+              <Tooltip
+                title='Meu perfil'
+                placement='right'
+                color={darkPallete.lightblue}
+              >
+                <MenuItem
+                  key='2'
+                  eventKey='2'
+                  icon={<UserOutlined style={IconStyle} />}
+                  onClick={() => navigate(`/profile/${user?._id}`)}
+                />
+              </Tooltip>
+            )}
+
+          {user === null && (
             <Tooltip
               title='Fazer login'
               placement='right'
