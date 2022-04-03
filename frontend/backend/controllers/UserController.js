@@ -182,7 +182,7 @@ module.exports = {
       const { username, email, cpf, phone, celphone, biography, socials } =
         request.body;
 
-      RoomsModel.findOneAndUpdate(
+      RoomsModel.updateMany(
         { owner: _id },
         { ownerName: username },
         { new: true },

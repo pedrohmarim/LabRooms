@@ -50,7 +50,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
 
               {rooms &&
                 rooms.map(({ title, thumb, _id, ownerName }) => (
-                  <Col xs={24} sm={24} md={12} lg={8} xl={6} xxl={3} key={_id}>
+                  <Col xs={12} sm={12} md={6} lg={4} xl={3} xxl={3} key={_id}>
                     <Link to={`view/project/${_id}`}>
                       <RoomItem background={darkPallete.lightblueOpacity}>
                         <RoomTitle color={darkPallete.white}>
