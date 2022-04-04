@@ -69,7 +69,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
         }
       });
     }
-  }, [user]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     getRoomsByOwnerId();
@@ -114,17 +115,11 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
 
         RoomService.UpdateRoom(dto, token).then(({ data }) => {
           const { message, status } = data;
-          if (status === 200) {
-            Notification.open({
-              type: "success",
-              message,
-            });
-          } else {
-            Notification.open({
-              type: "error",
-              message,
-            });
-          }
+
+          Notification.open({
+            type: status === 200 ? "success" : "error",
+            message,
+          });
 
           setShowConfirmButton({
             _id: null,

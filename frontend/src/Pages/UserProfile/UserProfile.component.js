@@ -28,21 +28,17 @@ export default function UserProfile() {
   const { _id } = params;
 
   useEffect(() => {
-    function getUserByName() {
+    function getUserById() {
       ChatRoomService.getUserById(_id).then(({ data }) => {
         setViewUser(data);
       });
     }
-
-    if (!user) {
-      getUserByName();
-    } else {
-      if (user && _id === user?._id) {
-        setViewUser(user);
-        setIsViewMode(false);
-      } else {
-        getUserByName();
-      }
+   
+    if (user && _id === user?._id) {
+      setViewUser(user);
+      setIsViewMode(false);
+    } else if (!user) {
+      getUserById();
     }
   }, [_id, params, user]);
 

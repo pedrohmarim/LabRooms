@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Card } from "../../UserProfile.component.styled";
+import { UserContext } from '../../../../Context/UserContext'
 import { FormStyled } from "../../UserProfile.component.styled";
 import { StyledButton } from "../../UserProfile.component.styled";
 import * as UserProfileService from "../../services/UserProfile.service";
@@ -10,6 +11,7 @@ import { Row, Notification } from "../../../../antd_components";
 
 const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const [editMode, setEditMode] = useState(false);
+  const { setUser } = useContext(UserContext);
 
   const styleInput = {
     color: "gray",
@@ -50,7 +52,9 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
     };
 
     UserProfileService.UpdateUserInfo(dto, token).then(({ data }) => {
-      const { message, status } = data;
+      const { message, status, updatedUser } = data;
+
+      setUser(updatedUser)
 
       Notification.open({
         type: status === 200 ? "success" : "error",

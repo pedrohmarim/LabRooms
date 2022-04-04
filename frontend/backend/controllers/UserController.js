@@ -91,14 +91,7 @@ module.exports = {
 
     if (user) {
       return response.json({
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        cpf: user.cpf,
-        phone: user.phone,
-        celphone: user.celphone,
-        biography: user.biography,
-        socials: user.socials,
+        ...user._doc,
         createdAt: user.createdAt.toLocaleString("pt-BR", {
           year: "numeric",
           month: "2-digit",
@@ -117,19 +110,12 @@ module.exports = {
 
     if (user) {
       return response.json({
-        _id: user._id,
-        username: user.username,
-        email: user.email,
-        cpf: user.cpf,
-        phone: user.phone,
-        celphone: user.celphone,
-        biography: user.biography,
-        socials: user.socials,
+        ...user._doc,
         createdAt: user.createdAt.toLocaleString("pt-BR", {
           year: "numeric",
           month: "2-digit",
           day: "2-digit",
-        }),
+        })
       });
     } else {
       return response.json(null);
@@ -204,13 +190,21 @@ module.exports = {
                 socials,
               },
               { new: true },
-              function (err) {
+              function (err, data) {
                 if (err) {
                   return response.json({
                     message: "Erro ao atualizar informações.",
                   });
                 } else {
                   response.json({
+                    updatedUser: {
+                      ...data._doc,
+                      createdAt: data.createdAt.toLocaleString("pt-BR", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                      })
+                    },
                     message: "Informações atualizadas com sucesso.",
                     status: 200,
                   });
