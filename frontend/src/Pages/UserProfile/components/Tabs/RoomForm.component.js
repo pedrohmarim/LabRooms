@@ -111,7 +111,7 @@ export default function RoomForm({
               ]}
               label={
                 <Typography>
-                  <b>Categoria Principal</b>
+                  <b>Categoria</b>
                 </Typography>
               }
               name='roomCategory'

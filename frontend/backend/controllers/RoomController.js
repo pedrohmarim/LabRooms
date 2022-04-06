@@ -1,8 +1,14 @@
 const RoomModel = require("../models/RoomModel");
+const UserModel = require("../models/userModel");
 
 module.exports = {
   async handleCreate(request, response) {
     const { _id } = request.body.decoded;
+
+    const user = await UserModel.findOne({ _id });
+
+    // 1 - TIPO_CADASTRO = FREELANCER
+    if (user?.accountType === 1) return response.status(401);
 
     let { title, description, categoryId, newCategory, thumb, ownerName } =
       request.body;

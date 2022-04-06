@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Container, StyledCol, ButtonText, Divider } from "./styles";
+import { Container, StyledCol, Divider } from "./styles";
 import * as HomeService from "../../services/home.service";
-import { Link } from "react-router-dom";
 import { darkPallete } from "../../../../styles/pallete";
 import SearchInput from "../../../../GlobalComponents/SearchInput/SearchInput.component";
 import RoomList from "./components/RoomList.component";
 import { CategoryTitle } from "../../../CreateRoom/CreateRoom.styled";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
+import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
 import * as CreateRoomService from "../../../CreateRoom/services/createroom.service";
 import {
   Row,
   Select,
   Tooltip,
-  Button,
   FeatherIcons,
   BackTop,
 } from "../../../../antd_components";
@@ -60,18 +59,11 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
           />
 
           {user && !loading ? (
-            <Link to='/createroom'>
-              <Tooltip title='Crie um Novo Projeto' color={pallete.lightblue}>
-                <Button
-                  margin='0 0 0 15px'
-                  color={darkPallete.white}
-                  backgroundcolor={darkPallete.lightblueOpacity}
-                  icon={<FeatherIcons icon='plus' size={20} />}
-                >
-                  <ButtonText>Criar Projeto</ButtonText>
-                </Button>
-              </Tooltip>
-            </Link>
+            <CreateRoomButton
+              color={darkPallete.white}
+              backgroundcolor={darkPallete.lightblueOpacity}
+              tooltip={darkPallete.lightblue}
+            />
           ) : (
             !user && loading && Loading(pallete.white, "0 0 0 10px")
           )}

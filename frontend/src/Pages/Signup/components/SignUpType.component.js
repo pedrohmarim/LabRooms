@@ -10,11 +10,17 @@ const SignUpType = ({ setAccountType }) => {
         justify='space-around'
         align='middle'
       >
-        <Button onClick={() => setAccountType(TIPO_CADASTRO.FREELANCER)}>
+        <Button
+          type='primary'
+          onClick={() => setAccountType(TIPO_CADASTRO.FREELANCER)}
+        >
           Freelancer
         </Button>
 
-        <Button onClick={() => setAccountType(TIPO_CADASTRO.EMPRESA)}>
+        <Button
+          type='primary'
+          onClick={() => setAccountType(TIPO_CADASTRO.EMPRESA)}
+        >
           Empresa
         </Button>
       </Row>

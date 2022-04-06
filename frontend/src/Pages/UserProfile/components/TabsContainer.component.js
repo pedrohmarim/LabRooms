@@ -4,6 +4,7 @@ import { Tabs } from "../../../antd_components";
 import UserInfoTab from "./Tabs/UserInfoTab.component";
 import RoomsTab from "./Tabs/RoomsTab.component";
 import { useSearchParams } from "react-router-dom";
+import { TIPO_CADASTRO } from "../../../Helpers/TipoCadastro";
 
 export default function TabUserInfo({
   user,
@@ -41,7 +42,7 @@ export default function TabUserInfo({
             />
           </TabPane>
 
-          {!viewMode && (
+          {!viewMode && user?.accountType === TIPO_CADASTRO.EMPRESA && (
             <TabPane tab='Meus Projetos' key='2'>
               <RoomsTab
                 darkPallete={darkPallete}

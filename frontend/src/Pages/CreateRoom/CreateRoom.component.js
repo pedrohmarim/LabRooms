@@ -18,6 +18,7 @@ import {
   Tooltip,
   FeatherIcons,
 } from "../../antd_components";
+import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
 
 export default function CreateRoom() {
   const { user } = useContext(UserContext);
@@ -28,42 +29,51 @@ export default function CreateRoom() {
 
   useEffect(() => {
     const token = Cookie.get("token");
-    if (!user && !token) navigate("/notfound");
+
+    if ((!user && !token) || user?.accountType === TIPO_CADASTRO.FREELANCER)
+      navigate("/notfound");
   }, [navigate, user]);
 
   return (
     <>
-      <video
-        loop
-        autoPlay
-        muted
-        id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
-      >
-        <source src={Background} type='video/mp4' />
-      </video>
-      <CenterForm>
-        <Link to='/'>
-          <Image src={Logo} alt='Logo' height={100} preview={false} />
-        </Link>
-        <SignFormContainer
-          width={window.innerWidth > 1024 ? "40%" : "90%"}
-          title={
-            <FormHeader>
-              <TitleStyled level={3}>Criar Projeto</TitleStyled>
-              <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
-                <Link to='/'>
-                  <FeatherIcons icon='chevron-left' size={30} />
-                </Link>
-              </Tooltip>
-            </FormHeader>
-          }
-        >
-          <FormHeader margin='0 0 20px 0'>
-            <Breadcrumb />
-          </FormHeader>
-          <CreateRoomForm darkPallete={darkPallete} user={user} />
-        </SignFormContainer>
-      </CenterForm>
+      {user?.accountType === TIPO_CADASTRO.EMPRESA && (
+        <>
+          <video
+            loop
+            autoPlay
+            muted
+            id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
+          >
+            <source src={Background} type='video/mp4' />
+          </video>
+          <CenterForm>
+            <Link to='/'>
+              <Image src={Logo} alt='Logo' height={100} preview={false} />
+            </Link>
+            <SignFormContainer
+              width={window.innerWidth > 1024 ? "40%" : "90%"}
+              title={
+                <FormHeader>
+                  <TitleStyled level={3}>Criar Projeto</TitleStyled>
+                  <Tooltip
+                    title='Voltar para Home'
+                    color={darkPallete.lightblue}
+                  >
+                    <Link to='/'>
+                      <FeatherIcons icon='chevron-left' size={30} />
+                    </Link>
+                  </Tooltip>
+                </FormHeader>
+              }
+            >
+              <FormHeader margin='0 0 20px 0'>
+                <Breadcrumb />
+              </FormHeader>
+              <CreateRoomForm darkPallete={darkPallete} user={user} />
+            </SignFormContainer>
+          </CenterForm>
+        </>
+      )}
     </>
   );
 }

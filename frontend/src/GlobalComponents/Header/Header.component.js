@@ -16,6 +16,7 @@ import {
   Dropdown,
   Tooltip,
 } from "../../antd_components";
+import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
 
 const Header = ({ fromNotFound }) => {
   const navigate = useNavigate();
@@ -44,14 +45,20 @@ const Header = ({ fromNotFound }) => {
           </Row>
         </Menu.Item>
       </Link>
-      <Link to={{ pathname: `/profile/${user?._id}`, search: "projects=true" }}>
-        <Menu.Item>
-          <Row align='middle' justify='start'>
-            <FeatherIcons icon='folder' size={15} />
-            <MenuLabelItem>Projetos</MenuLabelItem>
-          </Row>
-        </Menu.Item>
-      </Link>
+
+      {user?.accountType === TIPO_CADASTRO.EMPRESA && (
+        <Link
+          to={{ pathname: `/profile/${user?._id}`, search: "projects=true" }}
+        >
+          <Menu.Item>
+            <Row align='middle' justify='start'>
+              <FeatherIcons icon='folder' size={15} />
+              <MenuLabelItem>Projetos</MenuLabelItem>
+            </Row>
+          </Menu.Item>
+        </Link>
+      )}
+
       <Menu.Item
         onClick={() => {
           Cookie.remove("token");

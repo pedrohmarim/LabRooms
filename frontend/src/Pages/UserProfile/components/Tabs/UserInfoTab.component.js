@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Card } from "../../UserProfile.component.styled";
-import { UserContext } from '../../../../Context/UserContext'
+import { UserContext } from "../../../../Context/UserContext";
 import { FormStyled } from "../../UserProfile.component.styled";
 import { StyledButton } from "../../UserProfile.component.styled";
 import * as UserProfileService from "../../services/UserProfile.service";
@@ -8,6 +8,7 @@ import PersonalInfo from "./sessions/PersonalInfo.component";
 import SocialRegister from "./sessions/SocialsRegister.component";
 import UserSkills from "./sessions/UserSkills.component";
 import { Row, Notification } from "../../../../antd_components";
+import { TIPO_CADASTRO } from "../../../../Helpers/TipoCadastro";
 
 const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const [editMode, setEditMode] = useState(false);
@@ -54,7 +55,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
     UserProfileService.UpdateUserInfo(dto, token).then(({ data }) => {
       const { message, status, updatedUser } = data;
 
-      setUser(updatedUser)
+      setUser(updatedUser);
 
       Notification.open({
         type: status === 200 ? "success" : "error",
@@ -94,12 +95,14 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
             setEditMode={(value) => setEditMode(value)}
           />
 
-          <UserSkills
-            editMode={editMode}
-            viewMode={viewMode}
-            styleInput={styleInput}
-            darkPallete={darkPallete}
-          />
+          {user?.accountType === TIPO_CADASTRO.FREELANCER && (
+            <UserSkills
+              editMode={editMode}
+              viewMode={viewMode}
+              styleInput={styleInput}
+              darkPallete={darkPallete}
+            />
+          )}
 
           {!viewMode && (
             <SocialRegister editMode={editMode} styleInput={styleInput} />

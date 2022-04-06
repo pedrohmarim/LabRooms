@@ -7,6 +7,7 @@ import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
 import { TitleStyled, ButtonText } from "../../../Home/components/Rooms/styles";
 import RoomForm from "./RoomForm.component";
 import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
+import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
 import {
   Card,
   UserInfoTitle,
@@ -17,11 +18,9 @@ import {
   Select,
   Form,
   Row,
-  Tooltip,
   Col,
   FeatherIcons,
   Notification,
-  Button,
   Menu,
   PopConfirm,
 } from "../../../../antd_components";
@@ -40,21 +39,6 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     _id: null,
   });
 
-  const createRoomButton = (marginleft) => (
-    <Link to='/createroom'>
-      <Tooltip title='Crie um Novo Projeto' color={darkPallete.lightblue}>
-        <Button
-          margin={`0 0 ${marginleft || "15px"} 0px`}
-          color={darkPallete.white}
-          backgroundcolor={darkPallete.lightblue}
-          icon={<FeatherIcons icon='plus' size={20} />}
-        >
-          <ButtonText>Criar Projeto</ButtonText>
-        </Button>
-      </Tooltip>
-    </Link>
-  );
-
   const getRoomsByOwnerId = useCallback(() => {
     if (user) {
       const { _id } = user;
@@ -69,7 +53,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
         }
       });
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -252,7 +236,10 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                   Meus Projetos ({rooms?.array.length})
                 </UserInfoTitle>
 
-                {createRoomButton()}
+                <CreateRoomButton
+                  color={darkPallete.white}
+                  backgroundcolor={darkPallete.lightblue}
+                />
               </Row>
             </Col>
 
@@ -314,7 +301,13 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                 {hasntRooms?.errorMessage}
               </TitleStyled>
             </Col>
-            <Col span={24}>{createRoomButton("0px")}</Col>
+            <Col span={24}>
+              <CreateRoomButton
+                color={darkPallete.white}
+                backgroundcolor={darkPallete.lightblue}
+                margin='0 0 0 0'
+              />
+            </Col>
           </StyledRow>
         )}
 

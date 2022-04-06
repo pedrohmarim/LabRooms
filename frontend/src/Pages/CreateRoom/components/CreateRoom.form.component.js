@@ -103,28 +103,36 @@ const SigninForm = ({ darkPallete, user }) => {
       newCategory: newCategory || null,
     };
 
-    CreateRoomService.createRoom(dto, token).then((res) => {
-      const { message, success } = res.data;
+    CreateRoomService.createRoom(dto, token)
+      .then(({ message, success }) => {
+        if (success) {
+          navigate("/");
 
-      if (success) {
-        navigate("/");
-
+          Notification.open({
+            type: "success",
+            message,
+            style: {
+              zIndex: 999,
+            },
+            duration: 2,
+          });
+        } else {
+          Notification.open({
+            type: "error",
+            message: "Erro",
+            description: message,
+          });
+        }
+      })
+      .catch(() => {
         Notification.open({
-          type: "success",
-          message,
+          type: "error",
           style: {
             zIndex: 999,
           },
           duration: 2,
         });
-      } else {
-        Notification.open({
-          type: "error",
-          message: "Erro",
-          description: message,
-        });
-      }
-    });
+      });
   }
 
   useEffect(() => {
@@ -171,7 +179,7 @@ const SigninForm = ({ darkPallete, user }) => {
       </FormItem>
 
       <FormItem
-        label='Categoria Principal'
+        label='Categoria'
         name='category'
         rules={[{ required: true, message: "Campo obrigatório." }]}
       >
