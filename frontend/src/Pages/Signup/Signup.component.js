@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import SignUpForm from "./components/SignupForm/Signup.form.component";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo1.png";
 import Background from "../../assets/backStars.mp4";
 import { darkPallete } from "../../styles/pallete";
 import { TitleStyled } from "../CreateRoom/CreateRoom.styled";
+import SignUpType from "./components/SignUpType.component";
 import {
   Breadcrumb,
   FeatherIcons,
@@ -20,6 +21,8 @@ import {
 
 export default function Signup() {
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Registro";
+  const [accountType, setAccountType] = useState(null);
+
   return (
     <>
       <video
@@ -38,7 +41,9 @@ export default function Signup() {
         <SignFormContainer
           title={
             <FormHeader>
-              <TitleStyled level={3}>Registrar-se</TitleStyled>
+              <TitleStyled level={3}>
+                {!accountType ? "Qual seu Tipo de Perfil?" : "Registrar-se"}
+              </TitleStyled>
               <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
                 <Link to='/signin'>
                   <FeatherIcons icon='chevron-left' size={30} />
@@ -57,7 +62,11 @@ export default function Signup() {
             )}
           </FormHeader>
 
-          <SignUpForm darkPallete={darkPallete} />
+          {!accountType ? (
+            <SignUpType setAccountType={(data) => setAccountType(data)} />
+          ) : (
+            <SignUpForm darkPallete={darkPallete} accountType={accountType} />
+          )}
         </SignFormContainer>
       </CenterForm>
     </>

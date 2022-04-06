@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Logo from "../../assets/logo1.png";
 import { TitleStyled } from "../CreateRoom/CreateRoom.styled";
 import { darkPallete } from "../../styles/pallete";
-import SigninForm from "./components/SigninForm/Signin.form.component";
+import SigninForm from "./components/Signin.form.component";
 import {
   SignFormContainer,
   CenterForm,

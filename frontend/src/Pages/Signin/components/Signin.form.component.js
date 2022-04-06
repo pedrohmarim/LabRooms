@@ -1,20 +1,23 @@
 import React, { useState, useContext } from "react";
-import { UserContext } from "../../../../Context/UserContext";
-import * as SignUpService from "../../services/signin.service";
+import { UserContext } from "../../../Context/UserContext";
+import * as SignUpService from "../services/signin.service";
 import { useNavigate } from "react-router-dom";
-import * as HomeService from "../../../Home/services/home.service";
-import { FormItemStyled, LinkStyled } from "../../Signin.component.styled";
+import * as HomeService from "../../Home/services/home.service";
+import { LinkStyled } from "../Signin.component.styled";
+import { Link } from "react-router-dom";
 import {
   Form,
   FeatherIcons,
   Input,
   Checkbox,
   Notification,
-} from "../../../../antd_components";
+  Row,
+  Typography,
+} from "../../../antd_components";
 import {
   FormItem,
   StyledButton,
-} from "../../../Signup/components/SignupForm/Signup.form.styled";
+} from "../../Signup/components/SignupForm/Signup.form.styled";
 import Cookie from "js-cookie";
 
 const SigninForm = ({ darkPallete }) => {
@@ -112,9 +115,14 @@ const SigninForm = ({ darkPallete }) => {
         />
       </FormItem>
 
-      <FormItemStyled name='remember' valuePropName='checked'>
-        <Checkbox>Lembrar senha</Checkbox>
-      </FormItemStyled>
+      <Row justify='space-between' align='top'>
+        <Form.Item name='remember' valuePropName='checked'>
+          <Checkbox>Lembrar senha</Checkbox>
+        </Form.Item>
+        <Form.Item name='forgot'>
+          <LinkStyled to='#'>Esqueci minha senha</LinkStyled>
+        </Form.Item>
+      </Row>
 
       <StyledButton
         margin='-15px 0 5px 0'

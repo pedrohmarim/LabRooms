@@ -1,4 +1,4 @@
-const UserModel = require("../models/UserModel");
+const UserModel = require("../models/userModel");
 const RoomsModel = require("../models/RoomModel");
 const CategoriesModel = require("../models/CategoriesModel");
 const bcrypt = require("bcrypt");
@@ -6,7 +6,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   async handleRegister(request, response) {
-    const { cpf, email, password, username } = request.body;
+    const { cpf, email, password, username, accountType } = request.body;
 
     UserModel.find({ $or: [{ cpf }, { email }] }).then(async (res) => {
       if (res.length === 0) {
@@ -17,6 +17,7 @@ module.exports = {
           email,
           hashedPass,
           username,
+          accountType,
           createdAt: new Date().setHours(new Date().getHours() - 3),
         })
           .then(() => {
@@ -115,7 +116,7 @@ module.exports = {
           year: "numeric",
           month: "2-digit",
           day: "2-digit",
-        })
+        }),
       });
     } else {
       return response.json(null);
@@ -203,7 +204,7 @@ module.exports = {
                         year: "numeric",
                         month: "2-digit",
                         day: "2-digit",
-                      })
+                      }),
                     },
                     message: "Informações atualizadas com sucesso.",
                     status: 200,

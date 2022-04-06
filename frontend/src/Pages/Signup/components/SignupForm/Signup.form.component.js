@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { validateBr } from 'js-brasil';
+import { validateBr } from "js-brasil";
 import {
   Form,
   FeatherIcons,
@@ -11,7 +11,7 @@ import {
 import { FormItem, StyledButton } from "./Signup.form.styled";
 import * as SignUpService from "../../services/signup.service";
 
-const SignUpForm = ({ darkPallete }) => {
+const SignUpForm = ({ darkPallete, accountType }) => {
   const [validateInput, setValidateInput] = useState();
   let navigate = useNavigate();
 
@@ -25,11 +25,14 @@ const SignUpForm = ({ darkPallete }) => {
   function onSubmit(values) {
     const { cpf, email, password, username } = values;
 
+    if (!accountType) return;
+
     const dto = {
       cpf,
       email,
       password,
       username,
+      accountType,
     };
 
     SignUpService.userRegister(dto).then(({ data }) => {
@@ -108,9 +111,9 @@ const SignUpForm = ({ darkPallete }) => {
               if (!value || validateBr.cpf(value)) {
                 return Promise.resolve();
               }
-              return Promise.reject(new Error('CPF Inválido.'));
+              return Promise.reject(new Error("CPF Inválido."));
             },
-          })
+          }),
         ]}
         help={validateInput?.field === "cpf" ? validateInput.message : null}
         validateStatus={validateInput?.field === "cpf" ? "error" : null}
@@ -182,7 +185,7 @@ const SignUpForm = ({ darkPallete }) => {
               <FeatherIcons icon='eye-off' size={15} />
             )
           }
-          placeholder='Confirmar senha'
+          placeholder='Confirmar Senha'
         />
       </FormItem>
       <StyledButton
