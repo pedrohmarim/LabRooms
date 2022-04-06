@@ -18,6 +18,10 @@ const RoomModel = new Schema(
       type: String,
       required: true,
     },
+    subCategories: {
+      type: Array,
+      required: true,
+    },
     categoryId: {
       type: String,
       required: false,

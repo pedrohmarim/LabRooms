@@ -6,6 +6,7 @@ import * as CreateRoomService from "../services/createroom.service";
 import * as ChatRoomService from "../../ChatRoom/services/ChatRoom.service";
 import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
 import { InboxOutlined } from "@ant-design/icons";
+import TagRender from "../../../GlobalComponents/TagRender/TagRender.component";
 import {
   CategoryTitle,
   CategoryInfo,
@@ -22,10 +23,10 @@ import {
   FeatherIcons,
   Row,
   Upload,
+  Typography,
   Select,
   BraftEditor,
   Notification,
-  Tag,
 } from "../../../antd_components";
 
 const SigninForm = ({ darkPallete, user }) => {
@@ -33,6 +34,7 @@ const SigninForm = ({ darkPallete, user }) => {
   const [form] = Form.useForm();
   let navigate = useNavigate();
   const [categories, setCategories] = useState();
+  const [subCategories, setSubCategories] = useState([]);
   const [newCategory, setNewCategory] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [invalidType, setInvalidType] = useState(false);
@@ -56,26 +58,6 @@ const SigninForm = ({ darkPallete, user }) => {
       console.log("Dropped files", e.dataTransfer.files);
     },
   };
-
-
-  function tagRender(props) {
-    const { label, value, closable, onClose } = props;
-    const onPreventMouseDown = event => {
-      event.preventDefault();
-      event.stopPropagation();
-    };
-    return (
-      <Tag
-        color={value}
-        onMouseDown={onPreventMouseDown}
-        closable={closable}
-        onClose={onClose}
-        style={{ marginRight: 3 }}
-      >
-        {label}
-      </Tag>
-    );
-  }
 
   function beforeUpload(file) {
     const nameSplit = file.name.trim().split(".");
@@ -104,7 +86,7 @@ const SigninForm = ({ darkPallete, user }) => {
   }
 
   function onSubmit(values) {
-    let { title, description, category, newCategory } = values;
+    let { title, description, category, newCategory, subCategories } = values;
 
     const token = Cookie.get("token");
 
@@ -118,6 +100,7 @@ const SigninForm = ({ darkPallete, user }) => {
       //   type,
       //   webkitRelativePath,
       // },
+      subCategories,
       ownerName: user?.username,
       title,
       description: description.isEmpty() ? null : description.toHTML(),
@@ -125,36 +108,20 @@ const SigninForm = ({ darkPallete, user }) => {
       newCategory: newCategory || null,
     };
 
-    CreateRoomService.createRoom(dto, token)
-      .then(({ message, success }) => {
-        if (success) {
-          navigate("/");
+    CreateRoomService.createRoom(dto, token).then(({ data }) => {
+      const { message, success } = data;
 
-          Notification.open({
-            type: "success",
-            message,
-            style: {
-              zIndex: 999,
-            },
-            duration: 2,
-          });
-        } else {
-          Notification.open({
-            type: "error",
-            message: "Erro",
-            description: message,
-          });
-        }
-      })
-      .catch(() => {
-        Notification.open({
-          type: "error",
-          style: {
-            zIndex: 999,
-          },
-          duration: 2,
-        });
+      if (success) navigate("/");
+
+      Notification.open({
+        type: success ? "success" : "error",
+        message,
+        style: {
+          zIndex: 999,
+        },
+        duration: 2,
       });
+    });
   }
 
   useEffect(() => {
@@ -166,10 +133,15 @@ const SigninForm = ({ darkPallete, user }) => {
   function handleSelectChange(value) {
     setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
 
-    if(value !== TIPO_CATEGORIA.CATEGORIA_OUTRAS){
-      ChatRoomService.getCategoryById(value).then(({data}) => {
-        console.log(data);
-      })
+    if (
+      value !== TIPO_CATEGORIA.CATEGORIA_OUTRAS &&
+      value !== TIPO_CATEGORIA.CATEGORIA_CRIADA &&
+      value !== TIPO_CATEGORIA.CATEGORIA_TODAS
+    ) {
+      ChatRoomService.getCategoryById(value).then(({ data }) => {
+        const { SubCategories } = data;
+        setSubCategories(SubCategories);
+      });
     }
   }
 
@@ -214,7 +186,7 @@ const SigninForm = ({ darkPallete, user }) => {
         <Select
           allowClear
           getPopupContainer={(trigger) => trigger.parentNode}
-          placeholder='Ex.: Alimentos'
+          placeholder='Ex.: Desenvolvedor'
           onChange={handleSelectChange}
         >
           {categories &&
@@ -242,20 +214,35 @@ const SigninForm = ({ darkPallete, user }) => {
         </Select>
       </FormItem>
 
-      <FormItem 
-        label='SubCategorias'
-        name='subCategories'
-        rules={[{ required: true, message: "Campo obrigatório." }]}
-      >
-        <Select
-          mode="multiple"
-          showArrow
-          placeholder="Selecionar Subcategorias"
-          tagRender={tagRender}
-          style={{ width: '100%' }}
-          // options={options}
-        />
-      </FormItem>
+      {!newCategory && (
+        <FormItem
+          label='Subcategorias'
+          name='subCategories'
+          rules={[{ required: true, message: "Campo obrigatório." }]}
+        >
+          <Select
+            allowClear
+            getPopupContainer={(trigger) => trigger.parentNode}
+            notFoundContent={
+              <Row
+                justify='center'
+                align='middle'
+                style={{ marginBottom: "-10px" }}
+              >
+                <Typography level={5}>
+                  Selecione uma Categoria para as Opções Serem Disponibilizadas
+                </Typography>
+              </Row>
+            }
+            mode='multiple'
+            showArrow
+            placeholder='Selecionar subcategorias'
+            tagRender={TagRender}
+            style={{ width: "100%" }}
+            options={subCategories}
+          />
+        </FormItem>
+      )}
 
       {newCategory && (
         <FormItem

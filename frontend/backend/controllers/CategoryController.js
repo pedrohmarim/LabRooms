@@ -11,8 +11,7 @@ module.exports = {
 
     if (_id) {
       const result = await CategoriesModel.findOne({ _id });
-      const { Title, Icon } = result;
-      return response.json({ Title, Icon });
+      return response.json(result);
     }
   },
 };

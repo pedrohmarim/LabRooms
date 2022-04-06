@@ -8,15 +8,23 @@ module.exports = {
     const user = await UserModel.findOne({ _id });
 
     // 1 - TIPO_CADASTRO = FREELANCER
-    if (user?.accountType === 1) return response.status(401);
+    if (user?.accountType === 1) throw new Error("Não Autorizado");
 
-    let { title, description, categoryId, newCategory, thumb, ownerName } =
-      request.body;
+    let {
+      title,
+      description,
+      categoryId,
+      newCategory,
+      thumb,
+      ownerName,
+      subCategories,
+    } = request.body;
 
     RoomModel.create({
       title,
       description,
       categoryId,
+      subCategories,
       newCategory,
       owner: _id,
       thumb,

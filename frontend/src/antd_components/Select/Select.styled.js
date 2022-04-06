@@ -6,7 +6,6 @@ export const Select = styled(SelectStyled)`
   margin-top: ${({ margintop }) => margintop} !important;
 
   .ant-select-selection-placeholder {
-    color: #000 !important;
     opacity: 0.7 !important;
   }
 `;
