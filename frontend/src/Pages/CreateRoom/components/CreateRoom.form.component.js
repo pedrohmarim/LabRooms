@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { TIPO_CATEGORIA } from "../../../Helpers/TipoCategoria";
 import Cookie from "js-cookie";
 import * as CreateRoomService from "../services/createroom.service";
+import * as ChatRoomService from "../../ChatRoom/services/ChatRoom.service";
 import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
 import { InboxOutlined } from "@ant-design/icons";
 import {
@@ -24,6 +25,7 @@ import {
   Select,
   BraftEditor,
   Notification,
+  Tag,
 } from "../../../antd_components";
 
 const SigninForm = ({ darkPallete, user }) => {
@@ -54,6 +56,26 @@ const SigninForm = ({ darkPallete, user }) => {
       console.log("Dropped files", e.dataTransfer.files);
     },
   };
+
+
+  function tagRender(props) {
+    const { label, value, closable, onClose } = props;
+    const onPreventMouseDown = event => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    return (
+      <Tag
+        color={value}
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
+    );
+  }
 
   function beforeUpload(file) {
     const nameSplit = file.name.trim().split(".");
@@ -141,8 +163,14 @@ const SigninForm = ({ darkPallete, user }) => {
     });
   }, []);
 
-  function handleOtherCategories(value) {
+  function handleSelectChange(value) {
     setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
+
+    if(value !== TIPO_CATEGORIA.CATEGORIA_OUTRAS){
+      ChatRoomService.getCategoryById(value).then(({data}) => {
+        console.log(data);
+      })
+    }
   }
 
   const onChange = ({ fileList: newFileList }) => {
@@ -187,7 +215,7 @@ const SigninForm = ({ darkPallete, user }) => {
           allowClear
           getPopupContainer={(trigger) => trigger.parentNode}
           placeholder='Ex.: Alimentos'
-          onChange={handleOtherCategories}
+          onChange={handleSelectChange}
         >
           {categories &&
             categories
@@ -212,6 +240,21 @@ const SigninForm = ({ darkPallete, user }) => {
             </Row>
           </Select.Option>
         </Select>
+      </FormItem>
+
+      <FormItem 
+        label='SubCategorias'
+        name='subCategories'
+        rules={[{ required: true, message: "Campo obrigatório." }]}
+      >
+        <Select
+          mode="multiple"
+          showArrow
+          placeholder="Selecionar Subcategorias"
+          tagRender={tagRender}
+          style={{ width: '100%' }}
+          // options={options}
+        />
       </FormItem>
 
       {newCategory && (

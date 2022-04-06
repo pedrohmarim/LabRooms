@@ -24,10 +24,12 @@ import Layout from "./Layout/Layout.component";
 import Menu from "./Menu/Menu.component";
 import Upload from "./Upload/Upload.component";
 import Dropdown from "./Dropdown/Dropdown.component";
+import Tag from "./Tag/Tag.component";
 import PopConfirm from "./PopConfirm/PopConfirm.component";
 
 export {
   Avatar,
+  Tag,
   Button,
   Spin,
   BackTop,

@@ -1,66 +1,338 @@
 [
   {
-    "Title": "Segurança",
-    "Icon": "shield"
+    "Title": "Redator",
+    "Icon": "book",
+    "SubCategories": [
+      {
+        "value": "Boa Ortografia"
+      },
+      {
+        "value": "Searching Engine Optimization"
+      },
+      {
+        "value": "Link Building"
+      },
+      {
+        "value": "Story Telling"
+      }
+    ]
   },
   {
-    "Title": "Economia",
-    "Icon": "bar-chart"
+    "Title": "Revisor",
+    "Icon": "rotate-cw",
+    "SubCategories": [
+      {
+        "value": "Normas Cultas"
+      }, 
+      {
+        "value": "Boa Ortografia"
+      },
+      {
+        "value": "Searching Engine Optimization"
+      },
+      {
+        "value": "Link Building"
+      },
+      {
+        "value": "Story Telling"
+      }
+    ]
   },
   {
-    "Title": "Educação",
-    "Icon": "book"
+    "Title": "Designer gráfico",
+    "Icon": "figma",
+    "SubCategories": [
+      {
+        "value": "Redes Sociais"
+      }, 
+      {
+        "value": "E-mail Marketing"
+      },
+      {
+        "value": "Blogs"
+      },
+      {
+        "value": "Websites"
+      },
+      {
+        "value": "Banners"
+      },
+      {
+        "value": "Materiais Gráficos Offline (Cartões de visita e Flyers)"
+      }
+    ]
   },
   {
-    "Title": "Saúde",
-    "Icon": "heart"
+    "Title": "Social Media",
+    "Icon": "share-2",
+    "SubCategories": [
+      {
+        "value": "Influenciador Digital"
+      }, 
+      {
+        "value": "Redes Sociais"
+      },
+      {
+        "value": "Blogs"
+      },
+      {
+        "value": "Websites"
+      },
+      {
+        "value": "Perfil Analítico"
+      }
+    ]
   },
   {
-    "Title": "Compras",
-    "Icon": "shopping-cart"
+    "Title": "Tradutor",
+    "Icon": "globe",
+    "SubCategories": [
+      {
+        "value": "Inglês"
+      }, 
+      {
+        "value": "Chinês Mandarim"
+      },
+      {
+        "value": "Hindi"
+      },
+      {
+        "value": "Espanhol"
+      },
+      {
+        "value": "Francês"
+      },
+      {
+        "value": "Árabe"
+      },
+      {
+        "value": "Bengali"
+      },
+      {
+        "value": "Russo"
+      },
+      {
+        "value": "Português"
+      },
+      {
+        "value": "Indonésio"
+      }
+    ]
   },
   {
-    "Title": "Transporte",
-    "Icon": "truck"
+    "Title": "Arquiteto",
+    "Icon": "home",
+    "SubCategories": [
+      {
+        "value": "Matemática Avançada"
+      }, 
+      {
+        "value": "Design"
+      },
+      {
+        "value": "Projeções Objetivas"
+      }
+    ]
   },
   {
-    "Title": "Meio Ambiente",
-    "Icon": "sun"
+    "Title": "Contador",
+    "Icon": "dollar-sign",
+    "SubCategories": [
+      {
+        "value": "Patrimônio Empresariais"
+      },
+      {
+        "value": "Demonstrações Contábeis"
+      }, 
+      {
+        "value": "Escrituração"
+      },
+      {
+        "value": "Balanços"
+      },
+      {
+        "value": "Perícias Judiciais e Extrajudiciais"
+      }
+    ]
   },
   {
-    "Title": "Turismo",
-    "Icon": "compass"
+    "Title": "Jornalista",
+    "Icon": "camera",
+    "SubCategories": [
+      {
+        "value": "Jornalismo Web"
+      },
+      {
+        "value": "Relações Pessoais"
+      }, 
+      {
+        "value": "Domínío de Linguagem"
+      },
+      {
+        "value": "Expressivo"
+      }
+    ]
   },
   {
-    "Title": "Gênero",
-    "Icon": "user"
+    "Title": "Desenvolvedor",
+    "Icon": "code",
+    "SubCategories": [
+      {
+        "value": "HTML"
+      },
+      {
+        "value": "JavaScript"
+      }, 
+      {
+        "value": "React"
+      },
+      {
+        "value": "Node.js"
+      },
+      {
+        "value": "C++"
+      },
+      {
+        "value": "PHP"
+      },
+      {
+        "value": "Python"
+      },
+      {
+        "value": "Ruby"
+      },
+      {
+        "value": "Node"
+      },
+      {
+        "value": "Perl"
+      },
+      {
+        "value": ".NET"
+      },
+      {
+        "value": "C#"
+      },
+      {
+        "value": "Python"
+      },
+      {
+        "value": "Lua"
+      },
+      {
+        "value": "Java"
+      },
+      {
+        "value": "TypeScript"
+      },
+      {
+        "value": "Go"
+      },
+      {
+        "value": "C"
+      },
+      {
+        "value": "MongoDB"
+      },
+      {
+        "value": "MySQL"
+      },
+      {
+        "value": "Oracle"
+      },
+      {
+        "value": "Microsoft SQL Server"
+      },
+      {
+        "value": "PostgreSQL"
+      },
+      {
+        "value": "Redis"
+      },
+      {
+        "value": "ElasticSearch"
+      },
+      {
+        "value": "SQLite"
+      },
+      {
+        "value": "CSS"
+      },
+      {
+        "value": "SASS"
+      },
+      {
+        "value": "CSS-in-js (Styled Components)"
+      }
+    ]
   },
   {
-    "Title": "Agricultura",
-    "Icon": "wind"
+    "Title": "Editor de Vídeos",
+    "Icon": "monitor",
+    "SubCategories": [
+      {
+        "value": "Criativo"
+      },
+      {
+        "value": "Roteiros"
+      },
+      {
+        "value": "Câmeras"
+      },
+      {
+        "value": "Tratamento de Imagem"
+      },
+      {
+        "value": "Linearidade"
+      },
+      {
+        "value": "Final Cut"
+      }, 
+      {
+        "value": "Sony Vegas"
+      },
+      {
+        "value": "Premiere"
+      }
+    ]
   },
   {
-    "Title": "Indústria",
-    "Icon": "home"
-  },
-  {
-    "Title": "Família",
-    "Icon": "users"
-  },
-  {
-    "Title": "Política",
-    "Icon": "globe"
-  },
-  {
-    "Title": "Trabalho",
-    "Icon": "briefcase"
-  },
-  {
-    "Title": "Esportes",
-    "Icon": "award"
-  },
-  {
-    "Title": "Tecnologia",
-    "Icon": "airplay"
+    "Title": "Professor",
+    "Icon": "user",
+    "SubCategories": [
+      {
+        "value": "Fundamental"
+      },
+      {
+        "value": "Ensino Médio"
+      },
+      {
+        "value": "Universitário"
+      },
+      {
+        "value": "Ensino Público"
+      },
+      {
+        "value": "Ensino Privado"
+      },
+      {
+        "value": "Mestrado"
+      }, 
+      {
+        "value": "Doutorado"
+      },
+      {
+        "value": "Idiomas"
+      },
+      {
+        "value": "Exatas"
+      },
+      {
+        "value": "Humanas"
+      },
+      {
+        "value": "Biológicas"
+      }
+    ]
   }
 ]
