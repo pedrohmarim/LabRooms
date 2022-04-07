@@ -133,6 +133,10 @@ const SigninForm = ({ darkPallete, user }) => {
   function handleSelectChange(value) {
     setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
 
+    form.setFieldsValue({
+      subCategories: [],
+    });
+
     if (
       value !== TIPO_CATEGORIA.CATEGORIA_OUTRAS &&
       value !== TIPO_CATEGORIA.CATEGORIA_CRIADA &&

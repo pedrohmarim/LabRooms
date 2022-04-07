@@ -61,12 +61,42 @@ export default function RoomForm({
       <Form form={form} onFinish={handleSubmit} layout='vertical'>
         <RoomContainer>
           <Row align='middle' justify='space-between'>
-            <Col span={23}>
+            <Col span={14}>
               <TitleStyled level={3}>{title}</TitleStyled>
             </Col>
 
-            <Col span={1}>
-              <Row justify='end'>
+            <Col span={10}>
+              <Row justify='end' align='middle'>
+                {showConfirmButton._id === _id && (
+                  <Row justify='end'>
+                    {window.innerWidth > 1024 ? (
+                      <Button
+                        htmlType='submit'
+                        backgroundcolor={darkPallete.lightblue}
+                        height='35'
+                        width='200'
+                        color={darkPallete.white}
+                        margin='10px 0'
+                      >
+                        Confirmar
+                      </Button>
+                    ) : (
+                      <Tooltip
+                        title='Confirmar'
+                        color={darkPallete.lightblue}
+                        defaultVisible
+                      >
+                        <Button
+                          icon={<FeatherIcons size={18} icon='check' />}
+                          htmlType='submit'
+                          backgroundcolor={darkPallete.lightblue}
+                          color={darkPallete.white}
+                        />
+                      </Tooltip>
+                    )}
+                  </Row>
+                )}
+
                 <Tooltip title='Mais Opções' color={darkPallete.lightblue}>
                   <Dropdown
                     overlay={MoreActionsRoom(_id, title)}
@@ -200,7 +230,10 @@ export default function RoomForm({
                   placeholder='Selecionar subcategorias'
                   tagRender={TagRender}
                   style={{ width: "100%" }}
-                  options={allSubCategories || subCategories}
+                  options={
+                    allSubCategories ||
+                    categories.find((x) => x._id === categoryId).SubCategories
+                  }
                   notFoundContent={
                     <Row
                       justify='center'

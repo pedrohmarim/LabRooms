@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
 import * as UserProfileService from "../../services/UserProfile.service";
 import * as RoomService from "../../../CreateRoom/services/createroom.service";
+import * as ChatRoomService from "../../../ChatRoom/services/ChatRoom.service";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
 import { TitleStyled } from "../../../Home/components/Rooms/styles";
@@ -8,7 +9,6 @@ import RoomForm from "./RoomForm.component";
 import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
 import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
 import TagRender from "../../../../GlobalComponents/TagRender/TagRender.component";
-import * as ChatRoomService from "../../../ChatRoom/services/ChatRoom.service";
 import {
   Card,
   UserInfoTitle,
@@ -135,10 +135,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
       });
     }
 
-    function handleOtherCategories(value) {
-      setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
-      setShowSubCategorie(false);
-
+    function handleGetCategoryById(value) {
       if (
         value !== TIPO_CATEGORIA.CATEGORIA_OUTRAS &&
         value !== TIPO_CATEGORIA.CATEGORIA_CRIADA &&
@@ -150,6 +147,12 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           setAllSubCategories(SubCategories);
         });
       }
+    }
+
+    function handleOtherCategories(value) {
+      setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
+      setShowSubCategorie(false);
+      handleGetCategoryById(value);
     }
 
     const MoreActionsRoom = (_id, title) => (
@@ -231,9 +234,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
             newCategory={newCategory}
             _id={_id}
             CategorieTitle={CategorieTitle}
-            subCategories={subCategories.map((categorie) => {
-              return { value: categorie };
-            })}
+            subCategories={subCategories}
             allSubCategories={allSubCategories}
             tagRender={TagRender}
             showSubCategorie={showSubCategorie}
