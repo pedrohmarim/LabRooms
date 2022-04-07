@@ -149,7 +149,6 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           setShowSubCategorie(true);
           setAllSubCategories(SubCategories);
         });
-        debugger;
       }
     }
 
