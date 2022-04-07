@@ -1,12 +1,6 @@
 import React from "react";
 import { StyledCol } from "../../../UserProfile.component.styled";
-import {
-  Col,
-  Row,
-  Typography,
-  Form,
-  Input,
-} from "../../../../../antd_components";
+import { Row, Typography } from "../../../../../antd_components";
 
 const UserSkills = ({
   editMode,

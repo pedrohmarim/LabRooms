@@ -33,6 +33,10 @@ export default function RoomForm({
   _id,
   categories,
   CategorieTitle,
+  subCategories,
+  allSubCategories,
+  TagRender,
+  showSubCategorie,
 }) {
   const [form] = Form.useForm();
 
@@ -47,7 +51,9 @@ export default function RoomForm({
       roomDescription: BraftEditor.Editor.createEditorState(description),
       roomCategory: categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
       newCategory,
+      subCategories,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [categoryId, description, form, newCategory, title]);
 
   return (
@@ -120,7 +126,12 @@ export default function RoomForm({
                 disabled={viewMode._id === _id ? false : true}
                 getPopupContainer={(trigger) => trigger.parentNode}
                 placeholder='Ex.: Alimentos'
-                onChange={handleOtherCategories}
+                onChange={(value) => {
+                  handleOtherCategories(value);
+                  form.setFieldsValue({
+                    subCategories: [],
+                  });
+                }}
               >
                 {newCategory && !categoryId && (
                   <Select.Option
@@ -167,6 +178,45 @@ export default function RoomForm({
               </Select>
             </Form.Item>
           </Col>
+
+          {((!newCategoryState && categoryId) || showSubCategorie) && (
+            <Col span={24}>
+              <Form.Item
+                label='Subcategorias'
+                name='subCategories'
+                rules={[
+                  {
+                    required: viewMode._id === _id,
+                    message: "Campo obrigatório.",
+                  },
+                ]}
+              >
+                <Select
+                  disabled={viewMode._id === _id ? false : true}
+                  allowClear
+                  getPopupContainer={(trigger) => trigger.parentNode}
+                  mode='multiple'
+                  showArrow
+                  placeholder='Selecionar subcategorias'
+                  tagRender={TagRender}
+                  style={{ width: "100%" }}
+                  options={allSubCategories || subCategories}
+                  notFoundContent={
+                    <Row
+                      justify='center'
+                      align='middle'
+                      style={{ marginBottom: "-10px" }}
+                    >
+                      <Typography level={5}>
+                        Selecione uma Categoria para as Opções Serem
+                        Disponibilizadas
+                      </Typography>
+                    </Row>
+                  }
+                />
+              </Form.Item>
+            </Col>
+          )}
 
           {newCategoryState && viewMode._id === _id && (
             <Col span={24}>

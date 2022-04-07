@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useCallback, useMemo } from "react";
-import { Link } from "react-router-dom";
 import * as UserProfileService from "../../services/UserProfile.service";
 import * as RoomService from "../../../CreateRoom/services/createroom.service";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
-import { TitleStyled, ButtonText } from "../../../Home/components/Rooms/styles";
+import { TitleStyled } from "../../../Home/components/Rooms/styles";
 import RoomForm from "./RoomForm.component";
 import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
 import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
+import TagRender from "../../../../GlobalComponents/TagRender/TagRender.component";
+import * as ChatRoomService from "../../../ChatRoom/services/ChatRoom.service";
 import {
   Card,
   UserInfoTitle,
@@ -32,6 +33,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
   const [hasntRooms, setHasntRooms] = useState();
   const [categories, setCategories] = useState();
   const [newCategoryState, setNewCategory] = useState(false);
+  const [showSubCategorie, setShowSubCategorie] = useState(false);
+  const [allSubCategories, setAllSubCategories] = useState();
   const [showConfirmButton, setShowConfirmButton] = useState({
     _id: null,
   });
@@ -78,18 +81,21 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     }
   }
 
-  function handleOtherCategories(value) {
-    setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
-  }
-
   const listRooms = useMemo(() => {
     function handleSubmit(values) {
-      let { roomTitle, roomCategory, roomDescription, newCategory } = values;
+      let {
+        roomTitle,
+        roomCategory,
+        roomDescription,
+        newCategory,
+        subCategories,
+      } = values;
 
       if (_id) {
         const dto = {
           roomTitle,
           roomCategory,
+          subCategories: newCategory ? [] : subCategories,
           roomDescription: roomDescription.isEmpty()
             ? null
             : roomDescription.toHTML(),
@@ -127,6 +133,24 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           message,
         });
       });
+    }
+
+    function handleOtherCategories(value) {
+      setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
+      setShowSubCategorie(false);
+
+      if (
+        value !== TIPO_CATEGORIA.CATEGORIA_OUTRAS &&
+        value !== TIPO_CATEGORIA.CATEGORIA_CRIADA &&
+        value !== TIPO_CATEGORIA.CATEGORIA_TODAS
+      ) {
+        ChatRoomService.getCategoryById(value).then(({ data }) => {
+          const { SubCategories } = data;
+          setShowSubCategorie(true);
+          setAllSubCategories(SubCategories);
+        });
+        debugger;
+      }
     }
 
     const MoreActionsRoom = (_id, title) => (
@@ -190,6 +214,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           Icon,
           categoryId,
           newCategory,
+          subCategories,
         }) => (
           <RoomForm
             handleOtherCategories={handleOtherCategories}
@@ -207,6 +232,12 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
             newCategory={newCategory}
             _id={_id}
             CategorieTitle={CategorieTitle}
+            subCategories={subCategories.map((categorie) => {
+              return { value: categorie };
+            })}
+            allSubCategories={allSubCategories}
+            tagRender={TagRender}
+            showSubCategorie={showSubCategorie}
           />
         )
       )
@@ -223,6 +254,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     viewMode,
     showConfirmButton,
     darkPallete,
+    allSubCategories,
+    showSubCategorie,
   ]);
 
   return (

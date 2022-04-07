@@ -85,8 +85,14 @@ module.exports = {
     const { _id } = request.body.decoded;
 
     if (_id) {
-      const { roomTitle, roomCategory, roomDescription, newCategory, _id } =
-        request.body;
+      const {
+        roomTitle,
+        roomCategory,
+        subCategories,
+        roomDescription,
+        newCategory,
+        _id,
+      } = request.body;
 
       RoomModel.findByIdAndUpdate(
         { _id },
@@ -99,6 +105,7 @@ module.exports = {
             roomCategory && roomCategory !== 11 && roomCategory !== 12
               ? null
               : newCategory,
+          subCategories,
         },
         { new: true },
         function (err) {

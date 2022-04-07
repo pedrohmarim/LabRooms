@@ -4,7 +4,6 @@ import * as SignUpService from "../services/signin.service";
 import { useNavigate } from "react-router-dom";
 import * as HomeService from "../../Home/services/home.service";
 import { LinkStyled } from "../Signin.component.styled";
-import { Link } from "react-router-dom";
 import {
   Form,
   FeatherIcons,
@@ -12,7 +11,6 @@ import {
   Checkbox,
   Notification,
   Row,
-  Typography,
 } from "../../../antd_components";
 import {
   FormItem,
