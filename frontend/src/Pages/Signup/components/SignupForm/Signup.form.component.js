@@ -62,10 +62,8 @@ const SignUpForm = ({ darkPallete, accountType }) => {
       accountType,
       categoryId: newCategory ? null : userSkills?.category,
       newCategory: newCategory || null,
-      userSkills: userSkills?.subCategories,
+      subCategories: userSkills?.subCategories,
     };
-
-    debugger;
 
     SignUpService.userRegister(dto).then(({ data }) => {
       const { message, success } = data;

@@ -6,13 +6,8 @@ import * as CreateRoomService from "../services/createroom.service";
 import * as ChatRoomService from "../../ChatRoom/services/ChatRoom.service";
 import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
 import { InboxOutlined } from "@ant-design/icons";
-import TagRender from "../../../GlobalComponents/TagRender/TagRender.component";
-import {
-  CategoryTitle,
-  CategoryInfo,
-  StyledInput,
-  Form,
-} from "../CreateRoom.styled";
+import CategoriesSubcategoriesSelect from "../../../GlobalComponents/Categories&Subcategories/CategoriesSubcategoriesSelect.component";
+import { StyledInput, Form } from "../CreateRoom.styled";
 import { StyledButton } from "../../Signup/components/SignupForm/Signup.form.styled";
 import {
   acceptedFileTypes,
@@ -21,10 +16,7 @@ import {
 } from "../Helper/UploadImage.helper";
 import {
   FeatherIcons,
-  Row,
   Upload,
-  Typography,
-  Select,
   BraftEditor,
   Notification,
 } from "../../../antd_components";
@@ -182,85 +174,13 @@ const SigninForm = ({ darkPallete, user }) => {
         />
       </FormItem>
 
-      <FormItem
-        label='Categoria'
-        name='category'
-        rules={[{ required: true, message: "Campo obrigatório." }]}
-      >
-        <Select
-          allowClear
-          getPopupContainer={(trigger) => trigger.parentNode}
-          placeholder='Ex.: Desenvolvedor'
-          onChange={handleSelectChange}
-        >
-          {categories &&
-            categories
-              .sort((a, b) =>
-                a.Title > b.Title ? 1 : b.Title > a.Title ? -1 : 0
-              )
-              .map(({ Title, _id, Icon }) => (
-                <Select.Option key={_id} value={_id}>
-                  <Row align='middle' justify='start'>
-                    <FeatherIcons icon={Icon} size={15} />
-                    <CategoryTitle>{Title}</CategoryTitle>
-                  </Row>
-                </Select.Option>
-              ))}
-          <Select.Option key={11} value={11}>
-            <Row align='middle' justify='start'>
-              <FeatherIcons icon='repeat' size={15} />
-              <CategoryTitle>
-                Outras
-                <CategoryInfo>- Poderá criar uma nova categoria</CategoryInfo>
-              </CategoryTitle>
-            </Row>
-          </Select.Option>
-        </Select>
-      </FormItem>
-
-      {!newCategory && (
-        <FormItem
-          label='Subcategorias'
-          name='subCategories'
-          rules={[{ required: true, message: "Campo obrigatório." }]}
-        >
-          <Select
-            allowClear
-            getPopupContainer={(trigger) => trigger.parentNode}
-            notFoundContent={
-              <Row
-                justify='center'
-                align='middle'
-                style={{ marginBottom: "-10px" }}
-              >
-                <Typography level={5}>
-                  Selecione uma Categoria para as Opções Serem Disponibilizadas
-                </Typography>
-              </Row>
-            }
-            mode='multiple'
-            showArrow
-            placeholder='Selecionar subcategorias'
-            tagRender={TagRender}
-            style={{ width: "100%" }}
-            options={subCategories}
-          />
-        </FormItem>
-      )}
-
-      {newCategory && (
-        <FormItem
-          label='Nova Categoria'
-          name='newCategory'
-          rules={[{ required: true, message: "Campo obrigatório." }]}
-        >
-          <StyledInput
-            allowClear
-            prefix={<FeatherIcons icon='tag' size={15} />}
-            placeholder='Ex.: Construções'
-          />
-        </FormItem>
-      )}
+      <CategoriesSubcategoriesSelect
+        handleSelectChange={handleSelectChange}
+        categories={categories}
+        newCategory={newCategory}
+        subCategories={subCategories}
+        labelMainCategory='Categoria'
+      />
 
       <FormItem
         tooltip='Descreva Aqui Objetivos a Serem Alcançados, Requisitos de Habilidades Obrigatórias e Desejáveis para Realização do Projeto, Etapas a Serem seguidas,etc.'
