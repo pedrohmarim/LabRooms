@@ -14,13 +14,14 @@ const CategoriesSubcategoriesSelect = ({
   newCategory,
   subCategories,
   labelMainCategory,
+  inputsRequired,
 }) => {
   return (
     <>
       <FormItem
         label={labelMainCategory}
         name='category'
-        rules={[{ required: true, message: "Campo obrigatório." }]}
+        rules={[{ required: inputsRequired, message: "Campo obrigatório." }]}
       >
         <Select
           allowClear
@@ -57,7 +58,7 @@ const CategoriesSubcategoriesSelect = ({
         <FormItem
           label='Subcategorias'
           name='subCategories'
-          rules={[{ required: true, message: "Campo obrigatório." }]}
+          rules={[{ required: inputsRequired, message: "Campo obrigatório." }]}
         >
           <Select
             allowClear

@@ -180,6 +180,7 @@ const SigninForm = ({ darkPallete, user }) => {
         newCategory={newCategory}
         subCategories={subCategories}
         labelMainCategory='Categoria'
+        inputsRequired
       />
 
       <FormItem

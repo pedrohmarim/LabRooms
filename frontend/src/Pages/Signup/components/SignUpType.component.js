@@ -11,7 +11,7 @@ const SignUpType = ({ setAccountType, darkPallete }) => {
         align='middle'
       >
         <Tooltip
-          title='descrição para freelancer'
+          title='Pesquise o Projeto que melhor se Encaixe em Seu Perfil para Alavancar sua Carreira.'
           color={darkPallete.lightblue}
           placement='bottom'
         >
@@ -24,7 +24,7 @@ const SignUpType = ({ setAccountType, darkPallete }) => {
         </Tooltip>
 
         <Tooltip
-          title='descrição para Empresa'
+          title='Publique seus Projetos de Empresa para que Freelancers os Desenvolvam.'
           color={darkPallete.lightblue}
           placement='bottom'
         >
