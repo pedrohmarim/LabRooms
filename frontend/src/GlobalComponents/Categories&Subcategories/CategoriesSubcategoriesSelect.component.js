@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { TIPO_CATEGORIA } from "../../Helpers/TipoCategoria";
+import * as ChatRoomService from '../../Pages/ChatRoom/services/ChatRoom.service'
 import { Select, Row, FeatherIcons, Typography } from "../../antd_components";
 import TagRender from "../TagRender/TagRender.component";
 import { FormItem } from "../../Pages/Signup/components/SignupForm/Signup.form.styled";
@@ -9,26 +11,85 @@ import {
 import { StyledInput } from "../../Pages/CreateRoom/CreateRoom.styled";
 
 const CategoriesSubcategoriesSelect = ({
-  handleSelectChange,
+  categoryIdFromUser,
+  fromUserProfile,
   categories,
-  newCategory,
-  subCategories,
   labelMainCategory,
-  inputsRequired,
+  form,
+  editMode,
+  viewMode,
+  newCategoryFromUser,
 }) => {
+  const [newCategory, setNewCategory] = useState(false);
+  const [subCategories, setSubCategories] = useState([]);
+  const [hideNewCategoryInput, setHideNewCategoryInput] = useState(true);
+
+  useEffect(() => {
+    if (categoryIdFromUser) {
+      ChatRoomService.getCategoryById(categoryIdFromUser).then(({ data }) => {
+        const { SubCategories } = data;
+        setSubCategories(SubCategories);
+        setHideNewCategoryInput(true)
+      });
+    }
+  },[categoryIdFromUser])
+
+  function handleSelectChange(value) {
+    form.setFieldsValue({
+      subCategories: [],
+    });
+
+    if(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS || value === TIPO_CATEGORIA.CATEGORIA_CRIADA) {
+      setNewCategory(true)
+      setHideNewCategoryInput(false)
+      form.setFieldsValue({
+        newCategory: null,
+      });
+    }
+
+    if (
+      value !== TIPO_CATEGORIA.CATEGORIA_OUTRAS &&
+      value !== TIPO_CATEGORIA.CATEGORIA_CRIADA &&
+      value !== TIPO_CATEGORIA.CATEGORIA_TODAS
+    ) {
+      ChatRoomService.getCategoryById(value).then(({ data }) => {
+        const { SubCategories } = data;
+        setSubCategories(SubCategories);
+        setHideNewCategoryInput(true)
+      });
+    }
+  }
+
   return (
     <>
       <FormItem
         label={labelMainCategory}
         name='category'
-        rules={[{ required: inputsRequired, message: "Campo obrigatório." }]}
+        rules={[{ required: true, message: "Campo obrigatório." }]}
       >
         <Select
-          allowClear
+          disabled={fromUserProfile && !editMode && !viewMode}
+          readOnly={viewMode}
           getPopupContainer={(trigger) => trigger.parentNode}
           placeholder='Ex.: Desenvolvedor'
           onChange={handleSelectChange}
         >
+           {(newCategory || newCategoryFromUser) && !hideNewCategoryInput && (
+                  <Select.Option
+                    key={TIPO_CATEGORIA.CATEGORIA_CRIADA}
+                    value={TIPO_CATEGORIA.CATEGORIA_CRIADA}
+                  >
+                    <Row align='middle' justify='start'>
+                      <FeatherIcons
+                        icon='repeat'
+                        size={15}
+                        className='iconMarginRight'
+                      />
+                      {newCategoryFromUser}
+                      <CategoryInfo>- Categoria criada por você</CategoryInfo>
+                    </Row>
+                  </Select.Option>
+                )}
           {categories &&
             categories
               .sort((a, b) =>
@@ -54,14 +115,15 @@ const CategoriesSubcategoriesSelect = ({
         </Select>
       </FormItem>
 
-      {!newCategory && (
+      {((!newCategory && !newCategoryFromUser) || hideNewCategoryInput) && (
         <FormItem
           label='Subcategorias'
           name='subCategories'
-          rules={[{ required: inputsRequired, message: "Campo obrigatório." }]}
+          rules={[{ required: true, message: "Campo obrigatório." }]}
         >
           <Select
-            allowClear
+            disabled={fromUserProfile && !editMode && !viewMode}
+            readOnly={viewMode}
             getPopupContainer={(trigger) => trigger.parentNode}
             notFoundContent={
               <Row
@@ -84,16 +146,18 @@ const CategoriesSubcategoriesSelect = ({
         </FormItem>
       )}
 
-      {newCategory && (
+      {newCategory && !hideNewCategoryInput && (
         <FormItem
           label='Nova Categoria'
           name='newCategory'
           rules={[{ required: true, message: "Campo obrigatório." }]}
         >
           <StyledInput
+            disabled={fromUserProfile && !editMode && !viewMode}
+            readOnly={viewMode}
             allowClear
             prefix={<FeatherIcons icon='tag' size={15} />}
-            placeholder='Ex.: Construções'
+            placeholder='Ex.: Secretária'
           />
         </FormItem>
       )}

@@ -4,25 +4,38 @@ import CategoriesSubcategoriesSelect from "../../../../../GlobalComponents/Categ
 
 const UserSkills = ({
   categories,
-  handleSelectChange,
-  subCategories,
-  newCategory,
   darkPallete,
   setUserSkills,
   form,
 }) => {
+
+  function handleVerifyCategories(inputsValues) {
+    if(inputsValues?.subCategories?.length === 0) inputsValues.subCategories = undefined;
+    
+    if (Object.keys(inputsValues).length > 1) {
+      if(inputsValues?.category && inputsValues?.subCategories === undefined && !inputsValues.newCategory) {
+        inputsValues.subCategories = [];
+        form.validateFields();
+        return false;
+      }
+
+      return true;
+    }
+
+    form.validateFields();
+    return false;
+  }
+
   return (
     <>
       <CategoriesSubcategoriesSelect
-        handleSelectChange={handleSelectChange}
+        form={form}
         categories={categories}
-        newCategory={newCategory}
-        subCategories={subCategories}
         labelMainCategory='Qual sua Área de Atuação?'
       />
 
       <StyledButton
-        onClick={() => setUserSkills(form.getFieldsValue(true))}
+        onClick={() => handleVerifyCategories(form.getFieldsValue(true)) && setUserSkills(form.getFieldsValue(true))}
         height='45px'
         margin='15px 0 0 0'
         backgroundcolor={darkPallete.lightblue}

@@ -21,20 +21,21 @@ module.exports = {
       if (res.length === 0) {
         let hashedPass = await bcrypt.hash(password, 10);
 
-        UserModel.create({
-          cpf,
-          email,
-          hashedPass,
-          username,
-          accountType,
-          subCategories,
-          categoryId,
-          newCategory,
-          createdAt: new Date().setHours(new Date().getHours() - 3),
-        })
-          .then(() => {
+
+        if(accountType === 1) {
+          UserModel.create({
+            cpf,
+            email,
+            hashedPass,
+            username,
+            accountType,
+            subCategories,
+            categoryId,
+            newCategory,
+            createdAt: new Date().setHours(new Date().getHours() - 3),
+          }).then(() => {
             return response.json({
-              message: "Usuário cadastrado com sucesso.",
+              message: "Usuário cadastrado.",
               success: true,
             });
           })
@@ -44,6 +45,27 @@ module.exports = {
               unknow: true,
             });
           });
+        } else {
+          UserModel.create({
+            cpf,
+            email,
+            hashedPass,
+            username,
+            accountType,
+            createdAt: new Date().setHours(new Date().getHours() - 3),
+          }).then(() => {
+            return response.json({
+              message: "Usuário cadastrado.",
+              success: true,
+            });
+          })
+          .catch(() => {
+            return response.json({
+              message: "Erro ao cadastrar usuário.",
+              unknow: true,
+            });
+          });
+        }
       } else {
         if (res[0].email === email) {
           return response.json({
@@ -178,8 +200,18 @@ module.exports = {
     const { _id } = request.body.decoded;
 
     if (_id) {
-      const { username, email, cpf, phone, celphone, biography, socials } =
-        request.body;
+      const { 
+        username,
+        email,
+        cpf,
+        phone,
+        celphone,
+        biography,
+        socials,
+        categoryId,
+        newCategory,
+        subCategories,
+       } = request.body;
 
       RoomsModel.updateMany(
         { owner: _id },
@@ -201,6 +233,9 @@ module.exports = {
                 celphone,
                 biography,
                 socials,
+                categoryId: categoryId === 11 || categoryId === 12 ? undefined : categoryId,
+                newCategory: categoryId && categoryId !== 11 && categoryId !== 12 ? undefined : newCategory,
+                subCategories: newCategory ? undefined : subCategories,
               },
               { new: true },
               function (err, data) {

@@ -10,11 +10,9 @@ const TagRender = (props) => {
 
   return (
     <Tag
-      color='blue'
       onMouseDown={onPreventMouseDown}
       closable={closable}
       onClose={onClose}
-      style={{ margin: 6 }}
     >
       {label}
     </Tag>

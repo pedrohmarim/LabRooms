@@ -187,7 +187,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           title={
             <span>
               Deseja realmente excluir o projeto{" "}
-              <b>{title.lenght > 10 ? title.substr(0, 10) + "..." : title}</b> ?
+              <b>{title.length > 10 ? title.substr(0, 10) + "..." : title}</b> ?
             </span>
           }
           onConfirm={() => handleDeleteRoom(_id)}

@@ -5,6 +5,7 @@ const UserModel = new Schema(
     accountType: {
       type: Number,
       required: true,
+      default: undefined,
     },
     categoryId: {
       type: String,
@@ -17,55 +18,68 @@ const UserModel = new Schema(
     subCategories: {
       type: Array,
       required: false,
+      default: undefined,
     },
     username: {
       type: String,
       required: true,
+      default: undefined,
     },
     email: {
       type: String,
       required: true,
+      default: undefined,
     },
     cpf: {
       type: String,
       required: true,
+      default: undefined,
     },
     hashedPass: {
       type: String,
       required: true,
+      default: undefined,
     },
     phone: {
       type: String,
       required: false,
+      default: undefined,
     },
     celphone: {
       type: String,
       required: false,
+      default: undefined,
     },
     biography: {
       type: String,
       required: false,
+      default: undefined,
     },
     socials: {
       facebook: {
         type: String,
         required: false,
+        default: undefined,
       },
       instagram: {
         type: String,
         required: false,
+        default: undefined,
       },
       twitter: {
         type: String,
         required: false,
+        default: undefined,
       },
       linkedin: {
         type: String,
         required: false,
+        default: undefined,
       },
       github: {
         type: String,
         required: false,
+        default: undefined,
       },
     },
   },

@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import * as CreateRoomService from '../../../CreateRoom/services/createroom.service'
 import { Card } from "../../UserProfile.component.styled";
 import { UserContext } from "../../../../Context/UserContext";
 import { FormStyled } from "../../UserProfile.component.styled";
@@ -9,10 +10,13 @@ import SocialRegister from "./sessions/SocialsRegister.component";
 import UserSkills from "./sessions/UserSkills.component";
 import { Row, Notification } from "../../../../antd_components";
 import { TIPO_CADASTRO } from "../../../../Helpers/TipoCadastro";
+import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
 
 const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const [editMode, setEditMode] = useState(false);
+  const [categories, setCategories] = useState();
   const { setUser } = useContext(UserContext);
+  const [form] = FormStyled.useForm();
 
   const styleInput = {
     color: "gray",
@@ -21,11 +25,20 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
     borderBottom: viewMode && "solid 1px rgba(0, 0, 0, 0.1)",
   };
 
+  useEffect(() => {
+    CreateRoomService.getCategories().then(({ data }) => {
+      setCategories(data);
+    });
+  }, []);
+
   function handleSubmit(values) {
     const {
       username,
       email,
       cpf,
+      category,
+      newCategory,
+      subCategories,
       phone,
       celphone,
       biography,
@@ -40,15 +53,18 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
       username,
       email,
       cpf,
-      phone: phone || null,
-      celphone: celphone || null,
-      biography: biography || null,
+      categoryId: category,
+      newCategory,
+      subCategories: subCategories,
+      phone: phone || undefined,
+      celphone: celphone || undefined,
+      biography: biography || undefined,
       socials: {
-        facebook: facebook || null,
-        instagram: instagram || null,
-        twitter: twitter || null,
-        linkedin: linkedin || null,
-        github: github || null,
+        facebook: facebook || undefined,
+        instagram: instagram || undefined,
+        twitter: twitter || undefined,
+        linkedin: linkedin || undefined,
+        github: github || undefined,
       },
     };
 
@@ -68,8 +84,9 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
 
   return (
     <Card bordered={false}>
-      {user && (
+      {user && categories && (
         <FormStyled
+          form={form}
           background={darkPallete.white}
           onFinish={handleSubmit}
           layout='vertical'
@@ -77,6 +94,9 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
             username: user.username,
             email: user.email,
             cpf: user?.cpf,
+            category: user?.categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
+            newCategory: user?.newCategory,
+            subCategories: user?.subCategories || [],
             phone: user?.phone,
             celphone: user?.celphone,
             biography: user.biography,
@@ -97,10 +117,14 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
 
           {user?.accountType === TIPO_CADASTRO.FREELANCER && (
             <UserSkills
+              fromUserProfile
               editMode={editMode}
               viewMode={viewMode}
-              styleInput={styleInput}
-              darkPallete={darkPallete}
+              categories={categories}
+              categoryIdFromUser={user?.categoryId}
+              newCategoryFromUser={user?.newCategory}
+              labelMainCategory="Categoria"
+              form={form}
             />
           )}
 

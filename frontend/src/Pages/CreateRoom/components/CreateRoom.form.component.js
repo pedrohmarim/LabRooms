@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { TIPO_CATEGORIA } from "../../../Helpers/TipoCategoria";
 import Cookie from "js-cookie";
 import * as CreateRoomService from "../services/createroom.service";
-import * as ChatRoomService from "../../ChatRoom/services/ChatRoom.service";
 import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
 import { InboxOutlined } from "@ant-design/icons";
 import CategoriesSubcategoriesSelect from "../../../GlobalComponents/Categories&Subcategories/CategoriesSubcategoriesSelect.component";
@@ -26,8 +24,6 @@ const SigninForm = ({ darkPallete, user }) => {
   const [form] = Form.useForm();
   let navigate = useNavigate();
   const [categories, setCategories] = useState();
-  const [subCategories, setSubCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [invalidType, setInvalidType] = useState(false);
 
@@ -122,25 +118,6 @@ const SigninForm = ({ darkPallete, user }) => {
     });
   }, []);
 
-  function handleSelectChange(value) {
-    setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
-
-    form.setFieldsValue({
-      subCategories: [],
-    });
-
-    if (
-      value !== TIPO_CATEGORIA.CATEGORIA_OUTRAS &&
-      value !== TIPO_CATEGORIA.CATEGORIA_CRIADA &&
-      value !== TIPO_CATEGORIA.CATEGORIA_TODAS
-    ) {
-      ChatRoomService.getCategoryById(value).then(({ data }) => {
-        const { SubCategories } = data;
-        setSubCategories(SubCategories);
-      });
-    }
-  }
-
   const onChange = ({ fileList: newFileList }) => {
     !invalidType && setFileList(newFileList);
   };
@@ -175,12 +152,9 @@ const SigninForm = ({ darkPallete, user }) => {
       </FormItem>
 
       <CategoriesSubcategoriesSelect
-        handleSelectChange={handleSelectChange}
         categories={categories}
-        newCategory={newCategory}
-        subCategories={subCategories}
         labelMainCategory='Categoria'
-        inputsRequired
+        form={form}
       />
 
       <FormItem
