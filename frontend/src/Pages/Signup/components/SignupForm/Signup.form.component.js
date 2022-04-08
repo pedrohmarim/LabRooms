@@ -1,31 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { validateBr } from "js-brasil";
-import {
-  Form,
-  FeatherIcons,
-  Input,
-  Notification,
-  InputMask,
-} from "../../../../antd_components";
-import { FormItem, StyledButton } from "./Signup.form.styled";
+import * as ChatRoomService from "../../../ChatRoom/services/ChatRoom.service";
+import * as CreateRoomService from "../../../CreateRoom/services/createroom.service";
 import * as SignUpService from "../../services/signup.service";
+import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
+import UserSkills from "./components/UserSkills.component";
+import UserBasicInfo from "./components/UserBasicInfo.component";
+
+import { Form, Notification } from "../../../../antd_components";
 
 const SignUpForm = ({ darkPallete, accountType }) => {
   const [validateInput, setValidateInput] = useState();
+  const [newCategory, setNewCategory] = useState(false);
+  const [userSkills, setUserSkills] = useState();
+  const [subCategories, setSubCategories] = useState([]);
+  const [categories, setCategories] = useState();
+  const [form] = Form.useForm();
+
   let navigate = useNavigate();
 
-  const styleInput = {
-    borderRadius: "8px",
-    padding: "8px",
-    marginBottom: "4px",
-    marginTop: "-5px",
-  };
+  useEffect(() => {
+    CreateRoomService.getCategories().then(({ data }) => {
+      setCategories(data);
+    });
+  }, []);
+
+  function handleSelectChange(value) {
+    setNewCategory(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS);
+
+    form.setFieldsValue({
+      subCategories: [],
+    });
+
+    if (
+      value !== TIPO_CATEGORIA.CATEGORIA_OUTRAS &&
+      value !== TIPO_CATEGORIA.CATEGORIA_CRIADA &&
+      value !== TIPO_CATEGORIA.CATEGORIA_TODAS
+    ) {
+      ChatRoomService.getCategoryById(value).then(({ data }) => {
+        const { SubCategories } = data;
+        setSubCategories(SubCategories);
+      });
+    }
+  }
 
   function onSubmit(values) {
-    const { cpf, email, password, username } = values;
+    if (!accountType)
+      Notification.open({
+        type: "error",
+        message: "Erro",
+        description: "Selecione Novamente o Tipo de Cadastro.",
+      });
 
-    if (!accountType) return;
+    const { cpf, email, password, username, newCategory } = values;
 
     const dto = {
       cpf,
@@ -33,170 +60,51 @@ const SignUpForm = ({ darkPallete, accountType }) => {
       password,
       username,
       accountType,
+      categoryId: newCategory ? null : userSkills?.category,
+      newCategory: newCategory || null,
+      userSkills: userSkills?.subCategories,
     };
+
+    debugger;
 
     SignUpService.userRegister(dto).then(({ data }) => {
       const { message, success } = data;
 
       if (!success) {
         setValidateInput(data);
-        Notification.open({
-          type: "error",
-          message: "Erro",
-          description: message,
-        });
-      } else if (success) {
-        setValidateInput(null);
-
-        navigate("/signin");
-
-        Notification.open({
-          type: "success",
-          message,
-          style: {
-            zIndex: 999,
-          },
-          duration: 2,
-        });
       } else {
-        Notification.open({
-          type: "error",
-          message: "Erro",
-          description: message,
-        });
+        setValidateInput(null);
+        navigate("/signin");
       }
+
+      Notification.open({
+        type: success ? "success" : "error",
+        message: success ? "Sucesso" : "Erro",
+        description: message,
+      });
     });
   }
 
   return (
-    <Form layout='vertical' onFinish={onSubmit}>
-      <FormItem
-        label='Nome completo'
-        name='username'
-        rules={[{ required: true, message: "Campo obrigatório." }]}
-      >
-        <Input
-          style={styleInput}
-          allowClear
-          prefix={<FeatherIcons icon='user' size={15} />}
-          placeholder='Nome completo'
+    <Form layout='vertical' onFinish={onSubmit} form={form}>
+      {accountType === 1 && !userSkills && (
+        <UserSkills
+          categories={categories}
+          handleSelectChange={(value) => handleSelectChange(value)}
+          subCategories={subCategories}
+          newCategory={newCategory}
+          setUserSkills={setUserSkills}
+          darkPallete={darkPallete}
+          form={form}
         />
-      </FormItem>
+      )}
 
-      <FormItem
-        label='E-mail'
-        name='email'
-        rules={[
-          { required: true, message: "Campo obrigatório." },
-          { type: "email", message: "E-mail inválido." },
-        ]}
-        help={validateInput?.field === "email" ? validateInput.message : null}
-        validateStatus={validateInput?.field === "email" ? "error" : null}
-      >
-        <Input
-          style={styleInput}
-          allowClear
-          prefix={<FeatherIcons icon='mail' size={15} />}
-          placeholder='E-mail'
+      {(userSkills || accountType === 2) && (
+        <UserBasicInfo
+          validateInput={validateInput}
+          darkPallete={darkPallete}
         />
-      </FormItem>
-
-      <FormItem
-        label='CPF'
-        name='cpf'
-        rules={[
-          { required: true, message: "Campo obrigatório." },
-          () => ({
-            validator(_, value) {
-              if (!value || validateBr.cpf(value)) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error("CPF Inválido."));
-            },
-          }),
-        ]}
-        help={validateInput?.field === "cpf" ? validateInput.message : null}
-        validateStatus={validateInput?.field === "cpf" ? "error" : null}
-      >
-        <InputMask
-          mask='111.111.111-11'
-          style={styleInput}
-          allowClear
-          prefix={<FeatherIcons icon='credit-card' size={15} />}
-          placeholder='CPF'
-        />
-      </FormItem>
-
-      <FormItem
-        label='Senha'
-        name='password'
-        rules={[
-          { required: true, message: "Campo obrigatório." },
-          {
-            type: "string",
-            min: 6,
-            message: "Senha deve possuir no mínimo 6 caracteres.",
-          },
-        ]}
-      >
-        <Input.Password
-          style={styleInput}
-          allowClear
-          prefix={<FeatherIcons icon='lock' size={15} />}
-          iconRender={(visible) =>
-            visible ? (
-              <FeatherIcons icon='eye' size={15} />
-            ) : (
-              <FeatherIcons icon='eye-off' size={15} />
-            )
-          }
-          placeholder='Senha'
-        />
-      </FormItem>
-
-      <FormItem
-        label='Confirmar Senha'
-        name='confirmPassword'
-        rules={[
-          { required: true, message: "Campo obrigatório." },
-          {
-            type: "string",
-            min: 6,
-            message: "Senha deve possuir no mínimo 6 caracteres.",
-          },
-          ({ getFieldValue }) => ({
-            validator(_, value) {
-              if (!value || getFieldValue("password") === value) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error("Senhas não coincidem."));
-            },
-          }),
-        ]}
-      >
-        <Input.Password
-          style={styleInput}
-          allowClear
-          prefix={<FeatherIcons icon='lock' size={15} />}
-          iconRender={(visible) =>
-            visible ? (
-              <FeatherIcons icon='eye' size={15} />
-            ) : (
-              <FeatherIcons icon='eye-off' size={15} />
-            )
-          }
-          placeholder='Confirmar Senha'
-        />
-      </FormItem>
-      <StyledButton
-        height='45px'
-        margin='5px 0 0 0'
-        backgroundcolor={darkPallete.lightblue}
-        type='primary'
-        htmlType='submit'
-      >
-        Confirmar
-      </StyledButton>
+      )}
     </Form>
   );
 };

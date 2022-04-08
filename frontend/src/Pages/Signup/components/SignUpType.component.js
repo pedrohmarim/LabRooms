@@ -1,8 +1,8 @@
 import React from "react";
-import { Button, Row } from "../../../antd_components";
+import { Button, Row, Tooltip } from "../../../antd_components";
 import { TIPO_CADASTRO } from "../../../Helpers/TipoCadastro";
 
-const SignUpType = ({ setAccountType }) => {
+const SignUpType = ({ setAccountType, darkPallete }) => {
   return (
     <Row justify='center'>
       <Row
@@ -10,19 +10,31 @@ const SignUpType = ({ setAccountType }) => {
         justify='space-around'
         align='middle'
       >
-        <Button
-          type='primary'
-          onClick={() => setAccountType(TIPO_CADASTRO.FREELANCER)}
+        <Tooltip
+          title='descrição para freelancer'
+          color={darkPallete.lightblue}
+          placement='bottom'
         >
-          Freelancer
-        </Button>
+          <Button
+            type='primary'
+            onClick={() => setAccountType(TIPO_CADASTRO.FREELANCER)}
+          >
+            Freelancer
+          </Button>
+        </Tooltip>
 
-        <Button
-          type='primary'
-          onClick={() => setAccountType(TIPO_CADASTRO.EMPRESA)}
+        <Tooltip
+          title='descrição para Empresa'
+          color={darkPallete.lightblue}
+          placement='bottom'
         >
-          Empresa
-        </Button>
+          <Button
+            type='primary'
+            onClick={() => setAccountType(TIPO_CADASTRO.EMPRESA)}
+          >
+            Empresa
+          </Button>
+        </Tooltip>
       </Row>
     </Row>
   );

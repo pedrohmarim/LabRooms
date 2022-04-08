@@ -6,6 +6,7 @@ import Background from "../../assets/backStars.mp4";
 import { darkPallete } from "../../styles/pallete";
 import { TitleStyled } from "../CreateRoom/CreateRoom.styled";
 import SignUpType from "./components/SignUpType.component";
+import { useNavigate } from "react-router";
 import {
   Breadcrumb,
   FeatherIcons,
@@ -20,6 +21,7 @@ import {
 } from "./Signup.component.styled";
 
 export default function Signup() {
+  const navigate = useNavigate();
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Registro";
   const [accountType, setAccountType] = useState(null);
 
@@ -44,10 +46,17 @@ export default function Signup() {
               <TitleStyled level={3}>
                 {!accountType ? "Qual seu Tipo de Perfil?" : "Registrar-se"}
               </TitleStyled>
-              <Tooltip title='Voltar para Home' color={darkPallete.lightblue}>
-                <Link to='/signin'>
-                  <FeatherIcons icon='chevron-left' size={30} />
-                </Link>
+              <Tooltip
+                title={!accountType ? "Voltar para Home" : "Voltar"}
+                color={darkPallete.lightblue}
+              >
+                <Button
+                  type='ghost'
+                  onClick={() =>
+                    accountType ? setAccountType(null) : navigate("/")
+                  }
+                  icon={<FeatherIcons icon='chevron-left' size={30} />}
+                />
               </Tooltip>
             </FormHeader>
           }
@@ -63,7 +72,12 @@ export default function Signup() {
           </FormHeader>
 
           {!accountType ? (
-            <SignUpType setAccountType={(data) => setAccountType(data)} />
+            <SignUpType
+              setAccountType={(data) => {
+                setAccountType(data);
+              }}
+              darkPallete={darkPallete}
+            />
           ) : (
             <SignUpForm darkPallete={darkPallete} accountType={accountType} />
           )}

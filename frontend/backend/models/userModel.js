@@ -6,6 +6,18 @@ const UserModel = new Schema(
       type: Number,
       required: true,
     },
+    categoryId: {
+      type: String,
+      required: false,
+    },
+    newCategory: {
+      type: String,
+      required: false,
+    },
+    subCategories: {
+      type: Array,
+      required: false,
+    },
     username: {
       type: String,
       required: true,

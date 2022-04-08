@@ -6,7 +6,16 @@ const jwt = require("jsonwebtoken");
 
 module.exports = {
   async handleRegister(request, response) {
-    const { cpf, email, password, username, accountType } = request.body;
+    const {
+      cpf,
+      email,
+      password,
+      username,
+      accountType,
+      subCategories,
+      categoryId,
+      newCategory,
+    } = request.body;
 
     UserModel.find({ $or: [{ cpf }, { email }] }).then(async (res) => {
       if (res.length === 0) {
@@ -18,6 +27,9 @@ module.exports = {
           hashedPass,
           username,
           accountType,
+          subCategories,
+          categoryId,
+          newCategory,
           createdAt: new Date().setHours(new Date().getHours() - 3),
         })
           .then(() => {
