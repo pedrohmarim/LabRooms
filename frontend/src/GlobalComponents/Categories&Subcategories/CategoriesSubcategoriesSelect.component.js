@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { TIPO_CATEGORIA } from "../../Helpers/TipoCategoria";
-import * as ChatRoomService from '../../Pages/ChatRoom/services/ChatRoom.service'
+import * as ChatRoomService from "../../Pages/ChatRoom/services/ChatRoom.service";
 import { Select, Row, FeatherIcons, Typography } from "../../antd_components";
 import TagRender from "../TagRender/TagRender.component";
 import { FormItem } from "../../Pages/Signup/components/SignupForm/Signup.form.styled";
@@ -20,28 +20,42 @@ const CategoriesSubcategoriesSelect = ({
   viewMode,
   newCategoryFromUser,
 }) => {
-  const [newCategory, setNewCategory] = useState(false);
   const [subCategories, setSubCategories] = useState([]);
   const [hideNewCategoryInput, setHideNewCategoryInput] = useState(true);
+  const [hideSubCategoriesInput, setHideSubCategoriesInput] = useState(false);
 
   useEffect(() => {
+    if (!categoryIdFromUser) {
+      setHideSubCategoriesInput(true);
+      setHideNewCategoryInput(false);
+    } else {
+      setHideSubCategoriesInput(false);
+      setHideNewCategoryInput(true);
+    }
+
+    if (newCategoryFromUser) setHideNewCategoryInput(true);
+
     if (categoryIdFromUser) {
       ChatRoomService.getCategoryById(categoryIdFromUser).then(({ data }) => {
         const { SubCategories } = data;
         setSubCategories(SubCategories);
-        setHideNewCategoryInput(true)
+        setHideNewCategoryInput(true);
       });
     }
-  },[categoryIdFromUser])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleSelectChange(value) {
     form.setFieldsValue({
       subCategories: [],
     });
 
-    if(value === TIPO_CATEGORIA.CATEGORIA_OUTRAS || value === TIPO_CATEGORIA.CATEGORIA_CRIADA) {
-      setNewCategory(true)
-      setHideNewCategoryInput(false)
+    if (
+      value === TIPO_CATEGORIA.CATEGORIA_OUTRAS ||
+      value === TIPO_CATEGORIA.CATEGORIA_CRIADA
+    ) {
+      setHideSubCategoriesInput(true);
+      setHideNewCategoryInput(false);
       form.setFieldsValue({
         newCategory: null,
       });
@@ -55,7 +69,8 @@ const CategoriesSubcategoriesSelect = ({
       ChatRoomService.getCategoryById(value).then(({ data }) => {
         const { SubCategories } = data;
         setSubCategories(SubCategories);
-        setHideNewCategoryInput(true)
+        setHideNewCategoryInput(true);
+        setHideSubCategoriesInput(false);
       });
     }
   }
@@ -74,22 +89,23 @@ const CategoriesSubcategoriesSelect = ({
           placeholder='Ex.: Desenvolvedor'
           onChange={handleSelectChange}
         >
-           {(newCategory || newCategoryFromUser) && !hideNewCategoryInput && (
-                  <Select.Option
-                    key={TIPO_CATEGORIA.CATEGORIA_CRIADA}
-                    value={TIPO_CATEGORIA.CATEGORIA_CRIADA}
-                  >
-                    <Row align='middle' justify='start'>
-                      <FeatherIcons
-                        icon='repeat'
-                        size={15}
-                        className='iconMarginRight'
-                      />
-                      {newCategoryFromUser}
-                      <CategoryInfo>- Categoria criada por você</CategoryInfo>
-                    </Row>
-                  </Select.Option>
-                )}
+          {newCategoryFromUser && !categoryIdFromUser && (
+            <Select.Option
+              key={TIPO_CATEGORIA.CATEGORIA_CRIADA}
+              value={TIPO_CATEGORIA.CATEGORIA_CRIADA}
+            >
+              <Row align='middle' justify='start'>
+                <FeatherIcons
+                  icon='repeat'
+                  size={15}
+                  className='iconMarginRight'
+                />
+                {newCategoryFromUser}
+                <CategoryInfo>- Categoria criada por você</CategoryInfo>
+              </Row>
+            </Select.Option>
+          )}
+
           {categories &&
             categories
               .sort((a, b) =>
@@ -115,7 +131,7 @@ const CategoriesSubcategoriesSelect = ({
         </Select>
       </FormItem>
 
-      {((!newCategory && !newCategoryFromUser) || hideNewCategoryInput) && (
+      {!hideSubCategoriesInput && hideNewCategoryInput && (
         <FormItem
           label='Subcategorias'
           name='subCategories'
@@ -146,7 +162,7 @@ const CategoriesSubcategoriesSelect = ({
         </FormItem>
       )}
 
-      {newCategory && !hideNewCategoryInput && (
+      {!hideNewCategoryInput && hideSubCategoriesInput && (
         <FormItem
           label='Nova Categoria'
           name='newCategory'

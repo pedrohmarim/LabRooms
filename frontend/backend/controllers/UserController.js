@@ -21,8 +21,7 @@ module.exports = {
       if (res.length === 0) {
         let hashedPass = await bcrypt.hash(password, 10);
 
-
-        if(accountType === 1) {
+        if (accountType === 1) {
           UserModel.create({
             cpf,
             email,
@@ -33,18 +32,19 @@ module.exports = {
             categoryId,
             newCategory,
             createdAt: new Date().setHours(new Date().getHours() - 3),
-          }).then(() => {
-            return response.json({
-              message: "Usuário cadastrado.",
-              success: true,
-            });
           })
-          .catch(() => {
-            return response.json({
-              message: "Erro ao cadastrar usuário.",
-              unknow: true,
+            .then(() => {
+              return response.json({
+                message: "Usuário cadastrado.",
+                success: true,
+              });
+            })
+            .catch(() => {
+              return response.json({
+                message: "Erro ao cadastrar usuário.",
+                unknow: true,
+              });
             });
-          });
         } else {
           UserModel.create({
             cpf,
@@ -53,18 +53,19 @@ module.exports = {
             username,
             accountType,
             createdAt: new Date().setHours(new Date().getHours() - 3),
-          }).then(() => {
-            return response.json({
-              message: "Usuário cadastrado.",
-              success: true,
-            });
           })
-          .catch(() => {
-            return response.json({
-              message: "Erro ao cadastrar usuário.",
-              unknow: true,
+            .then(() => {
+              return response.json({
+                message: "Usuário cadastrado.",
+                success: true,
+              });
+            })
+            .catch(() => {
+              return response.json({
+                message: "Erro ao cadastrar usuário.",
+                unknow: true,
+              });
             });
-          });
         }
       } else {
         if (res[0].email === email) {
@@ -200,7 +201,7 @@ module.exports = {
     const { _id } = request.body.decoded;
 
     if (_id) {
-      const { 
+      const {
         username,
         email,
         cpf,
@@ -211,7 +212,7 @@ module.exports = {
         categoryId,
         newCategory,
         subCategories,
-       } = request.body;
+      } = request.body;
 
       RoomsModel.updateMany(
         { owner: _id },
@@ -233,9 +234,13 @@ module.exports = {
                 celphone,
                 biography,
                 socials,
-                categoryId: categoryId === 11 || categoryId === 12 ? undefined : categoryId,
-                newCategory: categoryId && categoryId !== 11 && categoryId !== 12 ? undefined : newCategory,
-                subCategories: newCategory ? undefined : subCategories,
+                categoryId:
+                  categoryId === 11 || categoryId === 12 ? null : categoryId,
+                newCategory:
+                  categoryId && categoryId !== 11 && categoryId !== 12
+                    ? null
+                    : newCategory,
+                subCategories: newCategory ? null : subCategories,
               },
               { new: true },
               function (err, data) {
