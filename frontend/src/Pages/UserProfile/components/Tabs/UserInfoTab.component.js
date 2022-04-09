@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import * as CreateRoomService from '../../../CreateRoom/services/createroom.service'
+import * as CreateRoomService from "../../../CreateRoom/services/createroom.service";
 import { Card } from "../../UserProfile.component.styled";
 import { UserContext } from "../../../../Context/UserContext";
 import { FormStyled } from "../../UserProfile.component.styled";
@@ -54,9 +54,9 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
       username,
       email,
       cpf,
-      categoryId: category,
-      newCategory,
-      subCategories: subCategories,
+      categoryId: category || undefined,
+      newCategory: newCategory || undefined,
+      subCategories: subCategories || undefined,
       phone: phone || undefined,
       celphone: celphone || undefined,
       biography: biography || undefined,
@@ -101,7 +101,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
             cpf: user?.cpf,
             category: user?.categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
             newCategory: user?.newCategory,
-            subCategories: user?.subCategories || [],
+            subCategories: user?.subCategories || undefined,
             phone: user?.phone,
             celphone: user?.celphone,
             biography: user.biography,
@@ -129,7 +129,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
               categories={categories}
               categoryIdFromUser={user?.categoryId}
               newCategoryFromUser={user?.newCategory}
-              labelMainCategory="Categoria"
+              labelMainCategory='Categoria'
               form={form}
             />
           )}
