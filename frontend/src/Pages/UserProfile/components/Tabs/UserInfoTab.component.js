@@ -14,6 +14,7 @@ import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
 
 const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const [editMode, setEditMode] = useState(false);
+  const [invalidInfo, setInvalidInfo] = useState(false);
   const [categories, setCategories] = useState();
   const { setUser } = useContext(UserContext);
   const [form] = FormStyled.useForm();
@@ -69,16 +70,20 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
     };
 
     UserProfileService.UpdateUserInfo(dto, token).then(({ data }) => {
-      const { message, status, updatedUser } = data;
+      const { message, status, updatedUser, field } = data;
 
-      setUser(updatedUser);
-
+      if(!field) {
+        setUser(updatedUser);
+        setEditMode(false);
+        setInvalidInfo(false)
+      } else {
+        setInvalidInfo({ field, message})
+      }
+       
       Notification.open({
         type: status === 200 ? "success" : "error",
         message,
       });
-
-      setEditMode(false);
     });
   }
 
@@ -108,6 +113,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
           }}
         >
           <PersonalInfo
+            invalidInfo={invalidInfo}
             editMode={editMode}
             viewMode={viewMode}
             styleInput={styleInput}

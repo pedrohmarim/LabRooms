@@ -212,6 +212,24 @@ module.exports = {
         newCategory,
         subCategories,
        } = request.body;
+       
+       const usersSameEmail = await UserModel.findOne({ email })
+       
+       if (usersSameEmail && usersSameEmail._id.toString() !== _id) {
+        return response.json({
+          message: "E-mail já cadastrado.",
+          field: "email",
+        });
+      } 
+      
+      const usersSameCpf = await UserModel.findOne({ cpf })  
+      
+      if (usersSameCpf && usersSameCpf._id.toString() !== _id) {
+        return response.json({
+          message: "CPF já cadastrado.",
+          field: "cpf",
+        });
+      }
 
       RoomsModel.updateMany(
         { owner: _id },

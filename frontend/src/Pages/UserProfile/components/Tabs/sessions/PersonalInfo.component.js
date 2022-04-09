@@ -13,6 +13,7 @@ import {
 } from "../../../../../antd_components";
 
 const SocialRegister = ({
+  invalidInfo,
   editMode,
   viewMode,
   styleInput,
@@ -68,6 +69,8 @@ const SocialRegister = ({
 
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
+            help={invalidInfo?.field === "email" ? invalidInfo.message : null}
+            validateStatus={invalidInfo?.field === "email" ? "error" : null}
             rules={
               !viewMode && [
                 { required: true, message: "Campo obrigatório." },
@@ -92,6 +95,8 @@ const SocialRegister = ({
 
         <Col span={window.innerWidth < 1024 ? 24 : 8}>
           <Form.Item
+            help={invalidInfo?.field === "cpf" ? invalidInfo.message : null}
+            validateStatus={invalidInfo?.field === "cpf" ? "error" : null}
             rules={
               !viewMode && [
                 { required: true, message: "Campo obrigatório." },
