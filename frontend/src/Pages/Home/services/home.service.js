@@ -12,6 +12,14 @@ export async function getRooms() {
   return api.get("/getRooms");
 }
 
+export async function getRecomendedRooms(newCategory, categoryId, subCategories) {
+  return api.get("/getRecomendedRooms", {
+    headers: {
+      newCategory, categoryId, subCategories
+    }
+  });
+}
+
 export async function getRoomsByCategory(categoryId) {
   return api.get("/getRoomsByCategory", {
     headers: {

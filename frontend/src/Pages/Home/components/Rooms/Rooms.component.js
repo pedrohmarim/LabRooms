@@ -4,6 +4,7 @@ import * as HomeService from "../../services/home.service";
 import { darkPallete } from "../../../../styles/pallete";
 import SearchInput from "../../../../GlobalComponents/SearchInput/SearchInput.component";
 import RoomList from "./components/RoomList.component";
+import RecomendedRoomList from "./components/RecomendedRoomList.component";
 import { CategoryTitle } from "../../../CreateRoom/CreateRoom.styled";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
@@ -15,10 +16,13 @@ import {
   FeatherIcons,
   BackTop,
 } from "../../../../antd_components";
+import { TIPO_CADASTRO } from "../../../../Helpers/TipoCadastro";
 
 const Rooms = ({ pallete, searchValue, userContext }) => {
   const [rooms, setRooms] = useState();
+  const [recomendedRooms, setRecomendedRooms] = useState();
   const [loadingRooms, setLoadingRooms] = useState(true);
+  const [loadingRecomendedRooms, setLoadingRecomendedRooms] = useState(true);
   const [categories, setCategories] = useState();
   const { user, loading } = userContext;
 
@@ -32,7 +36,19 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
     CreateRoomService.getCategories().then(({ data }) => {
       setCategories(data);
     });
-  }, []);
+  }, []);  
+  
+  useEffect(() => {
+    if (user) {
+      HomeService.getRecomendedRooms( user?.newCategory,
+      user?.categoryId,
+        user?.subCategories).then(({ data }) => {
+        const { recomendedRooms, loading } = data;
+        setRecomendedRooms(recomendedRooms);
+        setLoadingRecomendedRooms(loading);
+      });
+    }
+  }, [user]);
 
   function handleFilterRoom(categoryId) {
     setLoadingRooms(true);
@@ -115,7 +131,13 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
         )}
       </Row>
       <Divider />
-      <RoomList rooms={rooms} loadingRooms={loadingRooms} pallete={pallete} />
+      
+      {user && user?.accountType === TIPO_CADASTRO.FREELANCER && recomendedRooms?.length > 0 && (
+        <>
+          <RecomendedRoomList recomendedRooms={recomendedRooms} loadingRecomendedRooms={loadingRecomendedRooms} pallete={pallete} />
+          <RoomList rooms={rooms}loadingRooms={loadingRooms} pallete={pallete} />
+        </>
+      )}
     </Container>
   );
 };

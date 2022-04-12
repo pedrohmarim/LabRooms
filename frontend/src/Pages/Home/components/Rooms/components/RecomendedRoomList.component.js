@@ -13,10 +13,10 @@ import {
   RoomOwnerImg,
 } from "../styles";
 
-const Rooms = ({ rooms, loadingRooms, pallete }) => {
+const Rooms = ({ recomendedRooms, loadingRecomendedRooms, pallete }) => {
   return (
     <>
-      {loadingRooms && (
+      {loadingRecomendedRooms && (
         <Row justify='center'>
           <TitleStyled level={4} color={pallete.white} margintop='28px'>
             {Loading("#fff")}
@@ -25,7 +25,7 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
       )}
 
       <Row gutter={[4, 4]}>
-        {rooms && !loadingRooms && rooms.length === 0 ? (
+        {recomendedRooms && !loadingRecomendedRooms && recomendedRooms.length === 0 ? (
           <TitleStyled
             level={4}
             color={pallete.white}
@@ -34,9 +34,9 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
             Nenhum Projeto Encontrado.
           </TitleStyled>
         ) : (
-          rooms &&
-          !loadingRooms &&
-          rooms.length > 0 && (
+            recomendedRooms &&
+          !loadingRecomendedRooms &&
+          recomendedRooms.length > 0 && (
             <>
               <Col span={24}>
                 <TitleStyled
@@ -45,12 +45,12 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
                   margintop={window.innerWidth < 1024 ? "15px" : "20px"}
                 >
                   <FeatherIcons icon='check-circle' size={28} />
-                  <ButtonText>Disponíveis ({rooms.length})</ButtonText>
+                  <ButtonText>Recomendados ({recomendedRooms.length})</ButtonText>
                 </TitleStyled>
               </Col>
 
-              {rooms &&
-                rooms.map(({ title, thumb, _id, ownerName }) => (
+              {recomendedRooms &&
+                recomendedRooms.map(({ title, thumb, _id, ownerName }) => (
                   <Col xs={12} sm={12} md={6} lg={4} xl={3} xxl={3} key={_id}>
                     <Link to={`view/project/${_id}`}>
                       <RoomItem background={darkPallete.lightblueOpacity}>
