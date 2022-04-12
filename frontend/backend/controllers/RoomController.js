@@ -49,10 +49,20 @@ module.exports = {
   },
 
   async handleGetRecomendedRooms(request, response) {
-    const { newcategory, categoryid, subcategories } = request.headers;
-    var recomendedRooms = await RoomModel.find({ $or: [{ newCategory: newcategory }, { categoryId: categoryid }, { subCategories: subcategories }] });
-    
-    return response.json({ recomendedRooms, loading: false });
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { newcategory, categoryid, subcategories } = request.headers;
+      var recomendedRooms = await RoomModel.find({
+        $or: [
+          { newCategory: newcategory },
+          { categoryId: categoryid },
+          { subCategories: subcategories },
+        ],
+      });
+
+      return response.json({ recomendedRooms, loading: false });
+    }
   },
 
   async handleGetRoomsByCategory(request, response) {

@@ -12,11 +12,19 @@ export async function getRooms() {
   return api.get("/getRooms");
 }
 
-export async function getRecomendedRooms(newCategory, categoryId, subCategories) {
+export async function getRecomendedRooms(
+  newCategory,
+  categoryId,
+  subCategories,
+  token
+) {
   return api.get("/getRecomendedRooms", {
     headers: {
-      newCategory, categoryId, subCategories
-    }
+      Authorization: token,
+      newCategory: newCategory,
+      categoryId: categoryId,
+      subCategories: subCategories,
+    },
   });
 }
 

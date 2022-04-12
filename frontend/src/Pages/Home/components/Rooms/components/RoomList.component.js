@@ -16,6 +16,17 @@ import {
 const Rooms = ({ rooms, loadingRooms, pallete }) => {
   return (
     <>
+      <Col span={24}>
+        <TitleStyled
+          level={3}
+          color={pallete.white}
+          margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+        >
+          <FeatherIcons icon='check-circle' size={28} />
+          <ButtonText>Disponíveis ({rooms?.length})</ButtonText>
+        </TitleStyled>
+      </Col>
+
       {loadingRooms && (
         <Row justify='center'>
           <TitleStyled level={4} color={pallete.white} margintop='28px'>
@@ -38,17 +49,6 @@ const Rooms = ({ rooms, loadingRooms, pallete }) => {
           !loadingRooms &&
           rooms.length > 0 && (
             <>
-              <Col span={24}>
-                <TitleStyled
-                  level={3}
-                  color={pallete.white}
-                  margintop={window.innerWidth < 1024 ? "15px" : "20px"}
-                >
-                  <FeatherIcons icon='check-circle' size={28} />
-                  <ButtonText>Disponíveis ({rooms.length})</ButtonText>
-                </TitleStyled>
-              </Col>
-
               {rooms &&
                 rooms.map(({ title, thumb, _id, ownerName }) => (
                   <Col xs={12} sm={12} md={6} lg={4} xl={3} xxl={3} key={_id}>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Container, StyledCol, Divider } from "./styles";
 import * as HomeService from "../../services/home.service";
 import { darkPallete } from "../../../../styles/pallete";
@@ -8,7 +8,6 @@ import RecomendedRoomList from "./components/RecomendedRoomList.component";
 import { CategoryTitle } from "../../../CreateRoom/CreateRoom.styled";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
-import * as CreateRoomService from "../../../CreateRoom/services/createroom.service";
 import {
   Row,
   Select,
@@ -19,36 +18,17 @@ import {
 import { TIPO_CADASTRO } from "../../../../Helpers/TipoCadastro";
 
 const Rooms = ({ pallete, searchValue, userContext }) => {
-  const [rooms, setRooms] = useState();
-  const [recomendedRooms, setRecomendedRooms] = useState();
-  const [loadingRooms, setLoadingRooms] = useState(true);
-  const [loadingRecomendedRooms, setLoadingRecomendedRooms] = useState(true);
-  const [categories, setCategories] = useState();
-  const { user, loading } = userContext;
-
-  useEffect(() => {
-    HomeService.getRooms().then(({ data }) => {
-      const { rooms, loading } = data;
-      setRooms(rooms);
-      setLoadingRooms(loading);
-    });
-
-    CreateRoomService.getCategories().then(({ data }) => {
-      setCategories(data);
-    });
-  }, []);  
-  
-  useEffect(() => {
-    if (user) {
-      HomeService.getRecomendedRooms( user?.newCategory,
-      user?.categoryId,
-        user?.subCategories).then(({ data }) => {
-        const { recomendedRooms, loading } = data;
-        setRecomendedRooms(recomendedRooms);
-        setLoadingRecomendedRooms(loading);
-      });
-    }
-  }, [user]);
+  const {
+    user,
+    loading,
+    setLoadingRooms,
+    setRooms,
+    rooms,
+    recomendedRooms,
+    loadingRooms,
+    loadingRecomendedRooms,
+    categories,
+  } = userContext;
 
   function handleFilterRoom(categoryId) {
     setLoadingRooms(true);
@@ -131,13 +111,17 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
         )}
       </Row>
       <Divider />
-      
-      {user && user?.accountType === TIPO_CADASTRO.FREELANCER && recomendedRooms?.length > 0 && (
-        <>
-          <RecomendedRoomList recomendedRooms={recomendedRooms} loadingRecomendedRooms={loadingRecomendedRooms} pallete={pallete} />
-          <RoomList rooms={rooms}loadingRooms={loadingRooms} pallete={pallete} />
-        </>
+
+      {user && user?.accountType === TIPO_CADASTRO.FREELANCER && (
+        <RecomendedRoomList
+          userId={user?._id}
+          recomendedRooms={recomendedRooms}
+          loadingRecomendedRooms={loadingRecomendedRooms}
+          pallete={pallete}
+        />
       )}
+
+      <RoomList rooms={rooms} loadingRooms={loadingRooms} pallete={pallete} />
     </Container>
   );
 };

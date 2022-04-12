@@ -18,7 +18,11 @@ router.get("/getCategoryById", CategoryController.handleGetCategoryById);
 
 router.post("/createRoom", checkAuth, RoomController.handleCreate);
 router.get("/getRooms", RoomController.handleGetRooms);
-router.get("/getRecomendedRooms", RoomController.handleGetRecomendedRooms);
+router.get(
+  "/getRecomendedRooms",
+  checkAuth,
+  RoomController.handleGetRecomendedRooms
+);
 router.get("/getRoomsByCategory", RoomController.handleGetRoomsByCategory);
 router.get("/getRoomById", RoomController.handleGetRoomsById);
 router.post("/updateRoom", checkAuth, RoomController.handleUpdateRoom);

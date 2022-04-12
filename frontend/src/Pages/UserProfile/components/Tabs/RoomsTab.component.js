@@ -1,4 +1,11 @@
-import React, { useEffect, useState, useCallback, useMemo } from "react";
+import React, {
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+  useContext,
+} from "react";
+import { UserContext } from "../../../../Context/UserContext";
 import * as UserProfileService from "../../services/UserProfile.service";
 import * as RoomService from "../../../CreateRoom/services/createroom.service";
 import * as ChatRoomService from "../../../ChatRoom/services/ChatRoom.service";
@@ -27,11 +34,9 @@ import {
 } from "../../../../antd_components";
 
 const RoomsTab = ({ darkPallete, user, token, navigate }) => {
-  const [rooms, setRooms] = useState();
   const [allRooms, setAllRooms] = useState();
   const [_id, setRoomId] = useState();
   const [hasntRooms, setHasntRooms] = useState();
-  const [categories, setCategories] = useState();
   const [newCategoryState, setNewCategory] = useState(false);
   const [showSubCategorie, setShowSubCategorie] = useState(false);
   const [allSubCategories, setAllSubCategories] = useState();
@@ -42,6 +47,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     _id: null,
   });
 
+  const { setTabRooms, tabRooms, categories } = useContext(UserContext);
+
   const getRoomsByOwnerId = useCallback(() => {
     if (user) {
       const { _id } = user;
@@ -51,7 +58,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
         if (errorMessage) {
           setHasntRooms({ loading, errorMessage });
         } else {
-          setRooms({ array: roomWithIcon, loading });
+          setTabRooms({ array: roomWithIcon, loading });
           setAllRooms(roomWithIcon);
         }
       });
@@ -63,20 +70,14 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     getRoomsByOwnerId();
   }, [getRoomsByOwnerId]);
 
-  useEffect(() => {
-    RoomService.getCategories().then(({ data }) => {
-      setCategories(data);
-    });
-  }, []);
-
   function handleFilterRoom(roomSelectId) {
     if (roomSelectId === TIPO_CATEGORIA.CATEGORIA_TODAS) {
-      setRooms({ array: allRooms });
+      setTabRooms({ array: allRooms });
       setRoomId(null);
     } else {
       const filteredRoom = allRooms.find(({ _id }) => _id === roomSelectId);
       const { _id } = filteredRoom;
-      setRooms({ array: [filteredRoom] });
+      setTabRooms({ array: [filteredRoom] });
       setRoomId(_id);
     }
   }
@@ -206,8 +207,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
 
     return (
       !hasntRooms &&
-      rooms?.array &&
-      rooms?.array.map(
+      tabRooms?.array &&
+      tabRooms?.array.map(
         ({
           _id,
           title,
@@ -244,7 +245,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     );
   }, [
     hasntRooms,
-    rooms,
+    tabRooms,
     _id,
     token,
     getRoomsByOwnerId,
@@ -261,12 +262,12 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
   return (
     <Card bordered={false}>
       <Row justify='space-between' gutter={[10, 10]}>
-        {!hasntRooms && rooms?.array && !rooms.loading ? (
+        {!hasntRooms && tabRooms?.array && !tabRooms.loading ? (
           <>
             <Col span={window.innerWidth > 1024 ? 18 : 24}>
               <Row justify='space-between'>
                 <UserInfoTitle level={4}>
-                  Meus Projetos ({rooms?.array.length})
+                  Meus Projetos ({tabRooms?.array.length})
                 </UserInfoTitle>
 
                 <CreateRoomButton
@@ -311,7 +312,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
             </Col>
           </>
         ) : (
-          !rooms?.loading &&
+          !tabRooms?.loading &&
           !hasntRooms && (
             <Row>
               {Loading(

@@ -232,7 +232,7 @@ export default function RoomForm({
                   style={{ width: "100%" }}
                   options={
                     allSubCategories ||
-                    categories.find((x) => x._id === categoryId).SubCategories
+                    categories?.find((x) => x._id === categoryId).SubCategories
                   }
                   notFoundContent={
                     <Row

@@ -1,25 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import * as CreateRoomService from "../../../CreateRoom/services/createroom.service";
 import * as SignUpService from "../../services/signup.service";
 import UserSkills from "./components/UserSkills.component";
 import UserBasicInfo from "./components/UserBasicInfo.component";
+import { UserContext } from "../../../../Context/UserContext";
 
 import { Form, Notification } from "../../../../antd_components";
 
 const SignUpForm = ({ darkPallete, accountType }) => {
   const [validateInput, setValidateInput] = useState();
   const [userSkills, setUserSkills] = useState();
-  const [categories, setCategories] = useState();
+  const { categories } = useContext(UserContext);
+
   const [form] = Form.useForm();
 
   let navigate = useNavigate();
-
-  useEffect(() => {
-    CreateRoomService.getCategories().then(({ data }) => {
-      setCategories(data);
-    });
-  }, []);
 
   function onSubmit(values) {
     if (!accountType)
@@ -31,10 +26,6 @@ const SignUpForm = ({ darkPallete, accountType }) => {
 
     const { cpf, email, password, username } = values;
 
-    console.log(userSkills?.subCategories?.length)
-
-    debugger;
-      
     const dto = {
       cpf,
       email,

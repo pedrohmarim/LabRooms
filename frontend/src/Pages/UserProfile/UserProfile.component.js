@@ -20,6 +20,7 @@ import Header from "../../GlobalComponents/Header/Header.component";
 export default function UserProfile() {
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Perfil";
   const { user } = useContext(UserContext);
+
   const [viewUser, setViewUser] = useState();
   const [viewMode, setIsViewMode] = useState(true);
   const navigate = useNavigate();

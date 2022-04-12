@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
-import * as CreateRoomService from "../../../CreateRoom/services/createroom.service";
+import React, { useState, useContext } from "react";
 import { Card } from "../../UserProfile.component.styled";
 import { UserContext } from "../../../../Context/UserContext";
 import { FormStyled } from "../../UserProfile.component.styled";
@@ -15,8 +14,7 @@ import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
 const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const [editMode, setEditMode] = useState(false);
   const [invalidInfo, setInvalidInfo] = useState(false);
-  const [categories, setCategories] = useState();
-  const { setUser } = useContext(UserContext);
+  const { setUser, categories } = useContext(UserContext);
   const [form] = FormStyled.useForm();
 
   const styleInput = {
@@ -25,12 +23,6 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
     border: viewMode && "none",
     borderBottom: viewMode && "solid 1px rgba(0, 0, 0, 0.1)",
   };
-
-  useEffect(() => {
-    CreateRoomService.getCategories().then(({ data }) => {
-      setCategories(data);
-    });
-  }, []);
 
   function handleSubmit(values) {
     const {
@@ -72,14 +64,14 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
     UserProfileService.UpdateUserInfo(dto, token).then(({ data }) => {
       const { message, status, updatedUser, field } = data;
 
-      if(!field) {
+      if (!field) {
         setUser(updatedUser);
         setEditMode(false);
-        setInvalidInfo(false)
+        setInvalidInfo(false);
       } else {
-        setInvalidInfo({ field, message})
+        setInvalidInfo({ field, message });
       }
-       
+
       Notification.open({
         type: status === 200 ? "success" : "error",
         message,

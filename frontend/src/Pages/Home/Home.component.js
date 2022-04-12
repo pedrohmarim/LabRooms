@@ -10,7 +10,18 @@ import Rooms from "./components/Rooms/Rooms.component";
 import { darkPallete } from "../../styles/pallete";
 
 export default function Home() {
-  const { user, loading } = useContext(UserContext);
+  const {
+    user,
+    loading,
+    setLoadingRooms,
+    setRooms,
+    rooms,
+    recomendedRooms,
+    loadingRooms,
+    loadingRecomendedRooms,
+    categories,
+  } = useContext(UserContext);
+
   const [searchValue, setSearchValue] = useState();
 
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Home";
@@ -45,7 +56,17 @@ export default function Home() {
       <Rooms
         pallete={darkPallete}
         searchValue={searchValue}
-        userContext={{ user, loading }}
+        userContext={{
+          user,
+          loading,
+          setLoadingRooms,
+          setRooms,
+          rooms,
+          recomendedRooms,
+          loadingRooms,
+          loadingRecomendedRooms,
+          categories,
+        }}
       />
     </>
   );

@@ -12,43 +12,54 @@ import {
   RoomImage,
   RoomOwnerImg,
 } from "../styles";
+import { LinkStyled } from "../../../../Signin/Signin.component.styled";
 
-const Rooms = ({ recomendedRooms, loadingRecomendedRooms, pallete }) => {
+const Rooms = ({
+  recomendedRooms,
+  loadingRecomendedRooms,
+  pallete,
+  userId,
+}) => {
   return (
     <>
-      {loadingRecomendedRooms && (
+      {loadingRecomendedRooms ? (
         <Row justify='center'>
           <TitleStyled level={4} color={pallete.white} margintop='28px'>
             {Loading("#fff")}
           </TitleStyled>
         </Row>
+      ) : (
+        <Col span={24}>
+          <TitleStyled
+            level={3}
+            color={pallete.white}
+            margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+          >
+            <FeatherIcons icon='check-circle' size={28} />
+            <ButtonText>Recomendados ({recomendedRooms?.length})</ButtonText>
+          </TitleStyled>
+        </Col>
       )}
 
       <Row gutter={[4, 4]}>
-        {recomendedRooms && !loadingRecomendedRooms && recomendedRooms.length === 0 ? (
+        {recomendedRooms &&
+        !loadingRecomendedRooms &&
+        recomendedRooms.length === 0 ? (
           <TitleStyled
             level={4}
             color={pallete.white}
             margintop={window.innerWidth < 1024 ? "15px" : "20px"}
           >
             Nenhum Projeto Encontrado.
+            <LinkStyled to={`/profile/${userId}`} marginleft='10px'>
+              Cadastrar Habilidades
+            </LinkStyled>
           </TitleStyled>
         ) : (
-            recomendedRooms &&
+          recomendedRooms &&
           !loadingRecomendedRooms &&
           recomendedRooms.length > 0 && (
             <>
-              <Col span={24}>
-                <TitleStyled
-                  level={3}
-                  color={pallete.white}
-                  margintop={window.innerWidth < 1024 ? "15px" : "20px"}
-                >
-                  <FeatherIcons icon='check-circle' size={28} />
-                  <ButtonText>Recomendados ({recomendedRooms.length})</ButtonText>
-                </TitleStyled>
-              </Col>
-
               {recomendedRooms &&
                 recomendedRooms.map(({ title, thumb, _id, ownerName }) => (
                   <Col xs={12} sm={12} md={6} lg={4} xl={3} xxl={3} key={_id}>
