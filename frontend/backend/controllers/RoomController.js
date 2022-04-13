@@ -1,5 +1,6 @@
 const RoomModel = require("../models/RoomModel");
 const UserModel = require("../models/userModel");
+const CategoriesModel = require("../models/CategoriesModel");
 
 module.exports = {
   async handleCreate(request, response) {
@@ -48,11 +49,51 @@ module.exports = {
     return response.json({ rooms, loading: false });
   },
 
+  async handleGetRoomsByOwnerId(request, response) {
+    const { owner } = request.headers;
+
+    const rooms = await RoomModel.find({ owner: owner });
+
+    if (rooms.length > 0) {
+      let roomWithIcon = [];
+
+      rooms.forEach((room) => {
+        const { categoryId, newCategory } = room;
+
+        if (categoryId) {
+          CategoriesModel.findOne({ _id: categoryId }).then(
+            ({ Icon, Title }) => {
+              roomWithIcon.push({ ...room._doc, Icon, CategorieTitle: Title });
+
+              if (rooms.length === roomWithIcon.length)
+                return response.json({ roomWithIcon, loading: false });
+            }
+          );
+        } else if (newCategory) {
+          roomWithIcon.push({
+            ...room._doc,
+            Icon: "repeat",
+            CategorieTitle: newCategory,
+          });
+
+          if (rooms.length === roomWithIcon.length)
+            return response.json({ roomWithIcon, loading: false });
+        }
+      });
+    } else {
+      return response.json({
+        errorMessage: "Nenhum Projeto Encontrado.",
+        loading: false,
+      });
+    }
+  },
+
   async handleGetRecomendedRooms(request, response) {
     const { _id } = request.body.decoded;
 
     if (_id) {
       const { newcategory, categoryid, subcategories } = request.headers;
+
       var recomendedRooms = await RoomModel.find({
         $or: [
           { newCategory: newcategory },
@@ -62,6 +103,40 @@ module.exports = {
       });
 
       return response.json({ recomendedRooms, loading: false });
+    }
+  },
+
+  async handleGetRecomendedUsers(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { owner } = request.headers;
+
+      RoomModel.find({ owner }, function (err, data) {
+        if (err) {
+          return response.json({
+            message: "Erro ao Retornar Usuários Recomendados.",
+          });
+        } else {
+          const { categoryId, subCategories, newCategory } = data;
+
+          UserModel.find(
+            {
+              $or: [{ newCategory }, { categoryId }, { subCategories }],
+              $and: [{ accountType: 1 }], // Tipo 1 = Conta Freelancer
+            },
+            function (err, data) {
+              if (err) {
+                return response.json({
+                  message: "Erro ao Retornar Usuários Recomendados.",
+                });
+              } else {
+                return response.json({ recomendedUsers: data, loading: false });
+              }
+            }
+          );
+        }
+      });
     }
   },
 

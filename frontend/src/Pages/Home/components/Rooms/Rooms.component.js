@@ -4,9 +4,9 @@ import * as HomeService from "../../services/home.service";
 import { darkPallete } from "../../../../styles/pallete";
 import SearchInput from "../../../../GlobalComponents/SearchInput/SearchInput.component";
 import RoomList from "./components/RoomList.component";
-import RecomendedRoomList from "./components/RecomendedRoomList.component";
 import { CategoryTitle } from "../../../CreateRoom/CreateRoom.styled";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
+import { TIPO_HOMEARRAY } from "../../../../Helpers/TipoHomeArray";
 import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
 import {
   Row,
@@ -27,6 +27,8 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
     recomendedRooms,
     loadingRooms,
     loadingRecomendedRooms,
+    recomendedUsers,
+    loadingRecomendedUsers,
     categories,
   } = userContext;
 
@@ -113,15 +115,40 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
       <Divider />
 
       {user && user?.accountType === TIPO_CADASTRO.FREELANCER && (
-        <RecomendedRoomList
+        <RoomList
+          arrayType={TIPO_HOMEARRAY.PROJETOS_RECOMENDADOS}
           userId={user?._id}
-          recomendedRooms={recomendedRooms}
-          loadingRecomendedRooms={loadingRecomendedRooms}
+          arrayToRender={recomendedRooms}
+          loadingArray={loadingRecomendedRooms}
           pallete={pallete}
         />
       )}
 
-      <RoomList rooms={rooms} loadingRooms={loadingRooms} pallete={pallete} />
+      <RoomList
+        userId={user?._id}
+        arrayToRender={rooms}
+        arrayType={TIPO_HOMEARRAY.PROJETOS_RECENTES}
+        loadingArray={loadingRooms}
+        pallete={pallete}
+      />
+
+      {user && user?.accountType === TIPO_CADASTRO.EMPRESA && (
+        <RoomList
+          userId={user?._id}
+          arrayToRender={recomendedUsers}
+          arrayType={TIPO_HOMEARRAY.USUARIOS_RECOMENDADOS}
+          loadingArray={loadingRecomendedUsers}
+          pallete={pallete}
+        />
+      )}
+
+      <RoomList
+        userId={user?._id}
+        arrayToRender={rooms}
+        arrayType={TIPO_HOMEARRAY.USUARIOS_DISPONIVEIS}
+        loadingArray={loadingRooms}
+        pallete={pallete}
+      />
     </Container>
   );
 };

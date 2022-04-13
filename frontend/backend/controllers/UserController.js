@@ -1,6 +1,5 @@
 const UserModel = require("../models/userModel");
 const RoomsModel = require("../models/RoomModel");
-const CategoriesModel = require("../models/CategoriesModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -158,45 +157,6 @@ module.exports = {
     }
   },
 
-  async handleGetRoomsByOwnerId(request, response) {
-    const { owner } = request.headers;
-
-    const rooms = await RoomsModel.find({ owner: owner });
-
-    if (rooms.length > 0) {
-      let roomWithIcon = [];
-
-      rooms.forEach((room) => {
-        const { categoryId, newCategory } = room;
-
-        if (categoryId) {
-          CategoriesModel.findOne({ _id: categoryId }).then(
-            ({ Icon, Title }) => {
-              roomWithIcon.push({ ...room._doc, Icon, CategorieTitle: Title });
-
-              if (rooms.length === roomWithIcon.length)
-                return response.json({ roomWithIcon, loading: false });
-            }
-          );
-        } else if (newCategory) {
-          roomWithIcon.push({
-            ...room._doc,
-            Icon: "repeat",
-            CategorieTitle: newCategory,
-          });
-
-          if (rooms.length === roomWithIcon.length)
-            return response.json({ roomWithIcon, loading: false });
-        }
-      });
-    } else {
-      return response.json({
-        errorMessage: "Nenhum Projeto Encontrado.",
-        loading: false,
-      });
-    }
-  },
-
   async handleUpdateUser(request, response) {
     const { _id } = request.body.decoded;
 
@@ -212,19 +172,19 @@ module.exports = {
         categoryId,
         newCategory,
         subCategories,
-       } = request.body;
-       
-       const usersSameEmail = await UserModel.findOne({ email })
-       
-       if (usersSameEmail && usersSameEmail._id.toString() !== _id) {
+      } = request.body;
+
+      const usersSameEmail = await UserModel.findOne({ email });
+
+      if (usersSameEmail && usersSameEmail._id.toString() !== _id) {
         return response.json({
           message: "E-mail já cadastrado.",
           field: "email",
         });
-      } 
-      
-      const usersSameCpf = await UserModel.findOne({ cpf })  
-      
+      }
+
+      const usersSameCpf = await UserModel.findOne({ cpf });
+
       if (usersSameCpf && usersSameCpf._id.toString() !== _id) {
         return response.json({
           message: "CPF já cadastrado.",

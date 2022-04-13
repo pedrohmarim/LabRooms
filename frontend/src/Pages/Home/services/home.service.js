@@ -21,9 +21,18 @@ export async function getRecomendedRooms(
   return api.get("/getRecomendedRooms", {
     headers: {
       Authorization: token,
-      newCategory: newCategory,
-      categoryId: categoryId,
-      subCategories: subCategories,
+      newCategory,
+      categoryId,
+      subCategories,
+    },
+  });
+}
+
+export async function getRecomendedUsers(owner, token) {
+  return api.get("/getRecomendedUsers", {
+    headers: {
+      Authorization: token,
+      owner,
     },
   });
 }

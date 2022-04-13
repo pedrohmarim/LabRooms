@@ -20,6 +20,8 @@ export default function Home() {
     loadingRooms,
     loadingRecomendedRooms,
     categories,
+    recomendedUsers,
+    loadingRecomendedUsers,
   } = useContext(UserContext);
 
   const [searchValue, setSearchValue] = useState();
@@ -66,6 +68,8 @@ export default function Home() {
           loadingRooms,
           loadingRecomendedRooms,
           categories,
+          recomendedUsers,
+          loadingRecomendedUsers,
         }}
       />
     </>

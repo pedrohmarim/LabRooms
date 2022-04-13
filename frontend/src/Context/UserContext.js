@@ -2,17 +2,24 @@ import React, { createContext, useState, useEffect } from "react";
 import Cookie from "js-cookie";
 import * as HomeService from "../Pages/Home/services/home.service";
 import * as CreateRoomService from "../Pages/CreateRoom/services/createroom.service";
+import { TIPO_CADASTRO } from "../Helpers/TipoCadastro";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+
   const [rooms, setRooms] = useState();
-  const [tabRooms, setTabRooms] = useState();
-  const [recomendedRooms, setRecomendedRooms] = useState();
   const [loadingRooms, setLoadingRooms] = useState(true);
+
+  const [recomendedRooms, setRecomendedRooms] = useState();
   const [loadingRecomendedRooms, setLoadingRecomendedRooms] = useState(true);
+
+  const [recomendedUsers, setRecomendedUsers] = useState();
+  const [loadingRecomendedUsers, setLoadingRecomendedUsers] = useState(true);
+
+  const [tabRooms, setTabRooms] = useState();
   const [categories, setCategories] = useState();
   const token = Cookie.get("token");
 
@@ -44,16 +51,26 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (user && token) {
-      HomeService.getRecomendedRooms(
-        user?.newCategory,
-        user?.categoryId,
-        user?.subCategories,
-        token
-      ).then(({ data }) => {
-        const { recomendedRooms, loading } = data;
-        setRecomendedRooms(recomendedRooms);
-        setLoadingRecomendedRooms(loading);
-      });
+      if (user?.accountType === TIPO_CADASTRO.FREELANCER) {
+        HomeService.getRecomendedRooms(
+          user?.newCategory,
+          user?.categoryId,
+          user?.subCategories,
+          token
+        ).then(({ data }) => {
+          const { recomendedRooms, loading } = data;
+          setRecomendedRooms(recomendedRooms);
+          setLoadingRecomendedRooms(loading);
+        });
+      }
+
+      if (user?.accountType === TIPO_CADASTRO.EMPRESA) {
+        HomeService.getRecomendedUsers(user?._id, token).then(({ data }) => {
+          const { recomendedUsers, loading } = data;
+          setRecomendedUsers(recomendedUsers);
+          setLoadingRecomendedUsers(loading);
+        });
+      }
     }
   }, [user, token]);
 
@@ -72,6 +89,8 @@ export const UserProvider = ({ children }) => {
         loadingRooms,
         loadingRecomendedRooms,
         categories,
+        recomendedUsers,
+        loadingRecomendedUsers,
       }}
     >
       {children}
