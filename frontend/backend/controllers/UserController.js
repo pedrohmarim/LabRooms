@@ -117,6 +117,17 @@ module.exports = {
     }
   },
 
+  async handleGetUsers(request, response) {
+    const { _id } = request.headers;
+    
+    var users = [];
+
+    if (_id !== 'undefined') users = await UserModel.find({ $and: [{ _id: { $ne: _id }}, { accountType: 1 }]})
+    else users = await UserModel.find({ accountType: 1 })
+
+    return response.json({ users, loading: false });
+  },
+
   async handleGetCurrentUser(request, response) {
     const { _id } = request.body.decoded;
 

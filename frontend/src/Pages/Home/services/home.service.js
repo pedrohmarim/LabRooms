@@ -12,6 +12,14 @@ export async function getRooms() {
   return api.get("/getRooms");
 }
 
+export async function getUsers(userId) {
+  return api.get("/getUsers", {
+    headers: {
+      _id: userId
+    }
+  });
+}
+
 export async function getRecomendedRooms(
   newCategory,
   categoryId,

@@ -30,6 +30,8 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
     recomendedUsers,
     loadingRecomendedUsers,
     categories,
+    users,
+    loadingUsers,
   } = userContext;
 
   function handleFilterRoom(categoryId) {
@@ -114,41 +116,81 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
       </Row>
       <Divider />
 
-      {user && user?.accountType === TIPO_CADASTRO.FREELANCER && (
-        <RoomList
-          arrayType={TIPO_HOMEARRAY.PROJETOS_RECOMENDADOS}
-          userId={user?._id}
-          arrayToRender={recomendedRooms}
-          loadingArray={loadingRecomendedRooms}
-          pallete={pallete}
-        />
+      {!user && (
+        <>
+          <RoomList
+            userId={user?._id}
+            arrayToRender={rooms}
+            arrayType={TIPO_HOMEARRAY.PROJETOS_RECENTES}
+            loadingArray={loadingRooms}
+            pallete={pallete}
+          />
+
+          <RoomList
+            userId={user?._id}
+            arrayToRender={users}
+            arrayType={TIPO_HOMEARRAY.USUARIOS_DISPONIVEIS}
+            loadingArray={loadingUsers}
+            pallete={pallete}
+          />
+        </>
       )}
 
-      <RoomList
-        userId={user?._id}
-        arrayToRender={rooms}
-        arrayType={TIPO_HOMEARRAY.PROJETOS_RECENTES}
-        loadingArray={loadingRooms}
-        pallete={pallete}
-      />
+      {user && user?.accountType === TIPO_CADASTRO.FREELANCER && (
+        <>
+          <RoomList
+            arrayType={TIPO_HOMEARRAY.PROJETOS_RECOMENDADOS}
+            userId={user?._id}
+            arrayToRender={recomendedRooms}
+            loadingArray={loadingRecomendedRooms}
+            pallete={pallete}
+          />
+
+          <RoomList
+            userId={user?._id}
+            arrayToRender={rooms}
+            arrayType={TIPO_HOMEARRAY.PROJETOS_RECENTES}
+            loadingArray={loadingRooms}
+            pallete={pallete}
+          />
+
+          <RoomList
+            userId={user?._id}
+            arrayToRender={users}
+            arrayType={TIPO_HOMEARRAY.USUARIOS_DISPONIVEIS}
+            loadingArray={loadingUsers}
+            pallete={pallete}
+          />
+        </>
+      )}
 
       {user && user?.accountType === TIPO_CADASTRO.EMPRESA && (
-        <RoomList
-          userId={user?._id}
-          arrayToRender={recomendedUsers}
-          arrayType={TIPO_HOMEARRAY.USUARIOS_RECOMENDADOS}
-          loadingArray={loadingRecomendedUsers}
-          pallete={pallete}
-        />
-      )}
+        <>
+          <RoomList
+            userId={user?._id}
+            arrayToRender={recomendedUsers}
+            arrayType={TIPO_HOMEARRAY.USUARIOS_RECOMENDADOS}
+            loadingArray={loadingRecomendedUsers}
+            pallete={pallete}
+          />
 
-      <RoomList
-        userId={user?._id}
-        arrayToRender={rooms}
-        arrayType={TIPO_HOMEARRAY.USUARIOS_DISPONIVEIS}
-        loadingArray={loadingRooms}
-        pallete={pallete}
-      />
+          <RoomList
+            userId={user?._id}
+            arrayToRender={users}
+            arrayType={TIPO_HOMEARRAY.USUARIOS_DISPONIVEIS}
+            loadingArray={loadingUsers}
+            pallete={pallete}
+          />
+
+          <RoomList
+            userId={user?._id}
+            arrayToRender={rooms}
+            arrayType={TIPO_HOMEARRAY.PROJETOS_RECENTES}
+            loadingArray={loadingRooms}
+            pallete={pallete}
+          />
+        </>
+      )}
     </Container>
   );
 };

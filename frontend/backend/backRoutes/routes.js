@@ -9,6 +9,7 @@ const CategoryController = require("../controllers/CategoryController");
 router.post("/userRegister", UserController.handleRegister);
 router.get("/userLogin", UserController.handleLogin);
 router.get("/currentUser", checkAuth, UserController.handleGetCurrentUser);
+router.get("/getUsers", UserController.handleGetUsers);
 router.get("/getUserById", UserController.handleGetUserById);
 router.post("/updateUserInfo", checkAuth, UserController.handleUpdateUser);
 

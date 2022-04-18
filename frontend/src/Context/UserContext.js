@@ -13,6 +13,9 @@ export const UserProvider = ({ children }) => {
   const [rooms, setRooms] = useState();
   const [loadingRooms, setLoadingRooms] = useState(true);
 
+  const [users, setUsers] = useState();
+  const [loadingUsers, setLoadingUsers] = useState(true);
+
   const [recomendedRooms, setRecomendedRooms] = useState();
   const [loadingRecomendedRooms, setLoadingRecomendedRooms] = useState(true);
 
@@ -41,13 +44,19 @@ export const UserProvider = ({ children }) => {
       setRooms(rooms);
       setLoadingRooms(loading);
     });
-  }, []);
 
-  useEffect(() => {
     CreateRoomService.getCategories().then(({ data }) => {
       setCategories(data);
     });
   }, []);
+
+  useEffect(() => {
+    HomeService.getUsers(user?._id).then(({ data }) => {
+      const { users, loading } = data;
+      setUsers(users);
+      setLoadingUsers(loading);
+    });
+  }, [])
 
   useEffect(() => {
     if (user && token) {
@@ -91,6 +100,8 @@ export const UserProvider = ({ children }) => {
         categories,
         recomendedUsers,
         loadingRecomendedUsers,
+        users,
+        loadingUsers,
       }}
     >
       {children}

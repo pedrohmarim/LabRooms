@@ -22,6 +22,8 @@ export default function Home() {
     categories,
     recomendedUsers,
     loadingRecomendedUsers,
+    users,
+    loadingUsers,
   } = useContext(UserContext);
 
   const [searchValue, setSearchValue] = useState();
@@ -70,6 +72,8 @@ export default function Home() {
           categories,
           recomendedUsers,
           loadingRecomendedUsers,
+          users,
+          loadingUsers,
         }}
       />
     </>
