@@ -115,6 +115,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
 
           {user?.accountType === TIPO_CADASTRO.FREELANCER && (
             <UserSkills
+              styleInput={styleInput}
               fromUserProfile
               editMode={editMode}
               viewMode={viewMode}

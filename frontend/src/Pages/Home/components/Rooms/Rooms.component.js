@@ -87,7 +87,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
               <Select.Option key={10} value={10}>
                 <Row align='middle' justify='start'>
                   <FeatherIcons icon='list' size={15} />
-                  <CategoryTitle>Todas</CategoryTitle>
+                  <CategoryTitle>Todos</CategoryTitle>
                 </Row>
               </Select.Option>
               {categories

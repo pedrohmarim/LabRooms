@@ -112,30 +112,21 @@ module.exports = {
     if (_id) {
       const { owner } = request.headers;
 
-      RoomModel.find({ owner }, function (err, data) {
-        if (err) {
-          return response.json({
-            message: "Erro ao Retornar Usuários Recomendados.",
-          });
-        } else {
-          const { categoryId, subCategories, newCategory } = data;
+      let ownerRooms = await RoomModel.find({ owner });
 
-          UserModel.find(
-            {
-              $or: [{ newCategory }, { categoryId }, { subCategories }],
-              $and: [{ accountType: 1 }], // Tipo 1 = Conta Freelancer
-            },
-            function (err, data) {
-              if (err) {
-                return response.json({
-                  message: "Erro ao Retornar Usuários Recomendados.",
-                });
-              } else {
-                return response.json({ recomendedUsers: data, loading: false });
-              }
-            }
-          );
-        }
+      let categories = [];
+
+      ownerRooms.forEach((room) => {
+        const { categoryId } = room;
+        categories.push(categoryId);
+      });
+
+      return response.json({
+        recomendedUsers: await UserModel.find({
+          categoryId: { $in: categories },
+          $and: [{ accountType: 1 }],
+        }),
+        loading: false,
       });
     }
   },

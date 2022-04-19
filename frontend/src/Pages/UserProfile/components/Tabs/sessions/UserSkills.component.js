@@ -1,7 +1,7 @@
 import React from "react";
 import { StyledCol } from "../../../UserProfile.component.styled";
 import { Row, Typography } from "../../../../../antd_components";
-import CategoriesSubcategories from '../../../../../GlobalComponents/Categories&Subcategories/CategoriesSubcategoriesSelect.component'
+import CategoriesSubcategories from "../../../../../GlobalComponents/Categories&Subcategories/CategoriesSubcategoriesSelect.component";
 
 const UserSkills = ({
   categoryIdFromUser,
@@ -12,6 +12,7 @@ const UserSkills = ({
   newCategoryFromUser,
   labelMainCategory,
   form,
+  styleInput,
 }) => {
   const { Title } = Typography;
   return (
@@ -24,7 +25,8 @@ const UserSkills = ({
         </StyledCol>
       </Row>
 
-      <CategoriesSubcategories 
+      <CategoriesSubcategories
+        styleInput={styleInput}
         categoryIdFromUser={categoryIdFromUser}
         fromUserProfile={fromUserProfile}
         categories={categories}

@@ -59,6 +59,8 @@ const SocialRegister = ({
             }
           >
             <Input
+              className={viewMode && "disabled"}
+              tabIndex={viewMode && "-1"}
               readOnly={viewMode}
               disabled={!editMode && !viewMode}
               style={styleInput}
@@ -85,6 +87,8 @@ const SocialRegister = ({
             }
           >
             <Input
+              className={viewMode && "disabled"}
+              tabIndex={viewMode && "-1"}
               readOnly={viewMode}
               disabled={!editMode && !viewMode}
               style={styleInput}
@@ -118,7 +122,8 @@ const SocialRegister = ({
             }
           >
             <InputMask
-              readOnly={viewMode}
+              tabIndex={viewMode && "-1"}
+              className={viewMode && "disabled"}
               disabled={!editMode && !viewMode}
               style={styleInput}
               placeholder='CPF'
@@ -142,6 +147,8 @@ const SocialRegister = ({
             }
           >
             <Input
+              tabIndex={viewMode && "-1"}
+              className={viewMode && "disabled"}
               readOnly={viewMode}
               disabled={!editMode && !viewMode}
               style={styleInput}
@@ -170,7 +177,8 @@ const SocialRegister = ({
             }
           >
             <InputMask
-              readOnly={viewMode}
+              tabIndex={viewMode && "-1"}
+              className={viewMode && "disabled"}
               disabled={!editMode && !viewMode}
               Mask
               autoComplete='off'
@@ -201,7 +209,8 @@ const SocialRegister = ({
             }
           >
             <InputMask
-              readOnly={viewMode}
+              className={viewMode && "disabled"}
+              tabIndex={viewMode && "-1"}
               disabled={!editMode && !viewMode}
               Mask
               autoComplete='off'

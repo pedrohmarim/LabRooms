@@ -51,12 +51,12 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    HomeService.getUsers(user?._id).then(({ data }) => {
+    HomeService.getUsers(token ? user?._id : undefined).then(({ data }) => {
       const { users, loading } = data;
       setUsers(users);
       setLoadingUsers(loading);
     });
-  }, [])
+  }, [token, user]);
 
   useEffect(() => {
     if (user && token) {

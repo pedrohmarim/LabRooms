@@ -19,6 +19,7 @@ const CategoriesSubcategoriesSelect = ({
   editMode,
   viewMode,
   newCategoryFromUser,
+  styleInput,
 }) => {
   const [subCategories, setSubCategories] = useState([]);
   const [hideNewCategoryInput, setHideNewCategoryInput] = useState(true);
@@ -84,7 +85,8 @@ const CategoriesSubcategoriesSelect = ({
       >
         <Select
           disabled={fromUserProfile && !editMode && !viewMode}
-          readOnly={viewMode}
+          tabIndex={viewMode && "-1"}
+          className={viewMode && "disabled"}
           getPopupContainer={(trigger) => trigger.parentNode}
           placeholder='Ex.: Desenvolvedor'
           onChange={handleSelectChange}
@@ -138,8 +140,9 @@ const CategoriesSubcategoriesSelect = ({
           rules={[{ required: true, message: "Campo obrigatório." }]}
         >
           <Select
+            tabIndex={viewMode && "-1"}
+            className={viewMode && "disabled"}
             disabled={fromUserProfile && !editMode && !viewMode}
-            readOnly={viewMode}
             getPopupContainer={(trigger) => trigger.parentNode}
             notFoundContent={
               <Row
@@ -164,11 +167,14 @@ const CategoriesSubcategoriesSelect = ({
 
       {!hideNewCategoryInput && hideSubCategoriesInput && (
         <FormItem
-          label='Nova Categoria'
+          label={viewMode ? "Categoria" : "Nova Categoria"}
           name='newCategory'
           rules={[{ required: true, message: "Campo obrigatório." }]}
         >
           <StyledInput
+            style={viewMode ? styleInput : null}
+            tabIndex={viewMode && "-1"}
+            className={viewMode && "disabled"}
             disabled={fromUserProfile && !editMode && !viewMode}
             readOnly={viewMode}
             allowClear

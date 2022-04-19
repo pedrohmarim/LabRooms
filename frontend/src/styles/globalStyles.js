@@ -67,4 +67,8 @@ export const GlobalStyles = createGlobalStyle`
   .ant-dropdown, .ant-notification {
     z-index: 9999 !important;
   }
+
+  .disabled {
+    pointer-events: none; 
+  }
 `;

@@ -293,7 +293,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
                       size={18}
                       className='iconMargin'
                     />
-                    <StyledOption>Todas</StyledOption>
+                    <StyledOption>Todos</StyledOption>
                   </Select.Option>
 
                   {allRooms &&
