@@ -92,14 +92,10 @@ module.exports = {
     const { _id } = request.body.decoded;
 
     if (_id) {
-      const { newcategory, categoryid, subcategories } = request.headers;
+      const { categoryid } = request.headers;
 
       var recomendedRooms = await RoomModel.find({
-        $or: [
-          { newCategory: newcategory },
-          { categoryId: categoryid },
-          { subCategories: subcategories },
-        ],
+        $or: [{ categoryId: categoryid }],
       });
 
       return response.json({ recomendedRooms, loading: false });

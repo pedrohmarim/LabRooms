@@ -5,6 +5,7 @@ import {
   Divider as StyledDivider,
   Image,
   Avatar,
+  Row,
 } from "../../../../antd_components";
 
 const { Title } = Typography;
@@ -21,6 +22,22 @@ export const RoomImage = styled(Image)`
   height: auto;
   border-radius: 8px;
   margin-bottom: 10px;
+`;
+
+export const StyledRowTags = styled(Row)`
+  width: 100%;
+  overflow-x: auto;
+  display: inline-block;
+  white-space: nowrap;
+
+  ::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+  }
 `;
 
 export const TitleStyled = styled(Title)`
@@ -53,8 +70,8 @@ export const RoomOwner = styled.p`
   white-space: nowrap;
   text-overflow: ellipsis;
   color: ${({ color }) => color};
+  margin: ${({ margin }) => margin};
   font-style: italic;
-  margin: 0 0 15px 30px;
   padding-top: 5px;
   font-size: 10pt;
 `;

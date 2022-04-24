@@ -1,5 +1,6 @@
 import React from "react";
 import { Row, FeatherIcons, Col } from "../../../../../antd_components";
+import TagRender from "../../../../../GlobalComponents/TagRender/TagRender.component";
 import { darkPallete } from "../../../../../styles/pallete";
 import { Link } from "react-router-dom";
 import { Loading } from "../../../../../GlobalComponents/Loading/Loading.component";
@@ -12,6 +13,7 @@ import {
   RoomOwner,
   RoomImage,
   RoomOwnerImg,
+  StyledRowTags,
 } from "../styles";
 import { LinkStyled } from "../../../../Signin/Signin.component.styled";
 
@@ -74,6 +76,8 @@ const RoomList = ({
                     username,
                     biography,
                     accountType,
+                    subCategories,
+                    newCategory,
                   }) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={3} xxl={3} key={_id}>
                       <Link
@@ -86,29 +90,55 @@ const RoomList = ({
                             {title || username}
                           </RoomTitle>
 
-                          <RoomOwner color={darkPallete.white}>
+                          <RoomOwner
+                            color={darkPallete.white}
+                            margin={!ownerName ? "0 0 15px 0" : "0 0 15px 30px"}
+                          >
                             {ownerName ||
                               biography ||
                               "Biografia não informada"}
                           </RoomOwner>
 
-                          <RoomOwnerImg
-                            alt='Image'
-                            gap={2}
-                            src={
-                              thumb ||
-                              "https://media.istockphoto.com/photos/red-squirrel-looking-around-a-tree-picture-id466395505?k=20&m=466395505&s=612x612&w=0&h=ELSnLKu_E2-pc0q_bfGRadTZwYE1f7jq4TWTyHu1gkI="
-                            }
-                            preview={false}
-                          />
+                          {ownerName && (
+                            <RoomOwnerImg
+                              alt='Image'
+                              gap={2}
+                              src={
+                                thumb ||
+                                "https://media.istockphoto.com/photos/red-squirrel-looking-around-a-tree-picture-id466395505?k=20&m=466395505&s=612x612&w=0&h=ELSnLKu_E2-pc0q_bfGRadTZwYE1f7jq4TWTyHu1gkI="
+                              }
+                              preview={false}
+                            />
+                          )}
 
-                          <RoomImage
-                            src={
-                              thumb ||
-                              "https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/996/notfound.png"
-                            }
-                            preview={false}
-                          />
+                          {!ownerName && (
+                            <RoomImage
+                              src={
+                                thumb ||
+                                "https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/996/notfound.png"
+                              }
+                              preview={false}
+                            />
+                          )}
+
+                          {ownerName && !newCategory ? (
+                            <StyledRowTags align='middle'>
+                              {subCategories &&
+                                subCategories.map((data) => (
+                                  <TagRender label={data} margin='10px 5px' />
+                                ))}
+                            </StyledRowTags>
+                          ) : (
+                            ownerName &&
+                            newCategory && (
+                              <StyledRowTags align='middle'>
+                                <TagRender
+                                  label={newCategory}
+                                  margin='10px 5px'
+                                />
+                              </StyledRowTags>
+                            )
+                          )}
                         </RoomItem>
                       </Link>
                     </Col>

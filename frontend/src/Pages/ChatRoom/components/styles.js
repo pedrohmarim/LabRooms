@@ -55,11 +55,15 @@ export const Layout = styled(LayoutStyled)`
   background-color: transparent;
 `;
 
-export const RoomDescription = styled.p`
+export const RoomDescription = styled.span`
   color: ${({ color }) => color};
   font-size: 10pt;
   font-weight: 500;
   word-break: break-all;
+
+  &&:hover {
+    color: black !important;
+  }
 `;
 
 export const RoomCategory = styled.span`

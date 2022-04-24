@@ -51,26 +51,31 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    HomeService.getUsers(token ? user?._id : undefined).then(({ data }) => {
-      const { users, loading } = data;
-      setUsers(users);
-      setLoadingUsers(loading);
-    });
-  }, [token, user]);
+    if (!token) {
+      HomeService.getUsers(undefined).then(({ data }) => {
+        const { users, loading } = data;
+        setUsers(users);
+        setLoadingUsers(loading);
+      });
+    }
+  }, [token]);
 
   useEffect(() => {
     if (user && token) {
+      HomeService.getUsers(user?._id).then(({ data }) => {
+        const { users, loading } = data;
+        setUsers(users);
+        setLoadingUsers(loading);
+      });
+
       if (user?.accountType === TIPO_CADASTRO.FREELANCER) {
-        HomeService.getRecomendedRooms(
-          user?.newCategory,
-          user?.categoryId,
-          user?.subCategories,
-          token
-        ).then(({ data }) => {
-          const { recomendedRooms, loading } = data;
-          setRecomendedRooms(recomendedRooms);
-          setLoadingRecomendedRooms(loading);
-        });
+        HomeService.getRecomendedRooms(user?.categoryId, token).then(
+          ({ data }) => {
+            const { recomendedRooms, loading } = data;
+            setRecomendedRooms(recomendedRooms);
+            setLoadingRecomendedRooms(loading);
+          }
+        );
       }
 
       if (user?.accountType === TIPO_CADASTRO.EMPRESA) {
