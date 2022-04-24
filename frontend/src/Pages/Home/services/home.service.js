@@ -45,3 +45,12 @@ export async function getRoomsByCategory(categoryId) {
     },
   });
 }
+
+export async function getUsersByCategory(categoryId, userId) {
+  return api.get("/getUsersByCategory", {
+    headers: {
+      categoryId,
+      _id: userId,
+    },
+  });
+}

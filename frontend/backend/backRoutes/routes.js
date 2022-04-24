@@ -12,6 +12,7 @@ router.get("/currentUser", checkAuth, UserController.handleGetCurrentUser);
 router.get("/getUsers", UserController.handleGetUsers);
 router.get("/getUserById", UserController.handleGetUserById);
 router.post("/updateUserInfo", checkAuth, UserController.handleUpdateUser);
+router.get("/getUsersByCategory", UserController.handleGetUsersByCategory);
 
 router.get("/categories", CategoryController.handleGetCategory);
 router.get("/getCategoryById", CategoryController.handleGetCategoryById);

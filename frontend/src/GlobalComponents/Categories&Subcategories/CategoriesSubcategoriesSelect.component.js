@@ -103,7 +103,9 @@ const CategoriesSubcategoriesSelect = ({
                   className='iconMarginRight'
                 />
                 {newCategoryFromUser}
-                <CategoryInfo>- Categoria criada por você</CategoryInfo>
+                <CategoryInfo>
+                  - Categoria criada {!viewMode && "por você"}
+                </CategoryInfo>
               </Row>
             </Select.Option>
           )}
@@ -142,7 +144,7 @@ const CategoriesSubcategoriesSelect = ({
           <Select
             tabIndex={viewMode && "-1"}
             className={viewMode && "disabled"}
-            disabled={fromUserProfile && !editMode && !viewMode}
+            disabled={fromUserProfile && !editMode}
             getPopupContainer={(trigger) => trigger.parentNode}
             notFoundContent={
               <Row

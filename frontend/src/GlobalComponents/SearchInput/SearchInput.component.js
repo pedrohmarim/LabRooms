@@ -9,8 +9,8 @@ const SearchInput = ({
   fromLandingPage,
   searchValue,
   background,
-  title = 'Pesquise por um Tema para Encontrar Projetos',
-  placeholder = 'Procurar projeto'
+  title = "Pesquisar Por Palavra Chave",
+  placeholder = "Pesquisar",
 }) => {
   return searchValue ? (
     <Form initialValues={{ roomSearchInput: searchValue }}>

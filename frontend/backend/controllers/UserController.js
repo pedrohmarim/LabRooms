@@ -171,6 +171,32 @@ module.exports = {
     }
   },
 
+  async handleGetUsersByCategory(request, response) {
+    const { categoryid, _id } = request.headers;
+
+    let users = null;
+
+    switch (categoryid) {
+      case "10":
+        if (_id !== "undefined")
+          users = await UserModel.find({
+            $and: [{ _id: { $ne: _id } }, { accountType: 1 }],
+          });
+        else users = await UserModel.find({ accountType: 1 });
+
+        if (users) return response.json({ users, loading: false }); // Filtra todas os projetos ao selecionar Categoria = "Todas"
+        break;
+      case "11":
+        users = await UserModel.find({ categoryId: null }); // Filtra todas os projetos que possuem Categoria = "Outros"
+        if (users) return response.json({ users, loading: false });
+        break;
+      default: // Filtra projetos por Categoria
+        users = await UserModel.find({ categoryId: categoryid });
+        if (users) return response.json({ users, loading: false });
+        break;
+    }
+  },
+
   async handleUpdateUser(request, response) {
     const { _id } = request.body.decoded;
 

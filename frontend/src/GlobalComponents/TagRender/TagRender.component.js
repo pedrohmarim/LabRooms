@@ -1,8 +1,7 @@
 import React from "react";
 import { Tag } from "../../antd_components";
 
-const TagRender = (props) => {
-  const { label, closable, onClose, margin } = props;
+const TagRender = ({ label, closable, onClose, margin }) => {
   const onPreventMouseDown = (event) => {
     event.preventDefault();
     event.stopPropagation();

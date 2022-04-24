@@ -68,7 +68,6 @@ export const RoomDescription = styled.span`
 
 export const RoomCategory = styled.span`
   display: flex;
-  margin: 3px 80px 5px 10px;
   align-items: center;
   justify-content: space-between;
   color: ${({ color }) => color};

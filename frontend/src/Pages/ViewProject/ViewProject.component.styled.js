@@ -7,13 +7,13 @@ export const HeaderStyled = styled(Header)`
   background-color: transparent;
   padding: 0;
   height: fit-content;
-  width: fit-content;
-  max-width: 70%;
+  max-width: 100%;
   word-break: break-all;
 `;
 
 export const ProjectTitle = styled(Typography)`
   color: ${({ color }) => color};
+  margin: ${({ margin }) => margin};
   font-size: 20pt;
 `;
 

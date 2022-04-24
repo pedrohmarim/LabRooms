@@ -13,8 +13,6 @@ export default function Home() {
   const {
     user,
     loading,
-    setLoadingRooms,
-    setRooms,
     rooms,
     recomendedRooms,
     loadingRooms,
@@ -63,8 +61,6 @@ export default function Home() {
         userContext={{
           user,
           loading,
-          setLoadingRooms,
-          setRooms,
           rooms,
           recomendedRooms,
           loadingRooms,

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Row, FeatherIcons, Col } from "../../../../../antd_components";
+import * as HomeService from "../../../services/home.service";
+import { UserContext } from "../../../../../Context/UserContext";
 import TagRender from "../../../../../GlobalComponents/TagRender/TagRender.component";
 import { darkPallete } from "../../../../../styles/pallete";
 import { Link } from "react-router-dom";
-import { Loading } from "../../../../../GlobalComponents/Loading/Loading.component";
 import { TIPO_HOMEARRAY } from "../../../../../Helpers/TipoHomeArray";
 import {
   RoomItem,
@@ -16,6 +17,7 @@ import {
   StyledRowTags,
 } from "../styles";
 import { LinkStyled } from "../../../../Signin/Signin.component.styled";
+import HandleFilter from "../../../../../GlobalComponents/HandleFilter/HandleFilter.component";
 
 const RoomList = ({
   arrayToRender,
@@ -24,28 +26,60 @@ const RoomList = ({
   pallete,
   userId,
 }) => {
+  const { setLoadingRooms, setRooms, categories, setUsers, setLoadingUsers } =
+    useContext(UserContext);
+
+  function handleFilterRoom(categoryId) {
+    switch (arrayType) {
+      case TIPO_HOMEARRAY.PROJETOS_RECENTES:
+        setLoadingRooms(true);
+
+        HomeService.getRoomsByCategory(categoryId).then(({ data }) => {
+          const { rooms, loading } = data;
+          setRooms(rooms);
+          setLoadingRooms(loading);
+        });
+        break;
+
+      case TIPO_HOMEARRAY.USUARIOS_DISPONIVEIS:
+        setLoadingUsers(true);
+
+        HomeService.getUsersByCategory(categoryId, userId).then(({ data }) => {
+          const { users, loading } = data;
+          setUsers(users);
+          setLoadingUsers(loading);
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
   return (
     <>
-      {loadingArray ? (
-        <Row justify='center'>
-          <TitleStyled level={4} color={pallete.white} margintop='28px'>
-            {Loading("#fff")}
-          </TitleStyled>
-        </Row>
-      ) : (
-        <Col span={24}>
-          <TitleStyled
-            level={3}
-            color={pallete.white}
-            margintop={window.innerWidth < 1024 ? "15px" : "20px"}
-          >
-            <FeatherIcons icon='check-circle' size={28} />
-            <ButtonText>
-              {arrayType} ({arrayToRender?.length})
-            </ButtonText>
-          </TitleStyled>
-        </Col>
-      )}
+      <Row align='middle' justify='space-between'>
+        <TitleStyled
+          level={3}
+          color={pallete.white}
+          margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+        >
+          <FeatherIcons icon='check-circle' size={28} />
+          <ButtonText>
+            {arrayType} ({arrayToRender?.length})
+          </ButtonText>
+        </TitleStyled>
+
+        {(arrayType === TIPO_HOMEARRAY.PROJETOS_RECENTES ||
+          arrayType === TIPO_HOMEARRAY.USUARIOS_DISPONIVEIS) && (
+          <HandleFilter
+            handleFilterRoom={handleFilterRoom}
+            categories={categories}
+            pallete={pallete}
+            arrayType={arrayType}
+            userId={userId}
+          />
+        )}
+      </Row>
 
       <Row gutter={[4, 4]}>
         {arrayToRender && !loadingArray && arrayToRender.length === 0 ? (
