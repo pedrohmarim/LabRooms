@@ -15,13 +15,13 @@ import {
   RoomImage,
   RoomOwnerImg,
   StyledRowTags,
+  CategorieProject,
 } from "../styles";
 import { LinkStyled } from "../../../../Signin/Signin.component.styled";
 import HandleFilter from "../../../../../GlobalComponents/HandleFilter/HandleFilter.component";
 
 const RoomList = ({
   arrayToRender,
-  loadingArray,
   arrayType,
   pallete,
   userId,
@@ -35,8 +35,8 @@ const RoomList = ({
         setLoadingRooms(true);
 
         HomeService.getRoomsByCategory(categoryId).then(({ data }) => {
-          const { rooms, loading } = data;
-          setRooms(rooms);
+          const { arrayWithIcon, loading } = data;
+          setRooms(arrayWithIcon);
           setLoadingRooms(loading);
         });
         break;
@@ -45,8 +45,8 @@ const RoomList = ({
         setLoadingUsers(true);
 
         HomeService.getUsersByCategory(categoryId, userId).then(({ data }) => {
-          const { users, loading } = data;
-          setUsers(users);
+          const { usersWithIcon, loading } = data;
+          setUsers(usersWithIcon);
           setLoadingUsers(loading);
         });
         break;
@@ -82,7 +82,7 @@ const RoomList = ({
       </Row>
 
       <Row gutter={[4, 4]}>
-        {arrayToRender && !loadingArray && arrayToRender.length === 0 ? (
+        {arrayToRender && arrayToRender.length === 0 ? (
           <TitleStyled
             level={4}
             color={pallete.white}
@@ -97,7 +97,6 @@ const RoomList = ({
           </TitleStyled>
         ) : (
           arrayToRender &&
-          !loadingArray &&
           arrayToRender.length > 0 && (
             <>
               {arrayToRender &&
@@ -112,6 +111,8 @@ const RoomList = ({
                     accountType,
                     subCategories,
                     newCategory,
+                    CategorieTitle,
+                    Icon
                   }) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={3} xxl={3} key={_id}>
                       <Link
@@ -123,6 +124,12 @@ const RoomList = ({
                           <RoomTitle color={darkPallete.white}>
                             {title || username}
                           </RoomTitle>
+
+
+                     {   accountType&&  <CategorieProject color={darkPallete.white} align="middle">
+                            <FeatherIcons icon={Icon} size={18} />
+                            <ButtonText>{CategorieTitle}</ButtonText>
+                          </CategorieProject>}
 
                           <RoomOwner
                             color={darkPallete.white}
@@ -154,6 +161,11 @@ const RoomList = ({
                               preview={false}
                             />
                           )}
+
+{   !accountType&&  <CategorieProject color={darkPallete.white} align="middle">
+                            <FeatherIcons icon={Icon} size={18} />
+                            <ButtonText>{CategorieTitle}</ButtonText>
+                          </CategorieProject>}
 
                           {ownerName && !newCategory ? (
                             <StyledRowTags align='middle'>

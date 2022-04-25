@@ -40,8 +40,8 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     HomeService.getRooms().then(({ data }) => {
-      const { rooms, loading } = data;
-      setRooms(rooms);
+      const { arrayWithIcon, loading } = data;
+      setRooms(arrayWithIcon);
       setLoadingRooms(loading);
     });
 
@@ -53,8 +53,8 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (!token) {
       HomeService.getUsers(undefined).then(({ data }) => {
-        const { users, loading } = data;
-        setUsers(users);
+        const { usersWithIcon, loading } = data;
+        setUsers(usersWithIcon);
         setLoadingUsers(loading);
       });
     }
@@ -63,16 +63,16 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (user && token) {
       HomeService.getUsers(user?._id).then(({ data }) => {
-        const { users, loading } = data;
-        setUsers(users);
+        const { usersWithIcon, loading } = data;
+        setUsers(usersWithIcon);
         setLoadingUsers(loading);
       });
 
       if (user?.accountType === TIPO_CADASTRO.FREELANCER) {
         HomeService.getRecomendedRooms(user?.categoryId, token).then(
           ({ data }) => {
-            const { recomendedRooms, loading } = data;
-            setRecomendedRooms(recomendedRooms);
+            const { arrayWithIcon, loading } = data;
+            setRecomendedRooms(arrayWithIcon);
             setLoadingRecomendedRooms(loading);
           }
         );
@@ -80,8 +80,8 @@ export const UserProvider = ({ children }) => {
 
       if (user?.accountType === TIPO_CADASTRO.EMPRESA) {
         HomeService.getRecomendedUsers(user?._id, token).then(({ data }) => {
-          const { recomendedUsers, loading } = data;
-          setRecomendedUsers(recomendedUsers);
+          const { arrayWithIcon, loading } = data;
+          setRecomendedUsers(arrayWithIcon);
           setLoadingRecomendedUsers(loading);
         });
       }

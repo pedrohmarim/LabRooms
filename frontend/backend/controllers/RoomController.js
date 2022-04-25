@@ -2,6 +2,34 @@ const RoomModel = require("../models/RoomModel");
 const UserModel = require("../models/userModel");
 const CategoriesModel = require("../models/CategoriesModel");
 
+function handleRoomWithIcon(array, response) {
+  let arrayWithIcon = [];
+
+    array.forEach((room) => {
+      const { categoryId, newCategory } = room;
+
+      if (categoryId) {
+        CategoriesModel.findOne({ _id: categoryId }).then(
+          ({ Icon, Title }) => {
+            arrayWithIcon.push({ ...room._doc, Icon, CategorieTitle: Title });
+
+            if (array.length === arrayWithIcon.length)
+              return response.json({ arrayWithIcon, loading: false });
+          }
+        );
+      } else if (newCategory) {
+        arrayWithIcon.push({
+          ...room._doc,
+          Icon: "repeat",
+          CategorieTitle: newCategory,
+        });
+
+        if (array.length === arrayWithIcon.length)
+          return response.json({ arrayWithIcon, loading: false });
+      }
+    });
+}
+
 module.exports = {
   async handleCreate(request, response) {
     const { _id } = request.body.decoded;
@@ -46,7 +74,7 @@ module.exports = {
 
   async handleGetRooms(request, response) {
     const rooms = await RoomModel.find();
-    return response.json({ rooms, loading: false });
+    handleRoomWithIcon(rooms, response)
   },
 
   async handleGetRoomsByOwnerId(request, response) {
@@ -55,31 +83,7 @@ module.exports = {
     const rooms = await RoomModel.find({ owner: owner });
 
     if (rooms.length > 0) {
-      let roomWithIcon = [];
-
-      rooms.forEach((room) => {
-        const { categoryId, newCategory } = room;
-
-        if (categoryId) {
-          CategoriesModel.findOne({ _id: categoryId }).then(
-            ({ Icon, Title }) => {
-              roomWithIcon.push({ ...room._doc, Icon, CategorieTitle: Title });
-
-              if (rooms.length === roomWithIcon.length)
-                return response.json({ roomWithIcon, loading: false });
-            }
-          );
-        } else if (newCategory) {
-          roomWithIcon.push({
-            ...room._doc,
-            Icon: "repeat",
-            CategorieTitle: newCategory,
-          });
-
-          if (rooms.length === roomWithIcon.length)
-            return response.json({ roomWithIcon, loading: false });
-        }
-      });
+      handleRoomWithIcon(rooms, response)
     } else {
       return response.json({
         errorMessage: "Nenhum Projeto Encontrado.",
@@ -98,7 +102,7 @@ module.exports = {
         $or: [{ categoryId: categoryid }],
       });
 
-      return response.json({ recomendedRooms, loading: false });
+      handleRoomWithIcon(recomendedRooms, response)
     }
   },
 
@@ -117,13 +121,12 @@ module.exports = {
         categories.push(categoryId);
       });
 
-      return response.json({
-        recomendedUsers: await UserModel.find({
-          categoryId: { $in: categories },
-          $and: [{ accountType: 1 }],
-        }),
-        loading: false,
-      });
+      var recomendedUsers = await UserModel.find({
+        categoryId: { $in: categories },
+        $and: [{ accountType: 1 }],
+      })
+
+      handleRoomWithIcon(recomendedUsers, response)
     }
   },
 
@@ -134,18 +137,18 @@ module.exports = {
 
     switch (categoryid) {
       case "10":
-        rooms = await RoomModel.find();
-        if (rooms) return response.json({ rooms, loading: false }); // Filtra todas os projetos ao selecionar Categoria = "Todas"
+        rooms = await RoomModel.find(); // Filtra todas os projetos ao selecionar Categoria = "Todas"
         break;
       case "11":
         rooms = await RoomModel.find({ categoryId: null }); // Filtra todas os projetos que possuem Categoria = "Outros"
-        if (rooms) return response.json({ rooms, loading: false });
         break;
       default: // Filtra projetos por Categoria
         rooms = await RoomModel.find({ categoryId: categoryid });
-        if (rooms) return response.json({ rooms, loading: false });
         break;
     }
+
+    if (rooms.length > 0) handleRoomWithIcon(rooms, response)
+    else return response.json({ usersWithIcon: [], loading: false });
   },
 
   async handleGetRoomsById(request, response) {

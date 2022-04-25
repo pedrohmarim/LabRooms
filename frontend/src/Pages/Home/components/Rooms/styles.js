@@ -25,6 +25,7 @@ export const RoomImage = styled(Image)`
 `;
 
 export const StyledRowTags = styled(Row)`
+  margin-top: 3px;
   width: 100%;
   overflow-x: auto;
   display: inline-block;
@@ -63,6 +64,14 @@ export const RoomItem = styled.div`
     transform: scale(1);
     cursor: pointer;
   }
+`;
+
+export const CategorieProject = styled(Row)`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: ${({ color }) => color};
+  margin: ${({ margin }) => margin};
 `;
 
 export const RoomOwner = styled.p`

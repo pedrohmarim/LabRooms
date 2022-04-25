@@ -1,7 +1,36 @@
 const UserModel = require("../models/userModel");
 const RoomsModel = require("../models/RoomModel");
+const CategoriesModel = require("../models/CategoriesModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+
+function handleUsersWithIcon(users, response) {
+  let usersWithIcon = [];
+
+    users.forEach((user) => {
+      const { categoryId, newCategory } = user;
+
+      if (categoryId) {
+        CategoriesModel.findOne({ _id: categoryId }).then(
+          ({ Icon, Title }) => {
+            usersWithIcon.push({ ...user._doc, Icon, CategorieTitle: Title });
+
+            if (users.length === usersWithIcon.length)
+              return response.json({ usersWithIcon, loading: false });
+          }
+        );
+      } else if (newCategory) {
+        usersWithIcon.push({
+          ...user._doc,
+          Icon: "repeat",
+          CategorieTitle: newCategory,
+        });
+
+        if (users.length === usersWithIcon.length)
+          return response.json({ usersWithIcon, loading: false });
+      }
+    });
+}
 
 module.exports = {
   async handleRegister(request, response) {
@@ -128,7 +157,7 @@ module.exports = {
       });
     else users = await UserModel.find({ accountType: 1 });
 
-    return response.json({ users, loading: false });
+    handleUsersWithIcon(users, response)
   },
 
   async handleGetCurrentUser(request, response) {
@@ -174,7 +203,7 @@ module.exports = {
   async handleGetUsersByCategory(request, response) {
     const { categoryid, _id } = request.headers;
 
-    let users = null;
+    var users = null;
 
     switch (categoryid) {
       case "10":
@@ -183,18 +212,17 @@ module.exports = {
             $and: [{ _id: { $ne: _id } }, { accountType: 1 }],
           });
         else users = await UserModel.find({ accountType: 1 });
-
-        if (users) return response.json({ users, loading: false }); // Filtra todas os projetos ao selecionar Categoria = "Todas"
         break;
       case "11":
-        users = await UserModel.find({ categoryId: null }); // Filtra todas os projetos que possuem Categoria = "Outros"
-        if (users) return response.json({ users, loading: false });
+        users = await UserModel.find({ categoryId: null }); 
         break;
       default: // Filtra projetos por Categoria
         users = await UserModel.find({ categoryId: categoryid });
-        if (users) return response.json({ users, loading: false });
         break;
     }
+
+    if (users.length > 0) handleUsersWithIcon(users, response)
+    else return response.json({ usersWithIcon: [], loading: false });
   },
 
   async handleUpdateUser(request, response) {
