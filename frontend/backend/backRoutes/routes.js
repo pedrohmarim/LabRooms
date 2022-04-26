@@ -33,6 +33,7 @@ router.get("/getRoomsByCategory", RoomController.handleGetRoomsByCategory);
 router.get("/getRoomsByOwnerId", RoomController.handleGetRoomsByOwnerId);
 router.get("/getRoomById", RoomController.handleGetRoomsById);
 router.post("/updateRoom", checkAuth, RoomController.handleUpdateRoom);
+router.post("/lockProject", checkAuth, RoomController.handleLockProject);
 router.post("/deleteRoom", checkAuth, RoomController.handleDeleteRoom);
 
 module.exports = router;

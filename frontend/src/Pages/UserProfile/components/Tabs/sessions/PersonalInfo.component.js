@@ -32,7 +32,7 @@ const SocialRegister = ({
               <Tooltip
                 color={darkPallete.lightblue}
                 title='Editar Perfil'
-                defaultVisible
+                defaultVisible={window.innerWidth < 1024}
               >
                 <StyledButton
                   backgroundcolor='transparent'

@@ -3,6 +3,7 @@ import { RoomContainer } from "../../UserProfile.component.styled";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
 import { TitleStyled, CategoryInfo } from "../../UserProfile.component.styled";
 import { CategoryTitle } from "../../../CreateRoom/CreateRoom.styled";
+import { ButtonText } from "../../../Home/components/Rooms/styles";
 import {
   Select,
   Form,
@@ -37,6 +38,7 @@ export default function RoomForm({
   allSubCategories,
   TagRender,
   showSubCategorie,
+  visible,
 }) {
   const [form] = Form.useForm();
 
@@ -62,7 +64,17 @@ export default function RoomForm({
         <RoomContainer>
           <Row align='middle' justify='space-between'>
             <Col span={14}>
-              <TitleStyled level={3}>{title}</TitleStyled>
+              <TitleStyled level={3}>
+                {!visible && (
+                  <Tooltip
+                    color={darkPallete.lightblue}
+                    title='Este Projeto Está Privado.'
+                  >
+                    <FeatherIcons icon='lock' size={25} />
+                  </Tooltip>
+                )}
+                <ButtonText>{title}</ButtonText>
+              </TitleStyled>
             </Col>
 
             <Col span={10}>
@@ -99,7 +111,7 @@ export default function RoomForm({
 
                 <Tooltip title='Mais Opções' color={darkPallete.lightblue}>
                   <Dropdown
-                    overlay={MoreActionsRoom(_id, title)}
+                    overlay={MoreActionsRoom(_id, title, visible)}
                     placement='bottomRight'
                   >
                     <Button
@@ -232,7 +244,7 @@ export default function RoomForm({
                   style={{ width: "100%" }}
                   options={
                     allSubCategories ||
-                    categories?.find((x) => x._id === categoryId).SubCategories
+                    categories?.find((x) => x._id === categoryId)?.SubCategories
                   }
                   notFoundContent={
                     <Row

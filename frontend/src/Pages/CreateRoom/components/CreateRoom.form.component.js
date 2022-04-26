@@ -16,6 +16,8 @@ import {
   FeatherIcons,
   Upload,
   BraftEditor,
+  Checkbox,
+  Tooltip,
   Notification,
 } from "../../../antd_components";
 
@@ -74,7 +76,8 @@ const SigninForm = ({ darkPallete, user }) => {
   }
 
   function onSubmit(values) {
-    let { title, description, category, newCategory, subCategories } = values;
+    let { title, description, category, newCategory, subCategories, visible } =
+      values;
 
     const token = Cookie.get("token");
 
@@ -91,6 +94,7 @@ const SigninForm = ({ darkPallete, user }) => {
       subCategories,
       ownerName: user?.username,
       title,
+      visible: !visible,
       description: description.isEmpty() ? null : description.toHTML(),
       categoryId: newCategory ? null : category,
       newCategory: newCategory || null,
@@ -154,8 +158,18 @@ const SigninForm = ({ darkPallete, user }) => {
       <CategoriesSubcategoriesSelect
         categories={categories}
         labelMainCategory='Categoria'
+        defaultHideNewCategory
         form={form}
       />
+      <Tooltip
+        placement='leftBottom'
+        title='Salas Privadas Não Serão Listadas Publicamente, Usuários Terão Acesso a Esse Projeto por Meio de Link Compartilhado.'
+        color={darkPallete.lightblue}
+      >
+        <FormItem name='visible' valuePropName='checked'>
+          <Checkbox>Sala Privada</Checkbox>
+        </FormItem>
+      </Tooltip>
 
       <FormItem
         tooltip='Descreva Aqui Objetivos a Serem Alcançados, Requisitos de Habilidades Obrigatórias e Desejáveis para Realização do Projeto, Etapas a Serem seguidas,etc.'

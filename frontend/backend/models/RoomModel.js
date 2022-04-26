@@ -34,6 +34,11 @@ const RoomModel = new Schema(
       type: Object,
       required: false,
     },
+    visible: {
+      type: Object,
+      required: true,
+      default: true,
+    },
   },
   { timestamps: true }
 );

@@ -12,6 +12,7 @@ import { StyledInput } from "../../Pages/CreateRoom/CreateRoom.styled";
 
 const CategoriesSubcategoriesSelect = ({
   categoryIdFromUser,
+  defaultHideNewCategory,
   fromUserProfile,
   categories,
   labelMainCategory,
@@ -23,18 +24,17 @@ const CategoriesSubcategoriesSelect = ({
 }) => {
   const [subCategories, setSubCategories] = useState([]);
   const [hideNewCategoryInput, setHideNewCategoryInput] = useState(true);
-  const [hideSubCategoriesInput, setHideSubCategoriesInput] = useState(false);
+  const [hideSubCategoriesInput, setHideSubCategoriesInput] = useState(true);
 
   useEffect(() => {
-    if (!categoryIdFromUser) {
-      setHideSubCategoriesInput(true);
-      setHideNewCategoryInput(false);
-    } else {
-      setHideSubCategoriesInput(false);
-      setHideNewCategoryInput(true);
-    }
-
-    if (newCategoryFromUser) setHideNewCategoryInput(true);
+    if (!defaultHideNewCategory)
+      if (!categoryIdFromUser || !newCategoryFromUser) {
+        setHideSubCategoriesInput(true);
+        setHideNewCategoryInput(false);
+      } else {
+        setHideSubCategoriesInput(false);
+        setHideNewCategoryInput(true);
+      }
 
     if (categoryIdFromUser) {
       ChatRoomService.getCategoryById(categoryIdFromUser).then(({ data }) => {
@@ -135,7 +135,7 @@ const CategoriesSubcategoriesSelect = ({
         </Select>
       </FormItem>
 
-      {!hideSubCategoriesInput && hideNewCategoryInput && (
+      {(!hideSubCategoriesInput || categoryIdFromUser) && hideNewCategoryInput && (
         <FormItem
           label='Subcategorias'
           name='subCategories'
@@ -167,24 +167,26 @@ const CategoriesSubcategoriesSelect = ({
         </FormItem>
       )}
 
-      {!hideNewCategoryInput && hideSubCategoriesInput && (
-        <FormItem
-          label={viewMode ? "Categoria" : "Nova Categoria"}
-          name='newCategory'
-          rules={[{ required: true, message: "Campo obrigatório." }]}
-        >
-          <StyledInput
-            style={viewMode ? styleInput : null}
-            tabIndex={viewMode && "-1"}
-            className={viewMode && "disabled"}
-            disabled={fromUserProfile && !editMode && !viewMode}
-            readOnly={viewMode}
-            allowClear
-            prefix={<FeatherIcons icon='tag' size={15} />}
-            placeholder='Ex.: Secretária'
-          />
-        </FormItem>
-      )}
+      {(!hideNewCategoryInput || newCategoryFromUser) &&
+        hideSubCategoriesInput &&
+        !viewMode && (
+          <FormItem
+            label={viewMode ? "Categoria" : "Nova Categoria"}
+            name='newCategory'
+            rules={[{ required: true, message: "Campo obrigatório." }]}
+          >
+            <StyledInput
+              style={viewMode ? styleInput : null}
+              tabIndex={viewMode && "-1"}
+              className={viewMode && "disabled"}
+              disabled={fromUserProfile && !editMode && !viewMode}
+              readOnly={viewMode}
+              allowClear
+              prefix={<FeatherIcons icon='tag' size={15} />}
+              placeholder='Ex.: Secretária'
+            />
+          </FormItem>
+        )}
     </>
   );
 };

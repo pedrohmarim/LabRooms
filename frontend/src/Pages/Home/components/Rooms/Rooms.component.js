@@ -61,6 +61,8 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
             pallete={pallete}
           />
 
+          <Divider />
+
           <RoomList
             userId={user?._id}
             arrayToRender={users}
@@ -81,6 +83,8 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
             pallete={pallete}
           />
 
+          <Divider />
+
           <RoomList
             userId={user?._id}
             arrayToRender={rooms}
@@ -88,6 +92,8 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
             loadingArray={loadingRooms}
             pallete={pallete}
           />
+
+          <Divider />
 
           <RoomList
             userId={user?._id}
@@ -104,10 +110,12 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
           <RoomList
             userId={user?._id}
             arrayToRender={recomendedUsers}
-            arrayType={TIPO_HOMEARRAY.PROFISSIONAIS_RECOMENDADOS}
+            arrayType={TIPO_HOMEARRAY.USUARIOS_RECOMENDADOS}
             loadingArray={loadingRecomendedUsers}
             pallete={pallete}
           />
+
+          <Divider />
 
           <RoomList
             userId={user?._id}
@@ -116,6 +124,8 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
             loadingArray={loadingUsers}
             pallete={pallete}
           />
+
+          <Divider />
 
           <RoomList
             userId={user?._id}

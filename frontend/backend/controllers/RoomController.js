@@ -45,6 +45,7 @@ module.exports = {
       thumb,
       ownerName,
       subCategories,
+      visible,
     } = request.body;
 
     RoomModel.create({
@@ -56,6 +57,7 @@ module.exports = {
       owner: _id,
       thumb,
       ownerName,
+      visible,
     })
       .then(() => {
         return response.json({
@@ -71,7 +73,7 @@ module.exports = {
   },
 
   async handleGetRooms(request, response) {
-    const rooms = await RoomModel.find();
+    const rooms = await RoomModel.find({ visible: true });
 
     if (rooms.length > 0) {
       handleRoomWithIcon(rooms, response);
@@ -108,11 +110,11 @@ module.exports = {
 
       if (categoryid !== "null") {
         recomendedRooms = await RoomModel.find({
-          categoryId: categoryid,
+          $and: [{ categoryId: categoryid }, { visible: true }],
         });
       } else {
         recomendedRooms = await RoomModel.find({
-          categoryId: null,
+          $and: [{ categoryId: null }, { visible: true }],
         });
       }
 
@@ -165,13 +167,17 @@ module.exports = {
 
     switch (categoryid) {
       case "10":
-        rooms = await RoomModel.find(); // Filtra todas os projetos ao selecionar Categoria = "Todas"
+        rooms = await RoomModel.find({ visible: true }); // Filtra todas os projetos ao selecionar Categoria = "Todas"
         break;
       case "11":
-        rooms = await RoomModel.find({ categoryId: null }); // Filtra todas os projetos que possuem Categoria = "Outros"
+        rooms = await RoomModel.find({
+          $and: [{ categoryId: null }, { visible: true }],
+        }); // Filtra todas os projetos que possuem Categoria = "Outros"
         break;
       default: // Filtra projetos por Categoria
-        rooms = await RoomModel.find({ categoryId: categoryid });
+        rooms = await RoomModel.find({
+          $and: [{ categoryId: categoryid }, { visible: true }],
+        });
         break;
     }
 
@@ -191,15 +197,15 @@ module.exports = {
     }
   },
 
-  handleUpdateRoom(request, response) {
+  async handleUpdateRoom(request, response) {
     const { _id } = request.body.decoded;
 
     if (_id) {
       const {
-        roomTitle,
-        roomCategory,
+        title,
+        categoryId,
         subCategories,
-        roomDescription,
+        description,
         newCategory,
         _id,
       } = request.body;
@@ -207,12 +213,12 @@ module.exports = {
       RoomModel.findByIdAndUpdate(
         { _id },
         {
-          title: roomTitle,
-          description: roomDescription,
+          title,
+          description,
           categoryId:
-            roomCategory === 11 || roomCategory === 12 ? null : roomCategory, //11 = categoria "outras"
+            categoryId === 11 || categoryId === 12 ? null : categoryId, //11 = categoria "outras"
           newCategory:
-            roomCategory && roomCategory !== 11 && roomCategory !== 12
+            categoryId && categoryId !== 11 && categoryId !== 12
               ? null
               : newCategory,
           subCategories,
@@ -226,6 +232,34 @@ module.exports = {
           } else {
             response.json({
               message: "Informações atualizadas com sucesso.",
+              status: 200,
+            });
+          }
+        }
+      );
+    }
+  },
+
+  handleLockProject(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { visible, _id } = request.body;
+
+      RoomModel.findByIdAndUpdate(
+        { _id },
+        { visible },
+        { new: true },
+        function (err) {
+          if (err) {
+            return response.json({
+              message: "Erro ao Privar Sala.",
+            });
+          } else {
+            response.json({
+              message: `Sala ${
+                !visible ? "Privada" : "Desprivada"
+              } com Sucesso.`,
               status: 200,
             });
           }

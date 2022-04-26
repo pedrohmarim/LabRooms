@@ -94,10 +94,10 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
 
       if (_id) {
         const dto = {
-          roomTitle,
-          roomCategory,
+          title: roomTitle,
+          categoryId: roomCategory,
           subCategories: newCategory ? [] : subCategories,
-          roomDescription: roomDescription.isEmpty()
+          description: roomDescription.isEmpty()
             ? null
             : roomDescription.toHTML(),
           _id,
@@ -106,6 +106,8 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
 
         RoomService.UpdateRoom(dto, token).then(({ data }) => {
           const { message, status } = data;
+
+          getRoomsByOwnerId();
 
           Notification.open({
             type: status === 200 ? "success" : "error",
@@ -121,6 +123,24 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           });
         });
       }
+    }
+
+    function handleLockProject(_id, visible) {
+      const dto = {
+        _id,
+        visible: !visible,
+      };
+
+      RoomService.LockProject(dto, token).then(({ data }) => {
+        const { message, status } = data;
+
+        getRoomsByOwnerId();
+
+        Notification.open({
+          type: status === 200 ? "success" : "error",
+          message,
+        });
+      });
     }
 
     function handleDeleteRoom(_id) {
@@ -156,16 +176,26 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
       handleGetCategoryById(value);
     }
 
-    const MoreActionsRoom = (_id, title) => (
+    const MoreActionsRoom = (_id, title, visible) => (
       <Menu>
         <Menu.Item key='1' onClick={() => navigate(`/chatroom/${_id}`)}>
           <Row align='middle'>
             <FeatherIcons icon='share' size={15} />
-            <MenuLabelItem>Ver o Projeto</MenuLabelItem>
+            <MenuLabelItem>Visualizar</MenuLabelItem>
           </Row>
         </Menu.Item>
+
+        <Menu.Item key='2' onClick={() => handleLockProject(_id, visible)}>
+          <Row align='middle'>
+            <FeatherIcons icon={visible ? "lock" : "unlock"} size={15} />
+            <MenuLabelItem>
+              {visible ? "Privar" : "Tornar Visível"}
+            </MenuLabelItem>
+          </Row>
+        </Menu.Item>
+
         <Menu.Item
-          key='1'
+          key='3'
           onClick={() => {
             setViewMode({
               _id,
@@ -183,6 +213,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
             <MenuLabelItem>Editar</MenuLabelItem>
           </Row>
         </Menu.Item>
+
         <PopConfirm
           placement='topRight'
           title={
@@ -195,7 +226,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           okText='Sim'
           cancelText='Não'
         >
-          <Menu.Item key='2'>
+          <Menu.Item key='4'>
             <Row align='middle'>
               <FeatherIcons icon='trash-2' size={15} />
               <MenuLabelItem>Excluir</MenuLabelItem>
@@ -218,6 +249,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           categoryId,
           newCategory,
           subCategories,
+          visible,
         }) => (
           <RoomForm
             handleOtherCategories={handleOtherCategories}
@@ -233,6 +265,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
             description={description}
             categoryId={categoryId}
             newCategory={newCategory}
+            visible={visible}
             _id={_id}
             CategorieTitle={CategorieTitle}
             subCategories={subCategories}

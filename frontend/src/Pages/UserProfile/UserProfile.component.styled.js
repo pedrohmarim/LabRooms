@@ -116,6 +116,8 @@ export const TitleStyled = styled(Title)`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
 `;
 
 export const CategoryInfo = styled.i`
@@ -129,7 +131,11 @@ export const StyledCol = styled(Col)`
 `;
 
 export const UserInfoTitle = styled(Title)`
-  color: ${({ color }) => color || "#000"} !important;
+  color: #000;
+
+  @media screen and (max-width: 1024px) {
+    color: #fff !important;
+  }
 `;
 
 export const UserInfoSpan = styled(Typography)`

@@ -226,7 +226,9 @@ module.exports = {
         else users = await UserModel.find({ accountType: 1 });
         break;
       case "11":
-        users = await UserModel.find({ categoryId: null });
+        users = await UserModel.find({
+          $and: [{ categoryId: null }, { accountType: 1 }],
+        });
         break;
       default: // Filtra projetos por Categoria
         users = await UserModel.find({ categoryId: categoryid });
