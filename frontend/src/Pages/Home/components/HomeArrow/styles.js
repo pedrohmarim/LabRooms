@@ -6,8 +6,10 @@ export const ArrowContainer = styled(Row)`
   left: 50%;
   transform: translate(-50%, 0);
   animation-name: breath-animation;
+  color: #fff;
   animation-duration: 1.8s;
   animation-iteration-count: infinite;
+  cursor: pointer;
 
   @keyframes breath-animation {
     0%,

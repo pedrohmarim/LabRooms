@@ -20,12 +20,7 @@ import {
 import { LinkStyled } from "../../../../Signin/Signin.component.styled";
 import HandleFilter from "../../../../../GlobalComponents/HandleFilter/HandleFilter.component";
 
-const RoomList = ({
-  arrayToRender,
-  arrayType,
-  pallete,
-  userId,
-}) => {
+const RoomList = ({ arrayToRender, arrayType, pallete, userId }) => {
   const { setLoadingRooms, setRooms, categories, setUsers, setLoadingUsers } =
     useContext(UserContext);
 
@@ -112,7 +107,7 @@ const RoomList = ({
                     subCategories,
                     newCategory,
                     CategorieTitle,
-                    Icon
+                    Icon,
                   }) => (
                     <Col xs={12} sm={12} md={6} lg={4} xl={3} xxl={3} key={_id}>
                       <Link
@@ -125,11 +120,15 @@ const RoomList = ({
                             {title || username}
                           </RoomTitle>
 
-
-                     {   accountType&&  <CategorieProject color={darkPallete.white} align="middle">
-                            <FeatherIcons icon={Icon} size={18} />
-                            <ButtonText>{CategorieTitle}</ButtonText>
-                          </CategorieProject>}
+                          {accountType && (
+                            <CategorieProject
+                              color={darkPallete.white}
+                              align='middle'
+                            >
+                              <FeatherIcons icon={Icon} size={18} />
+                              <ButtonText>{CategorieTitle}</ButtonText>
+                            </CategorieProject>
+                          )}
 
                           <RoomOwner
                             color={darkPallete.white}
@@ -162,10 +161,15 @@ const RoomList = ({
                             />
                           )}
 
-{   !accountType&&  <CategorieProject color={darkPallete.white} align="middle">
-                            <FeatherIcons icon={Icon} size={18} />
-                            <ButtonText>{CategorieTitle}</ButtonText>
-                          </CategorieProject>}
+                          {!accountType && (
+                            <CategorieProject
+                              color={darkPallete.white}
+                              align='middle'
+                            >
+                              <FeatherIcons icon={Icon} size={18} />
+                              <ButtonText>{CategorieTitle}</ButtonText>
+                            </CategorieProject>
+                          )}
 
                           {ownerName && !newCategory ? (
                             <StyledRowTags align='middle'>

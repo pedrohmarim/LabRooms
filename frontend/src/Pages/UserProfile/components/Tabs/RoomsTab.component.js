@@ -53,13 +53,13 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     if (user) {
       const { _id } = user;
       UserProfileService.getRoomsByOwnerId(_id).then(({ data }) => {
-        const { loading, errorMessage, roomWithIcon } = data;
+        const { loading, errorMessage, arrayWithIcon } = data;
 
         if (errorMessage) {
           setHasntRooms({ loading, errorMessage });
         } else {
-          setTabRooms({ array: roomWithIcon, loading });
-          setAllRooms(roomWithIcon);
+          setTabRooms({ array: arrayWithIcon, loading });
+          setAllRooms(arrayWithIcon);
         }
       });
     }

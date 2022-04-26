@@ -5,29 +5,27 @@ const CategoriesModel = require("../models/CategoriesModel");
 function handleRoomWithIcon(array, response) {
   let arrayWithIcon = [];
 
-    array.forEach((room) => {
-      const { categoryId, newCategory } = room;
+  array.forEach((item) => {
+    const { categoryId, newCategory } = item;
 
-      if (categoryId) {
-        CategoriesModel.findOne({ _id: categoryId }).then(
-          ({ Icon, Title }) => {
-            arrayWithIcon.push({ ...room._doc, Icon, CategorieTitle: Title });
-
-            if (array.length === arrayWithIcon.length)
-              return response.json({ arrayWithIcon, loading: false });
-          }
-        );
-      } else if (newCategory) {
-        arrayWithIcon.push({
-          ...room._doc,
-          Icon: "repeat",
-          CategorieTitle: newCategory,
-        });
+    if (categoryId) {
+      CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
+        arrayWithIcon.push({ ...item._doc, Icon, CategorieTitle: Title });
 
         if (array.length === arrayWithIcon.length)
           return response.json({ arrayWithIcon, loading: false });
-      }
-    });
+      });
+    } else if (newCategory) {
+      arrayWithIcon.push({
+        ...item._doc,
+        Icon: "repeat",
+        CategorieTitle: newCategory,
+      });
+
+      if (array.length === arrayWithIcon.length)
+        return response.json({ arrayWithIcon, loading: false });
+    }
+  });
 }
 
 module.exports = {
@@ -74,7 +72,7 @@ module.exports = {
 
   async handleGetRooms(request, response) {
     const rooms = await RoomModel.find();
-    handleRoomWithIcon(rooms, response)
+    handleRoomWithIcon(rooms, response);
   },
 
   async handleGetRoomsByOwnerId(request, response) {
@@ -83,7 +81,7 @@ module.exports = {
     const rooms = await RoomModel.find({ owner: owner });
 
     if (rooms.length > 0) {
-      handleRoomWithIcon(rooms, response)
+      handleRoomWithIcon(rooms, response);
     } else {
       return response.json({
         errorMessage: "Nenhum Projeto Encontrado.",
@@ -98,11 +96,11 @@ module.exports = {
     if (_id) {
       const { categoryid } = request.headers;
 
-      var recomendedRooms = await RoomModel.find({
+      const recomendedRooms = await RoomModel.find({
         $or: [{ categoryId: categoryid }],
       });
 
-      handleRoomWithIcon(recomendedRooms, response)
+      handleRoomWithIcon(recomendedRooms, response);
     }
   },
 
@@ -124,9 +122,9 @@ module.exports = {
       var recomendedUsers = await UserModel.find({
         categoryId: { $in: categories },
         $and: [{ accountType: 1 }],
-      })
+      });
 
-      handleRoomWithIcon(recomendedUsers, response)
+      handleRoomWithIcon(recomendedUsers, response);
     }
   },
 
@@ -147,8 +145,8 @@ module.exports = {
         break;
     }
 
-    if (rooms.length > 0) handleRoomWithIcon(rooms, response)
-    else return response.json({ usersWithIcon: [], loading: false });
+    if (rooms.length > 0) handleRoomWithIcon(rooms, response);
+    else return response.json({ arrayWithIcon: [], loading: false });
   },
 
   async handleGetRoomsById(request, response) {

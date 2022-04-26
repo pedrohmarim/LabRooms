@@ -7,29 +7,32 @@ const jwt = require("jsonwebtoken");
 function handleUsersWithIcon(users, response) {
   let usersWithIcon = [];
 
-    users.forEach((user) => {
-      const { categoryId, newCategory } = user;
+  users.forEach((user) => {
+    const { categoryId, newCategory } = user;
 
-      if (categoryId) {
-        CategoriesModel.findOne({ _id: categoryId }).then(
-          ({ Icon, Title }) => {
-            usersWithIcon.push({ ...user._doc, Icon, CategorieTitle: Title });
-
-            if (users.length === usersWithIcon.length)
-              return response.json({ usersWithIcon, loading: false });
-          }
-        );
-      } else if (newCategory) {
+    if (categoryId) {
+      CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
         usersWithIcon.push({
           ...user._doc,
-          Icon: "repeat",
-          CategorieTitle: newCategory,
+          hashedPass: undefined,
+          Icon,
+          CategorieTitle: Title,
         });
 
         if (users.length === usersWithIcon.length)
           return response.json({ usersWithIcon, loading: false });
-      }
-    });
+      });
+    } else if (newCategory) {
+      usersWithIcon.push({
+        ...user._doc,
+        Icon: "repeat",
+        CategorieTitle: newCategory,
+      });
+
+      if (users.length === usersWithIcon.length)
+        return response.json({ usersWithIcon, loading: false });
+    }
+  });
 }
 
 module.exports = {
@@ -157,7 +160,7 @@ module.exports = {
       });
     else users = await UserModel.find({ accountType: 1 });
 
-    handleUsersWithIcon(users, response)
+    handleUsersWithIcon(users, response);
   },
 
   async handleGetCurrentUser(request, response) {
@@ -170,6 +173,7 @@ module.exports = {
     if (user) {
       return response.json({
         ...user._doc,
+        hashedPass: undefined,
         createdAt: user.createdAt.toLocaleString("pt-BR", {
           year: "numeric",
           month: "2-digit",
@@ -189,6 +193,7 @@ module.exports = {
     if (user) {
       return response.json({
         ...user._doc,
+        hashedPass: undefined,
         createdAt: user.createdAt.toLocaleString("pt-BR", {
           year: "numeric",
           month: "2-digit",
@@ -214,14 +219,14 @@ module.exports = {
         else users = await UserModel.find({ accountType: 1 });
         break;
       case "11":
-        users = await UserModel.find({ categoryId: null }); 
+        users = await UserModel.find({ categoryId: null });
         break;
       default: // Filtra projetos por Categoria
         users = await UserModel.find({ categoryId: categoryid });
         break;
     }
 
-    if (users.length > 0) handleUsersWithIcon(users, response)
+    if (users.length > 0) handleUsersWithIcon(users, response);
     else return response.json({ usersWithIcon: [], loading: false });
   },
 

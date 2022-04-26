@@ -10,7 +10,7 @@ const HomeArrow = () => (
         .scrollIntoView({ behavior: "smooth", block: "center" });
     }}
   >
-    <FeatherIcons icon='downoutlined' />
+    <FeatherIcons icon='chevron-down' size={40} />
   </ArrowContainer>
 );
 
