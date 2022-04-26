@@ -19,8 +19,15 @@ import {
 } from "../styles";
 import { LinkStyled } from "../../../../Signin/Signin.component.styled";
 import HandleFilter from "../../../../../GlobalComponents/HandleFilter/HandleFilter.component";
+import { Loading } from "../../../../../GlobalComponents/Loading/Loading.component";
 
-const RoomList = ({ arrayToRender, arrayType, pallete, userId }) => {
+const RoomList = ({
+  arrayToRender,
+  arrayType,
+  pallete,
+  userId,
+  loadingArray,
+}) => {
   const { setLoadingRooms, setRooms, categories, setUsers, setLoadingUsers } =
     useContext(UserContext);
 
@@ -59,9 +66,13 @@ const RoomList = ({ arrayToRender, arrayType, pallete, userId }) => {
           margintop={window.innerWidth < 1024 ? "15px" : "20px"}
         >
           <FeatherIcons icon='check-circle' size={28} />
-          <ButtonText>
-            {arrayType} ({arrayToRender?.length})
-          </ButtonText>
+          {loadingArray ? (
+            <Row justify='center'>{Loading(pallete.white, "0 0 0 10px")}</Row>
+          ) : (
+            <ButtonText>
+              {arrayType} ({arrayToRender?.length})
+            </ButtonText>
+          )}
         </TitleStyled>
 
         {(arrayType === TIPO_HOMEARRAY.PROJETOS_RECENTES ||
@@ -76,128 +87,144 @@ const RoomList = ({ arrayToRender, arrayType, pallete, userId }) => {
         )}
       </Row>
 
-      <Row gutter={[4, 4]}>
-        {arrayToRender && arrayToRender.length === 0 ? (
-          <TitleStyled
-            level={4}
-            color={pallete.white}
-            margintop={window.innerWidth < 1024 ? "15px" : "20px"}
-          >
-            {arrayType} não Foram Encontrados.
-            <LinkStyled to={`/profile/${userId}`} marginleft='10px'>
-              {arrayType === TIPO_HOMEARRAY.PROJETOS_RECOMENDADOS
-                ? "Atualizar Habilidades"
-                : "Atualizar Informações"}
-            </LinkStyled>
-          </TitleStyled>
-        ) : (
-          arrayToRender &&
-          arrayToRender.length > 0 && (
-            <>
-              {arrayToRender &&
-                arrayToRender.map(
-                  ({
-                    title,
-                    thumb,
-                    _id,
-                    ownerName,
-                    username,
-                    biography,
-                    accountType,
-                    subCategories,
-                    newCategory,
-                    CategorieTitle,
-                    Icon,
-                  }) => (
-                    <Col xs={12} sm={12} md={6} lg={4} xl={3} xxl={3} key={_id}>
-                      <Link
-                        to={
-                          accountType ? `profile/${_id}` : `view/project/${_id}`
-                        }
+      {loadingArray ? (
+        <Row justify='center'>{Loading(pallete.white, "50px 0 0 10px")}</Row>
+      ) : (
+        <Row gutter={[4, 4]}>
+          {arrayToRender && arrayToRender.length === 0 ? (
+            <TitleStyled
+              level={4}
+              color={pallete.white}
+              margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+            >
+              {arrayType} não Foram Encontrados.
+              <LinkStyled to={`/profile/${userId}`} marginleft='10px'>
+                {arrayType === TIPO_HOMEARRAY.PROJETOS_RECOMENDADOS
+                  ? "Atualizar Habilidades"
+                  : "Atualizar Informações"}
+              </LinkStyled>
+            </TitleStyled>
+          ) : (
+            arrayToRender &&
+            arrayToRender.length > 0 && (
+              <>
+                {arrayToRender &&
+                  arrayToRender.map(
+                    ({
+                      title,
+                      thumb,
+                      _id,
+                      ownerName,
+                      username,
+                      biography,
+                      accountType,
+                      subCategories,
+                      newCategory,
+                      CategorieTitle,
+                      Icon,
+                    }) => (
+                      <Col
+                        xs={12}
+                        sm={12}
+                        md={6}
+                        lg={4}
+                        xl={3}
+                        xxl={3}
+                        key={_id}
                       >
-                        <RoomItem background={darkPallete.lightblueOpacity}>
-                          <RoomTitle color={darkPallete.white}>
-                            {title || username}
-                          </RoomTitle>
+                        <Link
+                          to={
+                            accountType
+                              ? `profile/${_id}`
+                              : `view/project/${_id}`
+                          }
+                        >
+                          <RoomItem background={darkPallete.lightblueOpacity}>
+                            <RoomTitle color={darkPallete.white}>
+                              {title || username}
+                            </RoomTitle>
 
-                          {accountType && (
-                            <CategorieProject
+                            {accountType && (
+                              <CategorieProject
+                                color={darkPallete.white}
+                                align='middle'
+                              >
+                                <FeatherIcons icon={Icon} size={18} />
+                                <ButtonText>{CategorieTitle}</ButtonText>
+                              </CategorieProject>
+                            )}
+
+                            <RoomOwner
                               color={darkPallete.white}
-                              align='middle'
-                            >
-                              <FeatherIcons icon={Icon} size={18} />
-                              <ButtonText>{CategorieTitle}</ButtonText>
-                            </CategorieProject>
-                          )}
-
-                          <RoomOwner
-                            color={darkPallete.white}
-                            margin={!ownerName ? "0 0 15px 0" : "0 0 15px 30px"}
-                          >
-                            {ownerName ||
-                              biography ||
-                              "Biografia não informada"}
-                          </RoomOwner>
-
-                          {ownerName && (
-                            <RoomOwnerImg
-                              alt='Image'
-                              gap={2}
-                              src={
-                                thumb ||
-                                "https://media.istockphoto.com/photos/red-squirrel-looking-around-a-tree-picture-id466395505?k=20&m=466395505&s=612x612&w=0&h=ELSnLKu_E2-pc0q_bfGRadTZwYE1f7jq4TWTyHu1gkI="
+                              margin={
+                                !ownerName ? "0 0 15px 0" : "0 0 15px 30px"
                               }
-                              preview={false}
-                            />
-                          )}
-
-                          {!ownerName && (
-                            <RoomImage
-                              src={
-                                thumb ||
-                                "https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/996/notfound.png"
-                              }
-                              preview={false}
-                            />
-                          )}
-
-                          {!accountType && (
-                            <CategorieProject
-                              color={darkPallete.white}
-                              align='middle'
                             >
-                              <FeatherIcons icon={Icon} size={18} />
-                              <ButtonText>{CategorieTitle}</ButtonText>
-                            </CategorieProject>
-                          )}
+                              {ownerName ||
+                                biography ||
+                                "Biografia não informada"}
+                            </RoomOwner>
 
-                          {ownerName && !newCategory ? (
-                            <StyledRowTags align='middle'>
-                              {subCategories &&
-                                subCategories.map((data) => (
-                                  <TagRender label={data} margin='10px 5px' />
-                                ))}
-                            </StyledRowTags>
-                          ) : (
-                            ownerName &&
-                            newCategory && (
+                            {ownerName && (
+                              <RoomOwnerImg
+                                alt='Image'
+                                gap={2}
+                                src={
+                                  thumb ||
+                                  "https://media.istockphoto.com/photos/red-squirrel-looking-around-a-tree-picture-id466395505?k=20&m=466395505&s=612x612&w=0&h=ELSnLKu_E2-pc0q_bfGRadTZwYE1f7jq4TWTyHu1gkI="
+                                }
+                                preview={false}
+                              />
+                            )}
+
+                            {!ownerName && (
+                              <RoomImage
+                                src={
+                                  thumb ||
+                                  "https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/996/notfound.png"
+                                }
+                                preview={false}
+                              />
+                            )}
+
+                            {!accountType && (
+                              <CategorieProject
+                                color={darkPallete.white}
+                                align='middle'
+                              >
+                                <FeatherIcons icon={Icon} size={18} />
+                                <ButtonText>{CategorieTitle}</ButtonText>
+                              </CategorieProject>
+                            )}
+
+                            {ownerName && !newCategory ? (
                               <StyledRowTags align='middle'>
-                                <TagRender
-                                  label={newCategory}
-                                  margin='10px 5px'
-                                />
+                                {subCategories &&
+                                  subCategories.map((data) => (
+                                    <TagRender label={data} margin='10px 5px' />
+                                  ))}
                               </StyledRowTags>
-                            )
-                          )}
-                        </RoomItem>
-                      </Link>
-                    </Col>
-                  )
-                )}
-            </>
-          )
-        )}
-      </Row>
+                            ) : (
+                              ownerName &&
+                              newCategory && (
+                                <StyledRowTags align='middle'>
+                                  <TagRender
+                                    label={newCategory}
+                                    margin='10px 5px'
+                                  />
+                                </StyledRowTags>
+                              )
+                            )}
+                          </RoomItem>
+                        </Link>
+                      </Col>
+                    )
+                  )}
+              </>
+            )
+          )}
+        </Row>
+      )}
     </>
   );
 };

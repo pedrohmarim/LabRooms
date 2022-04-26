@@ -160,7 +160,14 @@ module.exports = {
       });
     else users = await UserModel.find({ accountType: 1 });
 
-    handleUsersWithIcon(users, response);
+    if (users.length > 0) {
+      handleUsersWithIcon(users, response);
+    } else {
+      return response.json({
+        usersWithIcon: users,
+        loading: false,
+      });
+    }
   },
 
   async handleGetCurrentUser(request, response) {

@@ -72,7 +72,15 @@ module.exports = {
 
   async handleGetRooms(request, response) {
     const rooms = await RoomModel.find();
-    handleRoomWithIcon(rooms, response);
+
+    if (rooms.length > 0) {
+      handleRoomWithIcon(rooms, response);
+    } else {
+      return response.json({
+        arrayWithIcon: rooms,
+        loading: false,
+      });
+    }
   },
 
   async handleGetRoomsByOwnerId(request, response) {
@@ -96,11 +104,26 @@ module.exports = {
     if (_id) {
       const { categoryid } = request.headers;
 
-      const recomendedRooms = await RoomModel.find({
-        $or: [{ categoryId: categoryid }],
-      });
+      var recomendedRooms = null;
 
-      handleRoomWithIcon(recomendedRooms, response);
+      if (categoryid !== "null") {
+        recomendedRooms = await RoomModel.find({
+          categoryId: categoryid,
+        });
+      } else {
+        recomendedRooms = await RoomModel.find({
+          categoryId: null,
+        });
+      }
+
+      if (recomendedRooms.length > 0) {
+        handleRoomWithIcon(recomendedRooms, response);
+      } else {
+        return response.json({
+          arrayWithIcon: recomendedRooms,
+          loading: false,
+        });
+      }
     }
   },
 
@@ -124,7 +147,14 @@ module.exports = {
         $and: [{ accountType: 1 }],
       });
 
-      handleRoomWithIcon(recomendedUsers, response);
+      if (recomendedUsers.length > 0) {
+        handleRoomWithIcon(recomendedUsers, response);
+      } else {
+        return response.json({
+          arrayWithIcon: recomendedUsers,
+          loading: false,
+        });
+      }
     }
   },
 
