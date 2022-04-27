@@ -1,6 +1,6 @@
 const { model, Schema } = require("mongoose");
 
-const RoomModel = new Schema(
+const CandidaciesModel = new Schema(
   {
     owner: {
       type: String,
@@ -43,4 +43,4 @@ const RoomModel = new Schema(
   { timestamps: true }
 );
 
-module.exports = model("rooms", RoomModel);
+module.exports = model("rooms", CandidaciesModel);

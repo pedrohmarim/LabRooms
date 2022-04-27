@@ -15,4 +15,4 @@ const CategoryModel = new Schema({
   },
 });
 
-module.exports = model("Categories", CategoryModel); // oq está em string é o nome da Tabela que vai ser criada armazenando o DTO de segundo parametro
+module.exports = model("Categories", CategoryModel);

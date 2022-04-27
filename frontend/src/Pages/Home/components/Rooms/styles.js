@@ -25,14 +25,14 @@ export const RoomImage = styled(Image)`
 `;
 
 export const StyledRowTags = styled(Row)`
-  margin-top: 3px;
+  margin: ${({ margin }) => margin || "3px 0 0 0"};
   width: 100%;
   overflow-x: auto;
   display: inline-block;
   white-space: nowrap;
 
   ::-webkit-scrollbar {
-    height: 6px;
+    height: ${({ scrollHeight }) => scrollHeight || "6px"};
   }
 
   ::-webkit-scrollbar-thumb {

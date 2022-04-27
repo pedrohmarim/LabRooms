@@ -131,7 +131,7 @@ export const StyledCol = styled(Col)`
 `;
 
 export const UserInfoTitle = styled(Title)`
-  color: #000;
+  color: ${({ isViewProject }) => (isViewProject ? "#fff" : "#000")} !important;
 
   @media screen and (max-width: 1024px) {
     color: #fff !important;
@@ -140,7 +140,6 @@ export const UserInfoTitle = styled(Title)`
 
 export const UserInfoSpan = styled(Typography)`
   color: #a0acbc;
-  text-align: right;
   font-size: 10pt;
   margin-top: 10px;
 

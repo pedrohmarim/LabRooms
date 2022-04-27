@@ -5,6 +5,7 @@ const checkAuth = require("../middleware/auth");
 const UserController = require("../controllers/UserController");
 const RoomController = require("../controllers/RoomController");
 const CategoryController = require("../controllers/CategoryController");
+const CandidaciesController = require("../controllers/CandidaciesController");
 
 router.post("/userRegister", UserController.handleRegister);
 router.get("/userLogin", UserController.handleLogin);
@@ -35,5 +36,7 @@ router.get("/getRoomById", RoomController.handleGetRoomsById);
 router.post("/updateRoom", checkAuth, RoomController.handleUpdateRoom);
 router.post("/lockProject", checkAuth, RoomController.handleLockProject);
 router.post("/deleteRoom", checkAuth, RoomController.handleDeleteRoom);
+
+router.get("/apply", checkAuth, CandidaciesController.handleApply);
 
 module.exports = router;

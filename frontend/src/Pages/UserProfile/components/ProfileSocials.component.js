@@ -40,20 +40,16 @@ export default function ProfileSocials({
           <Image src={UserImage} height={120} />
 
           <StyledCol span={24}>
-            <UserInfoTitle
-              level={4}
-              color={
-                (window.innerWidth < 1024 || isViewProject) && darkPallete.white
-              }
-              isViewProject={isViewProject}
-            >
+            <UserInfoTitle level={4} isViewProject={isViewProject}>
               {user?.username}
             </UserInfoTitle>
+
             {user?.biography && (
               <UserInfoBio color={darkPallete.white}>
                 {user.biography}
               </UserInfoBio>
             )}
+
             <UserInfoSpan color={darkPallete.white}>
               Membro desde {user?.createdAt}
             </UserInfoSpan>

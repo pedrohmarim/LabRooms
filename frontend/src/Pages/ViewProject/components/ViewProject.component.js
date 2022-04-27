@@ -1,6 +1,7 @@
 import React from "react";
 import { FeatherIcons, Row } from "../../../antd_components";
 import TagRender from "../../../GlobalComponents/TagRender/TagRender.component";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   Layout,
   RoomCategory,
@@ -12,8 +13,12 @@ import {
   ProjectDescription,
 } from "../ViewProject.component.styled";
 import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
+import { StyledRowTags } from "../../Home/components/Rooms/styles";
+import { StyledButton } from "../../UserProfile/UserProfile.component.styled";
 
 export default function ViewProject({
+  loadingApply,
+  handleApply,
   currentRoom,
   darkPallete,
   roomCategoryData,
@@ -26,32 +31,47 @@ export default function ViewProject({
         {currentRoom && roomCategoryData ? (
           <>
             <HeaderStyled>
-              <Row align='middle'>
-                <ProjectTitle color={darkPallete.white}>
-                  {currentRoom?.title}
-                </ProjectTitle>
+              <Row align='middle' justify='space-between'>
+                <Row>
+                  <ProjectTitle color={darkPallete.white}>
+                    {currentRoom?.title}
+                  </ProjectTitle>
 
-                <ProjectTitle margin='0 8px' color={darkPallete.white}>
-                  •
-                </ProjectTitle>
+                  <ProjectTitle margin='0 8px' color={darkPallete.white}>
+                    •
+                  </ProjectTitle>
 
-                <RoomCategory color={darkPallete.white}>
-                  <FeatherIcons icon={roomCategoryData?.Icon} size={15} />
-                  <CategoryText>{roomCategoryData?.Title}</CategoryText>
-                </RoomCategory>
+                  <RoomCategory color={darkPallete.white}>
+                    <FeatherIcons icon={roomCategoryData?.Icon} size={15} />
+                    <CategoryText>{roomCategoryData?.Title}</CategoryText>
+                  </RoomCategory>
+                </Row>
 
-                {currentRoom?.ownerName && !currentRoom?.newCategory && (
-                  <>
-                    <ProjectTitle margin='0 8px' color={darkPallete.white}>
-                      •
-                    </ProjectTitle>
-                    {currentRoom?.subCategories &&
-                      currentRoom?.subCategories.map((data) => (
-                        <TagRender label={data} margin='10px 5px' />
-                      ))}
-                  </>
-                )}
+                <StyledButton
+                  icon={loadingApply && <LoadingOutlined />}
+                  onClick={handleApply}
+                  htmlType='submit'
+                  backgroundcolor={darkPallete.green}
+                  height='35'
+                  width='200'
+                  color={darkPallete.white}
+                >
+                  Me Candidatar
+                </StyledButton>
               </Row>
+
+              {currentRoom?.ownerName && !currentRoom?.newCategory && (
+                <StyledRowTags
+                  align='middle'
+                  margin='-15px 0 -8px 0'
+                  scrollHeight='3px'
+                >
+                  {currentRoom?.subCategories &&
+                    currentRoom?.subCategories.map((data) => (
+                      <TagRender label={data} margin='10px 5px' />
+                    ))}
+                </StyledRowTags>
+              )}
             </HeaderStyled>
 
             <ProjectDescription

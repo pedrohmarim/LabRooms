@@ -8,6 +8,14 @@ export async function getRoomById(_id) {
   });
 }
 
+export async function handleApply(dto, token) {
+  return api.post("/apply", dto, {
+    headers: {
+      Authorization: token,
+    },
+  });
+}
+
 export async function getCategoryById(_id) {
   return api.get("/getCategoryById", {
     headers: {
