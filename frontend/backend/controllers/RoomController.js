@@ -1,5 +1,5 @@
 const RoomModel = require("../models/RoomModel");
-const UserModel = require("../models/UserModelaaaaaa");
+const UserModel = require("../models/UserModel");
 const CategoriesModel = require("../models/CategoriesModel");
 
 function handleRoomWithIcon(array, response) {

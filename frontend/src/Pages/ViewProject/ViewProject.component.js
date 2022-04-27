@@ -37,6 +37,7 @@ export default function ViewProject() {
 
       const dto = {
         roomId: _id,
+        owner: currentRoom?.owner,
         userIdToApply: user?._id,
       };
 
@@ -51,7 +52,6 @@ export default function ViewProject() {
           },
           duration: 2,
         });
-
         setLoadingApply(loading);
       });
     } else {

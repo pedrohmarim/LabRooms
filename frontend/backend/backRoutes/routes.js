@@ -37,6 +37,6 @@ router.post("/updateRoom", checkAuth, RoomController.handleUpdateRoom);
 router.post("/lockProject", checkAuth, RoomController.handleLockProject);
 router.post("/deleteRoom", checkAuth, RoomController.handleDeleteRoom);
 
-router.get("/apply", checkAuth, CandidaciesController.handleApply);
+router.post("/apply", checkAuth, CandidaciesController.handleApply);
 
 module.exports = router;
