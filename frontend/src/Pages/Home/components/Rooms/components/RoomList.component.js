@@ -77,13 +77,13 @@ const RoomList = ({
 
         {(arrayType === TIPO_HOMEARRAY.PROJETOS_RECENTES ||
           arrayType === TIPO_HOMEARRAY.USUARIOS_DISPONIVEIS) && (
-          <HandleFilter
-            handleFilterRoom={handleFilterRoom}
-            categories={categories}
-            pallete={pallete}
-            arrayType={arrayType}
-            userId={userId}
-          />
+          <Col span={window.innerWidth > 1024 ? 3 : 24}>
+            <HandleFilter
+              handleFilterRoom={handleFilterRoom}
+              categories={categories}
+              pallete={pallete}
+            />
+          </Col>
         )}
       </Row>
 

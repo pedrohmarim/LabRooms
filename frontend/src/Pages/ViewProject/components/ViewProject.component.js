@@ -15,8 +15,10 @@ import {
 import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
 import { StyledRowTags } from "../../Home/components/Rooms/styles";
 import { StyledButton } from "../../UserProfile/UserProfile.component.styled";
+import { TIPO_CADASTRO } from "../../../Helpers/TipoCadastro";
 
 export default function ViewProject({
+  loggedAccountType,
   loadingApply,
   handleApply,
   currentRoom,
@@ -47,17 +49,19 @@ export default function ViewProject({
                   </RoomCategory>
                 </Row>
 
-                <StyledButton
-                  icon={loadingApply && <LoadingOutlined />}
-                  onClick={handleApply}
-                  htmlType='submit'
-                  backgroundcolor={darkPallete.green}
-                  height='35'
-                  width='200'
-                  color={darkPallete.white}
-                >
-                  Me Candidatar
-                </StyledButton>
+                {loggedAccountType === TIPO_CADASTRO.FREELANCER && (
+                  <StyledButton
+                    icon={loadingApply && <LoadingOutlined />}
+                    onClick={handleApply}
+                    htmlType='submit'
+                    backgroundcolor={darkPallete.green}
+                    height='35'
+                    width='200'
+                    color={darkPallete.white}
+                  >
+                    Me Candidatar
+                  </StyledButton>
+                )}
               </Row>
 
               {currentRoom?.ownerName && !currentRoom?.newCategory && (

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Card } from "../../UserProfile.component.styled";
 import { UserContext } from "../../../../Context/UserContext";
 import { FormStyled } from "../../UserProfile.component.styled";
@@ -16,6 +16,25 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const [invalidInfo, setInvalidInfo] = useState(false);
   const { setUser, categories } = useContext(UserContext);
   const [form] = FormStyled.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue({
+      username: user?.username,
+      email: user?.email,
+      cpf: user?.cpf,
+      category: user?.categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
+      newCategory: user?.newCategory,
+      subCategories: user?.subCategories || undefined,
+      phone: user?.phone,
+      celphone: user?.celphone,
+      biography: user?.biography,
+      facebook: user?.socials?.facebook,
+      instagram: user?.socials?.instagram,
+      twitter: user?.socials?.twitter,
+      linkedin: user?.socials?.linkedin,
+      github: user?.socials?.github,
+    });
+  }, [form, user]);
 
   const styleInput = {
     color: "gray",
@@ -87,22 +106,22 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
           background={darkPallete.white}
           onFinish={handleSubmit}
           layout='vertical'
-          initialValues={{
-            username: user.username,
-            email: user.email,
-            cpf: user?.cpf,
-            category: user?.categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
-            newCategory: user?.newCategory,
-            subCategories: user?.subCategories || undefined,
-            phone: user?.phone,
-            celphone: user?.celphone,
-            biography: user.biography,
-            facebook: user?.socials?.facebook,
-            instagram: user?.socials?.instagram,
-            twitter: user?.socials?.twitter,
-            linkedin: user?.socials?.linkedin,
-            github: user?.socials?.github,
-          }}
+          // initialValues={{
+          //   username: user.username,
+          //   email: user.email,
+          //   cpf: user?.cpf,
+          //   category: user?.categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
+          //   newCategory: user?.newCategory,
+          //   subCategories: user?.subCategories || undefined,
+          //   phone: user?.phone,
+          //   celphone: user?.celphone,
+          //   biography: user.biography,
+          //   facebook: user?.socials?.facebook,
+          //   instagram: user?.socials?.instagram,
+          //   twitter: user?.socials?.twitter,
+          //   linkedin: user?.socials?.linkedin,
+          //   github: user?.socials?.github,
+          // }}
         >
           <PersonalInfo
             invalidInfo={invalidInfo}

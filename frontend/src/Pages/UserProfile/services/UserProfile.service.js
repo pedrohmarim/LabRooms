@@ -1,8 +1,9 @@
 import api from "../../../services/api";
 
-export async function getRoomsByOwnerId(owner) {
+export async function getRoomsByOwnerId(owner, token) {
   return api.get("/getRoomsByOwnerId", {
     headers: {
+      Authorization: token,
       owner,
     },
   });

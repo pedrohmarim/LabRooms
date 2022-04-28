@@ -26,9 +26,13 @@ import Upload from "./Upload/Upload.component";
 import Dropdown from "./Dropdown/Dropdown.component";
 import Tag from "./Tag/Tag.component";
 import PopConfirm from "./PopConfirm/PopConfirm.component";
+import Modal from "./Modal/Modal.component";
+import Table from "./Table/Table.component";
 
 export {
   Avatar,
+  Table,
+  Modal,
   Tag,
   Button,
   Spin,

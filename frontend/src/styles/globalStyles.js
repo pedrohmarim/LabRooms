@@ -71,4 +71,8 @@ export const GlobalStyles = createGlobalStyle`
   .disabled {
     pointer-events: none; 
   }
+  
+  .alert-icon {
+    color: red;
+  }
 `;

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
 import Aside from "../../GlobalComponents/Aside/Aside.component";
@@ -28,14 +28,37 @@ export default function UserProfile() {
   const token = Cookie.get("token");
   const { _id } = params;
 
+  const [searchParams] = useSearchParams();
+  const [candidaciesActive, setCandidaciesActive] = useState(false);
+
+  const [activeKey, setActiveKey] = useState("1");
+
   useEffect(() => {
+    if (searchParams.get("projects")) setActiveKey("2");
+
+    if (searchParams.get("fromCandidacies")) setActiveKey("1");
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (candidaciesActive?.active) setActiveKey("3");
+  }, [candidaciesActive]);
+
+  useEffect(() => {
+    function getUserById() {
+      ChatRoomService.getUserById(_id).then(({ data }) => {
+        setViewUser(data);
+      });
+
+      setIsViewMode(true);
+    }
+
+    // const fromCandidacies = searchParams.get("fromCandidacies");
+
     if (user && _id === user?._id) {
       setViewUser(user);
       setIsViewMode(false);
     } else if ((user && _id !== user?._id) || !user) {
-      ChatRoomService.getUserById(_id).then(({ data }) => {
-        setViewUser(data);
-      });
+      getUserById();
     }
   }, [_id, user]);
 
@@ -49,6 +72,7 @@ export default function UserProfile() {
       >
         <source src={Background} type='video/mp4' />
       </video>
+
       <div
         style={
           window.innerWidth > 1024
@@ -63,6 +87,7 @@ export default function UserProfile() {
         {window.innerWidth > 1024 && (
           <Aside darkPallete={darkPallete} SelectedItem={user && "2"} />
         )}
+
         <ProfileContainer>
           <Row>
             {window.innerWidth > 1024 ? (
@@ -72,8 +97,15 @@ export default function UserProfile() {
                     <ProfileSocials darkPallete={darkPallete} user={viewUser} />
                   </Card>
                 </LeftFormContainer>
+
                 <RightFormContainer span={window.innerWidth > 1024 ? 18 : 24}>
                   <TabsContainer
+                    candidaciesActive={candidaciesActive}
+                    setActiveKey={(value) => setActiveKey(value)}
+                    setCandidaciesActive={(value) =>
+                      setCandidaciesActive(value)
+                    }
+                    activeKey={activeKey}
                     darkPallete={darkPallete}
                     user={viewUser}
                     navigate={navigate}
@@ -85,13 +117,21 @@ export default function UserProfile() {
             ) : (
               <>
                 <Header />
+
                 <LeftFormContainer
                   span={window.innerWidth > 1024 ? 6 : 24}
                   tabcolor={darkPallete.white}
                 >
                   <Card bordered={false}>
                     <ProfileSocials darkPallete={darkPallete} user={viewUser} />
+
                     <TabsContainer
+                      candidaciesActive={candidaciesActive}
+                      setActiveKey={(value) => setActiveKey(value)}
+                      setCandidaciesActive={(value) =>
+                        setCandidaciesActive(value)
+                      }
+                      activeKey={activeKey}
                       darkPallete={darkPallete}
                       user={viewUser}
                       navigate={navigate}

@@ -11,8 +11,8 @@ const HandleFilter = ({ pallete, handleFilterRoom, categories }) => {
     >
       <Select
         id='rooms'
+        width='100%'
         onChange={handleFilterRoom}
-        width={window.innerWidth > 1024 ? "12%" : "100%"}
         margintop='10px'
         getPopupContainer={(trigger) => trigger.parentNode}
         placeholder='Filtrar por Categoria'

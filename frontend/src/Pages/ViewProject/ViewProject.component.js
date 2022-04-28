@@ -1,11 +1,18 @@
 import React, { useState, useEffect, useContext } from "react";
 import { darkPallete } from "../../styles/pallete";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Aside from "../../GlobalComponents/Aside/Aside.component";
 import ViewProjectComponent from "./components/ViewProject.component";
 import { ChatContainer as ViewProjectContainer } from "../ChatRoom/ChatRoom.styled";
+import { ModalButton } from "./ViewProject.component.styled";
 import Background from "../../assets/backStars.mp4";
-import { Row, Col, Notification } from "../../antd_components";
+import {
+  Row,
+  Col,
+  Notification,
+  Modal,
+  FeatherIcons,
+} from "../../antd_components";
 import ProfileSocials from "../UserProfile/components/ProfileSocials.component";
 import * as ChatRoomService from "../ChatRoom/services/ChatRoom.service";
 import { UserContext } from "../../Context/UserContext";
@@ -15,9 +22,12 @@ export default function ViewProject() {
   document.getElementsByTagName("title")[0].innerText =
     "LabRooms | Visualizar Projeto";
 
+  const navigate = useNavigate();
+
   const { user } = useContext(UserContext);
 
   const [currentRoom, setCurrentRoom] = useState();
+  const [visible, setVisible] = useState(false);
   const [roomOwner, setRoomOwner] = useState();
   const [RoomCategoryData, setRoomCategoryData] = useState();
   const [loadingApply, setLoadingApply] = useState(false);
@@ -39,6 +49,7 @@ export default function ViewProject() {
         roomId: _id,
         owner: currentRoom?.owner,
         userIdToApply: user?._id,
+        loggedAccountType: user?.accountType,
       };
 
       ChatRoomService.handleApply(dto, token).then(({ data }) => {
@@ -55,14 +66,7 @@ export default function ViewProject() {
         setLoadingApply(loading);
       });
     } else {
-      Notification.open({
-        type: "error",
-        message: "Necessário Estar Logado para Realizar essa Ação!",
-        style: {
-          zIndex: 999,
-        },
-        duration: 2,
-      });
+      setVisible(true);
     }
   }
 
@@ -86,6 +90,31 @@ export default function ViewProject() {
 
   return (
     <ViewProjectContainer>
+      <Modal
+        okText={
+          <Row align='middle'>
+            <FeatherIcons icon='log-in' size={18} />
+            <ModalButton>Entrar</ModalButton>
+          </Row>
+        }
+        onOk={() => navigate("/signin")}
+        cancelButtonProps={{ hidden: true }}
+        bodyStyle={{ display: "none" }}
+        title={
+          <Row align='middle'>
+            <FeatherIcons
+              icon='alert-circle'
+              size={18}
+              className='alert-icon'
+            />
+            <ModalButton>
+              Necessário Estar Logado para Realizar essa Ação!
+            </ModalButton>
+          </Row>
+        }
+        visible={visible}
+        onCancel={() => setVisible(false)}
+      />
       <video
         loop
         autoPlay
@@ -100,6 +129,7 @@ export default function ViewProject() {
       <Row>
         <Col span={16}>
           <ViewProjectComponent
+            loggedAccountType={user?.accountType}
             loadingApply={loadingApply}
             handleApply={handleApply}
             currentRoom={currentRoom}

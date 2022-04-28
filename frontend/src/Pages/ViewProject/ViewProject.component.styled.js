@@ -23,3 +23,7 @@ export const ProjectDescription = styled.div`
   width: 100%;
   border-radius: 4px;
 `;
+
+export const ModalButton = styled.span`
+  margin: 1px 0 0 5px;
+`;

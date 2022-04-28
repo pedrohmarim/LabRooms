@@ -31,12 +31,21 @@ router.get(
   RoomController.handleGetRecomendedUsers
 );
 router.get("/getRoomsByCategory", RoomController.handleGetRoomsByCategory);
-router.get("/getRoomsByOwnerId", RoomController.handleGetRoomsByOwnerId);
+router.get(
+  "/getRoomsByOwnerId",
+  checkAuth,
+  RoomController.handleGetRoomsByOwnerId
+);
 router.get("/getRoomById", RoomController.handleGetRoomsById);
 router.post("/updateRoom", checkAuth, RoomController.handleUpdateRoom);
 router.post("/lockProject", checkAuth, RoomController.handleLockProject);
 router.post("/deleteRoom", checkAuth, RoomController.handleDeleteRoom);
 
 router.post("/apply", checkAuth, CandidaciesController.handleApply);
+router.get(
+  "/getCandidaciesByRoomId",
+  checkAuth,
+  CandidaciesController.handleGetCandidaciesByRoomId
+);
 
 module.exports = router;

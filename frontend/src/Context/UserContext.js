@@ -1,12 +1,16 @@
-import React, { createContext, useState, useEffect } from "react";
+import React, { createContext, useState, useEffect, useCallback } from "react";
 import Cookie from "js-cookie";
 import * as HomeService from "../Pages/Home/services/home.service";
 import * as CreateRoomService from "../Pages/CreateRoom/services/createroom.service";
+import * as UserProfileService from "../Pages/UserProfile/services/UserProfile.service";
 import { TIPO_CADASTRO } from "../Helpers/TipoCadastro";
 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  const [hasntRooms, setHasntRooms] = useState();
+  const [allRooms, setAllRooms] = useState();
+
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
 
@@ -25,6 +29,28 @@ export const UserProvider = ({ children }) => {
   const [tabRooms, setTabRooms] = useState();
   const [categories, setCategories] = useState();
   const token = Cookie.get("token");
+
+  const getRoomsByOwnerId = useCallback(() => {
+    if (user) {
+      const { _id } = user;
+      if (user?.accountType === TIPO_CADASTRO.EMPRESA && _id && token) {
+        UserProfileService.getRoomsByOwnerId(_id, token).then(({ data }) => {
+          const { loading, errorMessage, arrayWithIcon } = data;
+
+          if (errorMessage) {
+            setHasntRooms({ loading, errorMessage });
+          } else {
+            setTabRooms({ array: arrayWithIcon, loading });
+            setAllRooms(arrayWithIcon);
+          }
+        });
+      }
+    }
+  }, [token, user]);
+
+  useEffect(() => {
+    getRoomsByOwnerId();
+  }, [getRoomsByOwnerId]);
 
   useEffect(() => {
     if (token) {
@@ -113,6 +139,9 @@ export const UserProvider = ({ children }) => {
         loadingRecomendedUsers,
         users,
         loadingUsers,
+        allRooms,
+        hasntRooms,
+        getRoomsByOwnerId,
       }}
     >
       {children}

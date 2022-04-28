@@ -1,12 +1,4 @@
-import React, {
-  useEffect,
-  useState,
-  useCallback,
-  useMemo,
-  useContext,
-} from "react";
-import { UserContext } from "../../../../Context/UserContext";
-import * as UserProfileService from "../../services/UserProfile.service";
+import React, { useState, useMemo } from "react";
 import * as RoomService from "../../../CreateRoom/services/createroom.service";
 import * as ChatRoomService from "../../../ChatRoom/services/ChatRoom.service";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
@@ -15,16 +7,10 @@ import { TitleStyled } from "../../../Home/components/Rooms/styles";
 import RoomForm from "./RoomForm.component";
 import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
 import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
+import HeaderTabRoomsCandidacies from "../../../../GlobalComponents/HeaderTabRoomsCandidacies/HeaderTabRoomsCandidacies.component";
 import TagRender from "../../../../GlobalComponents/TagRender/TagRender.component";
+import { Card, StyledRow } from "../../UserProfile.component.styled";
 import {
-  Card,
-  UserInfoTitle,
-  StyledOption,
-  StyledRow,
-} from "../../UserProfile.component.styled";
-import {
-  Select,
-  Form,
   Row,
   Col,
   FeatherIcons,
@@ -33,10 +19,20 @@ import {
   PopConfirm,
 } from "../../../../antd_components";
 
-const RoomsTab = ({ darkPallete, user, token, navigate }) => {
-  const [allRooms, setAllRooms] = useState();
-  const [_id, setRoomId] = useState();
-  const [hasntRooms, setHasntRooms] = useState();
+const RoomsTab = ({
+  getRoomsByOwnerId,
+  hasntRooms,
+  darkPallete,
+  handleFilterRoom,
+  categories,
+  allRooms,
+  setRoomId,
+  _id,
+  tabRooms,
+  token,
+  navigate,
+  setCandidaciesActive,
+}) => {
   const [newCategoryState, setNewCategory] = useState(false);
   const [showSubCategorie, setShowSubCategorie] = useState(false);
   const [allSubCategories, setAllSubCategories] = useState();
@@ -46,41 +42,6 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
   const [viewMode, setViewMode] = useState({
     _id: null,
   });
-
-  const { setTabRooms, tabRooms, categories } = useContext(UserContext);
-
-  const getRoomsByOwnerId = useCallback(() => {
-    if (user) {
-      const { _id } = user;
-      UserProfileService.getRoomsByOwnerId(_id).then(({ data }) => {
-        const { loading, errorMessage, arrayWithIcon } = data;
-
-        if (errorMessage) {
-          setHasntRooms({ loading, errorMessage });
-        } else {
-          setTabRooms({ array: arrayWithIcon, loading });
-          setAllRooms(arrayWithIcon);
-        }
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  useEffect(() => {
-    getRoomsByOwnerId();
-  }, [getRoomsByOwnerId]);
-
-  function handleFilterRoom(roomSelectId) {
-    if (roomSelectId === TIPO_CATEGORIA.CATEGORIA_TODAS) {
-      setTabRooms({ array: allRooms });
-      setRoomId(null);
-    } else {
-      const filteredRoom = allRooms.find(({ _id }) => _id === roomSelectId);
-      const { _id } = filteredRoom;
-      setTabRooms({ array: [filteredRoom] });
-      setRoomId(_id);
-    }
-  }
 
   const listRooms = useMemo(() => {
     function handleSubmit(values) {
@@ -178,14 +139,24 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
 
     const MoreActionsRoom = (_id, title, visible) => (
       <Menu>
-        <Menu.Item key='1' onClick={() => navigate(`/chatroom/${_id}`)}>
+        <Menu.Item key='1' onClick={() => navigate(`/view/project/${_id}`)}>
           <Row align='middle'>
             <FeatherIcons icon='share' size={15} />
             <MenuLabelItem>Visualizar</MenuLabelItem>
           </Row>
         </Menu.Item>
 
-        <Menu.Item key='2' onClick={() => handleLockProject(_id, visible)}>
+        <Menu.Item
+          key='2'
+          onClick={() => setCandidaciesActive({ active: true, roomId: _id })}
+        >
+          <Row align='middle'>
+            <FeatherIcons icon='users' size={15} />
+            <MenuLabelItem>Candidaturas</MenuLabelItem>
+          </Row>
+        </Menu.Item>
+
+        <Menu.Item key='3' onClick={() => handleLockProject(_id, visible)}>
           <Row align='middle'>
             <FeatherIcons icon={visible ? "lock" : "unlock"} size={15} />
             <MenuLabelItem>
@@ -195,7 +166,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
         </Menu.Item>
 
         <Menu.Item
-          key='3'
+          key='4'
           onClick={() => {
             setViewMode({
               _id,
@@ -226,7 +197,7 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
           okText='Sim'
           cancelText='Não'
         >
-          <Menu.Item key='4'>
+          <Menu.Item key='5'>
             <Row align='middle'>
               <FeatherIcons icon='trash-2' size={15} />
               <MenuLabelItem>Excluir</MenuLabelItem>
@@ -278,11 +249,13 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     );
   }, [
     hasntRooms,
-    tabRooms,
+    tabRooms?.array,
     _id,
     token,
     getRoomsByOwnerId,
     navigate,
+    setCandidaciesActive,
+    setRoomId,
     categories,
     newCategoryState,
     viewMode,
@@ -296,54 +269,13 @@ const RoomsTab = ({ darkPallete, user, token, navigate }) => {
     <Card bordered={false}>
       <Row justify='space-between' gutter={[10, 10]}>
         {!hasntRooms && tabRooms?.array && !tabRooms.loading ? (
-          <>
-            <Col span={window.innerWidth > 1024 ? 18 : 24}>
-              <Row justify='space-between'>
-                <UserInfoTitle level={4}>
-                  Meus Projetos ({tabRooms?.array.length})
-                </UserInfoTitle>
-
-                <CreateRoomButton
-                  color={darkPallete.white}
-                  backgroundcolor={darkPallete.lightblue}
-                />
-              </Row>
-            </Col>
-
-            <Col span={window.innerWidth > 1024 ? 6 : 24}>
-              <Form.Item name='roomFilter'>
-                <Select
-                  defaultValue={TIPO_CATEGORIA.CATEGORIA_TODAS}
-                  getPopupContainer={(trigger) => trigger.parentNode}
-                  onChange={handleFilterRoom}
-                >
-                  <Select.Option
-                    key={TIPO_CATEGORIA.CATEGORIA_TODAS}
-                    value={TIPO_CATEGORIA.CATEGORIA_TODAS}
-                  >
-                    <FeatherIcons
-                      icon='list'
-                      size={18}
-                      className='iconMargin'
-                    />
-                    <StyledOption>Todos</StyledOption>
-                  </Select.Option>
-
-                  {allRooms &&
-                    allRooms.map(({ title, _id, Icon }) => (
-                      <Select.Option key={_id} value={_id}>
-                        <FeatherIcons
-                          icon={Icon}
-                          size={18}
-                          className='iconMargin'
-                        />
-                        <StyledOption>{title}</StyledOption>
-                      </Select.Option>
-                    ))}
-                </Select>
-              </Form.Item>
-            </Col>
-          </>
+          <HeaderTabRoomsCandidacies
+            headerTitle='Meus Projetos'
+            tabRooms={tabRooms}
+            handleFilterRoom={handleFilterRoom}
+            allRooms={allRooms}
+            darkPallete={darkPallete}
+          />
         ) : (
           !tabRooms?.loading &&
           !hasntRooms && (
