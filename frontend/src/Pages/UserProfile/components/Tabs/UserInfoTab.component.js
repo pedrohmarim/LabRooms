@@ -106,22 +106,6 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
           background={darkPallete.white}
           onFinish={handleSubmit}
           layout='vertical'
-          // initialValues={{
-          //   username: user.username,
-          //   email: user.email,
-          //   cpf: user?.cpf,
-          //   category: user?.categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
-          //   newCategory: user?.newCategory,
-          //   subCategories: user?.subCategories || undefined,
-          //   phone: user?.phone,
-          //   celphone: user?.celphone,
-          //   biography: user.biography,
-          //   facebook: user?.socials?.facebook,
-          //   instagram: user?.socials?.instagram,
-          //   twitter: user?.socials?.twitter,
-          //   linkedin: user?.socials?.linkedin,
-          //   github: user?.socials?.github,
-          // }}
         >
           <PersonalInfo
             invalidInfo={invalidInfo}

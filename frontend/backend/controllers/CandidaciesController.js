@@ -14,7 +14,8 @@ function returnFormattedCandidacies(usersApplied, response) {
           CategoriesModel.findOne({ _id: categoryId }).then(
             ({ Icon, Title }) => {
               formattedCandidacies.push({
-                _id,
+                candidacieId: user?._id,
+                userId: _id,
                 username,
                 email,
                 skill: {
@@ -29,7 +30,8 @@ function returnFormattedCandidacies(usersApplied, response) {
           );
         } else if (newCategory) {
           formattedCandidacies.push({
-            _id,
+            candidacieId: user?._id,
+            userId: _id,
             username,
             email,
             skill: {
@@ -102,6 +104,27 @@ module.exports = {
           loading: false,
         });
       }
+    }
+  },
+
+  async handleDeleteCandidacieById(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { _id } = request.headers;
+
+      CandidaciesModel.findByIdAndRemove({ _id }, { new: true }, function (err) {
+        if (err) {
+          return response.json({
+            message: "Erro ao Excluir Candidato.",
+          });
+        } else {
+          response.json({
+            message: "Candidato Excluído com Sucesso.",
+            success: true,
+          });
+        }
+      })
     }
   },
 };

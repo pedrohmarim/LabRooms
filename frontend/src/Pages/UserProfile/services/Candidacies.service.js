@@ -8,3 +8,12 @@ export async function getCandidaciesByRoomId(roomId, token) {
     },
   });
 }
+
+export async function deleteCandidacieById(_id, token) {
+  return api.delete("/deleteCandidacieById", {
+    headers: {
+      Authorization: token,
+      _id,
+    },
+  });
+}

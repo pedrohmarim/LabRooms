@@ -42,6 +42,7 @@ router.post("/lockProject", checkAuth, RoomController.handleLockProject);
 router.post("/deleteRoom", checkAuth, RoomController.handleDeleteRoom);
 
 router.post("/apply", checkAuth, CandidaciesController.handleApply);
+router.delete("/deleteCandidacieById", checkAuth, CandidaciesController.handleDeleteCandidacieById);
 router.get(
   "/getCandidaciesByRoomId",
   checkAuth,

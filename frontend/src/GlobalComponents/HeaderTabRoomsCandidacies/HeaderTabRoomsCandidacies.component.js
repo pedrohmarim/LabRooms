@@ -42,9 +42,8 @@ const HeaderTabRoomsCandidacies = ({
       <Col span={window.innerWidth > 1024 ? 6 : 24}>
         <Tooltip
           color={darkPallete.lightblue}
-          placement='bottom'
+          placement='top'
           title='Selecionar Projeto'
-          defaultVisible={fromCandidacies}
         >
           <Form.Item name='roomFilter'>
             <Select

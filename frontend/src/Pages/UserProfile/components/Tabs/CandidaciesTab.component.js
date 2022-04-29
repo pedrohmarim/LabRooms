@@ -15,6 +15,7 @@ import {
   Button,
   Tooltip,
   PopConfirm,
+  Notification,
 } from "../../../../antd_components";
 
 const CandidaciesTab = ({
@@ -51,6 +52,19 @@ const CandidaciesTab = ({
     }
   }, [form, roomId, handleFilterRoom]);
 
+  function handleDeleteCandidate(candidacieId) {
+    CandidaciesService.deleteCandidacieById(candidacieId, token).then(
+      ({ data }) => {
+        const { success, message} = data;
+
+        Notification.open({
+          type: success ? "success" : "error",
+          message,
+        });
+      }
+    );
+  }
+
   const columns = [
     {
       title: "Nome",
@@ -83,10 +97,10 @@ const CandidaciesTab = ({
     },
     {
       title: "Ações",
-      dataIndex: "_id",
+      dataIndex: "userId",
       key: "Excluir",
       width: 100,
-      render: (value) => {
+      render: (value, dataIndex) => {
         return (
           <Button.Group>
             <Tooltip title='Ver Perfil'>
@@ -104,16 +118,13 @@ const CandidaciesTab = ({
               </Link>
             </Tooltip>
 
-            <Tooltip title='Excluir'>
+            <Tooltip title='Excluir Candidato'>
               <PopConfirm
                 placement='topLeft'
                 title='Deseja realmente excluir?'
                 onConfirm={() => {
-                  const filteredDataSource =
-                    responseGrid?.formattedCandidacies.filter(
-                      (x) => x.URL !== value
-                    );
-                  setResponseGrid({ formattedCandidacies: filteredDataSource });
+                  handleDeleteCandidate(dataIndex?.candidacieId)
+                  handleFilterRoom(dataIndex?.roomId)
                 }}
                 okText='Sim'
                 cancelText='Não'
@@ -185,7 +196,6 @@ const CandidaciesTab = ({
           dataSource={responseGrid?.formattedCandidacies}
           columns={columns}
           loading={loadingDataSource}
-          e
         />
       )}
     </Card>
