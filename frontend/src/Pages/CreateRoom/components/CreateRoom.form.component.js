@@ -21,7 +21,7 @@ import {
   Notification,
 } from "../../../antd_components";
 
-const SigninForm = ({ darkPallete, user }) => {
+const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
   const { Dragger } = Upload;
   const [form] = Form.useForm();
   let navigate = useNavigate();
@@ -103,7 +103,10 @@ const SigninForm = ({ darkPallete, user }) => {
     CreateRoomService.createRoom(dto, token).then(({ data }) => {
       const { message, success } = data;
 
-      if (success) navigate("/");
+      if (success){
+        navigate("/");
+        getRoomsByOwnerId()
+      } 
 
       Notification.open({
         type: success ? "success" : "error",

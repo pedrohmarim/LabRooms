@@ -61,7 +61,7 @@ module.exports = {
           success: false,
         });
 
-      const alreadyApplied = await CandidaciesModel.findOne({ userIdToApply });
+      const alreadyApplied = await CandidaciesModel.findOne({ $and:[{ userIdToApply }, {roomId}]});
 
       if (alreadyApplied)
         return response.json({

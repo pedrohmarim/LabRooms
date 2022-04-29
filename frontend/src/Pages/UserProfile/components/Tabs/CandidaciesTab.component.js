@@ -98,6 +98,7 @@ const CandidaciesTab = ({
     {
       title: "Ações",
       dataIndex: "userId",
+      align: 'center',
       key: "Excluir",
       width: 100,
       render: (value, dataIndex) => {
@@ -114,6 +115,27 @@ const CandidaciesTab = ({
                   type='ghost'
                   shape='circle'
                   icon={<FeatherIcons icon='eye' size={18} />}
+                />
+              </Link>
+            </Tooltip>
+
+            <Tooltip title='Enviar Mensagem'>
+              <Link to="#">
+                <Button
+                  type='ghost'
+                  shape='circle'
+                  icon={<FeatherIcons icon='message-circle' size={18} />}
+                />
+              </Link>
+            </Tooltip>
+
+            
+            <Tooltip title='Enviar E-mail'>
+              <Link to="#">
+                <Button
+                  type='ghost'
+                  shape='circle'
+                  icon={<FeatherIcons icon='mail' size={18} />}
                 />
               </Link>
             </Tooltip>

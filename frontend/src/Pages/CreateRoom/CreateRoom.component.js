@@ -21,7 +21,7 @@ import {
 import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
 
 export default function CreateRoom() {
-  const { user } = useContext(UserContext);
+  const { user, getRoomsByOwnerId } = useContext(UserContext);
   const navigate = useNavigate();
 
   document.getElementsByTagName("title")[0].innerText =
@@ -69,7 +69,7 @@ export default function CreateRoom() {
               <FormHeader margin='0 0 20px 0'>
                 <Breadcrumb />
               </FormHeader>
-              <CreateRoomForm darkPallete={darkPallete} user={user} />
+              <CreateRoomForm darkPallete={darkPallete} user={user} getRoomsByOwnerId={getRoomsByOwnerId}/>
             </SignFormContainer>
           </CenterForm>
         </>
