@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
@@ -43,16 +43,17 @@ export default function UserProfile() {
     if (candidaciesActive?.active) setActiveKey("3");
   }, [candidaciesActive]);
 
-  useEffect(() => {
-    function getUserById() {
+  const getUserById = useCallback(() =>{
+  
       ChatRoomService.getUserById(_id).then(({ data }) => {
         setViewUser(data);
       });
-
+  
       setIsViewMode(true);
-    }
+  },[_id])
 
-    // const fromCandidacies = searchParams.get("fromCandidacies");
+  useEffect(() => {
+    
 
     if (user && _id === user?._id) {
       setViewUser(user);
@@ -60,7 +61,8 @@ export default function UserProfile() {
     } else if ((user && _id !== user?._id) || !user) {
       getUserById();
     }
-  }, [_id, user]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

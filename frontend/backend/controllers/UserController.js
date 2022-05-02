@@ -1,3 +1,5 @@
+const AnonymizeCPF = require("../Anonymize/AnonymizeCPF");
+const AnonymizeEmail = require("../Anonymize/AnonymizeEmail");
 const UserModel = require("../models/UserModel");
 const RoomsModel = require("../models/RoomModel");
 const CategoriesModel = require("../models/CategoriesModel");
@@ -8,13 +10,15 @@ function handleUsersWithIcon(users, response) {
   let usersWithIcon = [];
 
   users.forEach((user) => {
-    const { categoryId, newCategory } = user;
+    const { _id, categoryId, newCategory, username, biography, accountType } = user;
 
     if (categoryId) {
       CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
         usersWithIcon.push({
-          ...user._doc,
-          hashedPass: undefined,
+          _id,
+          username,
+          biography,
+          accountType,
           Icon,
           CategorieTitle: Title,
         });
@@ -24,7 +28,10 @@ function handleUsersWithIcon(users, response) {
       });
     } else if (newCategory) {
       usersWithIcon.push({
-        ...user._doc,
+        _id,
+        username,
+        biography,
+        accountType,
         Icon: "repeat",
         CategorieTitle: newCategory,
       });
@@ -170,6 +177,37 @@ module.exports = {
     }
   },
 
+  async handleGetRecomendedUsers(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { owner } = request.headers;
+
+      let ownerRooms = await RoomsModel.find({ owner });
+
+      let categories = [];
+
+      ownerRooms.forEach((room) => {
+        const { categoryId } = room;
+        categories.push(categoryId);
+      });
+
+      var recomendedUsers = await UserModel.find({
+        categoryId: { $in: categories },
+        $and: [{ accountType: 1 }],
+      });
+
+      if (recomendedUsers.length > 0) {
+        handleUsersWithIcon(recomendedUsers, response);
+      } else {
+        return response.json({
+          arrayWithIcon: recomendedUsers,
+          loading: false,
+        });
+      }
+    }
+  },
+
   async handleGetCurrentUser(request, response) {
     const { _id } = request.body.decoded;
 
@@ -200,6 +238,8 @@ module.exports = {
     if (user) {
       return response.json({
         ...user._doc,
+        cpf: AnonymizeCPF(user?.cpf),
+        email: AnonymizeEmail(user?.email),
         hashedPass: undefined,
         createdAt: user.createdAt.toLocaleString("pt-BR", {
           year: "numeric",

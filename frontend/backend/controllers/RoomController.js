@@ -6,18 +6,21 @@ function handleRoomWithIcon(array, response) {
   let arrayWithIcon = [];
 
   array.forEach((item) => {
-    const { categoryId, newCategory } = item;
+    const { categoryId, newCategory, subCategories, ownerName, title, _id, description } = item;
 
     if (categoryId) {
       CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
-        arrayWithIcon.push({ ...item._doc, Icon, CategorieTitle: Title });
+        arrayWithIcon.push({ description,categoryId,_id,title,ownerName,subCategories, Icon, CategorieTitle: Title });
 
         if (array.length === arrayWithIcon.length)
           return response.json({ arrayWithIcon, loading: false });
       });
     } else if (newCategory) {
       arrayWithIcon.push({
-        ...item._doc,
+        description,
+        newCategory,
+        _id,
+        title,ownerName,subCategories,
         Icon: "repeat",
         CategorieTitle: newCategory,
       });
@@ -123,37 +126,6 @@ module.exports = {
       } else {
         return response.json({
           arrayWithIcon: recomendedRooms,
-          loading: false,
-        });
-      }
-    }
-  },
-
-  async handleGetRecomendedUsers(request, response) {
-    const { _id } = request.body.decoded;
-
-    if (_id) {
-      const { owner } = request.headers;
-
-      let ownerRooms = await RoomModel.find({ owner });
-
-      let categories = [];
-
-      ownerRooms.forEach((room) => {
-        const { categoryId } = room;
-        categories.push(categoryId);
-      });
-
-      var recomendedUsers = await UserModel.find({
-        categoryId: { $in: categories },
-        $and: [{ accountType: 1 }],
-      });
-
-      if (recomendedUsers.length > 0) {
-        handleRoomWithIcon(recomendedUsers, response);
-      } else {
-        return response.json({
-          arrayWithIcon: recomendedUsers,
           loading: false,
         });
       }

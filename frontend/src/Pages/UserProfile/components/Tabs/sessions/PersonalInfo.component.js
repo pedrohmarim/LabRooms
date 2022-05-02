@@ -121,14 +121,21 @@ const SocialRegister = ({
               </Typography>
             }
           >
-            <InputMask
+            {!viewMode ? <InputMask
               tabIndex={viewMode && "-1"}
               className={viewMode && "disabled"}
               disabled={!editMode && !viewMode}
               style={styleInput}
               placeholder='CPF'
               mask='111.111.111-11'
-            />
+            /> :(
+              <Input
+              tabIndex={viewMode && "-1"}
+              className={viewMode && "disabled"}
+              disabled={!editMode && !viewMode}
+              style={styleInput}
+            /> 
+            )}
           </Form.Item>
         </Col>
       </Row>

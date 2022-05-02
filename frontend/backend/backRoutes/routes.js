@@ -28,7 +28,7 @@ router.get(
 router.get(
   "/getRecomendedUsers",
   checkAuth,
-  RoomController.handleGetRecomendedUsers
+  UserController.handleGetRecomendedUsers
 );
 router.get("/getRoomsByCategory", RoomController.handleGetRoomsByCategory);
 router.get(
