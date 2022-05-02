@@ -1,6 +1,7 @@
 const RoomModel = require("../models/RoomModel");
 const UserModel = require("../models/UserModel");
 const CategoriesModel = require("../models/CategoriesModel");
+const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
 
 function handleRoomWithIcon(array, response) {
   let arrayWithIcon = [];
@@ -38,7 +39,7 @@ module.exports = {
     const user = await UserModel.findOne({ _id });
 
     // 1 - TIPO_CADASTRO = FREELANCER
-    if (user?.accountType === 1) throw new Error("Não Autorizado");
+    if (user?.accountType === 1) throw new Error("Não Autorizado.");
 
     let {
       title,
@@ -49,7 +50,12 @@ module.exports = {
       ownerName,
       subCategories,
       visible,
+      captcha,
     } = request.body;
+
+    var validCaptcha = VerifyCaptcha(captcha)
+
+    if (!validCaptcha) throw new Error("Captcha Inválido!");
 
     RoomModel.create({
       title,

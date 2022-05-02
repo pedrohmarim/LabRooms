@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
 import * as CreateRoomService from "../services/createroom.service";
 import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
 import { InboxOutlined } from "@ant-design/icons";
 import CategoriesSubcategoriesSelect from "../../../GlobalComponents/Categories&Subcategories/CategoriesSubcategoriesSelect.component";
-import { StyledInput, Form } from "../CreateRoom.styled";
+import Recaptcha from "../../../GlobalComponents/Recaptcha/Recaptcha.component";
+import { StyledInput, Form, StyledRow } from "../CreateRoom.styled";
 import { StyledButton } from "../../Signup/components/SignupForm/Signup.form.styled";
 import {
   acceptedFileTypes,
@@ -26,8 +27,15 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
   const [form] = Form.useForm();
   let navigate = useNavigate();
   const [categories, setCategories] = useState();
+  const [captcha, setCaptcha] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [invalidType, setInvalidType] = useState(false);
+  const recaptchaRef = useRef();
+
+  function resetCaptcha() {
+    setCaptcha(null);
+    recaptchaRef.current.reset();
+  }
 
   const draggerProps = {
     name: "file",
@@ -78,7 +86,6 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
   function onSubmit(values) {
     let { title, description, category, newCategory, subCategories, visible } =
       values;
-
     const token = Cookie.get("token");
 
     const dto = {
@@ -91,6 +98,7 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
       //   type,
       //   webkitRelativePath,
       // },
+      captcha,
       subCategories,
       ownerName: user?.username,
       title,
@@ -99,11 +107,12 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
       categoryId: newCategory ? null : category,
       newCategory: newCategory || null,
     };
-
+    debugger;
     CreateRoomService.createRoom(dto, token).then(({ data }) => {
       const { message, success } = data;
 
       if (success){
+        resetCaptcha();
         navigate("/");
         getRoomsByOwnerId()
       } 
@@ -212,10 +221,17 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
         </Dragger>
       </FormItem>
 
+        <StyledRow justify="center">  
+          <FormItem>
+            <Recaptcha verifyCallback={(verified) => setCaptcha(verified)} ref={recaptchaRef}/>
+          </FormItem>
+        </StyledRow>
+
       <StyledButton
+        disabled={!captcha}
         type='primary'
         htmlType='submit'
-        backgroundcolor={darkPallete.lightblue}
+        backgroundcolor={captcha && darkPallete.lightblue}
       >
         Confirmar
       </StyledButton>

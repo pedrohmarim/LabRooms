@@ -23,6 +23,5 @@ export const Button = styled(AntDesignButton)`
     background-color: ${({ backgroundcolor }) => backgroundcolor};
     border: none;
     opacity: 0.9;
-    cursor: pointer;
   }
 `;
