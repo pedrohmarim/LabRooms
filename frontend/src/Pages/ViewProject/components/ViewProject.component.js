@@ -18,6 +18,7 @@ import { StyledButton } from "../../UserProfile/UserProfile.component.styled";
 import { TIPO_CADASTRO } from "../../../Helpers/TipoCadastro";
 
 export default function ViewProject({
+  token,
   loggedAccountType,
   loadingApply,
   handleApply,
@@ -49,7 +50,7 @@ export default function ViewProject({
                   </RoomCategory>
                 </Row>
 
-                {loggedAccountType === TIPO_CADASTRO.FREELANCER && (
+                {(loggedAccountType === TIPO_CADASTRO.FREELANCER || !token) && (
                   <StyledButton
                     icon={loadingApply && <LoadingOutlined />}
                     onClick={handleApply}

@@ -7,21 +7,43 @@ function handleRoomWithIcon(array, response) {
   let arrayWithIcon = [];
 
   array.forEach((item) => {
-    const { categoryId, newCategory, subCategories, ownerName, title, _id, description } = item;
+    const {
+      categoryId,
+      newCategory,
+      subCategories,
+      ownerName,
+      title,
+      _id,
+      description,
+      visible,
+    } = item;
 
     if (categoryId) {
       CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
-        arrayWithIcon.push({ description,categoryId,_id,title,ownerName,subCategories, Icon, CategorieTitle: Title });
+        arrayWithIcon.push({
+          visible,
+          description,
+          categoryId,
+          _id,
+          title,
+          ownerName,
+          subCategories,
+          Icon,
+          CategorieTitle: Title,
+        });
 
         if (array.length === arrayWithIcon.length)
           return response.json({ arrayWithIcon, loading: false });
       });
     } else if (newCategory) {
       arrayWithIcon.push({
+        visible,
         description,
         newCategory,
         _id,
-        title,ownerName,subCategories,
+        title,
+        ownerName,
+        subCategories,
         Icon: "repeat",
         CategorieTitle: newCategory,
       });
@@ -39,7 +61,10 @@ module.exports = {
     const user = await UserModel.findOne({ _id });
 
     // 1 - TIPO_CADASTRO = FREELANCER
-    if (user?.accountType === 1) throw new Error("Não Autorizado.");
+    if (user?.accountType === 1)
+      return response.status(403).json({
+        message: "Não Autorizado.",
+      });
 
     let {
       title,
@@ -53,9 +78,12 @@ module.exports = {
       captcha,
     } = request.body;
 
-    var validCaptcha = VerifyCaptcha(captcha)
+    const validCaptcha = await VerifyCaptcha(captcha);
 
-    if (!validCaptcha) throw new Error("Captcha Inválido!");
+    if (!validCaptcha)
+      return response.status(500).json({
+        message: "Captcha Inválido",
+      });
 
     RoomModel.create({
       title,

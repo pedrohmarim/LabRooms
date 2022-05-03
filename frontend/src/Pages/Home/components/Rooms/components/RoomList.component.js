@@ -98,11 +98,6 @@ const RoomList = ({
               margintop={window.innerWidth < 1024 ? "15px" : "20px"}
             >
               {arrayType} não Foram Encontrados.
-              <LinkStyled to={`/profile/${userId}`} marginleft='10px'>
-                {arrayType === TIPO_HOMEARRAY.PROJETOS_RECOMENDADOS
-                  ? "Atualizar Habilidades"
-                  : "Atualizar Informações"}
-              </LinkStyled>
             </TitleStyled>
           ) : (
             arrayToRender &&

@@ -69,7 +69,12 @@ export default function CreateRoom() {
               <FormHeader margin='0 0 20px 0'>
                 <Breadcrumb />
               </FormHeader>
-              <CreateRoomForm darkPallete={darkPallete} user={user} getRoomsByOwnerId={getRoomsByOwnerId}/>
+
+              <CreateRoomForm
+                darkPallete={darkPallete}
+                user={user}
+                getRoomsByOwnerId={getRoomsByOwnerId}
+              />
             </SignFormContainer>
           </CenterForm>
         </>

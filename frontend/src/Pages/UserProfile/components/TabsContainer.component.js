@@ -16,7 +16,6 @@ export default function TabUserInfo({
   viewMode,
   activeKey,
   setCandidaciesActive,
-  setActiveKey,
   candidaciesActive,
 }) {
   const [_id, setRoomId] = useState();
@@ -47,12 +46,7 @@ export default function TabUserInfo({
       bodyStyle={{ display: "none" }}
       bordered={false}
       title={
-        <Tabs
-          activeKey={activeKey}
-          onTabClick={(activeKey) => {
-            setActiveKey(activeKey);
-          }}
-        >
+        <Tabs defaultActiveKey={activeKey}>
           <TabPane tab={viewMode ? "Perfil" : "Meu Perfil"} key='1'>
             <UserInfoTab
               darkPallete={darkPallete}

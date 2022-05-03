@@ -22,7 +22,7 @@ export default function UserProfile() {
   const { user } = useContext(UserContext);
 
   const [viewUser, setViewUser] = useState();
-  const [viewMode, setIsViewMode] = useState(true);
+  const [viewMode, setIsViewMode] = useState(false);
   const navigate = useNavigate();
   const params = useParams();
   const token = Cookie.get("token");
@@ -31,38 +31,30 @@ export default function UserProfile() {
   const [searchParams] = useSearchParams();
   const [candidaciesActive, setCandidaciesActive] = useState(false);
 
-  const [activeKey, setActiveKey] = useState("1");
+  const [activeKey, setActiveKey] = useState();
 
   useEffect(() => {
     if (searchParams.get("projects")) setActiveKey("2");
 
     if (searchParams.get("fromCandidacies")) setActiveKey("1");
+
+    setActiveKey("1");
   }, [searchParams]);
 
   useEffect(() => {
     if (candidaciesActive?.active) setActiveKey("3");
   }, [candidaciesActive]);
 
-  const getUserById = useCallback(() =>{
-  
+  useEffect(() => {
+    if (user && _id === user?._id) {
+      setViewUser(user);
+    } else if ((user && _id !== user?._id) || !token) {
       ChatRoomService.getUserById(_id).then(({ data }) => {
         setViewUser(data);
       });
-  
       setIsViewMode(true);
-  },[_id])
-
-  useEffect(() => {
-    
-
-    if (user && _id === user?._id) {
-      setViewUser(user);
-      setIsViewMode(false);
-    } else if ((user && _id !== user?._id) || !user) {
-      getUserById();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [_id, user, token]);
 
   return (
     <>

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import * as SignUpService from "../../services/signup.service";
 import UserSkills from "./components/UserSkills.component";
@@ -9,12 +9,17 @@ import { Form, Notification } from "../../../../antd_components";
 
 const SignUpForm = ({ darkPallete, accountType }) => {
   const [validateInput, setValidateInput] = useState();
+  const [captcha, setCaptcha] = useState(false);
   const [userSkills, setUserSkills] = useState();
   const { categories } = useContext(UserContext);
-
+  const recaptchaRef = useRef();
   const [form] = Form.useForm();
-
   let navigate = useNavigate();
+
+  function resetCaptcha() {
+    setCaptcha(null);
+    if (recaptchaRef.current) recaptchaRef.current.reset();
+  }
 
   function onSubmit(values) {
     if (!accountType)
@@ -35,6 +40,7 @@ const SignUpForm = ({ darkPallete, accountType }) => {
       categoryId: userSkills?.newCategory ? undefined : userSkills?.category,
       newCategory: userSkills?.newCategory || undefined,
       subCategories: userSkills?.subCategories,
+      captcha,
     };
 
     SignUpService.userRegister(dto).then(({ data }) => {
@@ -45,6 +51,7 @@ const SignUpForm = ({ darkPallete, accountType }) => {
       } else {
         setValidateInput(null);
         navigate("/signin");
+        resetCaptcha();
       }
 
       Notification.open({
@@ -68,6 +75,9 @@ const SignUpForm = ({ darkPallete, accountType }) => {
 
       {(userSkills || accountType === 2) && (
         <UserBasicInfo
+          captcha={captcha}
+          recaptchaRef={recaptchaRef}
+          setCaptcha={(value) => setCaptcha(value)}
           validateInput={validateInput}
           darkPallete={darkPallete}
         />
@@ -75,4 +85,5 @@ const SignUpForm = ({ darkPallete, accountType }) => {
     </Form>
   );
 };
+
 export default SignUpForm;

@@ -3,8 +3,16 @@ import { FormItem } from "../Signup.form.styled";
 import { FeatherIcons, Input, InputMask } from "../../../../../antd_components";
 import { validateBr } from "js-brasil";
 import { StyledButton } from "../Signup.form.styled";
+import Recaptcha from "../../../../../GlobalComponents/Recaptcha/Recaptcha.component";
+import { StyledRow } from "../../../../CreateRoom/CreateRoom.styled";
 
-const UserBasicInfo = ({ validateInput, darkPallete }) => {
+const UserBasicInfo = ({
+  validateInput,
+  darkPallete,
+  recaptchaRef,
+  setCaptcha,
+  captcha,
+}) => {
   const styleInput = {
     borderRadius: "8px",
     padding: "8px",
@@ -133,10 +141,18 @@ const UserBasicInfo = ({ validateInput, darkPallete }) => {
         />
       </FormItem>
 
+      <StyledRow justify='center'>
+        <Recaptcha
+          verifyCallback={(verified) => setCaptcha(verified)}
+          ref={recaptchaRef}
+        />
+      </StyledRow>
+
       <StyledButton
         height='45px'
         margin='5px 0 0 0'
-        backgroundcolor={darkPallete.lightblue}
+        disabled={!captcha}
+        backgroundcolor={captcha && darkPallete.lightblue}
         type='primary'
         htmlType='submit'
       >

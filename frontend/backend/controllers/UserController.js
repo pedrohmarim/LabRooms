@@ -5,12 +5,14 @@ const RoomsModel = require("../models/RoomModel");
 const CategoriesModel = require("../models/CategoriesModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
 
 function handleUsersWithIcon(users, response) {
   let usersWithIcon = [];
 
   users.forEach((user) => {
-    const { _id, categoryId, newCategory, username, biography, accountType } = user;
+    const { _id, categoryId, newCategory, username, biography, accountType } =
+      user;
 
     if (categoryId) {
       CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
@@ -53,7 +55,15 @@ module.exports = {
       subCategories,
       categoryId,
       newCategory,
+      captcha,
     } = request.body;
+
+    const validCaptcha = await VerifyCaptcha(captcha);
+
+    if (!validCaptcha)
+      return response.status(500).json({
+        message: "Captcha Inválido",
+      });
 
     UserModel.find({ $or: [{ cpf }, { email }] }).then(async (res) => {
       if (res.length === 0) {
@@ -73,13 +83,13 @@ module.exports = {
           })
             .then(() => {
               return response.json({
-                message: "Usuário cadastrado.",
+                message: "Usuário Cadastrado.",
                 success: true,
               });
             })
             .catch(() => {
               return response.json({
-                message: "Erro ao cadastrar usuário.",
+                message: "Erro ao Cadastrar Usuário.",
                 unknow: true,
               });
             });
@@ -94,7 +104,7 @@ module.exports = {
           })
             .then(() => {
               return response.json({
-                message: "Usuário cadastrado.",
+                message: "Usuário Cadastrado.",
                 success: true,
               });
             })
@@ -147,7 +157,7 @@ module.exports = {
           }
         );
 
-        return response.json({ token, message: "Logado com sucesso." });
+        return response.json({ token, message: "Logado com Sucesso." });
       } else {
         return response.json({ _id: null });
       }

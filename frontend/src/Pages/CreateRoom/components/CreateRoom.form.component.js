@@ -34,7 +34,7 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
 
   function resetCaptcha() {
     setCaptcha(null);
-    recaptchaRef.current.reset();
+    if (recaptchaRef.current) recaptchaRef.current.reset();
   }
 
   const draggerProps = {
@@ -86,6 +86,7 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
   function onSubmit(values) {
     let { title, description, category, newCategory, subCategories, visible } =
       values;
+
     const token = Cookie.get("token");
 
     const dto = {
@@ -107,15 +108,15 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
       categoryId: newCategory ? null : category,
       newCategory: newCategory || null,
     };
-    debugger;
+
     CreateRoomService.createRoom(dto, token).then(({ data }) => {
       const { message, success } = data;
 
-      if (success){
+      if (success) {
         resetCaptcha();
         navigate("/");
-        getRoomsByOwnerId()
-      } 
+        getRoomsByOwnerId();
+      }
 
       Notification.open({
         type: success ? "success" : "error",
@@ -221,17 +222,20 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
         </Dragger>
       </FormItem>
 
-        <StyledRow justify="center">  
-          <FormItem>
-            <Recaptcha verifyCallback={(verified) => setCaptcha(verified)} ref={recaptchaRef}/>
-          </FormItem>
-        </StyledRow>
+      <StyledRow justify='center'>
+        <FormItem>
+          <Recaptcha
+            verifyCallback={(verified) => setCaptcha(verified)}
+            ref={recaptchaRef}
+          />
+        </FormItem>
+      </StyledRow>
 
       <StyledButton
         disabled={!captcha}
+        backgroundcolor={captcha && darkPallete.lightblue}
         type='primary'
         htmlType='submit'
-        backgroundcolor={captcha && darkPallete.lightblue}
       >
         Confirmar
       </StyledButton>

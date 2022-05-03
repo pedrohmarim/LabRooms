@@ -6,6 +6,10 @@ import ViewProjectComponent from "./components/ViewProject.component";
 import { ChatContainer as ViewProjectContainer } from "../ChatRoom/ChatRoom.styled";
 import { ModalButton } from "./ViewProject.component.styled";
 import Background from "../../assets/backStars.mp4";
+import ProfileSocials from "../UserProfile/components/ProfileSocials.component";
+import * as ChatRoomService from "../ChatRoom/services/ChatRoom.service";
+import { UserContext } from "../../Context/UserContext";
+import Cookie from "js-cookie";
 import {
   Row,
   Col,
@@ -13,19 +17,13 @@ import {
   Modal,
   FeatherIcons,
 } from "../../antd_components";
-import ProfileSocials from "../UserProfile/components/ProfileSocials.component";
-import * as ChatRoomService from "../ChatRoom/services/ChatRoom.service";
-import { UserContext } from "../../Context/UserContext";
-import Cookie from "js-cookie";
 
 export default function ViewProject() {
   document.getElementsByTagName("title")[0].innerText =
     "LabRooms | Visualizar Projeto";
 
   const navigate = useNavigate();
-
   const { user } = useContext(UserContext);
-
   const [currentRoom, setCurrentRoom] = useState();
   const [visible, setVisible] = useState(false);
   const [roomOwner, setRoomOwner] = useState();
@@ -115,6 +113,7 @@ export default function ViewProject() {
         visible={visible}
         onCancel={() => setVisible(false)}
       />
+
       <video
         loop
         autoPlay
@@ -129,6 +128,7 @@ export default function ViewProject() {
       <Row>
         <Col span={16}>
           <ViewProjectComponent
+            token={token}
             loggedAccountType={user?.accountType}
             loadingApply={loadingApply}
             handleApply={handleApply}
