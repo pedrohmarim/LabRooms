@@ -137,9 +137,32 @@ const RoomsTab = ({
       handleGetCategoryById(value);
     }
 
+    function handleCreateSharedLink(_id) {
+      RoomService.CreateSharedLink(_id, token).then(async ({ data }) => {
+        const { message, status, description, inviteLink } = data;
+
+        await navigator.clipboard.writeText(inviteLink);
+
+        Notification.open({
+          type: status === 200 ? "success" : "error",
+          message,
+          description,
+        });
+      });
+    }
+
     const MoreActionsRoom = (_id, title, visible) => (
       <Menu>
-        <Menu.Item key='1' onClick={() => navigate(`/view/project/${_id}`)}>
+        {!visible && (
+          <Menu.Item key='1' onClick={() => handleCreateSharedLink(_id)}>
+            <Row align='middle'>
+              <FeatherIcons icon='share-2' size={15} />
+              <MenuLabelItem>Criar Convite</MenuLabelItem>
+            </Row>
+          </Menu.Item>
+        )}
+
+        <Menu.Item key='2' onClick={() => navigate(`/view/project/${_id}`)}>
           <Row align='middle'>
             <FeatherIcons icon='share' size={15} />
             <MenuLabelItem>Visualizar</MenuLabelItem>
@@ -147,7 +170,7 @@ const RoomsTab = ({
         </Menu.Item>
 
         <Menu.Item
-          key='2'
+          key='3'
           onClick={() => setCandidaciesActive({ active: true, roomId: _id })}
         >
           <Row align='middle'>
@@ -156,7 +179,7 @@ const RoomsTab = ({
           </Row>
         </Menu.Item>
 
-        <Menu.Item key='3' onClick={() => handleLockProject(_id, visible)}>
+        <Menu.Item key='4' onClick={() => handleLockProject(_id, visible)}>
           <Row align='middle'>
             <FeatherIcons icon={visible ? "lock" : "unlock"} size={15} />
             <MenuLabelItem>
@@ -166,7 +189,7 @@ const RoomsTab = ({
         </Menu.Item>
 
         <Menu.Item
-          key='4'
+          key='5'
           onClick={() => {
             setViewMode({
               _id,
@@ -197,7 +220,7 @@ const RoomsTab = ({
           okText='Sim'
           cancelText='Não'
         >
-          <Menu.Item key='5'>
+          <Menu.Item key='6'>
             <Row align='middle'>
               <FeatherIcons icon='trash-2' size={15} />
               <MenuLabelItem>Excluir</MenuLabelItem>

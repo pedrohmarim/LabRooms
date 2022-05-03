@@ -39,3 +39,24 @@ export async function DeleteRoom(_id, token) {
     }
   );
 }
+
+export async function CreateSharedLink(_id, token) {
+  return api.post(
+    "/createSharedLink",
+    { _id },
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+}
+
+export async function ValidateSharedLink({ token, _id }) {
+  return api.get("/validateSharedLink", {
+    headers: {
+      token,
+      _id,
+    },
+  });
+}

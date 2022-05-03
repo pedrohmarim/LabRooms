@@ -2,7 +2,6 @@ import React from "react";
 import UserImage from "../../../assets/userImage.jpg";
 import { Link } from "react-router-dom";
 import { SocialList } from "./Tabs/sessions/SocialList.component";
-import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
 import {
   StyledBreadCrumb,
   StyledCol,
@@ -23,7 +22,7 @@ export default function ProfileSocials({
 }) {
   return (
     <>
-      {user ? (
+      {user && (
         <Row justify='center' gutter={[16, 16]}>
           <StyledBreadCrumb span={24}>
             <Breadcrumb />
@@ -50,7 +49,7 @@ export default function ProfileSocials({
           {Object.keys(user?.socials).length > 0 && (
             <Col span={24}>
               <Row justify='center'>
-                {SocialList(user?.socials, isViewProject).map(
+                {SocialList(user?.socials).map(
                   (item) =>
                     item.link && (
                       <SocialIcon
@@ -94,8 +93,6 @@ export default function ProfileSocials({
 
           {!isViewProject && <StyledDivider />}
         </Row>
-      ) : (
-        Loading("#000")
       )}
     </>
   );

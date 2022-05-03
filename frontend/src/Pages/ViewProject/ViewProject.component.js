@@ -1,13 +1,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { darkPallete } from "../../styles/pallete";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Aside from "../../GlobalComponents/Aside/Aside.component";
 import ViewProjectComponent from "./components/ViewProject.component";
+import { Loading } from "../../GlobalComponents/Loading/Loading.component";
 import { ChatContainer as ViewProjectContainer } from "../ChatRoom/ChatRoom.styled";
 import { ModalButton } from "./ViewProject.component.styled";
 import Background from "../../assets/backStars.mp4";
 import ProfileSocials from "../UserProfile/components/ProfileSocials.component";
 import * as ChatRoomService from "../ChatRoom/services/ChatRoom.service";
+import * as CreateRoomService from "../CreateRoom/services/createroom.service";
 import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
 import {
@@ -23,6 +25,8 @@ export default function ViewProject() {
   document.getElementsByTagName("title")[0].innerText =
     "LabRooms | Visualizar Projeto";
 
+  const params = useParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [currentRoom, setCurrentRoom] = useState();
@@ -30,15 +34,35 @@ export default function ViewProject() {
   const [roomOwner, setRoomOwner] = useState();
   const [RoomCategoryData, setRoomCategoryData] = useState();
   const [loadingApply, setLoadingApply] = useState(false);
-  const params = useParams();
-  const { _id } = params;
   const token = Cookie.get("token");
+  const { _id } = params;
 
   useEffect(() => {
-    ChatRoomService.getRoomById(_id).then(({ data }) => {
-      setCurrentRoom(data);
-    });
-  }, [_id]);
+    if (searchParams.get("token")) {
+      const token = searchParams.get("token");
+
+      const dto = {
+        token,
+        _id,
+      };
+
+      CreateRoomService.ValidateSharedLink(dto).then(({ data }) => {
+        const { _id } = data;
+        if (_id) {
+          ChatRoomService.getRoomById(_id).then(({ data }) => {
+            setCurrentRoom(data);
+          });
+        } else {
+          navigate("/notfound");
+        }
+      });
+    } else {
+      ChatRoomService.getRoomById(_id).then(({ data }) => {
+        setCurrentRoom(data);
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   function handleApply() {
     if (user?._id && token) {
@@ -141,20 +165,24 @@ export default function ViewProject() {
 
         <Col span={8}>
           <Row justify='center' align='middle' style={{ height: "100vh" }}>
-            <Card
-              style={{
-                maxWidth: "400px",
-                height: "fit-content",
-                position: "fixed",
-              }}
-            >
-              <ProfileSocials
-                darkPallete={darkPallete}
-                user={roomOwner}
-                isViewProject
-                ownerId={currentRoom?.owner}
-              />
-            </Card>
+            {roomOwner ? (
+              <Card
+                style={{
+                  maxWidth: "400px",
+                  height: "fit-content",
+                  position: "fixed",
+                }}
+              >
+                <ProfileSocials
+                  darkPallete={darkPallete}
+                  user={roomOwner}
+                  isViewProject
+                  ownerId={currentRoom?.owner}
+                />
+              </Card>
+            ) : (
+              Loading("#fff")
+            )}
           </Row>
         </Col>
       </Row>

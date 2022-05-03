@@ -40,9 +40,19 @@ router.get("/getRoomById", RoomController.handleGetRoomsById);
 router.post("/updateRoom", checkAuth, RoomController.handleUpdateRoom);
 router.post("/lockProject", checkAuth, RoomController.handleLockProject);
 router.post("/deleteRoom", checkAuth, RoomController.handleDeleteRoom);
+router.post(
+  "/createSharedLink",
+  checkAuth,
+  RoomController.handleCreateSharedLink
+);
+router.get("/validateSharedLink", RoomController.handleValidateSharedLink);
 
 router.post("/apply", checkAuth, CandidaciesController.handleApply);
-router.delete("/deleteCandidacieById", checkAuth, CandidaciesController.handleDeleteCandidacieById);
+router.delete(
+  "/deleteCandidacieById",
+  checkAuth,
+  CandidaciesController.handleDeleteCandidacieById
+);
 router.get(
   "/getCandidaciesByRoomId",
   checkAuth,

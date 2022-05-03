@@ -2,6 +2,8 @@ const RoomModel = require("../models/RoomModel");
 const UserModel = require("../models/UserModel");
 const CategoriesModel = require("../models/CategoriesModel");
 const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
+const CreateToken = require("../Helpers/CreateToken");
+const jwt = require("jsonwebtoken");
 
 function handleRoomWithIcon(array, response) {
   let arrayWithIcon = [];
@@ -291,6 +293,48 @@ module.exports = {
             status: 200,
           });
         }
+      });
+    }
+  },
+
+  async handleCreateSharedLink(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { _id } = request.body;
+
+      const tokenName = `JWT_KEY_SHAREROOM_${_id}`;
+
+      const token = await CreateToken(_id, tokenName, "12h");
+
+      const inviteLink = `${request.headers.origin}/view/project/${_id}?token=${token}`;
+
+      return response.json({
+        status: 200,
+        inviteLink,
+        message: "URL Copiada.",
+        description: "Após 12h o Link Irá Expirar.",
+      });
+    }
+  },
+
+  async handleValidateSharedLink(request, response) {
+    const { token, _id } = request.headers;
+
+    try {
+      const decoded = jwt.verify(token, `process.env.JWT_KEY_SHAREROOM_${_id}`);
+
+      if (decoded) {
+        const { _id } = decoded;
+
+        return response.json({
+          status: 200,
+          _id,
+        });
+      }
+    } catch {
+      return response.json({
+        _id: undefined,
       });
     }
   },
