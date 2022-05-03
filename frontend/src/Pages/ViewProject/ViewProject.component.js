@@ -13,6 +13,7 @@ import Cookie from "js-cookie";
 import {
   Row,
   Col,
+  Card,
   Notification,
   Modal,
   FeatherIcons,
@@ -140,12 +141,20 @@ export default function ViewProject() {
 
         <Col span={8}>
           <Row justify='center' align='middle' style={{ height: "100vh" }}>
-            <ProfileSocials
-              darkPallete={darkPallete}
-              user={roomOwner}
-              isViewProject
-              ownerId={currentRoom?.owner}
-            />
+            <Card
+              style={{
+                maxWidth: "400px",
+                height: "fit-content",
+                position: "fixed",
+              }}
+            >
+              <ProfileSocials
+                darkPallete={darkPallete}
+                user={roomOwner}
+                isViewProject
+                ownerId={currentRoom?.owner}
+              />
+            </Card>
           </Row>
         </Col>
       </Row>

@@ -39,13 +39,7 @@ export const SocialList = (
       tooltip: "LinkedIn",
     },
     {
-      icon: (
-        <GithubFilled
-          style={{
-            color: isViewProject || window.innerWidth < 1024 ? "#fff" : "#333",
-          }}
-        />
-      ),
+      icon: <GithubFilled style={{ color: "#333" }} />,
       link: github,
       tooltip: "Github",
     },

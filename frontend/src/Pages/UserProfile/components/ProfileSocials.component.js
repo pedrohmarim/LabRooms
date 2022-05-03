@@ -22,19 +22,11 @@ export default function ProfileSocials({
   ownerId,
 }) {
   return (
-    <Row
-      justify='center'
-      gutter={[16, 16]}
-      style={isViewProject && { maxWidth: "400px", position: "fixed" }}
-    >
+    <>
       {user ? (
-        <>
+        <Row justify='center' gutter={[16, 16]}>
           <StyledBreadCrumb span={24}>
-            <Breadcrumb
-              color={
-                (window.innerWidth < 1024 || isViewProject) && darkPallete.white
-              }
-            />
+            <Breadcrumb />
           </StyledBreadCrumb>
 
           <Image src={UserImage} height={120} />
@@ -55,10 +47,10 @@ export default function ProfileSocials({
             </UserInfoSpan>
           </StyledCol>
 
-          <Col span={24}>
-            <Row justify='center'>
-              {SocialList &&
-                SocialList(user?.socials, isViewProject).map(
+          {Object.keys(user?.socials).length > 0 && (
+            <Col span={24}>
+              <Row justify='center'>
+                {SocialList(user?.socials, isViewProject).map(
                   (item) =>
                     item.link && (
                       <SocialIcon
@@ -76,8 +68,9 @@ export default function ProfileSocials({
                       </SocialIcon>
                     )
                 )}
-            </Row>
-          </Col>
+              </Row>
+            </Col>
+          )}
 
           {isViewProject && (
             <Tooltip
@@ -100,10 +93,10 @@ export default function ProfileSocials({
           )}
 
           {!isViewProject && <StyledDivider />}
-        </>
+        </Row>
       ) : (
-        Loading(isViewProject ? "#fff" : "#000")
+        Loading("#000")
       )}
-    </Row>
+    </>
   );
 }

@@ -131,7 +131,7 @@ export const StyledCol = styled(Col)`
 `;
 
 export const UserInfoTitle = styled(Title)`
-  color: ${({ isViewProject }) => (isViewProject ? "#fff" : "#000")} !important;
+  color: #000;
 
   @media screen and (max-width: 1024px) {
     color: #fff !important;

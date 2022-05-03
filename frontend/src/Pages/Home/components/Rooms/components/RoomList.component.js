@@ -17,7 +17,6 @@ import {
   StyledRowTags,
   CategorieProject,
 } from "../styles";
-import { LinkStyled } from "../../../../Signin/Signin.component.styled";
 import HandleFilter from "../../../../../GlobalComponents/HandleFilter/HandleFilter.component";
 import { Loading } from "../../../../../GlobalComponents/Loading/Loading.component";
 

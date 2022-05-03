@@ -4,7 +4,7 @@ import routes from "../../Routes/routes";
 import { Tooltip } from "antd";
 import { darkPallete } from "../../styles/pallete";
 
-const Breadcrumb = ({ crumbs = routes, color }) => {
+const Breadcrumb = ({ crumbs = routes }) => {
   function handleCompareProps(bc, linkTo) {
     let pathname = `/${window.location.pathname.split("/")[1]}`;
 
@@ -15,7 +15,7 @@ const Breadcrumb = ({ crumbs = routes, color }) => {
   }
 
   return (
-    <S.Breadcrumb color={color || "#000"}>
+    <S.Breadcrumb color='#000'>
       {crumbs?.length &&
         crumbs
           .filter(({ path, breadcrumb }) =>
@@ -35,7 +35,7 @@ const Breadcrumb = ({ crumbs = routes, color }) => {
                       to={{
                         pathname: handleCompareProps(bc, true),
                       }}
-                      color={color || "#000"}
+                      color='#000'
                     >
                       {bc.name}
                     </S.StyledLink>
