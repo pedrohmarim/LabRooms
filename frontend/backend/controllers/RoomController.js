@@ -319,10 +319,13 @@ module.exports = {
   },
 
   async handleValidateSharedLink(request, response) {
-    const { token, _id } = request.headers;
+    const { urltoken, _id } = request.headers;
 
     try {
-      const decoded = jwt.verify(token, `process.env.JWT_KEY_SHAREROOM_${_id}`);
+      const decoded = jwt.verify(
+        urltoken,
+        `process.env.JWT_KEY_SHAREROOM_${_id}`
+      );
 
       if (decoded) {
         const { _id } = decoded;

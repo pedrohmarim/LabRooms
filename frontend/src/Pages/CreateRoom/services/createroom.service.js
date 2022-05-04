@@ -52,10 +52,10 @@ export async function CreateSharedLink(_id, token) {
   );
 }
 
-export async function ValidateSharedLink({ token, _id }) {
+export async function ValidateSharedLink({ urlToken, _id }) {
   return api.get("/validateSharedLink", {
     headers: {
-      token,
+      urlToken,
       _id,
     },
   });

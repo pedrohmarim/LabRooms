@@ -39,15 +39,16 @@ export default function ViewProject() {
 
   useEffect(() => {
     if (searchParams.get("token")) {
-      const token = searchParams.get("token");
+      const urlToken = searchParams.get("token");
 
       const dto = {
-        token,
+        urlToken,
         _id,
       };
 
       CreateRoomService.ValidateSharedLink(dto).then(({ data }) => {
         const { _id } = data;
+
         if (_id) {
           ChatRoomService.getRoomById(_id).then(({ data }) => {
             setCurrentRoom(data);
@@ -58,7 +59,16 @@ export default function ViewProject() {
       });
     } else {
       ChatRoomService.getRoomById(_id).then(({ data }) => {
+        const { visible, owner } = data;
+
         setCurrentRoom(data);
+
+        console.log(user?._id);
+        console.log("owner", owner);
+
+        if (token && user && user?._id !== owner) navigate("/notfound");
+
+        if (!visible && !token) navigate("/notfound");
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
