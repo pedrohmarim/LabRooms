@@ -2,6 +2,10 @@ import React from "react";
 import { FeatherIcons, Row } from "../../../antd_components";
 import TagRender from "../../../GlobalComponents/TagRender/TagRender.component";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
+import { StyledRowTags } from "../../Home/components/Rooms/styles";
+import { StyledButton } from "../../UserProfile/UserProfile.component.styled";
+import { TIPO_CADASTRO } from "../../../Helpers/TipoCadastro";
 import {
   Layout,
   RoomCategory,
@@ -12,16 +16,12 @@ import {
   ProjectTitle,
   ProjectDescription,
 } from "../ViewProject.component.styled";
-import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
-import { StyledRowTags } from "../../Home/components/Rooms/styles";
-import { StyledButton } from "../../UserProfile/UserProfile.component.styled";
-import { TIPO_CADASTRO } from "../../../Helpers/TipoCadastro";
 
 export default function ViewProject({
   token,
   loggedAccountType,
   loadingApply,
-  handleApply,
+  setCaptchaVisible,
   currentRoom,
   darkPallete,
   roomCategoryData,
@@ -36,12 +36,8 @@ export default function ViewProject({
             <HeaderStyled>
               <Row align='middle' justify='space-between'>
                 <Row>
-                  <ProjectTitle color={darkPallete.white}>
-                    {currentRoom?.title}
-                  </ProjectTitle>
-
-                  <ProjectTitle margin='0 8px' color={darkPallete.white}>
-                    •
+                  <ProjectTitle color={darkPallete.white} margin='0 8px 0 0'>
+                    {currentRoom?.title} •
                   </ProjectTitle>
 
                   <RoomCategory color={darkPallete.white}>
@@ -53,7 +49,7 @@ export default function ViewProject({
                 {(loggedAccountType === TIPO_CADASTRO.FREELANCER || !token) && (
                   <StyledButton
                     icon={loadingApply && <LoadingOutlined />}
-                    onClick={handleApply}
+                    onClick={() => setCaptchaVisible(true)}
                     htmlType='submit'
                     backgroundcolor={darkPallete.green}
                     height='35'

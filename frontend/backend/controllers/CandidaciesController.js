@@ -1,6 +1,7 @@
 const CandidaciesModel = require("../models/CandidaciesModel");
 const CategoriesModel = require("../models/CategoriesModel");
 const UserModel = require("../models/UserModel");
+const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
 
 function returnFormattedCandidacies(usersApplied, response) {
   let formattedCandidacies = [];
@@ -53,7 +54,15 @@ module.exports = {
     const { _id } = request.body.decoded;
 
     if (_id) {
-      const { roomId, userIdToApply, owner, loggedAccountType } = request.body;
+      const { roomId, userIdToApply, owner, loggedAccountType, captcha } =
+        request.body;
+
+      const validCaptcha = await VerifyCaptcha(captcha);
+
+      if (!validCaptcha)
+        return response.status(500).json({
+          message: "Captcha Inválido",
+        });
 
       if (loggedAccountType === 2)
         return response.json({
@@ -61,7 +70,9 @@ module.exports = {
           success: false,
         });
 
-      const alreadyApplied = await CandidaciesModel.findOne({ $and:[{ userIdToApply }, {roomId}]});
+      const alreadyApplied = await CandidaciesModel.findOne({
+        $and: [{ userIdToApply }, { roomId }],
+      });
 
       if (alreadyApplied)
         return response.json({
@@ -113,18 +124,22 @@ module.exports = {
     if (_id) {
       const { _id } = request.headers;
 
-      CandidaciesModel.findByIdAndRemove({ _id }, { new: true }, function (err) {
-        if (err) {
-          return response.json({
-            message: "Erro ao Excluir Candidato.",
-          });
-        } else {
-          response.json({
-            message: "Candidato Excluído com Sucesso.",
-            success: true,
-          });
+      CandidaciesModel.findByIdAndRemove(
+        { _id },
+        { new: true },
+        function (err) {
+          if (err) {
+            return response.json({
+              message: "Erro ao Excluir Candidato.",
+            });
+          } else {
+            response.json({
+              message: "Candidato Excluído com Sucesso.",
+              success: true,
+            });
+          }
         }
-      })
+      );
     }
   },
 };

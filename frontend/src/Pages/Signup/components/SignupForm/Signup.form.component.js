@@ -18,7 +18,7 @@ const SignUpForm = ({ darkPallete, accountType }) => {
 
   function resetCaptcha() {
     setCaptcha(null);
-    if (recaptchaRef.current) recaptchaRef.current.reset();
+    recaptchaRef.current.reset();
   }
 
   function onSubmit(values) {

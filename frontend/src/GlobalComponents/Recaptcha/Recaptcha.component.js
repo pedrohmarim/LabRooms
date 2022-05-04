@@ -1,7 +1,7 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import RecaptchaComponent from "react-recaptcha";
 
-const Recaptcha = ({ verifyCallback, ref }) => {
+const Recaptcha = ({ verifyCallback }, ref) => {
   return (
     <RecaptchaComponent
       ref={ref}
@@ -12,4 +12,4 @@ const Recaptcha = ({ verifyCallback, ref }) => {
   );
 };
 
-export default Recaptcha;
+export default forwardRef(Recaptcha);

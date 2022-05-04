@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { darkPallete } from "../../styles/pallete";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Aside from "../../GlobalComponents/Aside/Aside.component";
@@ -20,22 +20,32 @@ import {
   Modal,
   FeatherIcons,
 } from "../../antd_components";
+import Recaptcha from "../../GlobalComponents/Recaptcha/Recaptcha.component";
+import { StyledRow } from "../CreateRoom/CreateRoom.styled";
 
 export default function ViewProject() {
   document.getElementsByTagName("title")[0].innerText =
     "LabRooms | Visualizar Projeto";
 
+  const recaptchaRef = useRef();
   const params = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [currentRoom, setCurrentRoom] = useState();
+  const [captcha, setCaptcha] = useState();
+  const [captchaVisible, setCaptchaVisible] = useState();
   const [visible, setVisible] = useState(false);
   const [roomOwner, setRoomOwner] = useState();
   const [RoomCategoryData, setRoomCategoryData] = useState();
   const [loadingApply, setLoadingApply] = useState(false);
   const token = Cookie.get("token");
   const { _id } = params;
+
+  function resetCaptcha() {
+    setCaptcha(null);
+    recaptchaRef?.current.reset();
+  }
 
   useEffect(() => {
     if (searchParams.get("token")) {
@@ -63,10 +73,8 @@ export default function ViewProject() {
 
         setCurrentRoom(data);
 
-        console.log(user?._id);
-        console.log("owner", owner);
-
-        if (token && user && user?._id !== owner) navigate("/notfound");
+        if (!visible && token && user && user?._id !== owner)
+          navigate("/notfound");
 
         if (!visible && !token) navigate("/notfound");
       });
@@ -83,6 +91,7 @@ export default function ViewProject() {
         owner: currentRoom?.owner,
         userIdToApply: user?._id,
         loggedAccountType: user?.accountType,
+        captcha,
       };
 
       ChatRoomService.handleApply(dto, token).then(({ data }) => {
@@ -123,6 +132,30 @@ export default function ViewProject() {
 
   return (
     <ViewProjectContainer>
+      <Modal
+        visible={captchaVisible}
+        title='ReCaptcha'
+        onOk={() => {
+          if (captcha) {
+            resetCaptcha();
+            setCaptchaVisible(false);
+            handleApply();
+          }
+        }}
+        onCancel={() => setCaptchaVisible(false)}
+        okText='Enviar'
+        cancelText='Cancelar'
+      >
+        <StyledRow justify='center'>
+          <Recaptcha
+            verifyCallback={(verified) => {
+              setCaptcha(verified);
+            }}
+            ref={recaptchaRef}
+          />
+        </StyledRow>
+      </Modal>
+
       <Modal
         okText={
           <Row align='middle'>
@@ -166,7 +199,7 @@ export default function ViewProject() {
             token={token}
             loggedAccountType={user?.accountType}
             loadingApply={loadingApply}
-            handleApply={handleApply}
+            setCaptchaVisible={(value) => setCaptchaVisible(value)}
             currentRoom={currentRoom}
             darkPallete={darkPallete}
             roomCategoryData={RoomCategoryData}

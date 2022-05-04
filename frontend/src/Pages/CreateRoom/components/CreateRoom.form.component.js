@@ -34,7 +34,7 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
 
   function resetCaptcha() {
     setCaptcha(null);
-    if (recaptchaRef.current) recaptchaRef.current.reset();
+    recaptchaRef.current.reset();
   }
 
   const draggerProps = {
