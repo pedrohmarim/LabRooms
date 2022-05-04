@@ -73,7 +73,6 @@ module.exports = {
       description,
       categoryId,
       newCategory,
-      thumb,
       ownerName,
       subCategories,
       visible,
@@ -94,7 +93,6 @@ module.exports = {
       subCategories,
       newCategory,
       owner: _id,
-      thumb,
       ownerName,
       visible,
     })

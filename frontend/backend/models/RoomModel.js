@@ -30,10 +30,6 @@ const RoomModel = new Schema(
       type: String,
       required: false,
     },
-    thumb: {
-      type: Object,
-      required: false,
-    },
     visible: {
       type: Object,
       required: true,

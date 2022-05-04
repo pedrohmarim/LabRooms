@@ -1,4 +1,5 @@
-const fetch = require("node-fetch");
+const fetchP = import("node-fetch").then((mod) => mod.default);
+const fetch = (...args) => fetchP.then((fn) => fn(...args));
 
 module.exports = async (captcha) => {
   const response_key = captcha;

@@ -1,10 +1,22 @@
-import React from "react";
-import { FormItem } from "../Signup.form.styled";
-import { FeatherIcons, Input, InputMask } from "../../../../../antd_components";
+import React, { useState } from "react";
+import ImgCrop from "antd-img-crop";
 import { validateBr } from "js-brasil";
 import { StyledButton } from "../Signup.form.styled";
 import Recaptcha from "../../../../../GlobalComponents/Recaptcha/Recaptcha.component";
 import { StyledRow } from "../../../../CreateRoom/CreateRoom.styled";
+import { FormItem } from "../Signup.form.styled";
+import {
+  acceptedFileTypes,
+  isValidExtension,
+  isValidFileSize,
+} from "../../../../../Helpers/UploadImage.helper";
+import {
+  FeatherIcons,
+  Input,
+  InputMask,
+  Upload,
+  Notification,
+} from "../../../../../antd_components";
 
 const UserBasicInfo = ({
   validateInput,
@@ -13,12 +25,70 @@ const UserBasicInfo = ({
   setCaptcha,
   captcha,
 }) => {
+  const [fileList, setFileList] = useState([]);
+
   const styleInput = {
     borderRadius: "8px",
     padding: "8px",
     marginBottom: "4px",
     marginTop: "-5px",
   };
+
+  const onChange = ({ fileList: newFileList }) => {
+    setFileList(newFileList);
+
+    const { status, name } = newFileList[0];
+
+    if (status === "done") {
+      Notification.open({
+        type: "success",
+        message: `${name} file uploaded successfully.`,
+      });
+    } else if (status === "error") {
+      Notification.open({
+        type: "error",
+        message: `${name} file uploaded successfully.`,
+      });
+    }
+  };
+
+  const onPreview = async (file) => {
+    let src = file.url;
+    if (!src) {
+      src = await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file.originFileObj);
+        reader.onload = () => resolve(reader.result);
+      });
+    }
+    const image = new Image();
+    image.src = src;
+    const imgWindow = window.open(src);
+    imgWindow.document.write(image.outerHTML);
+  };
+
+  function beforeUpload(file) {
+    const nameSplit = file.name.trim().split(".");
+    const extension = nameSplit[nameSplit.length - 1];
+
+    if (!isValidExtension(extension)) {
+      Notification.open({
+        type: "error",
+        message: "Formato de Arquivo Inválido",
+      });
+      return false;
+    }
+
+    if (!isValidFileSize(file.size, 3)) {
+      Notification.open({
+        type: "error",
+        message: "Arquivos de imagem devem ser menores que 3MB.",
+      });
+      return false;
+    }
+
+    return true;
+  }
 
   return (
     <>
@@ -140,6 +210,24 @@ const UserBasicInfo = ({
           placeholder='Confirmar Senha'
         />
       </FormItem>
+
+      <ImgCrop rotate>
+        <FormItem label='Imagem de Perfil' name='file'>
+          <Upload
+            multiple={false}
+            beforeUpload={beforeUpload}
+            progress
+            accept={acceptedFileTypes}
+            // action={`${window.location.href.split(":3000")[0]}:4000/upload`}
+            listType='picture-card'
+            fileList={fileList}
+            onChange={onChange}
+            onPreview={onPreview}
+          >
+            {fileList.length < 1 && "+ Enviar"}
+          </Upload>
+        </FormItem>
+      </ImgCrop>
 
       <StyledRow justify='center'>
         <Recaptcha
