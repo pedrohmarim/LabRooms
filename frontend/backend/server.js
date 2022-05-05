@@ -1,13 +1,11 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
+const connection = require("./db");
 const routesUrls = require("./backRoutes/routes");
-const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
 
-mongoose.connect(
-  `mongodb+srv://${process.env.MONGO_LOGIN}:${process.env.MONGO_PSW}@cluster0.qur6c.mongodb.net/LabRoomsDataBase`
-);
+connection();
 
 app.use(express.json());
 app.use(cors());

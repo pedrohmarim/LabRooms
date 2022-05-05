@@ -37,7 +37,7 @@ const UserBasicInfo = ({
   const onChange = ({ fileList: newFileList }) => {
     setFileList(newFileList);
 
-    const { status, name } = newFileList[0];
+    const { status, name } = fileList;
 
     if (status === "done") {
       Notification.open({
@@ -218,7 +218,10 @@ const UserBasicInfo = ({
             beforeUpload={beforeUpload}
             progress
             accept={acceptedFileTypes}
-            // action={`${window.location.href.split(":3000")[0]}:4000/upload`}
+            // action={(file) => {
+            //   setImage({ name: file.name, uid: file.uid });
+            //   return `${window.location.href.split(":3000")[0]}:4000/upload`;
+            // }}
             listType='picture-card'
             fileList={fileList}
             onChange={onChange}
