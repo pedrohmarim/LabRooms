@@ -10,6 +10,11 @@ const RoomModel = new Schema(
       type: String,
       required: true,
     },
+    imagePath: {
+      type: String,
+      required: false,
+      default: undefined,
+    },
     title: {
       type: String,
       required: true,

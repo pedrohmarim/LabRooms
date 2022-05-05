@@ -1,5 +1,4 @@
 import React from "react";
-import UserImage from "../../../assets/userImage.jpg";
 import { Link } from "react-router-dom";
 import { SocialList } from "./Tabs/sessions/SocialList.component";
 import {
@@ -28,7 +27,13 @@ export default function ProfileSocials({
             <Breadcrumb />
           </StyledBreadCrumb>
 
-          <Image src={UserImage} height={120} />
+          <Image
+            width={150}
+            src={`${window.location.href.split(":3000")[0]}:4000/${
+              user?.imagePath
+            }`}
+            height={150}
+          />
 
           <StyledCol span={24}>
             <UserInfoTitle level={4} isViewProject={isViewProject}>

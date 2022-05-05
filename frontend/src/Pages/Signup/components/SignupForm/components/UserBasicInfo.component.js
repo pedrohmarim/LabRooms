@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ImgCrop from "antd-img-crop";
 import { validateBr } from "js-brasil";
 import { StyledButton } from "../Signup.form.styled";
 import Recaptcha from "../../../../../GlobalComponents/Recaptcha/Recaptcha.component";
@@ -52,6 +51,11 @@ const UserBasicInfo = ({
     }
   };
 
+  const dummyRequest = ({ file, onSuccess }) => {
+    setTimeout(() => {
+      onSuccess("ok");
+    }, 0);
+  };
   const onPreview = async (file) => {
     let src = file.url;
     if (!src) {
@@ -87,7 +91,7 @@ const UserBasicInfo = ({
       return false;
     }
 
-    return true;
+    return file;
   }
 
   return (
@@ -211,26 +215,25 @@ const UserBasicInfo = ({
         />
       </FormItem>
 
-      <ImgCrop rotate>
-        <FormItem label='Imagem de Perfil' name='file'>
-          <Upload
-            multiple={false}
-            beforeUpload={beforeUpload}
-            progress
-            accept={acceptedFileTypes}
-            // action={(file) => {
-            //   setImage({ name: file.name, uid: file.uid });
-            //   return `${window.location.href.split(":3000")[0]}:4000/upload`;
-            // }}
-            listType='picture-card'
-            fileList={fileList}
-            onChange={onChange}
-            onPreview={onPreview}
-          >
-            {fileList.length < 1 && "+ Enviar"}
-          </Upload>
-        </FormItem>
-      </ImgCrop>
+      <FormItem
+        label='Imagem de Perfil'
+        name='imageFile'
+        rules={[{ required: true, message: "Campo obrigatório." }]}
+      >
+        <Upload
+          multiple={false}
+          beforeUpload={beforeUpload}
+          customRequest={dummyRequest}
+          progress
+          accept={acceptedFileTypes}
+          listType='picture-card'
+          fileList={fileList}
+          onChange={onChange}
+          onPreview={onPreview}
+        >
+          {fileList.length < 1 && "+ Enviar"}
+        </Upload>
+      </FormItem>
 
       <StyledRow justify='center'>
         <Recaptcha

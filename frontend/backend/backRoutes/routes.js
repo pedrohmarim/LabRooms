@@ -1,13 +1,35 @@
 const express = require("express");
 const router = express.Router();
 const checkAuth = require("../middleware/auth");
-
 const UserController = require("../controllers/UserController");
 const RoomController = require("../controllers/RoomController");
 const CategoryController = require("../controllers/CategoryController");
 const CandidaciesController = require("../controllers/CandidaciesController");
+const multer = require("multer");
 
-router.post("/userRegister", UserController.handleRegister);
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./uploads/");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + file.originalname);
+  },
+  fileFilter: function (req, file, callback) {
+    var ext = file.originalname;
+    if (ext !== ".png" && ext !== ".jpg" && ext !== "jpeg") {
+      return callback(new Error("Formato Inválido"));
+    }
+    callback(null, true);
+  },
+});
+
+const upload = multer({ storage: storage });
+
+router.post(
+  "/userRegister",
+  upload.single("image-file"),
+  UserController.handleRegister
+);
 router.get("/userLogin", UserController.handleLogin);
 router.get("/currentUser", checkAuth, UserController.handleGetCurrentUser);
 router.get("/getUsers", UserController.handleGetUsers);

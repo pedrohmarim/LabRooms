@@ -106,8 +106,8 @@ export const UserProvider = ({ children }) => {
 
       if (user?.accountType === TIPO_CADASTRO.EMPRESA) {
         HomeService.getRecomendedUsers(user?._id, token).then(({ data }) => {
-          const { usersWithIcon, loading } = data;
-          setRecomendedUsers(usersWithIcon);
+          const { arrayWithIcon, loading } = data;
+          setRecomendedUsers(arrayWithIcon);
           setLoadingRecomendedUsers(loading);
         });
       }

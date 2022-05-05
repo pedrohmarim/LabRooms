@@ -16,11 +16,6 @@ const SignUpForm = ({ darkPallete, accountType }) => {
   const [form] = Form.useForm();
   let navigate = useNavigate();
 
-  function resetCaptcha() {
-    setCaptcha(null);
-    recaptchaRef.current.reset();
-  }
-
   function onSubmit(values) {
     if (!accountType)
       Notification.open({
@@ -29,19 +24,25 @@ const SignUpForm = ({ darkPallete, accountType }) => {
         description: "Selecione Novamente o Tipo de Cadastro.",
       });
 
-    const { cpf, email, password, username } = values;
+    const { cpf, email, password, username, imageFile } = values;
 
-    const dto = {
-      cpf,
-      email,
-      password,
-      username,
-      accountType,
-      categoryId: userSkills?.newCategory ? undefined : userSkills?.category,
-      newCategory: userSkills?.newCategory || undefined,
-      subCategories: userSkills?.subCategories,
-      captcha,
-    };
+    const dto = new FormData();
+    dto.append("image-file", imageFile.file.originFileObj);
+    dto.append("cpf", cpf);
+    dto.append("email", email);
+    dto.append("password", password);
+    dto.append("username", username);
+    dto.append("accountType", accountType);
+    dto.append(
+      "categoryId",
+      userSkills?.newCategory ? undefined : userSkills?.category
+    );
+    dto.append("newCategory", userSkills?.newCategory || undefined);
+
+    for (var i = 0; i < userSkills?.subCategories.length; i++) {
+      dto.append("subCategories", userSkills?.subCategories[i]);
+    }
+    dto.set("captcha", captcha);
 
     SignUpService.userRegister(dto).then(({ data }) => {
       const { message, success } = data;
@@ -51,7 +52,6 @@ const SignUpForm = ({ darkPallete, accountType }) => {
       } else {
         setValidateInput(null);
         navigate("/signin");
-        resetCaptcha();
       }
 
       Notification.open({

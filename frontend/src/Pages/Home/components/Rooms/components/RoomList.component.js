@@ -106,7 +106,6 @@ const RoomList = ({
                   arrayToRender.map(
                     ({
                       title,
-                      thumb,
                       _id,
                       ownerName,
                       username,
@@ -116,6 +115,7 @@ const RoomList = ({
                       newCategory,
                       CategorieTitle,
                       Icon,
+                      imagePath,
                     }) => (
                       <Col
                         xs={12}
@@ -164,8 +164,10 @@ const RoomList = ({
                                 alt='Image'
                                 gap={2}
                                 src={
-                                  thumb ||
-                                  "https://media.istockphoto.com/photos/red-squirrel-looking-around-a-tree-picture-id466395505?k=20&m=466395505&s=612x612&w=0&h=ELSnLKu_E2-pc0q_bfGRadTZwYE1f7jq4TWTyHu1gkI="
+                                  `${
+                                    window.location.href.split(":3000")[0]
+                                  }:4000/${imagePath}` ||
+                                  "https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/996/notfound.png"
                                 }
                                 preview={false}
                               />
@@ -174,7 +176,9 @@ const RoomList = ({
                             {!ownerName && (
                               <RoomImage
                                 src={
-                                  thumb ||
+                                  `${
+                                    window.location.href.split(":3000")[0]
+                                  }:4000/${imagePath}` ||
                                   "https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/996/notfound.png"
                                 }
                                 preview={false}

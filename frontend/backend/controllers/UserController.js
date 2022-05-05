@@ -11,14 +11,22 @@ function handleUsersWithIcon(users, response) {
   let usersWithIcon = [];
 
   users.forEach((user) => {
-    const { _id, categoryId, newCategory, username, biography, accountType } =
-      user;
+    const {
+      _id,
+      categoryId,
+      newCategory,
+      username,
+      biography,
+      accountType,
+      imagePath,
+    } = user;
 
     if (categoryId) {
       CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
         usersWithIcon.push({
           _id,
           username,
+          imagePath,
           biography,
           accountType,
           Icon,
@@ -32,6 +40,7 @@ function handleUsersWithIcon(users, response) {
       usersWithIcon.push({
         _id,
         username,
+        imagePath,
         biography,
         accountType,
         Icon: "repeat",
@@ -69,7 +78,7 @@ module.exports = {
       if (res.length === 0) {
         let hashedPass = await bcrypt.hash(password, 10);
 
-        if (accountType === 1) {
+        if (accountType === "1") {
           UserModel.create({
             cpf,
             email,
@@ -77,8 +86,9 @@ module.exports = {
             username,
             accountType,
             subCategories,
-            categoryId,
-            newCategory,
+            categoryId: categoryId === "undefined" ? undefined : categoryId,
+            newCategory: newCategory === "undefined" ? undefined : newCategory,
+            imagePath: request.file.path,
             createdAt: new Date().setHours(new Date().getHours() - 3),
           })
             .then(() => {
@@ -90,7 +100,6 @@ module.exports = {
             .catch(() => {
               return response.json({
                 message: "Erro ao Cadastrar Usuário.",
-                unknow: true,
               });
             });
         } else {
@@ -100,6 +109,7 @@ module.exports = {
             hashedPass,
             username,
             accountType,
+            imagePath: request.file.path,
             createdAt: new Date().setHours(new Date().getHours() - 3),
           })
             .then(() => {
@@ -111,7 +121,6 @@ module.exports = {
             .catch(() => {
               return response.json({
                 message: "Erro ao cadastrar usuário.",
-                unknow: true,
               });
             });
         }

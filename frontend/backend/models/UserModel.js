@@ -14,6 +14,7 @@ const UserModel = new Schema(
     newCategory: {
       type: String,
       required: false,
+      default: undefined,
     },
     subCategories: {
       type: Array,
@@ -28,6 +29,11 @@ const UserModel = new Schema(
     email: {
       type: String,
       required: true,
+      default: undefined,
+    },
+    imagePath: {
+      type: String,
+      required: false,
       default: undefined,
     },
     cpf: {

@@ -18,6 +18,7 @@ function handleRoomWithIcon(array, response) {
       _id,
       description,
       visible,
+      imagePath,
     } = item;
 
     if (categoryId) {
@@ -32,6 +33,7 @@ function handleRoomWithIcon(array, response) {
           subCategories,
           Icon,
           CategorieTitle: Title,
+          imagePath,
         });
 
         if (array.length === arrayWithIcon.length)
@@ -48,6 +50,7 @@ function handleRoomWithIcon(array, response) {
         subCategories,
         Icon: "repeat",
         CategorieTitle: newCategory,
+        imagePath,
       });
 
       if (array.length === arrayWithIcon.length)
@@ -77,6 +80,7 @@ module.exports = {
       subCategories,
       visible,
       captcha,
+      imagePath,
     } = request.body;
 
     const validCaptcha = await VerifyCaptcha(captcha);
@@ -90,6 +94,7 @@ module.exports = {
       title,
       description,
       categoryId,
+      imagePath,
       subCategories,
       newCategory,
       owner: _id,

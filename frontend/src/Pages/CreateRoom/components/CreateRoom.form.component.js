@@ -37,6 +37,7 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
       captcha,
       subCategories,
       ownerName: user?.username,
+      imagePath: user?.imagePath,
       title,
       visible: !visible,
       description: description.isEmpty() ? null : description.toHTML(),
