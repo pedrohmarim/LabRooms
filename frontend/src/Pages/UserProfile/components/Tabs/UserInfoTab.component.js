@@ -42,8 +42,6 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
       github,
     } = values;
 
-    debugger;
-
     const dto = {
       username,
       email,
