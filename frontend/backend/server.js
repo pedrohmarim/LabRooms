@@ -8,8 +8,9 @@ const path = require("path");
 
 connection();
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
+console.log(path.join(__dirname, "/uploads"));
 app.use(express.json());
 app.use(cors());
-app.listen(process.env.PORT || 4000);
+app.listen(process.env.PORT);
 app.use(routesUrls);
