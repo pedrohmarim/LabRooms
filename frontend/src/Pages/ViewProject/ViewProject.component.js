@@ -56,28 +56,32 @@ export default function ViewProject() {
         _id,
       };
 
-      CreateRoomService.ValidateSharedLink(dto).then(({ data }) => {
-        const { _id } = data;
+      CreateRoomService.ValidateSharedLink(dto)
+        .then(({ data }) => {
+          const { _id } = data;
 
-        if (_id) {
-          ChatRoomService.getRoomById(_id).then(({ data }) => {
-            setCurrentRoom(data);
-          });
-        } else {
-          navigate("/notfound");
-        }
-      });
+          if (_id) {
+            ChatRoomService.getRoomById(_id).then(({ data }) => {
+              setCurrentRoom(data);
+            });
+          } else {
+            navigate("/notfound");
+          }
+        })
+        .catch(() => navigate("/notfound"));
     } else {
-      ChatRoomService.getRoomById(_id).then(({ data }) => {
-        const { visible, owner } = data;
+      ChatRoomService.getRoomById(_id)
+        .then(({ data }) => {
+          const { visible, owner } = data;
 
-        setCurrentRoom(data);
+          setCurrentRoom(data);
 
-        if (!visible && token && user && user?._id !== owner)
-          navigate("/notfound");
+          if (!visible && token && user && user?._id !== owner)
+            navigate("/notfound");
 
-        if (!visible && !token) navigate("/notfound");
-      });
+          if (!visible && !token) navigate("/notfound");
+        })
+        .catch(() => navigate("/notfound"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

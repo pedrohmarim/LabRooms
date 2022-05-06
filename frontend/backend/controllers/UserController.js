@@ -252,21 +252,23 @@ module.exports = {
   async handleGetUserById(request, response) {
     const { _id } = request.headers;
 
-    const user = await UserModel.findOne({ _id });
+    try {
+      const user = await UserModel.findOne({ _id });
 
-    if (user) {
-      return response.json({
-        ...user._doc,
-        cpf: AnonymizeCPF(user?.cpf),
-        email: AnonymizeEmail(user?.email),
-        hashedPass: undefined,
-        createdAt: user.createdAt.toLocaleString("pt-BR", {
-          year: "numeric",
-          month: "2-digit",
-          day: "2-digit",
-        }),
-      });
-    } else {
+      if (user) {
+        return response.json({
+          ...user._doc,
+          cpf: AnonymizeCPF(user?.cpf),
+          email: AnonymizeEmail(user?.email),
+          hashedPass: undefined,
+          createdAt: user.createdAt.toLocaleString("pt-BR", {
+            year: "numeric",
+            month: "2-digit",
+            day: "2-digit",
+          }),
+        });
+      }
+    } catch {
       return response.json(null);
     }
   },
@@ -349,9 +351,9 @@ module.exports = {
                 username,
                 email,
                 cpf,
-                phone,
-                celphone,
-                biography,
+                phone: phone || "",
+                celphone: celphone || "",
+                biography: biography || "",
                 socials,
                 categoryId:
                   categoryId === 11 || categoryId === 12 ? null : categoryId,

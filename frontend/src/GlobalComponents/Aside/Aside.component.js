@@ -30,6 +30,7 @@ const Aside = ({ darkPallete, SelectedItem }) => {
               onClick={() => navigate("/")}
             />
           </Tooltip>
+
           {user !== null &&
             window.location.pathname.split("/")[1] !== "profile" && (
               <Tooltip

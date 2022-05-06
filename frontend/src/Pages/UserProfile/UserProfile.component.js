@@ -50,11 +50,15 @@ export default function UserProfile() {
       setViewUser(user);
     } else if ((user && _id !== user?._id) || !token) {
       ChatRoomService.getUserById(_id).then(({ data }) => {
-        setViewUser(data);
+        if (data) {
+          setViewUser(data);
+          setIsViewMode(true);
+        } else {
+          navigate("/notfound");
+        }
       });
-      setIsViewMode(true);
     }
-  }, [_id, user, token]);
+  }, [_id, user, token, navigate]);
 
   return (
     <>

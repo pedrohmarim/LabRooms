@@ -199,11 +199,10 @@ module.exports = {
   async handleGetRoomsById(request, response) {
     const { _id } = request.headers;
 
-    const result = await RoomModel.findOne({ _id });
-
-    if (result) {
+    try {
+      const result = await RoomModel.findOne({ _id });
       return response.json(result);
-    } else {
+    } catch {
       return response.json(null);
     }
   },
