@@ -175,6 +175,7 @@ const RoomList = ({
 
                             {!ownerName && (
                               <RoomImage
+                              height={210}
                                 src={
                                   `${
                                     window.location.href.split(":3000")[0]
