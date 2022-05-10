@@ -49,9 +49,9 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
       const { message, success } = data;
 
       if (success) {
+        getRoomsByOwnerId();
         resetCaptcha();
         navigate("/");
-        getRoomsByOwnerId();
       }
 
       Notification.open({

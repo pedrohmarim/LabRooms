@@ -29,6 +29,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
       username,
       email,
       cpf,
+      cnpj,
       category,
       newCategory,
       subCategories,
@@ -45,7 +46,8 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
     const dto = {
       username,
       email,
-      cpf,
+      cpf: cpf || undefined,
+      cnpj: cnpj || undefined,
       categoryId: category || undefined,
       newCategory: newCategory || undefined,
       subCategories: subCategories || undefined,
@@ -90,7 +92,8 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
           initialValues={{
             username: user?.username,
             email: user?.email,
-            cpf: user?.cpf,
+            cpf: user?.cpf || undefined,
+            cnpj: user?.cnpj || undefined,
             category: user?.categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
             newCategory: user?.newCategory,
             subCategories: user?.subCategories || undefined,
@@ -105,6 +108,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
           }}
         >
           <PersonalInfo
+            accountType={user?.accountType}
             invalidInfo={invalidInfo}
             editMode={editMode}
             viewMode={viewMode}

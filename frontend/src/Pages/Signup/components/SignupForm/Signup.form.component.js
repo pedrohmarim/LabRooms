@@ -16,6 +16,11 @@ const SignUpForm = ({ darkPallete, accountType }) => {
   const [form] = Form.useForm();
   let navigate = useNavigate();
 
+  function resetCaptcha() {
+    setCaptcha(null);
+    recaptchaRef.current.reset();
+  }
+
   function onSubmit(values) {
     if (!accountType)
       Notification.open({
@@ -24,11 +29,14 @@ const SignUpForm = ({ darkPallete, accountType }) => {
         description: "Selecione Novamente o Tipo de Cadastro.",
       });
 
-    const { cpf, email, password, username, imageFile } = values;
+    setValidateInput(null);
+
+    const { cpf, email, password, username, imageFile, cnpj } = values;
 
     const dto = new FormData();
     dto.append("image-file", imageFile.file.originFileObj);
-    dto.append("cpf", cpf);
+    if (cpf) dto.append("cpf", cpf);
+    else dto.append("cnpj", cnpj);
     dto.append("email", email);
     dto.append("password", password);
     dto.append("username", username);
@@ -49,6 +57,7 @@ const SignUpForm = ({ darkPallete, accountType }) => {
 
       if (!success) {
         setValidateInput(data);
+        resetCaptcha();
       } else {
         setValidateInput(null);
         navigate("/signin");
@@ -75,6 +84,7 @@ const SignUpForm = ({ darkPallete, accountType }) => {
 
       {(userSkills || accountType === 2) && (
         <UserBasicInfo
+          accountType={accountType}
           captcha={captcha}
           recaptchaRef={recaptchaRef}
           setCaptcha={(value) => setCaptcha(value)}

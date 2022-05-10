@@ -20,6 +20,7 @@ import {
 } from "../../../../antd_components";
 
 const RoomsTab = ({
+  getRooms,
   getRoomsByOwnerId,
   hasntRooms,
   darkPallete,
@@ -69,6 +70,7 @@ const RoomsTab = ({
           const { message, status } = data;
 
           getRoomsByOwnerId();
+          getRooms();
 
           Notification.open({
             type: status === 200 ? "success" : "error",
@@ -96,6 +98,7 @@ const RoomsTab = ({
         const { message, status } = data;
 
         getRoomsByOwnerId();
+        getRooms();
 
         Notification.open({
           type: status === 200 ? "success" : "error",
@@ -109,6 +112,7 @@ const RoomsTab = ({
         const { message, status } = data;
 
         getRoomsByOwnerId();
+        getRooms();
 
         Notification.open({
           type: status === 200 ? "success" : "error",
@@ -154,7 +158,13 @@ const RoomsTab = ({
     const MoreActionsRoom = (_id, title, visible) => (
       <Menu>
         {!visible && (
-          <Menu.Item key='1' onClick={() => handleCreateSharedLink(_id)}>
+          <Menu.Item
+            key='1'
+            onClickCapture={(e) => {
+              handleCreateSharedLink(_id);
+              e.stopPropagation();
+            }}
+          >
             <Row align='middle'>
               <FeatherIcons icon='share-2' size={15} />
               <MenuLabelItem>Criar Convite</MenuLabelItem>
@@ -162,7 +172,13 @@ const RoomsTab = ({
           </Menu.Item>
         )}
 
-        <Menu.Item key='2' onClick={() => navigate(`/view/project/${_id}`)}>
+        <Menu.Item
+          key='2'
+          onClickCapture={(e) => {
+            navigate(`/view/project/${_id}`);
+            e.stopPropagation();
+          }}
+        >
           <Row align='middle'>
             <FeatherIcons icon='share' size={15} />
             <MenuLabelItem>Visualizar</MenuLabelItem>
@@ -171,7 +187,10 @@ const RoomsTab = ({
 
         <Menu.Item
           key='3'
-          onClick={() => setCandidaciesActive({ active: true, roomId: _id })}
+          onClickCapture={(e) => {
+            setCandidaciesActive({ active: true, roomId: _id });
+            e.stopPropagation();
+          }}
         >
           <Row align='middle'>
             <FeatherIcons icon='users' size={15} />
@@ -179,7 +198,13 @@ const RoomsTab = ({
           </Row>
         </Menu.Item>
 
-        <Menu.Item key='4' onClick={() => handleLockProject(_id, visible)}>
+        <Menu.Item
+          key='4'
+          onClickCapture={(e) => {
+            handleLockProject(_id, visible);
+            e.stopPropagation();
+          }}
+        >
           <Row align='middle'>
             <FeatherIcons icon={visible ? "lock" : "unlock"} size={15} />
             <MenuLabelItem>
@@ -190,7 +215,7 @@ const RoomsTab = ({
 
         <Menu.Item
           key='5'
-          onClick={() => {
+          onClickCapture={() => {
             setViewMode({
               _id,
             });
@@ -216,7 +241,10 @@ const RoomsTab = ({
               <b>{title.length > 10 ? title.substr(0, 10) + "..." : title}</b> ?
             </span>
           }
-          onConfirm={() => handleDeleteRoom(_id)}
+          onClickCapture={(e) => {
+            handleDeleteRoom(_id);
+            e.stopPropagation();
+          }}
           okText='Sim'
           cancelText='Não'
         >
@@ -286,6 +314,7 @@ const RoomsTab = ({
     darkPallete,
     allSubCategories,
     showSubCategorie,
+    getRooms,
   ]);
 
   return (

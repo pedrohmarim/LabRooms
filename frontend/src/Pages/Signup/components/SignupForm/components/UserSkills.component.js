@@ -31,6 +31,7 @@ const UserSkills = ({ categories, darkPallete, setUserSkills, form }) => {
         form={form}
         categories={categories}
         labelMainCategory='Qual sua Área de Atuação?'
+        defaultHideNewCategory
       />
 
       <StyledButton

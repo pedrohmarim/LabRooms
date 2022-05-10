@@ -38,7 +38,12 @@ const UserModel = new Schema(
     },
     cpf: {
       type: String,
-      required: true,
+      required: false,
+      default: undefined,
+    },
+    cnpj: {
+      type: String,
+      required: false,
       default: undefined,
     },
     hashedPass: {

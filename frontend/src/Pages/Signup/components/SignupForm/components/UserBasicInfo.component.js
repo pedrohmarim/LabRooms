@@ -16,6 +16,7 @@ import {
   Upload,
   Notification,
 } from "../../../../../antd_components";
+import { TIPO_CADASTRO } from "../../../../../Helpers/TipoCadastro";
 
 const UserBasicInfo = ({
   validateInput,
@@ -23,6 +24,7 @@ const UserBasicInfo = ({
   recaptchaRef,
   setCaptcha,
   captcha,
+  accountType,
 }) => {
   const [fileList, setFileList] = useState([]);
 
@@ -127,31 +129,59 @@ const UserBasicInfo = ({
         />
       </FormItem>
 
-      <FormItem
-        label='CPF'
-        name='cpf'
-        rules={[
-          { required: true, message: "Campo obrigatório." },
-          () => ({
-            validator(_, value) {
-              if (!value || validateBr.cpf(value)) {
-                return Promise.resolve();
-              }
-              return Promise.reject(new Error("CPF Inválido."));
-            },
-          }),
-        ]}
-        help={validateInput?.field === "cpf" ? validateInput.message : null}
-        validateStatus={validateInput?.field === "cpf" ? "error" : null}
-      >
-        <InputMask
-          mask='111.111.111-11'
-          style={styleInput}
-          allowClear
-          prefix={<FeatherIcons icon='credit-card' size={15} />}
-          placeholder='CPF'
-        />
-      </FormItem>
+      {accountType === TIPO_CADASTRO.FREELANCER ? (
+        <FormItem
+          label='CPF'
+          name='cpf'
+          rules={[
+            { required: true, message: "Campo obrigatório." },
+            () => ({
+              validator(_, value) {
+                if (!value || validateBr.cpf(value)) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error("CPF Inválido."));
+              },
+            }),
+          ]}
+          help={validateInput?.field === "cpf" ? validateInput.message : null}
+          validateStatus={validateInput?.field === "cpf" ? "error" : null}
+        >
+          <InputMask
+            mask='111.111.111-11'
+            style={styleInput}
+            allowClear
+            prefix={<FeatherIcons icon='credit-card' size={15} />}
+            placeholder='CPF'
+          />
+        </FormItem>
+      ) : (
+        <FormItem
+          label='CNPJ'
+          name='cnpj'
+          rules={[
+            { required: true, message: "Campo obrigatório." },
+            () => ({
+              validator(_, value) {
+                if (!value || validateBr.cnpj(value)) {
+                  return Promise.resolve();
+                }
+                return Promise.reject(new Error("CNPJ Inválido."));
+              },
+            }),
+          ]}
+          help={validateInput?.field === "cnpj" ? validateInput.message : null}
+          validateStatus={validateInput?.field === "cnpj" ? "error" : null}
+        >
+          <InputMask
+            mask='11.111.111/1111-11'
+            style={styleInput}
+            allowClear
+            prefix={<FeatherIcons icon='credit-card' size={15} />}
+            placeholder='CNPJ'
+          />
+        </FormItem>
+      )}
 
       <FormItem
         label='Senha'

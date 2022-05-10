@@ -76,6 +76,11 @@ export default function ViewProject({
             </HeaderStyled>
 
             <ProjectDescription
+              margintop={
+                currentRoom?.ownerName && !currentRoom?.newCategory
+                  ? "-15px"
+                  : "0"
+              }
               color={darkPallete.white}
               dangerouslySetInnerHTML={{ __html: currentRoom?.description }}
             />

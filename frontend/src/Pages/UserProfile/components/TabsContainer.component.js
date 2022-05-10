@@ -19,7 +19,7 @@ export default function TabUserInfo({
   candidaciesActive,
   setActiveKey,
 }) {
-  const [_id, setRoomId] = useState();
+  const [_id, setRoomId] = useState(null);
   const { TabPane } = Tabs;
   const {
     setTabRooms,
@@ -28,6 +28,7 @@ export default function TabUserInfo({
     allRooms,
     hasntRooms,
     getRoomsByOwnerId,
+    getRooms,
   } = useContext(UserContext);
 
   function handleFilterRoom(roomSelectId) {
@@ -67,6 +68,7 @@ export default function TabUserInfo({
             <>
               <TabPane tab='Meus Projetos' key='2'>
                 <RoomsTab
+                  getRooms={getRooms}
                   getRoomsByOwnerId={getRoomsByOwnerId}
                   hasntRooms={hasntRooms}
                   darkPallete={darkPallete}

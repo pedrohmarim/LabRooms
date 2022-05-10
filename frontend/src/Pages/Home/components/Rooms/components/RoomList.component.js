@@ -163,25 +163,19 @@ const RoomList = ({
                               <RoomOwnerImg
                                 alt='Image'
                                 gap={2}
-                                src={
-                                  `${
-                                    window.location.href.split(":3000")[0]
-                                  }:4000/${imagePath}` ||
-                                  "https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/996/notfound.png"
-                                }
+                                src={`${
+                                  window.location.href.split(":3000")[0]
+                                }:4000/${imagePath}`}
                                 preview={false}
                               />
                             )}
 
                             {!ownerName && (
                               <RoomImage
-                              height={210}
-                                src={
-                                  `${
-                                    window.location.href.split(":3000")[0]
-                                  }:4000/${imagePath}` ||
-                                  "https://cdn.neemo.com.br/uploads/settings_webdelivery/logo/996/notfound.png"
-                                }
+                                height={210}
+                                src={`${
+                                  window.location.href.split(":3000")[0]
+                                }:4000/${imagePath}`}
                                 preview={false}
                               />
                             )}

@@ -11,8 +11,10 @@ import {
   FeatherIcons,
   Tooltip,
 } from "../../../../../antd_components";
+import { TIPO_CADASTRO } from "../../../../../Helpers/TipoCadastro";
 
 const SocialRegister = ({
+  accountType,
   invalidInfo,
   editMode,
   viewMode,
@@ -97,47 +99,95 @@ const SocialRegister = ({
           </Form.Item>
         </Col>
 
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
-          <Form.Item
-            help={invalidInfo?.field === "cpf" ? invalidInfo.message : null}
-            validateStatus={invalidInfo?.field === "cpf" ? "error" : null}
-            rules={
-              !viewMode && [
-                { required: true, message: "Campo obrigatório." },
-                () => ({
-                  validator(_, value) {
-                    if (!value || validateBr.cpf(value)) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(new Error("CPF Inválido."));
-                  },
-                }),
-              ]
-            }
-            name='cpf'
-            label={
-              <Typography>
-                <b>CPF</b>
-              </Typography>
-            }
-          >
-            {!viewMode ? <InputMask
-              tabIndex={viewMode && "-1"}
-              className={viewMode && "disabled"}
-              disabled={!editMode && !viewMode}
-              style={styleInput}
-              placeholder='CPF'
-              mask='111.111.111-11'
-            /> :(
-              <Input
-              tabIndex={viewMode && "-1"}
-              className={viewMode && "disabled"}
-              disabled={!editMode && !viewMode}
-              style={styleInput}
-            /> 
-            )}
-          </Form.Item>
-        </Col>
+        {accountType === TIPO_CADASTRO.FREELANCER ? (
+          <Col span={window.innerWidth < 1024 ? 24 : 8}>
+            <Form.Item
+              help={invalidInfo?.field === "cpf" ? invalidInfo.message : null}
+              validateStatus={invalidInfo?.field === "cpf" ? "error" : null}
+              rules={
+                !viewMode && [
+                  { required: true, message: "Campo obrigatório." },
+                  () => ({
+                    validator(_, value) {
+                      if (!value || validateBr.cpf(value)) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error("CPF Inválido."));
+                    },
+                  }),
+                ]
+              }
+              name='cpf'
+              label={
+                <Typography>
+                  <b>CPF</b>
+                </Typography>
+              }
+            >
+              {!viewMode ? (
+                <InputMask
+                  tabIndex={viewMode && "-1"}
+                  className={viewMode && "disabled"}
+                  disabled={!editMode && !viewMode}
+                  style={styleInput}
+                  placeholder='CPF'
+                  mask='111.111.111-11'
+                />
+              ) : (
+                <Input
+                  tabIndex={viewMode && "-1"}
+                  className={viewMode && "disabled"}
+                  disabled={!editMode && !viewMode}
+                  style={styleInput}
+                />
+              )}
+            </Form.Item>
+          </Col>
+        ) : (
+          <Col span={window.innerWidth < 1024 ? 24 : 8}>
+            <Form.Item
+              help={invalidInfo?.field === "cnpj" ? invalidInfo.message : null}
+              validateStatus={invalidInfo?.field === "cnpj" ? "error" : null}
+              rules={
+                !viewMode && [
+                  { required: true, message: "Campo obrigatório." },
+                  () => ({
+                    validator(_, value) {
+                      if (!value || validateBr.cnpj(value)) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error("CNPJ Inválido."));
+                    },
+                  }),
+                ]
+              }
+              name='cnpj'
+              label={
+                <Typography>
+                  <b>CNPJ</b>
+                </Typography>
+              }
+            >
+              {!viewMode ? (
+                <InputMask
+                  tabIndex={viewMode && "-1"}
+                  className={viewMode && "disabled"}
+                  disabled={!editMode && !viewMode}
+                  style={styleInput}
+                  placeholder='CNPJ'
+                  mask='11.111.111/1111-11'
+                />
+              ) : (
+                <Input
+                  tabIndex={viewMode && "-1"}
+                  className={viewMode && "disabled"}
+                  disabled={!editMode && !viewMode}
+                  style={styleInput}
+                />
+              )}
+            </Form.Item>
+          </Col>
+        )}
       </Row>
 
       <Row

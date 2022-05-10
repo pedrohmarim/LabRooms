@@ -117,6 +117,8 @@ export const TitleStyled = styled(Title)`
   white-space: nowrap;
   text-overflow: ellipsis;
   display: flex;
+  padding: 0 !important;
+  margin: 0 !important;
   align-items: center;
 `;
 

@@ -48,6 +48,14 @@ export const UserProvider = ({ children }) => {
     }
   }, [token, user]);
 
+  const getRooms = useCallback(() => {
+    HomeService.getRooms().then(({ data }) => {
+      const { arrayWithIcon, loading } = data;
+      setRooms(arrayWithIcon);
+      setLoadingRooms(loading);
+    });
+  }, []);
+
   useEffect(() => {
     getRoomsByOwnerId();
   }, [getRoomsByOwnerId]);
@@ -65,12 +73,10 @@ export const UserProvider = ({ children }) => {
   }, [token]);
 
   useEffect(() => {
-    HomeService.getRooms().then(({ data }) => {
-      const { arrayWithIcon, loading } = data;
-      setRooms(arrayWithIcon);
-      setLoadingRooms(loading);
-    });
+    getRooms();
+  }, [getRooms]);
 
+  useEffect(() => {
     CreateRoomService.getCategories().then(({ data }) => {
       setCategories(data);
     });
@@ -106,8 +112,8 @@ export const UserProvider = ({ children }) => {
 
       if (user?.accountType === TIPO_CADASTRO.EMPRESA) {
         HomeService.getRecomendedUsers(user?._id, token).then(({ data }) => {
-          const { usersWithIcon, loading } = data;
-          setRecomendedUsers(usersWithIcon);
+          const { arrayWithIcon, loading } = data;
+          setRecomendedUsers(arrayWithIcon);
           setLoadingRecomendedUsers(loading);
         });
       }
@@ -142,6 +148,7 @@ export const UserProvider = ({ children }) => {
         allRooms,
         hasntRooms,
         getRoomsByOwnerId,
+        getRooms,
       }}
     >
       {children}

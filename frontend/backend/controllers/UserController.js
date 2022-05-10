@@ -1,4 +1,5 @@
 const AnonymizeCPF = require("../Anonymize/AnonymizeCPF");
+const AnonymizeCNPJ = require("../Anonymize/AnonymizeCNPJ");
 const AnonymizeEmail = require("../Anonymize/AnonymizeEmail");
 const UserModel = require("../models/UserModel");
 const RoomsModel = require("../models/RoomModel");
@@ -57,6 +58,7 @@ module.exports = {
   async handleRegister(request, response) {
     const {
       cpf,
+      cnpj,
       email,
       password,
       username,
@@ -74,72 +76,75 @@ module.exports = {
         message: "Captcha Inválido",
       });
 
-    UserModel.find({ $or: [{ cpf }, { email }] }).then(async (res) => {
-      if (res.length === 0) {
-        let hashedPass = await bcrypt.hash(password, 10);
+    UserModel.find({ $or: [cpf ? { cpf } : { cnpj }, { email }] }).then(
+      async (res) => {
+        if (res.length === 0) {
+          let hashedPass = await bcrypt.hash(password, 10);
 
-        if (accountType === "1") {
-          UserModel.create({
-            cpf,
-            email,
-            hashedPass,
-            username,
-            accountType,
-            subCategories,
-            categoryId: categoryId === "undefined" ? undefined : categoryId,
-            newCategory: newCategory === "undefined" ? undefined : newCategory,
-            imagePath: request.file.path,
-            createdAt: new Date().setHours(new Date().getHours() - 3),
-          })
-            .then(() => {
-              return response.json({
-                message: "Usuário Cadastrado.",
-                success: true,
-              });
+          if (accountType === "1") {
+            UserModel.create({
+              cpf,
+              email,
+              hashedPass,
+              username,
+              accountType,
+              subCategories,
+              categoryId: categoryId === "undefined" ? undefined : categoryId,
+              newCategory:
+                newCategory === "undefined" ? undefined : newCategory,
+              imagePath: request.file.path,
+              createdAt: new Date().setHours(new Date().getHours() - 3),
             })
-            .catch(() => {
-              return response.json({
-                message: "Erro ao Cadastrar Usuário.",
+              .then(() => {
+                return response.json({
+                  message: "Usuário Cadastrado.",
+                  success: true,
+                });
+              })
+              .catch(() => {
+                return response.json({
+                  message: "Erro ao Cadastrar Usuário.",
+                });
               });
-            });
+          } else {
+            UserModel.create({
+              cnpj,
+              email,
+              hashedPass,
+              username,
+              accountType,
+              imagePath: request.file.path,
+              createdAt: new Date().setHours(new Date().getHours() - 3),
+            })
+              .then(() => {
+                return response.json({
+                  message: "Usuário Cadastrado.",
+                  success: true,
+                });
+              })
+              .catch(() => {
+                return response.json({
+                  message: "Erro ao cadastrar usuário.",
+                });
+              });
+          }
         } else {
-          UserModel.create({
-            cpf,
-            email,
-            hashedPass,
-            username,
-            accountType,
-            imagePath: request.file.path,
-            createdAt: new Date().setHours(new Date().getHours() - 3),
-          })
-            .then(() => {
-              return response.json({
-                message: "Usuário Cadastrado.",
-                success: true,
-              });
-            })
-            .catch(() => {
-              return response.json({
-                message: "Erro ao cadastrar usuário.",
-              });
+          if (res[0].email === email) {
+            return response.json({
+              message: "E-mail já cadastrado.",
+              field: "email",
             });
-        }
-      } else {
-        if (res[0].email === email) {
-          return response.json({
-            message: "E-mail já cadastrado.",
-            field: "email",
-          });
-        }
+          }
 
-        if (res[0].cpf === cpf) {
-          return response.json({
-            message: "CPF já cadastrado.",
-            field: "cpf",
-          });
+          if (res[0].cpf === cpf && res[0].cnpj === cnpj) {
+            return response.json({
+              message: "Documento já cadastrado.",
+              field: cpf ? "cpf" : "cnpj",
+            });
+          }
         }
       }
-    });
+    );
   },
 
   async handleLogin(request, response) {
@@ -258,7 +263,8 @@ module.exports = {
       if (user) {
         return response.json({
           ...user._doc,
-          cpf: AnonymizeCPF(user?.cpf),
+          cpf: user?.cpf ? AnonymizeCPF(user?.cpf) : undefined,
+          cnpj: user?.cnpj ? AnonymizeCNPJ(user?.cnpj) : undefined,
           email: AnonymizeEmail(user?.email),
           hashedPass: undefined,
           createdAt: user.createdAt.toLocaleString("pt-BR", {
@@ -308,6 +314,7 @@ module.exports = {
         username,
         email,
         cpf,
+        cnpj,
         phone,
         celphone,
         biography,
@@ -326,12 +333,14 @@ module.exports = {
         });
       }
 
-      const usersSameCpf = await UserModel.findOne({ cpf });
+      const usersSameDoc = await UserModel.findOne({
+        $or: [cpf ? { cpf } : { cnpj }],
+      });
 
-      if (usersSameCpf && usersSameCpf._id.toString() !== _id) {
+      if (usersSameDoc && usersSameDoc._id.toString() !== _id) {
         return response.json({
-          message: "CPF já cadastrado.",
-          field: "cpf",
+          message: "Documento já cadastrado.",
+          field: cpf ? "cpf" : "cnpj",
         });
       }
 
@@ -350,7 +359,8 @@ module.exports = {
               {
                 username,
                 email,
-                cpf,
+                cpf: cpf || undefined,
+                cnpj: cnpj || undefined,
                 phone: phone || "",
                 celphone: celphone || "",
                 biography: biography || "",

@@ -18,7 +18,7 @@ export const ProjectTitle = styled(Typography)`
 `;
 
 export const ProjectDescription = styled.div`
-  margin-top: -15px;
+  margin-top: ${({ margintop }) => margintop};
   background-color: #fff;
   padding: 10px 15px;
   width: 100%;
