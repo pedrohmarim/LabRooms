@@ -1,5 +1,5 @@
 import React from "react";
-import { FeatherIcons, Row } from "../../../antd_components";
+import { FeatherIcons, Row, Tooltip } from "../../../antd_components";
 import TagRender from "../../../GlobalComponents/TagRender/TagRender.component";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Loading } from "../../../GlobalComponents/Loading/Loading.component";
@@ -19,12 +19,14 @@ import {
 
 export default function ViewProject({
   token,
+  setVisible,
   loggedAccountType,
   loadingApply,
   setCaptchaVisible,
   currentRoom,
   darkPallete,
   roomCategoryData,
+  disabledApplyBtn,
 }) {
   const { Content } = Layout;
 
@@ -47,17 +49,31 @@ export default function ViewProject({
                 </Row>
 
                 {(loggedAccountType === TIPO_CADASTRO.FREELANCER || !token) && (
-                  <StyledButton
-                    icon={loadingApply && <LoadingOutlined />}
-                    onClick={() => setCaptchaVisible(true)}
-                    htmlType='submit'
-                    backgroundcolor={darkPallete.green}
-                    height='35'
-                    width='200'
-                    color={darkPallete.white}
+                  <Tooltip
+                    title={
+                      disabledApplyBtn
+                        ? "Você já Enviou uma Candidatura para Esta Vaga."
+                        : "Enviar Candidatura"
+                    }
+                    color={darkPallete.lightblue}
                   >
-                    Me Candidatar
-                  </StyledButton>
+                    <StyledButton
+                      icon={loadingApply && <LoadingOutlined />}
+                      onClick={() =>
+                        token ? setCaptchaVisible(true) : setVisible(true)
+                      }
+                      htmlType='submit'
+                      backgroundcolor={!disabledApplyBtn && darkPallete.green}
+                      height='35'
+                      width='200'
+                      color={darkPallete.white}
+                      disabled={disabledApplyBtn}
+                    >
+                      {disabledApplyBtn
+                        ? "Candidatura Enviada"
+                        : "Me Candidatar"}
+                    </StyledButton>
+                  </Tooltip>
                 )}
               </Row>
 

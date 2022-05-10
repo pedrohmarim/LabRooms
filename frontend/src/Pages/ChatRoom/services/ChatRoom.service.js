@@ -16,6 +16,15 @@ export async function handleApply(dto, token) {
   });
 }
 
+export async function handleVerifyApply(_id, roomId) {
+  return api.get("/verifyApply", {
+    headers: {
+      _id,
+      roomId,
+    },
+  });
+}
+
 export async function getCategoryById(_id) {
   return api.get("/getCategoryById", {
     headers: {

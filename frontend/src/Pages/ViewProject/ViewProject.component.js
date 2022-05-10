@@ -33,6 +33,7 @@ export default function ViewProject() {
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [currentRoom, setCurrentRoom] = useState();
+  const [disabledApplyBtn, setDisabledApplyBtn] = useState();
   const [captcha, setCaptcha] = useState();
   const [captchaVisible, setCaptchaVisible] = useState();
   const [visible, setVisible] = useState(false);
@@ -86,6 +87,17 @@ export default function ViewProject() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (user && currentRoom && user?._id !== currentRoom?.owner) {
+      ChatRoomService.handleVerifyApply(user?._id, currentRoom?._id).then(
+        ({ data }) => {
+          const { applied } = data;
+          setDisabledApplyBtn(applied);
+        }
+      );
+    }
+  }, [user, currentRoom]);
+
   function handleApply() {
     if (user?._id && token) {
       setLoadingApply(true);
@@ -109,6 +121,7 @@ export default function ViewProject() {
           },
           duration: 2,
         });
+        setDisabledApplyBtn(true);
         setLoadingApply(loading);
       });
     } else {
@@ -200,10 +213,12 @@ export default function ViewProject() {
       <Row>
         <Col span={16}>
           <ViewProjectComponent
+            disabledApplyBtn={disabledApplyBtn}
             token={token}
             loggedAccountType={user?.accountType}
             loadingApply={loadingApply}
             setCaptchaVisible={(value) => setCaptchaVisible(value)}
+            setVisible={(value) => setVisible(value)}
             currentRoom={currentRoom}
             darkPallete={darkPallete}
             roomCategoryData={RoomCategoryData}

@@ -1,11 +1,12 @@
 const RoomModel = require("../models/RoomModel");
 const UserModel = require("../models/UserModel");
 const CategoriesModel = require("../models/CategoriesModel");
+const CandidaciesModel = require("../models/CandidaciesModel");
 const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
 const CreateToken = require("../Helpers/CreateToken");
 const jwt = require("jsonwebtoken");
 
-function handleRoomWithIcon(array, response) {
+function handleRoomWithIcon(array, response, _id) {
   let arrayWithIcon = [];
 
   array.forEach((item) => {
@@ -115,10 +116,12 @@ module.exports = {
   },
 
   async handleGetRooms(request, response) {
+    const { _id } = request.headers;
+
     const rooms = await RoomModel.find({ visible: true });
 
     if (rooms.length > 0) {
-      handleRoomWithIcon(rooms, response);
+      handleRoomWithIcon(rooms, response, _id);
     } else {
       return response.json({
         arrayWithIcon: rooms,
@@ -196,7 +199,7 @@ module.exports = {
     else return response.json({ arrayWithIcon: [], loading: false });
   },
 
-  async handleGetRoomsById(request, response) {
+  async handleGetRoomById(request, response) {
     const { _id } = request.headers;
 
     try {
@@ -204,6 +207,22 @@ module.exports = {
       return response.json(result);
     } catch {
       return response.json(null);
+    }
+  },
+
+  async handleVerifyApply(request, response) {
+    const { _id, roomid } = request.headers;
+
+    try {
+      const result = await CandidaciesModel.findOne({
+        $and: [{ userIdToApply: _id }, { roomId: roomid }],
+      });
+
+      if (result) return response.json({ applied: true });
+
+      return response.json({ applied: false });
+    } catch {
+      return response.json({ applied: false });
     }
   },
 

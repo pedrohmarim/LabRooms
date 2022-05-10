@@ -58,7 +58,8 @@ router.get(
   checkAuth,
   RoomController.handleGetRoomsByOwnerId
 );
-router.get("/getRoomById", RoomController.handleGetRoomsById);
+router.get("/getRoomById", RoomController.handleGetRoomById);
+router.get("/verifyApply", RoomController.handleVerifyApply);
 router.post("/updateRoom", checkAuth, RoomController.handleUpdateRoom);
 router.post("/lockProject", checkAuth, RoomController.handleLockProject);
 router.post("/deleteRoom", checkAuth, RoomController.handleDeleteRoom);

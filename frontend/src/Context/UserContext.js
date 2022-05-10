@@ -40,6 +40,7 @@ export const UserProvider = ({ children }) => {
           if (errorMessage) {
             setHasntRooms({ loading, errorMessage });
           } else {
+            setHasntRooms(null);
             setTabRooms({ array: arrayWithIcon, loading });
             setAllRooms(arrayWithIcon);
           }

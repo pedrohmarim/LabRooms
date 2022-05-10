@@ -37,8 +37,6 @@ export default function UserProfile() {
     if (searchParams.get("projects")) setActiveKey("2");
 
     if (searchParams.get("fromCandidacies")) setActiveKey("1");
-
-    setActiveKey("1");
   }, [searchParams]);
 
   useEffect(() => {

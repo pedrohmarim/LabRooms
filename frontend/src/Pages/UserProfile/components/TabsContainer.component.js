@@ -49,6 +49,7 @@ export default function TabUserInfo({
       bordered={false}
       title={
         <Tabs
+          defaultActiveKey='1'
           activeKey={activeKey}
           onTabClick={(activeKey) => {
             setActiveKey(activeKey);
