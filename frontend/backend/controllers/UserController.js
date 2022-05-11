@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
 
 function handleUsersWithIcon(users, response) {
-  let usersWithIcon = [];
+  let arrayWithIcon = [];
 
   users.forEach((user) => {
     const {
@@ -24,7 +24,7 @@ function handleUsersWithIcon(users, response) {
 
     if (categoryId) {
       CategoriesModel.findOne({ _id: categoryId }).then(({ Icon, Title }) => {
-        usersWithIcon.push({
+        arrayWithIcon.push({
           _id,
           username,
           imagePath,
@@ -34,11 +34,11 @@ function handleUsersWithIcon(users, response) {
           CategorieTitle: Title,
         });
 
-        if (users.length === usersWithIcon.length)
-          return response.json({ usersWithIcon, loading: false });
+        if (users.length === arrayWithIcon.length)
+          return response.json({ arrayWithIcon, loading: false });
       });
     } else if (newCategory) {
-      usersWithIcon.push({
+      arrayWithIcon.push({
         _id,
         username,
         imagePath,
@@ -48,8 +48,8 @@ function handleUsersWithIcon(users, response) {
         CategorieTitle: newCategory,
       });
 
-      if (users.length === usersWithIcon.length)
-        return response.json({ usersWithIcon, loading: false });
+      if (users.length === arrayWithIcon.length)
+        return response.json({ arrayWithIcon, loading: false });
     }
   });
 }
@@ -183,19 +183,19 @@ module.exports = {
   async handleGetUsers(request, response) {
     const { _id } = request.headers;
 
-    var users = [];
+    var arrayWithIcon = [];
 
     if (_id !== "undefined")
-      users = await UserModel.find({
+      arrayWithIcon = await UserModel.find({
         $and: [{ _id: { $ne: _id } }, { accountType: 1 }],
       });
-    else users = await UserModel.find({ accountType: 1 });
+    else arrayWithIcon = await UserModel.find({ accountType: 1 });
 
-    if (users.length > 0) {
-      handleUsersWithIcon(users, response);
+    if (arrayWithIcon.length > 0) {
+      handleUsersWithIcon(arrayWithIcon, response);
     } else {
       return response.json({
-        usersWithIcon: users,
+        arrayWithIcon,
         loading: false,
       });
     }
@@ -303,7 +303,7 @@ module.exports = {
     }
 
     if (users.length > 0) handleUsersWithIcon(users, response);
-    else return response.json({ usersWithIcon: [], loading: false });
+    else return response.json({ arrayWithIcon: [], loading: false });
   },
 
   async handleUpdateUser(request, response) {

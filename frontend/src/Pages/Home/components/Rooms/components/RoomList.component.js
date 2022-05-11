@@ -46,8 +46,8 @@ const RoomList = ({
         setLoadingUsers(true);
 
         HomeService.getUsersByCategory(categoryId, userId).then(({ data }) => {
-          const { usersWithIcon, loading } = data;
-          setUsers(usersWithIcon);
+          const { arrayWithIcon, loading } = data;
+          setUsers(arrayWithIcon);
           setLoadingUsers(loading);
         });
         break;

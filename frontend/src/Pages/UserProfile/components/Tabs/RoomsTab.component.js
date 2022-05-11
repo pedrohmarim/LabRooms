@@ -3,21 +3,19 @@ import * as RoomService from "../../../CreateRoom/services/createroom.service";
 import * as ChatRoomService from "../../../ChatRoom/services/ChatRoom.service";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
-import { TitleStyled } from "../../../Home/components/Rooms/styles";
 import RoomForm from "./RoomForm.component";
 import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
-import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
 import HeaderTabRoomsCandidacies from "../../../../GlobalComponents/HeaderTabRoomsCandidacies/HeaderTabRoomsCandidacies.component";
 import TagRender from "../../../../GlobalComponents/TagRender/TagRender.component";
-import { Card, StyledRow } from "../../UserProfile.component.styled";
+import { Card } from "../../UserProfile.component.styled";
 import {
   Row,
-  Col,
   FeatherIcons,
   Notification,
   Menu,
   PopConfirm,
 } from "../../../../antd_components";
+import NoProjectInfo from "../../../../GlobalComponents/NoProjectInfo/NoProjectInfo.component";
 
 const RoomsTab = ({
   getRooms,
@@ -241,10 +239,7 @@ const RoomsTab = ({
               <b>{title.length > 10 ? title.substr(0, 10) + "..." : title}</b> ?
             </span>
           }
-          onClickCapture={(e) => {
-            handleDeleteRoom(_id);
-            e.stopPropagation();
-          }}
+          onConfirm={() => handleDeleteRoom(_id)}
           okText='Sim'
           cancelText='Não'
         >
@@ -341,25 +336,9 @@ const RoomsTab = ({
         )}
       </Row>
 
-      <Row gutter={window.innerWidth > 1024 && [15, 15]}>
+      <Row>
         {hasntRooms && (
-          <StyledRow align='middle' justify='center'>
-            <Col span={24}>
-              <TitleStyled
-                level={5}
-                color={window.innerWidth < 1024 ? darkPallete.white : "#000"}
-              >
-                {hasntRooms?.errorMessage}
-              </TitleStyled>
-            </Col>
-            <Col span={24}>
-              <CreateRoomButton
-                color={darkPallete.white}
-                backgroundcolor={darkPallete.lightblue}
-                margin='0 0 0 0'
-              />
-            </Col>
-          </StyledRow>
+          <NoProjectInfo darkPallete={darkPallete} hasntRooms={hasntRooms} />
         )}
 
         {listRooms}

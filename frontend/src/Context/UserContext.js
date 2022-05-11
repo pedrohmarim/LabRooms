@@ -86,8 +86,8 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (!token) {
       HomeService.getUsers(undefined).then(({ data }) => {
-        const { usersWithIcon, loading } = data;
-        setUsers(usersWithIcon);
+        const { arrayWithIcon, loading } = data;
+        setUsers(arrayWithIcon);
         setLoadingUsers(loading);
       });
     }
@@ -96,8 +96,8 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     if (user && token) {
       HomeService.getUsers(user?._id).then(({ data }) => {
-        const { usersWithIcon, loading } = data;
-        setUsers(usersWithIcon);
+        const { arrayWithIcon, loading } = data;
+        setUsers(arrayWithIcon);
         setLoadingUsers(loading);
       });
 

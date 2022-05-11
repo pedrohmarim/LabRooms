@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { Card, StyledRow } from "../../UserProfile.component.styled";
-
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import HeaderTabRoomsCandidacies from "../../../../GlobalComponents/HeaderTabRoomsCandidacies/HeaderTabRoomsCandidacies.component";
 import * as CandidaciesService from "../../services/Candidacies.service";
@@ -17,6 +16,7 @@ import {
   PopConfirm,
   Notification,
 } from "../../../../antd_components";
+import NoProjectInfo from "../../../../GlobalComponents/NoProjectInfo/NoProjectInfo.component";
 
 const CandidaciesTab = ({
   darkPallete,
@@ -55,7 +55,7 @@ const CandidaciesTab = ({
   function handleDeleteCandidate(candidacieId) {
     CandidaciesService.deleteCandidacieById(candidacieId, token).then(
       ({ data }) => {
-        const { success, message} = data;
+        const { success, message } = data;
 
         Notification.open({
           type: success ? "success" : "error",
@@ -98,7 +98,7 @@ const CandidaciesTab = ({
     {
       title: "Ações",
       dataIndex: "userId",
-      align: 'center',
+      align: "center",
       key: "Excluir",
       width: 100,
       render: (value, dataIndex) => {
@@ -120,7 +120,7 @@ const CandidaciesTab = ({
             </Tooltip>
 
             <Tooltip title='Enviar Mensagem'>
-              <Link to="#">
+              <Link to='#'>
                 <Button
                   type='ghost'
                   shape='circle'
@@ -129,9 +129,8 @@ const CandidaciesTab = ({
               </Link>
             </Tooltip>
 
-            
             <Tooltip title='Enviar E-mail'>
-              <Link to="#">
+              <Link to='#'>
                 <Button
                   type='ghost'
                   shape='circle'
@@ -145,8 +144,8 @@ const CandidaciesTab = ({
                 placement='topLeft'
                 title='Deseja realmente excluir?'
                 onConfirm={() => {
-                  handleDeleteCandidate(dataIndex?.candidacieId)
-                  handleFilterRoom(dataIndex?.roomId)
+                  handleDeleteCandidate(dataIndex?.candidacieId);
+                  handleFilterRoom(dataIndex?.roomId);
                 }}
                 okText='Sim'
                 cancelText='Não'
@@ -198,18 +197,22 @@ const CandidaciesTab = ({
         </Row>
       </Form>
 
-      {!responseGrid && (
-        <StyledRow align='middle' justify='center'>
-          <TitleStyled
-            level={5}
-            color={window.innerWidth < 1024 ? darkPallete.white : "#000"}
-          >
-            Selecione um Projeto para Visualizar suas Candidaturas
-          </TitleStyled>
-        </StyledRow>
+      {hasntRooms ? (
+        <NoProjectInfo darkPallete={darkPallete} hasntRooms={hasntRooms} />
+      ) : (
+        !showTable && (
+          <StyledRow align='middle' justify='center'>
+            <TitleStyled
+              level={5}
+              color={window.innerWidth < 1024 ? darkPallete.white : "#000"}
+            >
+              Selecione um Projeto para Visualizar suas Candidaturas
+            </TitleStyled>
+          </StyledRow>
+        )
       )}
 
-      {showTable && (
+      {showTable && !hasntRooms && (
         <Table
           locale={{
             emptyText: <Row justify='center'>{responseGrid?.errorMessage}</Row>,
