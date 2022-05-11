@@ -40,6 +40,7 @@ export default function ViewProject() {
   const [roomOwner, setRoomOwner] = useState();
   const [RoomCategoryData, setRoomCategoryData] = useState();
   const [loadingApply, setLoadingApply] = useState(false);
+  const [loadPage, setLoadPage] = useState(false);
   const token = Cookie.get("token");
   const { _id } = params;
 
@@ -63,6 +64,7 @@ export default function ViewProject() {
 
           if (_id) {
             ChatRoomService.getRoomById(_id).then(({ data }) => {
+              setLoadPage(true);
               setCurrentRoom(data);
             });
           } else {
@@ -75,17 +77,18 @@ export default function ViewProject() {
         .then(({ data }) => {
           const { visible, owner } = data;
 
-          setCurrentRoom(data);
-
           if (!visible && token && user && user?._id !== owner)
             navigate("/notfound");
 
           if (!visible && !token) navigate("/notfound");
+
+          setCurrentRoom(data);
+          setLoadPage(true);
         })
         .catch(() => navigate("/notfound"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user?._id]);
 
   useEffect(() => {
     if (user && currentRoom && user?._id !== currentRoom?.owner) {
@@ -148,106 +151,110 @@ export default function ViewProject() {
   }, [currentRoom]);
 
   return (
-    <ViewProjectContainer>
-      <Modal
-        visible={captchaVisible}
-        title='ReCaptcha'
-        onOk={() => {
-          if (captcha) {
-            resetCaptcha();
-            setCaptchaVisible(false);
-            handleApply();
-          }
-        }}
-        onCancel={() => setCaptchaVisible(false)}
-        okText='Enviar'
-        cancelText='Cancelar'
-      >
-        <StyledRow justify='center'>
-          <Recaptcha
-            verifyCallback={(verified) => {
-              setCaptcha(verified);
+    <>
+      {loadPage && (
+        <ViewProjectContainer>
+          <Modal
+            visible={captchaVisible}
+            title='ReCaptcha'
+            onOk={() => {
+              if (captcha) {
+                resetCaptcha();
+                setCaptchaVisible(false);
+                handleApply();
+              }
             }}
-            ref={recaptchaRef}
-          />
-        </StyledRow>
-      </Modal>
-
-      <Modal
-        okText={
-          <Row align='middle'>
-            <FeatherIcons icon='log-in' size={18} />
-            <ModalButton>Entrar</ModalButton>
-          </Row>
-        }
-        onOk={() => navigate("/signin")}
-        cancelButtonProps={{ hidden: true }}
-        bodyStyle={{ display: "none" }}
-        title={
-          <Row align='middle'>
-            <FeatherIcons
-              icon='alert-circle'
-              size={18}
-              className='alert-icon'
-            />
-            <ModalButton>
-              Necessário Estar Logado para Realizar essa Ação!
-            </ModalButton>
-          </Row>
-        }
-        visible={visible}
-        onCancel={() => setVisible(false)}
-      />
-
-      <video
-        loop
-        autoPlay
-        muted
-        id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
-      >
-        <source src={Background} type='video/mp4' />
-      </video>
-
-      <Aside darkPallete={darkPallete} />
-
-      <Row>
-        <Col span={16}>
-          <ViewProjectComponent
-            disabledApplyBtn={disabledApplyBtn}
-            token={token}
-            loggedAccountType={user?.accountType}
-            loadingApply={loadingApply}
-            setCaptchaVisible={(value) => setCaptchaVisible(value)}
-            setVisible={(value) => setVisible(value)}
-            currentRoom={currentRoom}
-            darkPallete={darkPallete}
-            roomCategoryData={RoomCategoryData}
-          />
-        </Col>
-
-        <Col span={8}>
-          <Row justify='center' align='middle' style={{ height: "100vh" }}>
-            {roomOwner ? (
-              <Card
-                style={{
-                  maxWidth: "400px",
-                  height: "fit-content",
-                  position: "fixed",
+            onCancel={() => setCaptchaVisible(false)}
+            okText='Enviar'
+            cancelText='Cancelar'
+          >
+            <StyledRow justify='center'>
+              <Recaptcha
+                verifyCallback={(verified) => {
+                  setCaptcha(verified);
                 }}
-              >
-                <ProfileSocials
-                  darkPallete={darkPallete}
-                  user={roomOwner}
-                  isViewProject
-                  ownerId={currentRoom?.owner}
+                ref={recaptchaRef}
+              />
+            </StyledRow>
+          </Modal>
+
+          <Modal
+            okText={
+              <Row align='middle'>
+                <FeatherIcons icon='log-in' size={18} />
+                <ModalButton>Entrar</ModalButton>
+              </Row>
+            }
+            onOk={() => navigate("/signin")}
+            cancelButtonProps={{ hidden: true }}
+            bodyStyle={{ display: "none" }}
+            title={
+              <Row align='middle'>
+                <FeatherIcons
+                  icon='alert-circle'
+                  size={18}
+                  className='alert-icon'
                 />
-              </Card>
-            ) : (
-              Loading("#fff")
-            )}
+                <ModalButton>
+                  Necessário Estar Logado para Realizar essa Ação!
+                </ModalButton>
+              </Row>
+            }
+            visible={visible}
+            onCancel={() => setVisible(false)}
+          />
+
+          <video
+            loop
+            autoPlay
+            muted
+            id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
+          >
+            <source src={Background} type='video/mp4' />
+          </video>
+
+          <Aside darkPallete={darkPallete} />
+
+          <Row>
+            <Col span={16}>
+              <ViewProjectComponent
+                disabledApplyBtn={disabledApplyBtn}
+                token={token}
+                loggedAccountType={user?.accountType}
+                loadingApply={loadingApply}
+                setCaptchaVisible={(value) => setCaptchaVisible(value)}
+                setVisible={(value) => setVisible(value)}
+                currentRoom={currentRoom}
+                darkPallete={darkPallete}
+                roomCategoryData={RoomCategoryData}
+              />
+            </Col>
+
+            <Col span={8}>
+              <Row justify='center' align='middle' style={{ height: "100vh" }}>
+                {roomOwner ? (
+                  <Card
+                    style={{
+                      maxWidth: "400px",
+                      height: "fit-content",
+                      position: "fixed",
+                    }}
+                  >
+                    <ProfileSocials
+                      darkPallete={darkPallete}
+                      user={roomOwner}
+                      isViewProject
+                      ownerId={currentRoom?.owner}
+                    />
+                  </Card>
+                ) : (
+                  Loading("#fff")
+                )}
+              </Row>
+            </Col>
           </Row>
-        </Col>
-      </Row>
-    </ViewProjectContainer>
+        </ViewProjectContainer>
+      )}
+    </>
   );
 }
