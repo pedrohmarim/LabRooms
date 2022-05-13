@@ -18,6 +18,8 @@ import {
 import NoProjectInfo from "../../../../GlobalComponents/NoProjectInfo/NoProjectInfo.component";
 
 const RoomsTab = ({
+  setCollapseDisabled,
+  collapseDisabled,
   getRooms,
   getRoomsByOwnerId,
   hasntRooms,
@@ -87,6 +89,7 @@ const RoomsTab = ({
     }
 
     function handleLockProject(_id, visible) {
+      setCollapseDisabled(true);
       const dto = {
         _id,
         visible: !visible,
@@ -102,6 +105,8 @@ const RoomsTab = ({
           type: status === 200 ? "success" : "error",
           message,
         });
+
+        setCollapseDisabled(false);
       });
     }
 
@@ -140,6 +145,7 @@ const RoomsTab = ({
     }
 
     function handleCreateSharedLink(_id) {
+      setCollapseDisabled(true);
       RoomService.CreateSharedLink(_id, token).then(async ({ data }) => {
         const { message, status, description, inviteLink } = data;
 
@@ -150,19 +156,15 @@ const RoomsTab = ({
           message,
           description,
         });
+
+        setCollapseDisabled(false);
       });
     }
 
     const MoreActionsRoom = (_id, title, visible) => (
       <Menu>
         {!visible && (
-          <Menu.Item
-            key='1'
-            onClickCapture={(e) => {
-              handleCreateSharedLink(_id);
-              e.stopPropagation();
-            }}
-          >
+          <Menu.Item key='1' onClickCapture={() => handleCreateSharedLink(_id)}>
             <Row align='middle'>
               <FeatherIcons icon='share-2' size={15} />
               <MenuLabelItem>Criar Convite</MenuLabelItem>
@@ -170,13 +172,7 @@ const RoomsTab = ({
           </Menu.Item>
         )}
 
-        <Menu.Item
-          key='2'
-          onClickCapture={(e) => {
-            navigate(`/view/project/${_id}`);
-            e.stopPropagation();
-          }}
-        >
+        <Menu.Item key='2' onClick={() => navigate(`/view/project/${_id}`)}>
           <Row align='middle'>
             <FeatherIcons icon='share' size={15} />
             <MenuLabelItem>Visualizar</MenuLabelItem>
@@ -185,9 +181,9 @@ const RoomsTab = ({
 
         <Menu.Item
           key='3'
-          onClickCapture={(e) => {
+          onClickCapture={() => {
+            setCollapseDisabled(true);
             setCandidaciesActive({ active: true, roomId: _id });
-            e.stopPropagation();
           }}
         >
           <Row align='middle'>
@@ -198,10 +194,7 @@ const RoomsTab = ({
 
         <Menu.Item
           key='4'
-          onClickCapture={(e) => {
-            handleLockProject(_id, visible);
-            e.stopPropagation();
-          }}
+          onClickCapture={() => handleLockProject(_id, visible)}
         >
           <Row align='middle'>
             <FeatherIcons icon={visible ? "lock" : "unlock"} size={15} />
@@ -214,6 +207,8 @@ const RoomsTab = ({
         <Menu.Item
           key='5'
           onClickCapture={() => {
+            if (viewMode._id !== null) setCollapseDisabled(true);
+
             setViewMode({
               _id,
             });
@@ -223,6 +218,10 @@ const RoomsTab = ({
             });
 
             setRoomId(_id);
+
+            setTimeout(() => {
+              setCollapseDisabled(false);
+            }, 200);
           }}
         >
           <Row align='middle'>
@@ -232,6 +231,7 @@ const RoomsTab = ({
         </Menu.Item>
 
         <PopConfirm
+          onVisibleChange={() => setCollapseDisabled(false)}
           placement='topRight'
           title={
             <span>
@@ -239,11 +239,15 @@ const RoomsTab = ({
               <b>{title.length > 10 ? title.substr(0, 10) + "..." : title}</b> ?
             </span>
           }
-          onConfirm={() => handleDeleteRoom(_id)}
+          onConfirm={(e) => {
+            handleDeleteRoom(_id);
+            e.stopPropagation();
+          }}
+          onCancel={(e) => e.stopPropagation()}
           okText='Sim'
           cancelText='Não'
         >
-          <Menu.Item key='6'>
+          <Menu.Item key='6' onClickCapture={() => setCollapseDisabled(true)}>
             <Row align='middle'>
               <FeatherIcons icon='trash-2' size={15} />
               <MenuLabelItem>Excluir</MenuLabelItem>
@@ -269,6 +273,7 @@ const RoomsTab = ({
           visible,
         }) => (
           <RoomForm
+            collapseDisabled={collapseDisabled}
             handleOtherCategories={handleOtherCategories}
             MoreActionsRoom={MoreActionsRoom}
             handleSubmit={handleSubmit}
@@ -299,9 +304,11 @@ const RoomsTab = ({
     _id,
     token,
     getRoomsByOwnerId,
+    setCollapseDisabled,
     navigate,
     setCandidaciesActive,
     setRoomId,
+    collapseDisabled,
     categories,
     newCategoryState,
     viewMode,

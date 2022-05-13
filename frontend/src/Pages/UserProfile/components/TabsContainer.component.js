@@ -20,6 +20,7 @@ export default function TabUserInfo({
   setActiveKey,
 }) {
   const [_id, setRoomId] = useState(null);
+  const [collapseDisabled, setCollapseDisabled] = useState(false);
   const { TabPane } = Tabs;
   const {
     setTabRooms,
@@ -52,6 +53,7 @@ export default function TabUserInfo({
           defaultActiveKey='1'
           activeKey={activeKey}
           onTabClick={(activeKey) => {
+            if (activeKey === "2") setCollapseDisabled(false);
             setActiveKey(activeKey);
           }}
         >
@@ -69,6 +71,8 @@ export default function TabUserInfo({
             <>
               <TabPane tab='Meus Projetos' key='2'>
                 <RoomsTab
+                  setCollapseDisabled={(value) => setCollapseDisabled(value)}
+                  collapseDisabled={collapseDisabled}
                   getRooms={getRooms}
                   getRoomsByOwnerId={getRoomsByOwnerId}
                   hasntRooms={hasntRooms}

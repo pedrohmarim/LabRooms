@@ -48,32 +48,37 @@ export default function ViewProject({
                   </RoomCategory>
                 </Row>
 
-                {(loggedAccountType === TIPO_CADASTRO.FREELANCER || !token) && (
-                  <Tooltip
-                    title={
-                      disabledApplyBtn
-                        ? "Você já Enviou uma Candidatura para Esta Vaga."
-                        : "Enviar Candidatura"
-                    }
-                    color={darkPallete.lightblue}
-                  >
-                    <StyledButton
-                      icon={loadingApply && <LoadingOutlined />}
-                      onClick={() =>
-                        token ? setCaptchaVisible(true) : setVisible(true)
+                {disabledApplyBtn === undefined && token ? (
+                  <Row>{Loading(darkPallete.white, "0 100px 0 0")}</Row>
+                ) : (
+                  (loggedAccountType === TIPO_CADASTRO.FREELANCER ||
+                    !token) && (
+                    <Tooltip
+                      title={
+                        disabledApplyBtn
+                          ? "Você já Enviou uma Candidatura para Esta Vaga."
+                          : "Enviar Candidatura"
                       }
-                      htmlType='submit'
-                      backgroundcolor={!disabledApplyBtn && darkPallete.green}
-                      height='35'
-                      width='200'
-                      color={darkPallete.white}
-                      disabled={disabledApplyBtn}
+                      color={darkPallete.lightblue}
                     >
-                      {disabledApplyBtn
-                        ? "Candidatura Enviada"
-                        : "Me Candidatar"}
-                    </StyledButton>
-                  </Tooltip>
+                      <StyledButton
+                        icon={loadingApply && <LoadingOutlined />}
+                        onClick={() =>
+                          token ? setCaptchaVisible(true) : setVisible(true)
+                        }
+                        htmlType='submit'
+                        backgroundcolor={!disabledApplyBtn && darkPallete.green}
+                        height='35'
+                        width='200'
+                        color={darkPallete.white}
+                        disabled={disabledApplyBtn}
+                      >
+                        {disabledApplyBtn
+                          ? "Candidatura Enviada"
+                          : "Me Candidatar"}
+                      </StyledButton>
+                    </Tooltip>
+                  )
                 )}
               </Row>
 

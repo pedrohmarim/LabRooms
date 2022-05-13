@@ -72,6 +72,10 @@ export const GlobalStyles = createGlobalStyle`
     pointer-events: none; 
   }
   
+  .confirm-icon {
+    color: green;
+  }
+
   .alert-icon {
     color: red;
   }

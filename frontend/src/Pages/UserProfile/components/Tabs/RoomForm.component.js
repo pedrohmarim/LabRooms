@@ -40,6 +40,7 @@ export default function RoomForm({
   TagRender,
   showSubCategorie,
   visible,
+  collapseDisabled,
 }) {
   const [form] = Form.useForm();
   const { Panel } = Collapse;
@@ -61,7 +62,12 @@ export default function RoomForm({
   }, [categoryId, description, form, newCategory, title]);
 
   return (
-    <Collapse bordered={false} style={{ width: "100%" }} destroyInactivePanel>
+    <Collapse
+      bordered={false}
+      style={{ width: "100%" }}
+      destroyInactivePanel
+      collapsible={collapseDisabled && "disabled"}
+    >
       <Panel
         destroyInactivePanel
         key={_id}

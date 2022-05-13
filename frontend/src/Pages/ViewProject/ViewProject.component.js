@@ -166,6 +166,7 @@ export default function ViewProject() {
             }}
             onCancel={() => setCaptchaVisible(false)}
             okText='Enviar'
+            okButtonProps={{ disabled: !captcha }}
             cancelText='Cancelar'
           >
             <StyledRow justify='center'>

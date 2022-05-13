@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
@@ -43,7 +43,7 @@ export default function UserProfile() {
     if (candidaciesActive?.active) setActiveKey("3");
   }, [candidaciesActive]);
 
-  useEffect(() => {
+  const getUserById = useCallback(() => {
     if (user && _id === user?._id) {
       setViewUser(user);
     } else if ((user && _id !== user?._id) || !token) {
@@ -56,7 +56,11 @@ export default function UserProfile() {
         }
       });
     }
-  }, [_id, user, token, navigate]);
+  }, [_id, navigate, token, user]);
+
+  useEffect(() => {
+    getUserById();
+  }, [getUserById]);
 
   return (
     <>

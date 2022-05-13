@@ -142,4 +142,20 @@ module.exports = {
       );
     }
   },
+
+  async handleVerifyApply(request, response) {
+    const { _id, roomid } = request.headers;
+
+    try {
+      const result = await CandidaciesModel.findOne({
+        $and: [{ userIdToApply: _id }, { roomId: roomid }],
+      });
+
+      if (result) return response.json({ applied: true });
+
+      return response.json({ applied: false });
+    } catch {
+      return response.json({ applied: false });
+    }
+  },
 };

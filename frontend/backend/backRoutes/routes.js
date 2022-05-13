@@ -59,7 +59,6 @@ router.get(
   RoomController.handleGetRoomsByOwnerId
 );
 router.get("/getRoomById", RoomController.handleGetRoomById);
-router.get("/verifyApply", RoomController.handleVerifyApply);
 router.post("/updateRoom", checkAuth, RoomController.handleUpdateRoom);
 router.post("/lockProject", checkAuth, RoomController.handleLockProject);
 router.post("/deleteRoom", checkAuth, RoomController.handleDeleteRoom);
@@ -71,6 +70,7 @@ router.post(
 router.get("/validateSharedLink", RoomController.handleValidateSharedLink);
 
 router.post("/apply", checkAuth, CandidaciesController.handleApply);
+router.get("/verifyApply", CandidaciesController.handleVerifyApply);
 router.delete(
   "/deleteCandidacieById",
   checkAuth,
