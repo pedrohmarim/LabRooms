@@ -3,10 +3,20 @@ const express = require("express");
 const app = express();
 const connection = require("./db");
 const routesUrls = require("./backRoutes/routes");
+const cors = require("cors");
 const path = require("path");
 
 connection();
 
+const corsOpts = {
+  origin: "*",
+
+  methods: ["GET", "POST"],
+
+  allowedHeaders: ["Content-Type"],
+};
+
+app.use(cors(corsOpts));
 app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
