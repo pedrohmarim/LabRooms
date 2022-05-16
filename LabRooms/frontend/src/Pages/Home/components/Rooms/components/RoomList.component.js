@@ -27,6 +27,8 @@ const RoomList = ({
   userId,
   loadingArray,
 }) => {
+  console.log("iamgem path", `${window.location.href}/imagem123`);
+
   const { setLoadingRooms, setRooms, categories, setUsers, setLoadingUsers } =
     useContext(UserContext);
 
