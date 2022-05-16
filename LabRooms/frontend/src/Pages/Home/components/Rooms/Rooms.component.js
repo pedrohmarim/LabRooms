@@ -8,6 +8,7 @@ import { TIPO_HOMEARRAY } from "../../../../Helpers/TipoHomeArray";
 import CreateRoomButton from "../../../../GlobalComponents/CreateRoomButton/CreateRoomButton.component";
 import { Row, BackTop } from "../../../../antd_components";
 import { TIPO_CADASTRO } from "../../../../Helpers/TipoCadastro";
+import Swiper from "../../../../GlobalComponents/Swiper/Swiper.component";
 
 const Rooms = ({ pallete, searchValue, userContext }) => {
   const {
@@ -48,6 +49,8 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
           )}
         </StyledCol>
       </Row>
+
+      <Swiper />
 
       <Divider />
 

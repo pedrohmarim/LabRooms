@@ -3,11 +3,11 @@ const CategoriesModel = require("../models/CategoriesModel");
 const UserModel = require("../models/UserModel");
 const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
 
-function returnFormattedCandidacies(usersApplied, response) {
+function returnFormattedCandidacies(candidacies, response) {
   let formattedCandidacies = [];
 
-  usersApplied.forEach((user) => {
-    const { userIdToApply } = user;
+  candidacies.forEach((user) => {
+    const { userIdToApply, roomId } = user;
 
     UserModel.findOne({ _id: userIdToApply }).then(
       ({ username, _id, email, categoryId, newCategory }) => {
@@ -23,9 +23,10 @@ function returnFormattedCandidacies(usersApplied, response) {
                   Icon,
                   Title,
                 },
+                roomId,
               });
 
-              if (usersApplied.length === formattedCandidacies.length)
+              if (candidacies.length === formattedCandidacies.length)
                 return response.json({ formattedCandidacies, loading: false });
             }
           );
@@ -39,9 +40,10 @@ function returnFormattedCandidacies(usersApplied, response) {
               Icon: "repeat",
               CategorieTitle: newCategory,
             },
+            roomId,
           });
 
-          if (usersApplied.length === formattedCandidacies.length)
+          if (candidacies.length === formattedCandidacies.length)
             return response.json({ formattedCandidacies, loading: false });
         }
       }
@@ -105,10 +107,10 @@ module.exports = {
     if (_id) {
       const { roomid } = request.headers;
 
-      const usersApplied = await CandidaciesModel.find({ roomId: roomid });
+      const candidacies = await CandidaciesModel.find({ roomId: roomid });
 
-      if (usersApplied.length > 0) {
-        returnFormattedCandidacies(usersApplied, response);
+      if (candidacies.length > 0) {
+        returnFormattedCandidacies(candidacies, response);
       } else {
         return response.json({
           errorMessage: "Ainda não Há Candidaturas para este Projeto.",

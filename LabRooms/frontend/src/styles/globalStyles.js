@@ -79,4 +79,10 @@ export const GlobalStyles = createGlobalStyle`
   .alert-icon {
     color: red;
   }
+
+  .swiper-slide {
+    background-position: center !important;
+    background-size: cover !important;
+    width: fit-content !important;
+  }
 `;
