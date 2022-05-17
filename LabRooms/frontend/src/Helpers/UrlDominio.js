@@ -13,7 +13,7 @@ export function MontaUrlDominio() {
     return urlDevelopment;
   }
 
-  const urlProd = `https://${window.location.host.slice(0, -2)}:4000`;
+  const urlProd = `https://${window.location.host}:4000`;
 
   console.log("returning url development", urlProd);
 
