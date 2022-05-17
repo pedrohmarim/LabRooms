@@ -31,9 +31,6 @@ const SignUpForm = ({ darkPallete, accountType }) => {
 
     setValidateInput(null);
 
-    console.log(userSkills);
-    debugger;
-
     const { cpf, email, password, username, imageFile, cnpj } = values;
 
     const dto = new FormData();
@@ -54,8 +51,6 @@ const SignUpForm = ({ darkPallete, accountType }) => {
       dto.append("subCategories", userSkills?.subCategories[i]);
     }
     dto.set("captcha", captcha);
-
-    debugger;
 
     SignUpService.userRegister(dto).then(({ data }) => {
       const { message, success } = data;

@@ -1,5 +1,6 @@
 import Axios from "axios";
+import { MontaUrlDominio } from "../Helpers/UrlDominio";
 
-const api = Axios.create({ baseURL: "http://localhost:4000" }); // ver se arruma isso aqui para .env
+const api = Axios.create({ baseURL: MontaUrlDominio() });
 
 export default api;

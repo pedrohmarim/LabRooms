@@ -9,7 +9,7 @@ export function MontaUrlDominio() {
     return urlDevelopment;
   }
 
-  const urlProd = `${window.location.href.slice(0, -1)}:4000`;
+  const urlProd = `${window.location.href.slice(0, -2)}:4000`;
 
   console.log("returning url development", urlProd);
 
