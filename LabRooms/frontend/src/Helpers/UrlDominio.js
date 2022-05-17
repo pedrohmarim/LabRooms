@@ -9,7 +9,7 @@ export function MontaUrlDominio() {
     return urlDevelopment;
   }
 
-  const urlProd = `https://labrooms.up.railway.app`;
+  const urlProd = `https://labrooms.up.railway.app/`;
 
   return urlProd;
 }
