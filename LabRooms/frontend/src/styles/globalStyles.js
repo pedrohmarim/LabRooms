@@ -80,6 +80,10 @@ export const GlobalStyles = createGlobalStyle`
     color: red;
   }
 
+  .swiper-container {
+    width: 100%;
+  }
+
   .swiper-slide {
     background-position: center !important;
     background-size: cover !important;

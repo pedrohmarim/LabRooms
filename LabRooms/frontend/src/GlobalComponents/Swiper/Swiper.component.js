@@ -1,5 +1,10 @@
 import React from "react";
-import SwiperCore, { EffectCoverflow, Pagination } from "swiper";
+import SwiperCore, {
+  EffectCoverflow,
+  Pagination,
+  Autoplay,
+  Navigation,
+} from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
@@ -17,25 +22,38 @@ import {
   StyledRowTags,
   CategorieProject,
 } from "../../Pages/Home/components/Rooms/styles";
+import { MontaUrlDominio } from "../../Helpers/UrlDominio";
 
-SwiperCore.use([EffectCoverflow, Pagination]);
+SwiperCore.use([EffectCoverflow, Pagination, Autoplay, Navigation]);
 
 const SwiperComp = ({ arrayToRender }) => {
+  const SwiperOpt = arrayToRender?.length > 5 && {
+    coverflowEffect: {
+      rotate: 50,
+      stretch: 0,
+      modifier: 1,
+      slideShadows: false,
+    },
+    mousewheel: { releaseOnEdges: true },
+    hashNavigation: { watchState: true },
+    loopedSlides: arrayToRender?.length,
+    grabCursor: true,
+    loop: true,
+    effect: "slide",
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    centeredSlides: true,
+    navigation: true,
+    freeMode: true,
+    pagination: {
+      clickable: true,
+    },
+  };
+
   return (
-    <Swiper
-      effect={"slide"}
-      grabCursor
-      freeMode
-      centeredSlides
-      coverflowEffect={{
-        rotate: 50,
-        stretch: 0,
-        modifier: 1,
-        slideShadows: false,
-      }}
-      pagination={false}
-      className='mySwiper'
-    >
+    <Swiper slidesPerView='auto' freeMode grabCursor {...SwiperOpt}>
       {arrayToRender &&
         arrayToRender.map(
           ({
@@ -56,7 +74,10 @@ const SwiperComp = ({ arrayToRender }) => {
                 <Link
                   to={accountType ? `profile/${_id}` : `view/project/${_id}`}
                 >
-                  <RoomItem background={darkPallete.lightblueOpacity}>
+                  <RoomItem
+                    background={darkPallete.lightblueOpacity}
+                    width={ownerName ? "220px" : "min-content"}
+                  >
                     <RoomTitle color={darkPallete.white}>
                       {title || username}
                     </RoomTitle>
@@ -82,19 +103,14 @@ const SwiperComp = ({ arrayToRender }) => {
                       <RoomOwnerImg
                         alt='Image'
                         gap={2}
-                        src={`${
-                          window.location.href.split(":3000")[0]
-                        }:4000/${imagePath}`}
+                        src={`${MontaUrlDominio()}${imagePath}`}
                         preview={false}
                       />
                     )}
 
                     {!ownerName && (
                       <RoomImage
-                        height={210}
-                        src={`${
-                          window.location.href.split(":3000")[0]
-                        }:4000/${imagePath}`}
+                        src={`${MontaUrlDominio()}${imagePath}`}
                         preview={false}
                       />
                     )}

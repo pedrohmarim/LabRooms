@@ -12,6 +12,7 @@ import {
   SocialIcon,
 } from "../UserProfile.component.styled";
 import { Row, Breadcrumb, Image, Col, Tooltip } from "../../../antd_components";
+import { MontaUrlDominio } from "../../../Helpers/UrlDominio";
 
 export default function ProfileSocials({
   darkPallete,
@@ -28,11 +29,10 @@ export default function ProfileSocials({
           </StyledBreadCrumb>
 
           <Image
-            width={150}
-            src={`${window.location.href.split(":3000")[0]}:4000/${
-              user?.imagePath
-            }`}
-            height={150}
+            style={{ objectFit: "cover" }}
+            width={200}
+            src={`${MontaUrlDominio()}${user?.imagePath}`}
+            height={200}
           />
 
           <StyledCol span={24}>

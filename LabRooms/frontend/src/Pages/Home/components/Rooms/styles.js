@@ -18,10 +18,10 @@ export const Container = styled.div`
 `;
 
 export const RoomImage = styled(Image)`
-  width: 100%;
-  height: auto;
+  width: 200px;
+  height: 220px;
+  object-fit: cover;
   border-radius: 8px;
-  margin-bottom: 10px;
 `;
 
 export const StyledRowTags = styled(Row)`
@@ -49,6 +49,7 @@ export const TitleStyled = styled(Title)`
 `;
 
 export const RoomItem = styled.div`
+  width: ${({ width }) => width} !important;
   display: grid;
   grid-template-columns: 100%;
   justify-content: start;

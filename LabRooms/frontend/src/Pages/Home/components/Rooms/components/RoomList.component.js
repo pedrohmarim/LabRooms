@@ -77,7 +77,7 @@ const RoomList = ({
       {loadingArray ? (
         <Row justify='center'>{Loading(pallete.white, "50px 0 0 10px")}</Row>
       ) : (
-        <Row gutter={[4, 4]}>
+        <Row justify='start'>
           {arrayToRender && arrayToRender.length === 0 ? (
             <TitleStyled
               level={4}
