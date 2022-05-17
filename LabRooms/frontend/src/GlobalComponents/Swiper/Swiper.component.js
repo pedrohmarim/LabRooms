@@ -12,6 +12,7 @@ import { FeatherIcons, Col } from "../../antd_components";
 import TagRender from "../TagRender/TagRender.component";
 import { darkPallete } from "../../styles/pallete";
 import { Link } from "react-router-dom";
+import NotFound from "../../assets/image_notfound.png";
 import {
   RoomItem,
   RoomTitle,
@@ -110,6 +111,7 @@ const SwiperComp = ({ arrayToRender }) => {
 
                     {!ownerName && (
                       <RoomImage
+                        fallback={NotFound}
                         src={`${MontaUrlDominio()}${imagePath}`}
                         preview={false}
                       />
