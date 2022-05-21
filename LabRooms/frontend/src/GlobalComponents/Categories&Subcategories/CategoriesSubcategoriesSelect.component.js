@@ -21,6 +21,7 @@ const CategoriesSubcategoriesSelect = ({
   viewMode,
   newCategoryFromUser,
   styleInput,
+  setShowPrice,
 }) => {
   const [subCategories, setSubCategories] = useState([]);
   const [hideNewCategoryInput, setHideNewCategoryInput] = useState(true);
@@ -47,8 +48,11 @@ const CategoriesSubcategoriesSelect = ({
   }, []);
 
   function handleSelectChange(value) {
+    setShowPrice(true)
+
     form.setFieldsValue({
       subCategories: [],
+      hourprice: undefined,
     });
 
     if (

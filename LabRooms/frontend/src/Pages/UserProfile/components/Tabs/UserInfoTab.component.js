@@ -7,6 +7,7 @@ import * as UserProfileService from "../../services/UserProfile.service";
 import PersonalInfo from "./sessions/PersonalInfo.component";
 import SocialRegister from "./sessions/SocialsRegister.component";
 import UserSkills from "./sessions/UserSkills.component";
+import UserPrice from "./sessions/UserPrice.component";
 import { Row, Notification } from "../../../../antd_components";
 import { TIPO_CADASTRO } from "../../../../Helpers/TipoCadastro";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
@@ -27,6 +28,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   function handleSubmit(values) {
     const {
       username,
+      hourprice,
       email,
       cpf,
       cnpj,
@@ -45,6 +47,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
 
     const dto = {
       username,
+      hourprice,
       email,
       cpf: cpf || undefined,
       cnpj: cnpj || undefined,
@@ -120,18 +123,29 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
           />
 
           {user?.accountType === TIPO_CADASTRO.FREELANCER && (
-            <UserSkills
-              darkPallete={darkPallete}
-              styleInput={styleInput}
-              fromUserProfile
-              editMode={editMode}
-              viewMode={viewMode}
-              categories={categories}
-              categoryIdFromUser={user?.categoryId}
-              newCategoryFromUser={user?.newCategory}
-              labelMainCategory='Categoria'
-              form={form}
-            />
+            <>
+              <UserSkills
+                darkPallete={darkPallete}
+                styleInput={styleInput}
+                fromUserProfile
+                editMode={editMode}
+                viewMode={viewMode}
+                categories={categories}
+                categoryIdFromUser={user?.categoryId}
+                newCategoryFromUser={user?.newCategory}
+                labelMainCategory='Categoria'
+                form={form}
+              />
+
+              <UserPrice
+                form={form}
+                userPrice={user?.hourprice}
+                darkPallete={darkPallete}
+                fromUserProfile
+                editMode={editMode}
+                viewMode={viewMode}
+              />
+            </>
           )}
 
           {!viewMode && (

@@ -20,7 +20,7 @@ const UserSkills = ({
       <Row>
         <StyledCol span={24} marginbottom='0 0 15px 0'>
           <Row justify='space-between'>
-            <Title level={4}>Habilidades</Title>
+            <Title level={4}>Área e Habilidades</Title>
           </Row>
         </StyledCol>
       </Row>

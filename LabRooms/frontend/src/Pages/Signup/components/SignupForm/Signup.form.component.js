@@ -22,6 +22,7 @@ const SignUpForm = ({ darkPallete, accountType }) => {
   }
 
   function onSubmit(values) {
+    debugger;
     if (!accountType)
       Notification.open({
         type: "error",
@@ -40,6 +41,7 @@ const SignUpForm = ({ darkPallete, accountType }) => {
     dto.append("email", email);
     dto.append("password", password);
     dto.append("username", username);
+    dto.append("hourprice", userSkills?.hourprice);
     dto.append("accountType", accountType);
     dto.append(
       "categoryId",

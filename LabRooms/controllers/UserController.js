@@ -7,6 +7,7 @@ const CategoriesModel = require("../models/CategoriesModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
+const RecommendedUsersWithScore = require("../Helpers/RecommendedUsersWithScore");
 
 function handleUsersWithIcon(users, response) {
   let arrayWithIcon = [];
@@ -17,9 +18,11 @@ function handleUsersWithIcon(users, response) {
       categoryId,
       newCategory,
       username,
+      hourprice,
       biography,
       accountType,
       imagePath,
+      subCategoriesScore,
     } = user;
 
     if (categoryId) {
@@ -27,11 +30,13 @@ function handleUsersWithIcon(users, response) {
         arrayWithIcon.push({
           _id,
           username,
+          hourprice,
           imagePath,
           biography,
           accountType,
           Icon,
           CategorieTitle: Title,
+          subCategoriesScore,
         });
 
         if (users.length === arrayWithIcon.length)
@@ -41,11 +46,13 @@ function handleUsersWithIcon(users, response) {
       arrayWithIcon.push({
         _id,
         username,
+        hourprice,
         imagePath,
         biography,
         accountType,
         Icon: "repeat",
         CategorieTitle: newCategory,
+        subCategoriesScore,
       });
 
       if (users.length === arrayWithIcon.length)
@@ -65,6 +72,7 @@ module.exports = {
       accountType,
       subCategories,
       categoryId,
+      hourprice,
       newCategory,
       captcha,
     } = request.body;
@@ -87,6 +95,7 @@ module.exports = {
               email,
               hashedPass,
               username,
+              hourprice,
               accountType,
               subCategories,
               categoryId: categoryId === "undefined" ? undefined : categoryId,
@@ -221,11 +230,13 @@ module.exports = {
         $and: [{ accountType: 1 }],
       });
 
-      if (recomendedUsers.length > 0) {
-        handleUsersWithIcon(recomendedUsers, response);
+      const recommendedUsersWithScore = await RecommendedUsersWithScore(ownerRooms, recomendedUsers);
+
+      if (recommendedUsersWithScore.length > 0) {
+        handleUsersWithIcon(recommendedUsersWithScore, response);
       } else {
         return response.json({
-          arrayWithIcon: recomendedUsers,
+          arrayWithIcon: recommendedUsersWithScore,
           loading: false,
         });
       }
@@ -312,6 +323,7 @@ module.exports = {
     if (_id) {
       const {
         username,
+        hourprice,
         email,
         cpf,
         cnpj,
@@ -358,6 +370,7 @@ module.exports = {
               { _id },
               {
                 username,
+                hourprice,
                 email,
                 cpf: cpf || undefined,
                 cnpj: cnpj || undefined,
