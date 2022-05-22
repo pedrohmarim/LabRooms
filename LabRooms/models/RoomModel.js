@@ -27,6 +27,11 @@ const RoomModel = new Schema(
       type: Array,
       required: true,
     },
+    hourprice: {
+      type: Number,
+      required: true,
+      default: undefined,
+    },
     categoryId: {
       type: String,
       required: false,

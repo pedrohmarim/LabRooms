@@ -23,6 +23,7 @@ function handleUsersWithIcon(users, response) {
       accountType,
       imagePath,
       subCategoriesScore,
+      priceScore,
     } = user;
 
     if (categoryId) {
@@ -37,6 +38,7 @@ function handleUsersWithIcon(users, response) {
           Icon,
           CategorieTitle: Title,
           subCategoriesScore,
+          priceScore,
         });
 
         if (users.length === arrayWithIcon.length)
@@ -53,6 +55,7 @@ function handleUsersWithIcon(users, response) {
         Icon: "repeat",
         CategorieTitle: newCategory,
         subCategoriesScore,
+        priceScore,
       });
 
       if (users.length === arrayWithIcon.length)

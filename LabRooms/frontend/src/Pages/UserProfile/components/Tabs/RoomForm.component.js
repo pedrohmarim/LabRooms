@@ -18,6 +18,7 @@ import {
   Dropdown,
   Collapse,
 } from "../../../../antd_components";
+import PriceHour from "../../../../GlobalComponents/Categories&Subcategories/PriceHour.component";
 
 export default function RoomForm({
   MoreActionsRoom,
@@ -33,6 +34,7 @@ export default function RoomForm({
   categoryId,
   newCategory,
   _id,
+  hourprice,
   categories,
   CategorieTitle,
   subCategories,
@@ -268,6 +270,17 @@ export default function RoomForm({
                 </Form.Item>
               </Col>
             )}
+
+            <Col span={24}>
+              <PriceHour 
+                fromCreateForm
+                editModeFromTabRoom={viewMode._id === _id ? false : true} 
+                viewMode={viewMode._id === _id ? false : true} 
+                form={form}
+                userPrice={hourprice}
+                tooltip="Exponha aos Usuários Qual é o Valor em R$ por Hora que está Buscando."
+              />
+            </Col>
 
             <Col span={24}>
               <Form.Item

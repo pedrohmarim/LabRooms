@@ -29,7 +29,7 @@ const UserSkills = ({ categories, darkPallete, setUserSkills, form }) => {
         defaultHideNewCategory
       />
 
-      {showPrice && <PriceHour fromSignup form={form}/>}
+      {showPrice && <PriceHour fromCreateForm form={form} tooltip="Digite aqui seu Valor em R$ por Horas Trabalhadas."/>}
 
       <StyledButton
         onClick={() =>

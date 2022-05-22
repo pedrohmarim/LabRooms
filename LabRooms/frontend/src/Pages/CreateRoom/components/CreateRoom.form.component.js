@@ -13,7 +13,9 @@ import {
   Checkbox,
   Tooltip,
   Notification,
+  Row,
 } from "../../../antd_components";
+import PriceHour from "../../../GlobalComponents/Categories&Subcategories/PriceHour.component";
 
 const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
   const [form] = Form.useForm();
@@ -28,7 +30,7 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
   }
 
   function onSubmit(values) {
-    let { title, description, category, newCategory, subCategories, visible } =
+    let { title, description, category, newCategory, subCategories, visible, hourprice } =
       values;
 
     const token = Cookie.get("token");
@@ -43,6 +45,7 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
       description: description.isEmpty() ? null : description.toHTML(),
       categoryId: newCategory ? null : category,
       newCategory: newCategory || null,
+      hourprice,
     };
 
     CreateRoomService.createRoom(dto, token).then(({ data }) => {
@@ -90,16 +93,22 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
         labelMainCategory='Categoria'
         defaultHideNewCategory
         form={form}
+        setShowPrice={() => {}}
       />
-      <Tooltip
-        placement='leftBottom'
-        title='Salas Privadas Não Serão Listadas Publicamente, Usuários Terão Acesso a Esse Projeto por Meio de Link Compartilhado.'
-        color={darkPallete.lightblue}
-      >
-        <FormItem name='visible' valuePropName='checked'>
-          <Checkbox>Sala Privada</Checkbox>
-        </FormItem>
-      </Tooltip>
+
+      <Row justify="space-between" align="middle">
+        <PriceHour form={form} fromCreateForm tooltip="Exponha aos Usuários Qual é o Valor em R$ por Hora que está Buscando."/>
+
+        <Tooltip
+          placement='leftBottom'
+          title='Salas Privadas Não Serão Listadas Publicamente, Usuários Poderão ter Acesso a Esse Projeto Apenas por Meio de Links Compartilhados.'
+          color={darkPallete.lightblue}
+        >
+          <FormItem name='visible' valuePropName='checked'>
+            <Checkbox>Sala Privada</Checkbox>
+          </FormItem>
+        </Tooltip>
+      </Row>
 
       <FormItem
         tooltip='Descreva Aqui Objetivos a Serem Alcançados, Requisitos de Habilidades Obrigatórias e Desejáveis para Realização do Projeto, Etapas a Serem seguidas,etc.'

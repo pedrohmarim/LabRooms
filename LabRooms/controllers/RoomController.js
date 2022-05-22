@@ -1,7 +1,6 @@
 const RoomModel = require("../models/RoomModel");
 const UserModel = require("../models/UserModel");
 const CategoriesModel = require("../models/CategoriesModel");
-const CandidaciesModel = require("../models/CandidaciesModel");
 const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
 const CreateToken = require("../Helpers/CreateToken");
 const jwt = require("jsonwebtoken");
@@ -20,6 +19,7 @@ function handleRoomWithIcon(array, response, _id) {
       description,
       visible,
       imagePath,
+      hourprice,
     } = item;
 
     if (categoryId) {
@@ -35,6 +35,7 @@ function handleRoomWithIcon(array, response, _id) {
           Icon,
           CategorieTitle: Title,
           imagePath,
+          hourprice,
         });
 
         if (array.length === arrayWithIcon.length)
@@ -52,6 +53,7 @@ function handleRoomWithIcon(array, response, _id) {
         Icon: "repeat",
         CategorieTitle: newCategory,
         imagePath,
+        hourprice,
       });
 
       if (array.length === arrayWithIcon.length)
@@ -82,6 +84,7 @@ module.exports = {
       visible,
       captcha,
       imagePath,
+      hourprice,
     } = request.body;
 
     const validCaptcha = await VerifyCaptcha(captcha);
@@ -101,6 +104,7 @@ module.exports = {
       owner: _id,
       ownerName,
       visible,
+      hourprice,
     })
       .then(() => {
         return response.json({
@@ -220,6 +224,7 @@ module.exports = {
         subCategories,
         description,
         newCategory,
+        hourprice,
         _id,
       } = request.body;
 
@@ -227,6 +232,7 @@ module.exports = {
         { _id },
         {
           title,
+          hourprice,
           description,
           categoryId:
             categoryId === 11 || categoryId === 12 ? null : categoryId, //11 = categoria "outras"

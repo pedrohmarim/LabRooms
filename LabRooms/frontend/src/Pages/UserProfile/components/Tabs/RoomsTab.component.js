@@ -52,10 +52,12 @@ const RoomsTab = ({
         roomDescription,
         newCategory,
         subCategories,
+        hourprice,
       } = values;
 
       if (_id) {
         const dto = {
+          hourprice,
           title: roomTitle,
           categoryId: roomCategory,
           subCategories: newCategory ? [] : subCategories,
@@ -271,6 +273,7 @@ const RoomsTab = ({
           newCategory,
           subCategories,
           visible,
+          hourprice,
         }) => (
           <RoomForm
             collapseDisabled={collapseDisabled}
@@ -284,6 +287,7 @@ const RoomsTab = ({
             darkPallete={darkPallete}
             Icon={Icon}
             title={title}
+            hourprice={hourprice}
             description={description}
             categoryId={categoryId}
             newCategory={newCategory}

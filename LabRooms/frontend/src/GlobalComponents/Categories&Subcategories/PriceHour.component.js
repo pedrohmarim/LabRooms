@@ -1,11 +1,12 @@
 import React from "react";
 import {CurrencyInput, Form,Typography } from '../../antd_components'
 
-const PriceHour = ({viewMode,editMode,fromSignup,form,userPrice}) => {
+const PriceHour = ({viewMode,editMode,fromCreateForm,form,userPrice,tooltip,editModeFromTabRoom}) => {
   return (
     <Form.Item
+    tooltip={tooltip ?? null}
     rules={
-      !viewMode && [{ required: true, message: "Campo obrigatório." }]
+     !viewMode && [{ required: true, message: "Campo obrigatório." }]
     }
     name='hourprice'
     label={
@@ -25,7 +26,7 @@ const PriceHour = ({viewMode,editMode,fromSignup,form,userPrice}) => {
                 }
                 maxLength={4}
                 readOnly={viewMode}
-                disabled={!editMode && !viewMode && !fromSignup}
+                disabled={editModeFromTabRoom ||(!editMode && !viewMode && !fromCreateForm)}
                 style={{ padding: "5px", border: "1px solid #d9d9d9", borderBottom: "1px solid #d9d9d9", outline: 'none'}}
                 prefix="R$ "
                 placeholder="Preço/Hora"
