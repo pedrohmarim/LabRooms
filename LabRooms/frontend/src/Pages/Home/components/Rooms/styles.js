@@ -100,7 +100,7 @@ export const RoomOwnerImg = styled(Avatar)`
   width: 28px;
   height: 28px;
   position: absolute;
-  top: 45px;
+  top: ${({ top }) => top};
   left: 5px;
 `;
 
@@ -111,6 +111,12 @@ export const StyledCol = styled(Col)`
 
 export const ButtonText = styled.span`
   margin-left: 5px;
+`;
+
+export const ScoreFeedback = styled(Typography)`
+  color: ${({ color }) => color};
+  font-size: ${({ highRecommend }) => highRecommend ? '12pt' : '13pt'};
+  font-weight: 500;
 `;
 
 export const Divider = styled(StyledDivider)`

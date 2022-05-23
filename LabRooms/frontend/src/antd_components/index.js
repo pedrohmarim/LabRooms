@@ -29,6 +29,7 @@ import PopConfirm from "./PopConfirm/PopConfirm.component";
 import Modal from "./Modal/Modal.component";
 import Table from "./Table/Table.component";
 import CurrencyInput from "./CurrencyInput/CurrencyInput.component";
+import Progress from "./Progress/Progress.component";
 
 export {
   Avatar,
@@ -62,4 +63,5 @@ export {
   Form,
   Dropdown,
   PopConfirm,
+  Progress,
 };

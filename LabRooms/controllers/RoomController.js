@@ -4,6 +4,7 @@ const CategoriesModel = require("../models/CategoriesModel");
 const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
 const CreateToken = require("../Helpers/CreateToken");
 const jwt = require("jsonwebtoken");
+const RecommendedArrayWithScore = require("../Helpers/RecommendedArrayWithScore");
 
 function handleRoomWithIcon(array, response, _id) {
   let arrayWithIcon = [];
@@ -20,6 +21,7 @@ function handleRoomWithIcon(array, response, _id) {
       visible,
       imagePath,
       hourprice,
+      itemScore,
     } = item;
 
     if (categoryId) {
@@ -36,6 +38,7 @@ function handleRoomWithIcon(array, response, _id) {
           CategorieTitle: Title,
           imagePath,
           hourprice,
+          itemScore,
         });
 
         if (array.length === arrayWithIcon.length)
@@ -54,6 +57,7 @@ function handleRoomWithIcon(array, response, _id) {
         CategorieTitle: newCategory,
         imagePath,
         hourprice,
+        itemScore,
       });
 
       if (array.length === arrayWithIcon.length)
@@ -155,6 +159,8 @@ module.exports = {
     if (_id) {
       const { categoryid } = request.headers;
 
+      const user =await UserModel.findOne({_id});
+
       var recomendedRooms = null;
 
       if (categoryid !== "null") {
@@ -167,11 +173,13 @@ module.exports = {
         });
       }
 
-      if (recomendedRooms.length > 0) {
-        handleRoomWithIcon(recomendedRooms, response);
+      const recommendedArrayWithScore = await RecommendedArrayWithScore(recomendedRooms, [user], true);
+
+      if (recommendedArrayWithScore.length > 0) {
+        handleRoomWithIcon(recommendedArrayWithScore, response);
       } else {
         return response.json({
-          arrayWithIcon: recomendedRooms,
+          arrayWithIcon: recommendedArrayWithScore,
           loading: false,
         });
       }

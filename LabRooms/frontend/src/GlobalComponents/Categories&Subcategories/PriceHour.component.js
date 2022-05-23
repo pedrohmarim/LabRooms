@@ -1,7 +1,13 @@
-import React from "react";
+import React,{useEffect} from "react";
 import {CurrencyInput, Form,Typography } from '../../antd_components'
 
-const PriceHour = ({viewMode,editMode,fromCreateForm,form,userPrice,tooltip,editModeFromTabRoom}) => {
+const PriceHour = ({viewMode,editMode,fromCreateForm,form,tooltip,editModeFromTabRoom,userPrice}) => {
+  useEffect(() => {
+    if (userPrice) form.setFieldsValue({
+      hourprice: userPrice,
+    });
+  },[form, userPrice])
+
   return (
     <Form.Item
     tooltip={tooltip ?? null}
@@ -17,7 +23,7 @@ const PriceHour = ({viewMode,editMode,fromCreateForm,form,userPrice,tooltip,edit
   >
  
                <CurrencyInput
-               defaultValue={userPrice && userPrice}
+               defaultValue={userPrice && userPrice }
                onValueChange={(value) => {
                     form.setFieldsValue({
                       hourprice: value,

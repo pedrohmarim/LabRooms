@@ -7,7 +7,7 @@ const CategoriesModel = require("../models/CategoriesModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
-const RecommendedUsersWithScore = require("../Helpers/RecommendedUsersWithScore");
+const RecommendedArrayWithScore = require("../Helpers/RecommendedArrayWithScore");
 
 function handleUsersWithIcon(users, response) {
   let arrayWithIcon = [];
@@ -21,9 +21,7 @@ function handleUsersWithIcon(users, response) {
       hourprice,
       biography,
       accountType,
-      imagePath,
-      subCategoriesScore,
-      priceScore,
+      imagePath,itemScore,
     } = user;
 
     if (categoryId) {
@@ -37,8 +35,7 @@ function handleUsersWithIcon(users, response) {
           accountType,
           Icon,
           CategorieTitle: Title,
-          subCategoriesScore,
-          priceScore,
+          itemScore,
         });
 
         if (users.length === arrayWithIcon.length)
@@ -54,8 +51,7 @@ function handleUsersWithIcon(users, response) {
         accountType,
         Icon: "repeat",
         CategorieTitle: newCategory,
-        subCategoriesScore,
-        priceScore,
+        itemScore,
       });
 
       if (users.length === arrayWithIcon.length)
@@ -233,13 +229,13 @@ module.exports = {
         $and: [{ accountType: 1 }],
       });
 
-      const recommendedUsersWithScore = await RecommendedUsersWithScore(ownerRooms, recomendedUsers);
+      const recommendedArrayWithScore = await RecommendedArrayWithScore(ownerRooms, recomendedUsers);
 
-      if (recommendedUsersWithScore.length > 0) {
-        handleUsersWithIcon(recommendedUsersWithScore, response);
+      if (recommendedArrayWithScore.length > 0) {
+        handleUsersWithIcon(recommendedArrayWithScore, response);
       } else {
         return response.json({
-          arrayWithIcon: recommendedUsersWithScore,
+          arrayWithIcon: recommendedArrayWithScore,
           loading: false,
         });
       }

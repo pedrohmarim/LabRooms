@@ -28,3 +28,16 @@ export const ProjectDescription = styled.div`
 export const ModalButton = styled.span`
   margin: 1px 0 0 5px;
 `;
+
+export const HourPriceContainer = styled.span`
+  margin: 1px 0 0 5px;
+  float: right;
+  color: #fff;
+  font-size: 14pt;
+  `;
+
+export const Price = styled.span`
+  padding: 5px;
+  border: solid 1px #fff;
+  background-color: rgba(191, 191, 191, 0.3);
+`;

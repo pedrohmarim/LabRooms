@@ -89,4 +89,8 @@ export const GlobalStyles = createGlobalStyle`
     background-size: cover !important;
     width: fit-content !important;
   }
+  
+  .ant-progress-text {
+    color: #fff
+  }
 `;

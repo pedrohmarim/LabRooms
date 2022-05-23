@@ -15,6 +15,8 @@ import {
   HeaderStyled,
   ProjectTitle,
   ProjectDescription,
+  HourPriceContainer,
+  Price
 } from "../ViewProject.component.styled";
 
 export default function ViewProject({
@@ -82,7 +84,7 @@ export default function ViewProject({
                 )}
               </Row>
 
-              {currentRoom?.ownerName && !currentRoom?.newCategory && (
+             {currentRoom?.ownerName && !currentRoom?.newCategory && (
                 <StyledRowTags
                   align='middle'
                   margin='-15px 0 -8px 0'
@@ -92,6 +94,7 @@ export default function ViewProject({
                     currentRoom?.subCategories.map((data) => (
                       <TagRender label={data} margin='10px 5px' />
                     ))}
+                  <HourPriceContainer>Preço/Hora: <Price>{`R$ ${currentRoom?.hourprice}`}</Price> </HourPriceContainer>
                 </StyledRowTags>
               )}
             </HeaderStyled>

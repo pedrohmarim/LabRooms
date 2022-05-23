@@ -22,7 +22,6 @@ const SignUpForm = ({ darkPallete, accountType }) => {
   }
 
   function onSubmit(values) {
-    debugger;
     if (!accountType)
       Notification.open({
         type: "error",

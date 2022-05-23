@@ -8,7 +8,7 @@ import SwiperCore, {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
-import { FeatherIcons, Col } from "../../antd_components";
+import { FeatherIcons, Col, Progress, Row } from "../../antd_components";
 import TagRender from "../TagRender/TagRender.component";
 import { darkPallete } from "../../styles/pallete";
 import { Link } from "react-router-dom";
@@ -22,12 +22,49 @@ import {
   RoomOwnerImg,
   StyledRowTags,
   CategorieProject,
+  ScoreFeedback,
 } from "../../Pages/Home/components/Rooms/styles";
 import { MontaUrlDominio } from "../../Helpers/UrlDominio";
 
 SwiperCore.use([EffectCoverflow, Pagination, Autoplay, Navigation]);
 
 const SwiperComp = ({ arrayToRender }) => {
+  const calculateProgress = itemScore => {
+    switch (true) {
+      case itemScore <= 20:
+        return (
+          <Row style={{marginRight: '10px'}} justify="center">
+          <ScoreFeedback color="red">Não Recomendado</ScoreFeedback>
+          <Progress status="active" percent={itemScore} strokeColor="red"/>
+          </Row>
+        )
+
+      case itemScore <= 50:
+        return (
+          <Row style={{marginRight: '10px'}} justify="center">
+           <ScoreFeedback color="yellow">Pouco Recomendado</ScoreFeedback>
+           <Progress status="active" percent={itemScore} strokeColor="yellow"/>
+          </Row>
+         )
+      case itemScore <= 90:
+        return (
+          <Row style={{marginRight: '10px'}} justify="center">
+           <ScoreFeedback color="#24E500">Recomendado</ScoreFeedback>
+           <Progress status="active" percent={itemScore} strokeColor="#24E500" />
+          </Row>
+         )
+      case itemScore > 90:
+        return (
+          <Row style={{marginRight: '10px'}} justify="center">
+          <ScoreFeedback color="#24E500" highRecommend>Altamente Recomendado</ScoreFeedback>
+           <Progress status="active" percent={itemScore} strokeColor="#24E500"/>
+          </Row>
+         )
+      default:
+        return <></>
+    }
+  }
+
   const SwiperOpt = arrayToRender?.length > 5 && {
     coverflowEffect: {
       rotate: 50,
@@ -69,6 +106,7 @@ const SwiperComp = ({ arrayToRender }) => {
             CategorieTitle,
             Icon,
             imagePath,
+            itemScore,
           }) => (
             <Col xs={12} sm={12} md={6} lg={4} xl={4} xxl={3} key={_id}>
               <SwiperSlide>
@@ -79,6 +117,9 @@ const SwiperComp = ({ arrayToRender }) => {
                     background={darkPallete.lightblueOpacity}
                     width={ownerName ? "220px" : "min-content"}
                   >
+
+                    {itemScore && calculateProgress(itemScore)}
+
                     <RoomTitle color={darkPallete.white}>
                       {title || username}
                     </RoomTitle>
@@ -102,6 +143,7 @@ const SwiperComp = ({ arrayToRender }) => {
 
                     {ownerName && (
                       <RoomOwnerImg
+                      top={itemScore ? '95px': '45px'}
                         alt='Image'
                         gap={2}
                         src={`${MontaUrlDominio()}${imagePath}`}
