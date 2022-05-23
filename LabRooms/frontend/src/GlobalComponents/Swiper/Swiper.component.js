@@ -8,7 +8,7 @@ import SwiperCore, {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
-import { FeatherIcons, Col, Progress, Row } from "../../antd_components";
+import { FeatherIcons, Col, Progress, Row, Tooltip } from "../../antd_components";
 import TagRender from "../TagRender/TagRender.component";
 import { darkPallete } from "../../styles/pallete";
 import { Link } from "react-router-dom";
@@ -55,10 +55,12 @@ const SwiperComp = ({ arrayToRender }) => {
          )
       case itemScore > 90:
         return (
-          <Row style={{marginRight: '10px'}} justify="center">
-          <ScoreFeedback color="#24E500" highRecommend>Altamente Recomendado</ScoreFeedback>
-           <Progress status="active" percent={itemScore} strokeColor="#24E500"/>
-          </Row>
+          <Tooltip color={darkPallete.lightblue}>
+            <Row style={{marginRight: '10px'}} justify="center">
+              <ScoreFeedback color="#24E500" highRecommend>Altamente Recomendado</ScoreFeedback>
+            <Progress status="active" percent={itemScore} strokeColor="#24E500"/>
+            </Row>
+          </Tooltip>
          )
       default:
         return <></>
@@ -136,7 +138,7 @@ const SwiperComp = ({ arrayToRender }) => {
 
                     <RoomOwner
                       color={darkPallete.white}
-                      margin={!ownerName ? "0 0 15px 0" : "0 0 15px 30px"}
+                      margin={!ownerName ? "0 0 8px 0" : "0 0 8px 30px"}
                     >
                       {ownerName || biography || "Biografia não informada"}
                     </RoomOwner>
