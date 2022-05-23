@@ -39,7 +39,9 @@ function handleUsersWithIcon(users, response) {
         });
 
         if (users.length === arrayWithIcon.length)
-          return response.json({ arrayWithIcon, loading: false });
+          return response.json({ arrayWithIcon: arrayWithIcon.sort(function(a, b) {
+    return parseFloat(b.itemScore) -  parseFloat(a.itemScore);
+}), loading: false });
       });
     } else if (newCategory) {
       arrayWithIcon.push({
@@ -55,7 +57,9 @@ function handleUsersWithIcon(users, response) {
       });
 
       if (users.length === arrayWithIcon.length)
-        return response.json({ arrayWithIcon, loading: false });
+        return response.json({ arrayWithIcon: arrayWithIcon.sort(function(a, b) {
+    return parseFloat(b.itemScore) -  parseFloat(a.itemScore);
+}), loading: false });
     }
   });
 }

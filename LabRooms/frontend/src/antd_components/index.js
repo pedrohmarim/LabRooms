@@ -30,6 +30,7 @@ import Modal from "./Modal/Modal.component";
 import Table from "./Table/Table.component";
 import CurrencyInput from "./CurrencyInput/CurrencyInput.component";
 import Progress from "./Progress/Progress.component";
+import Popover from "./Popover/Popover.component";
 
 export {
   Avatar,
@@ -64,4 +65,5 @@ export {
   Dropdown,
   PopConfirm,
   Progress,
+  Popover,
 };

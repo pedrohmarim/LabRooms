@@ -92,7 +92,7 @@ export const RoomTitle = styled.p`
   text-overflow: ellipsis;
   color: ${({ color }) => color};
   font-weight: bold;
-  margin: 0 0 5px 0px;
+  margin: 0 20px 5px 0px;
   font-size: 15pt;
 `;
 
@@ -102,6 +102,17 @@ export const RoomOwnerImg = styled(Avatar)`
   position: absolute;
   top: ${({ top }) => top};
   left: 5px;
+`;
+
+export const ProgressIcon = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 5px;
+  color: #fff;
+
+  &&:hover {
+    color: #fff
+  }
 `;
 
 export const StyledCol = styled(Col)`

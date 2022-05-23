@@ -8,7 +8,7 @@ import SwiperCore, {
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
-import { FeatherIcons, Col, Progress, Row, Tooltip } from "../../antd_components";
+import { FeatherIcons, Col, Progress, Row, Tooltip, Popover } from "../../antd_components";
 import TagRender from "../TagRender/TagRender.component";
 import { darkPallete } from "../../styles/pallete";
 import { Link } from "react-router-dom";
@@ -23,6 +23,7 @@ import {
   StyledRowTags,
   CategorieProject,
   ScoreFeedback,
+  ProgressIcon,
 } from "../../Pages/Home/components/Rooms/styles";
 import { MontaUrlDominio } from "../../Helpers/UrlDominio";
 
@@ -119,12 +120,17 @@ const SwiperComp = ({ arrayToRender }) => {
                     background={darkPallete.lightblueOpacity}
                     width={ownerName ? "220px" : "min-content"}
                   >
-
-                    {itemScore && calculateProgress(itemScore)}
-
                     <RoomTitle color={darkPallete.white}>
                       {title || username}
                     </RoomTitle>
+
+                    <ProgressIcon>
+                      {itemScore && (
+                        <Popover content={calculateProgress(itemScore)} title="Nível de Recomendação" defaultVisible>
+                          <FeatherIcons icon="bar-chart"/> 
+                        </Popover>
+                      )}
+                    </ProgressIcon>
 
                     {accountType && (
                       <CategorieProject
