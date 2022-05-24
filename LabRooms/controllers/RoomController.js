@@ -22,6 +22,9 @@ function handleRoomWithIcon(array, response, _id) {
       imagePath,
       hourprice,
       itemScore,
+      totalSubMatches,
+      priceScore,
+      userPrice,
     } = item;
 
     if (categoryId) {
@@ -39,6 +42,9 @@ function handleRoomWithIcon(array, response, _id) {
           imagePath,
           hourprice,
           itemScore,
+          totalSubMatches,
+          priceScore,
+          userPrice,
         });
 
         if (array.length === arrayWithIcon.length)
@@ -58,6 +64,9 @@ function handleRoomWithIcon(array, response, _id) {
         imagePath,
         hourprice,
         itemScore,
+        totalSubMatches,
+        priceScore,
+        userPrice,
       });
 
       if (array.length === arrayWithIcon.length)
@@ -159,7 +168,7 @@ module.exports = {
     if (_id) {
       const { categoryid } = request.headers;
 
-      const user =await UserModel.findOne({_id});
+      const user = await UserModel.findOne({ _id });
 
       var recomendedRooms = null;
 
@@ -173,7 +182,11 @@ module.exports = {
         });
       }
 
-      const recommendedArrayWithScore = await RecommendedArrayWithScore(recomendedRooms, [user], true);
+      const recommendedArrayWithScore = await RecommendedArrayWithScore(
+        recomendedRooms,
+        [user],
+        true
+      );
 
       if (recommendedArrayWithScore.length > 0) {
         handleRoomWithIcon(recommendedArrayWithScore, response);

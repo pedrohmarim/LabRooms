@@ -1,5 +1,10 @@
 import styled from "styled-components";
-import { Typography, Input, Form as StyledForm, Row } from "../../antd_components";
+import {
+  Typography,
+  Input,
+  Form as StyledForm,
+  Row,
+} from "../../antd_components";
 
 const { Title } = Typography;
 
@@ -39,5 +44,5 @@ export const Form = styled(StyledForm)`
 `;
 
 export const StyledRow = styled(Row)`
-  transform: scale(0.85)
+  transform: scale(0.85);
 `;

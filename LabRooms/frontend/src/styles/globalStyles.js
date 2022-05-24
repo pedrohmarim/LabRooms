@@ -63,6 +63,16 @@ export const GlobalStyles = createGlobalStyle`
   .iconMarginRight {
     margin-right: 4px;
   }
+  
+  .default-icon {
+    margin-right: 5px;
+    color: #fff;
+  }
+  
+  .iconMarginLeft {
+    color: #fff;
+    margin-left: 5px;
+  }
 
   .ant-dropdown, .ant-notification {
     z-index: 9999 !important;
@@ -91,7 +101,7 @@ export const GlobalStyles = createGlobalStyle`
   }
   
   .ant-progress-text {
-    color:#fff;
+    color: #fff;
   }
 
   .ant-popover-inner {

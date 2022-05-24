@@ -16,7 +16,7 @@ import {
   ProjectTitle,
   ProjectDescription,
   HourPriceContainer,
-  Price
+  Price,
 } from "../ViewProject.component.styled";
 
 export default function ViewProject({
@@ -50,7 +50,9 @@ export default function ViewProject({
                   </RoomCategory>
                 </Row>
 
-                {disabledApplyBtn === undefined && token ? (
+                {disabledApplyBtn === undefined &&
+                token &&
+                loggedAccountType === TIPO_CADASTRO.FREELANCER ? (
                   <Row>{Loading(darkPallete.white, "0 100px 0 0")}</Row>
                 ) : (
                   (loggedAccountType === TIPO_CADASTRO.FREELANCER ||
@@ -84,7 +86,7 @@ export default function ViewProject({
                 )}
               </Row>
 
-             {currentRoom?.ownerName && !currentRoom?.newCategory && (
+              {currentRoom?.ownerName && !currentRoom?.newCategory && (
                 <StyledRowTags
                   align='middle'
                   margin='-15px 0 -8px 0'
@@ -94,7 +96,9 @@ export default function ViewProject({
                     currentRoom?.subCategories.map((data) => (
                       <TagRender label={data} margin='10px 5px' />
                     ))}
-                  <HourPriceContainer>Preço/Hora: <Price>{`R$ ${currentRoom?.hourprice}`}</Price> </HourPriceContainer>
+                  <HourPriceContainer>
+                    Preço/Hora: <Price>{`R$ ${currentRoom?.hourprice}`}</Price>{" "}
+                  </HourPriceContainer>
                 </StyledRowTags>
               )}
             </HeaderStyled>

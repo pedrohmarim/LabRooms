@@ -48,7 +48,7 @@ const CategoriesSubcategoriesSelect = ({
   }, []);
 
   function handleSelectChange(value) {
-    setShowPrice(true)
+    setShowPrice(true);
 
     form.setFieldsValue({
       subCategories: [],

@@ -272,13 +272,13 @@ export default function RoomForm({
             )}
 
             <Col span={24}>
-              <PriceHour 
+              <PriceHour
                 fromCreateForm
-                editModeFromTabRoom={viewMode._id === _id ? false : true} 
-                viewMode={viewMode._id === _id ? false : true} 
+                editModeFromTabRoom={viewMode._id === _id ? false : true}
+                viewMode={viewMode._id === _id ? false : true}
                 form={form}
                 userPrice={hourprice}
-                tooltip="Exponha aos Usuários Qual é o Valor em R$ por Hora que está Buscando."
+                tooltip='Exponha aos Usuários Qual é o Valor em R$ por Hora que está Buscando.'
               />
             </Col>
 

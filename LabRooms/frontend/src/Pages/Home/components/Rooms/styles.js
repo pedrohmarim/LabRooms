@@ -100,7 +100,7 @@ export const RoomOwnerImg = styled(Avatar)`
   width: 28px;
   height: 28px;
   position: absolute;
-  top: ${({ top }) => top};
+  top: 45px;
   left: 5px;
 `;
 
@@ -111,7 +111,7 @@ export const ProgressIcon = styled.div`
   color: #fff;
 
   &&:hover {
-    color: #fff
+    color: #fff;
   }
 `;
 
@@ -124,10 +124,14 @@ export const ButtonText = styled.span`
   margin-left: 5px;
 `;
 
-export const ScoreFeedback = styled(Typography)`
+export const ScoreTitle = styled(Typography)`
   color: ${({ color }) => color};
-  font-size: ${({ highRecommend }) => highRecommend ? '12pt' : '13pt'};
-  font-weight: 500;
+  text-align: center;
+`;
+
+export const ScoreList = styled.span`
+  color: ${({ color }) => color};
+  margin-top: 5px;
 `;
 
 export const Divider = styled(StyledDivider)`

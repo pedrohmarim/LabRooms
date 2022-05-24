@@ -34,7 +34,7 @@ export const HourPriceContainer = styled.span`
   float: right;
   color: #fff;
   font-size: 14pt;
-  `;
+`;
 
 export const Price = styled.span`
   padding: 5px;

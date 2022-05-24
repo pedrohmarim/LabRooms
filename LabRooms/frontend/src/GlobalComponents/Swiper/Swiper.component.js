@@ -1,18 +1,25 @@
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
+import TagRender from "../TagRender/TagRender.component";
+import { darkPallete } from "../../styles/pallete";
+import { Link } from "react-router-dom";
+import NotFound from "../../assets/image_notfound.png";
+import { MontaUrlDominio } from "../../Helpers/UrlDominio";
 import SwiperCore, {
   EffectCoverflow,
   Pagination,
   Autoplay,
   Navigation,
 } from "swiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
-import "swiper/swiper.min.css";
-import { FeatherIcons, Col, Progress, Row, Tooltip, Popover } from "../../antd_components";
-import TagRender from "../TagRender/TagRender.component";
-import { darkPallete } from "../../styles/pallete";
-import { Link } from "react-router-dom";
-import NotFound from "../../assets/image_notfound.png";
+import {
+  FeatherIcons,
+  Col,
+  Progress,
+  Row,
+  Popover,
+} from "../../antd_components";
 import {
   RoomItem,
   RoomTitle,
@@ -22,51 +29,65 @@ import {
   RoomOwnerImg,
   StyledRowTags,
   CategorieProject,
-  ScoreFeedback,
   ProgressIcon,
+  ScoreTitle,
+  ScoreList,
 } from "../../Pages/Home/components/Rooms/styles";
-import { MontaUrlDominio } from "../../Helpers/UrlDominio";
 
 SwiperCore.use([EffectCoverflow, Pagination, Autoplay, Navigation]);
 
 const SwiperComp = ({ arrayToRender }) => {
-  const calculateProgress = itemScore => {
-    switch (true) {
-      case itemScore <= 20:
-        return (
-          <Row style={{marginRight: '10px'}} justify="center">
-          <ScoreFeedback color="red">Não Recomendado</ScoreFeedback>
-          <Progress status="active" percent={itemScore} strokeColor="red"/>
-          </Row>
-        )
+  const ItemScoreProgress = (
+    itemScore,
+    totalSubMatches,
+    priceScore,
+    roomPrice,
+    userPrice,
+    hourprice
+  ) => (
+    <Row style={{ marginRight: "10px" }} justify='center'>
+      <Progress status='active' percent={itemScore} strokeColor='#24E500' />
 
-      case itemScore <= 50:
-        return (
-          <Row style={{marginRight: '10px'}} justify="center">
-           <ScoreFeedback color="yellow">Pouco Recomendado</ScoreFeedback>
-           <Progress status="active" percent={itemScore} strokeColor="yellow"/>
-          </Row>
-         )
-      case itemScore <= 90:
-        return (
-          <Row style={{marginRight: '10px'}} justify="center">
-           <ScoreFeedback color="#24E500">Recomendado</ScoreFeedback>
-           <Progress status="active" percent={itemScore} strokeColor="#24E500" />
-          </Row>
-         )
-      case itemScore > 90:
-        return (
-          <Tooltip color={darkPallete.lightblue}>
-            <Row style={{marginRight: '10px'}} justify="center">
-              <ScoreFeedback color="#24E500" highRecommend>Altamente Recomendado</ScoreFeedback>
-            <Progress status="active" percent={itemScore} strokeColor="#24E500"/>
-            </Row>
-          </Tooltip>
-         )
-      default:
-        return <></>
-    }
-  }
+      <Col span={24}>
+        <Row align='middle'>
+          <FeatherIcons size={18} icon='tag' className='default-icon' />
+          <ScoreList color={darkPallete.white}>{totalSubMatches}</ScoreList>
+        </Row>
+      </Col>
+
+      <Col span={24}>
+        <Row align='middle' justify='start'>
+          <FeatherIcons
+            size={18}
+            className='default-icon'
+            icon={userPrice ? "user" : "home"}
+          />
+
+          <ScoreList color={darkPallete.white}>
+            R$ {roomPrice || userPrice}
+          </ScoreList>
+
+          <FeatherIcons
+            size={18}
+            className='iconMarginLeft'
+            icon='chevron-right'
+          />
+
+          <FeatherIcons
+            size={18}
+            className='default-icon'
+            icon={userPrice ? "home" : "user"}
+          />
+
+          <ScoreList color={darkPallete.white}>R$ {hourprice}</ScoreList>
+
+          <ScoreList color={darkPallete.white} className='iconMarginLeft'>
+            ({priceScore}%)
+          </ScoreList>
+        </Row>
+      </Col>
+    </Row>
+  );
 
   const SwiperOpt = arrayToRender?.length > 5 && {
     coverflowEffect: {
@@ -110,6 +131,11 @@ const SwiperComp = ({ arrayToRender }) => {
             Icon,
             imagePath,
             itemScore,
+            totalSubMatches,
+            priceScore,
+            roomPrice = false,
+            userPrice = false,
+            hourprice,
           }) => (
             <Col xs={12} sm={12} md={6} lg={4} xl={4} xxl={3} key={_id}>
               <SwiperSlide>
@@ -126,8 +152,22 @@ const SwiperComp = ({ arrayToRender }) => {
 
                     <ProgressIcon>
                       {itemScore && (
-                        <Popover content={calculateProgress(itemScore)} title="Nível de Recomendação" defaultVisible>
-                          <FeatherIcons icon="bar-chart"/> 
+                        <Popover
+                          content={ItemScoreProgress(
+                            itemScore,
+                            totalSubMatches,
+                            priceScore,
+                            roomPrice,
+                            userPrice,
+                            hourprice
+                          )}
+                          title={
+                            <ScoreTitle color={darkPallete.white}>
+                              Nível de Recomendação
+                            </ScoreTitle>
+                          }
+                        >
+                          <FeatherIcons icon='bar-chart' />
                         </Popover>
                       )}
                     </ProgressIcon>
@@ -151,7 +191,6 @@ const SwiperComp = ({ arrayToRender }) => {
 
                     {ownerName && (
                       <RoomOwnerImg
-                      top={itemScore ? '95px': '45px'}
                         alt='Image'
                         gap={2}
                         src={`${MontaUrlDominio()}${imagePath}`}

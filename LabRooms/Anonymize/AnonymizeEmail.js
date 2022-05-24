@@ -1,11 +1,11 @@
 module.exports = (email) => {
-    email = email.trim().split("");
+  email = email.trim().split("");
 
-    for (var i = 0; i < email.length; i++) {
-        if (i > 2 && i< email.indexOf("@") ) {
-            email[i] = "*"
-          }
+  for (var i = 0; i < email.length; i++) {
+    if (i > 2 && i < email.indexOf("@")) {
+      email[i] = "*";
     }
+  }
 
-    return email.join("");
+  return email.join("");
 };

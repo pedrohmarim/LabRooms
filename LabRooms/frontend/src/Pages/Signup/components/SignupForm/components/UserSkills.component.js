@@ -7,29 +7,37 @@ const UserSkills = ({ categories, darkPallete, setUserSkills, form }) => {
   const [showPrice, setShowPrice] = useState();
 
   function handleValidateInputs(inputsValues) {
-
-    if (inputsValues.newCategory){
-      if (inputsValues?.hourprice && inputsValues?.category)  return true;
-    } else if ((inputsValues?.category || inputsValues.newCategory) && inputsValues?.hourprice && inputsValues?.subCategories.length > 0) {
+    if (inputsValues.newCategory) {
+      if (inputsValues?.hourprice && inputsValues?.category) return true;
+    } else if (
+      (inputsValues?.category || inputsValues.newCategory) &&
+      inputsValues?.hourprice &&
+      inputsValues?.subCategories.length > 0
+    ) {
       return true;
     }
 
     form.validateFields();
     return false;
-
   }
 
   return (
     <>
       <CategoriesSubcategoriesSelect
-      setShowPrice={value => setShowPrice(value)}
+        setShowPrice={(value) => setShowPrice(value)}
         form={form}
         categories={categories}
         labelMainCategory='Qual sua Área de Atuação?'
         defaultHideNewCategory
       />
 
-      {showPrice && <PriceHour fromCreateForm form={form} tooltip="Digite aqui seu Valor em R$ por Horas Trabalhadas."/>}
+      {showPrice && (
+        <PriceHour
+          fromCreateForm
+          form={form}
+          tooltip='Digite aqui seu Valor em R$ por Horas Trabalhadas.'
+        />
+      )}
 
       <StyledButton
         onClick={() =>

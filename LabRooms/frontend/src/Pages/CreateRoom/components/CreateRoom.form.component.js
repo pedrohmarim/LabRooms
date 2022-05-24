@@ -30,8 +30,15 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
   }
 
   function onSubmit(values) {
-    let { title, description, category, newCategory, subCategories, visible, hourprice } =
-      values;
+    let {
+      title,
+      description,
+      category,
+      newCategory,
+      subCategories,
+      visible,
+      hourprice,
+    } = values;
 
     const token = Cookie.get("token");
 
@@ -96,8 +103,12 @@ const SigninForm = ({ darkPallete, user, getRoomsByOwnerId }) => {
         setShowPrice={() => {}}
       />
 
-      <Row justify="space-between" align="middle">
-        <PriceHour form={form} fromCreateForm tooltip="Exponha aos Usuários Qual é o Valor em R$ por Hora que está Buscando."/>
+      <Row justify='space-between' align='middle'>
+        <PriceHour
+          form={form}
+          fromCreateForm
+          tooltip='Exponha aos Usuários Qual é o Valor em R$ por Hora que está Buscando.'
+        />
 
         <Tooltip
           placement='leftBottom'

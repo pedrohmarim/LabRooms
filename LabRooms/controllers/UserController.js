@@ -21,7 +21,11 @@ function handleUsersWithIcon(users, response) {
       hourprice,
       biography,
       accountType,
-      imagePath,itemScore,
+      imagePath,
+      itemScore,
+      totalSubMatches,
+      priceScore,
+      roomPrice,
     } = user;
 
     if (categoryId) {
@@ -36,12 +40,18 @@ function handleUsersWithIcon(users, response) {
           Icon,
           CategorieTitle: Title,
           itemScore,
+          totalSubMatches,
+          priceScore,
+          roomPrice,
         });
 
         if (users.length === arrayWithIcon.length)
-          return response.json({ arrayWithIcon: arrayWithIcon.sort(function(a, b) {
-    return parseFloat(b.itemScore) -  parseFloat(a.itemScore);
-}), loading: false });
+          return response.json({
+            arrayWithIcon: arrayWithIcon.sort(function (a, b) {
+              return parseFloat(b.itemScore) - parseFloat(a.itemScore);
+            }),
+            loading: false,
+          });
       });
     } else if (newCategory) {
       arrayWithIcon.push({
@@ -54,12 +64,18 @@ function handleUsersWithIcon(users, response) {
         Icon: "repeat",
         CategorieTitle: newCategory,
         itemScore,
+        totalSubMatches,
+        priceScore,
+        roomPrice,
       });
 
       if (users.length === arrayWithIcon.length)
-        return response.json({ arrayWithIcon: arrayWithIcon.sort(function(a, b) {
-    return parseFloat(b.itemScore) -  parseFloat(a.itemScore);
-}), loading: false });
+        return response.json({
+          arrayWithIcon: arrayWithIcon.sort(function (a, b) {
+            return parseFloat(b.itemScore) - parseFloat(a.itemScore);
+          }),
+          loading: false,
+        });
     }
   });
 }
@@ -233,7 +249,10 @@ module.exports = {
         $and: [{ accountType: 1 }],
       });
 
-      const recommendedArrayWithScore = await RecommendedArrayWithScore(ownerRooms, recomendedUsers);
+      const recommendedArrayWithScore = await RecommendedArrayWithScore(
+        ownerRooms,
+        recomendedUsers
+      );
 
       if (recommendedArrayWithScore.length > 0) {
         handleUsersWithIcon(recommendedArrayWithScore, response);
