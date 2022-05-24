@@ -28,7 +28,7 @@ const UserModel = new Schema(
     },
     hourprice: {
       type: Number,
-      required: true,
+      required: false,
       default: undefined,
     },
     email: {

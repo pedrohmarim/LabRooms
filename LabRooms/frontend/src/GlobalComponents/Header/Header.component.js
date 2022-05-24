@@ -11,12 +11,15 @@ import {
   Col,
   Image,
   Button,
+  Avatar,
   FeatherIcons,
   Menu,
   Dropdown,
   Tooltip,
 } from "../../antd_components";
 import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
+import { MontaUrlDominio } from "../../Helpers/UrlDominio";
+import { Loading } from "../Loading/Loading.component";
 
 const Header = ({ fromNotFound }) => {
   const navigate = useNavigate();
@@ -24,7 +27,7 @@ const Header = ({ fromNotFound }) => {
   const [solidHeader, setSolidHeader] = useState(false);
   const { lightblue, white } = darkPallete;
 
-  const { user } = useContext(UserContext);
+  const { user, loading } = useContext(UserContext);
 
   useEffect(() => {
     const scrollListener = () => {
@@ -87,7 +90,8 @@ const Header = ({ fromNotFound }) => {
         </Link>
 
         <Col>
-          {!fromNotFound && user === null ? (
+          {loading && Loading(darkPallete.white)}
+          {!fromNotFound && user === null && !loading ? (
             <Link to='/signin'>
               <Tooltip
                 title={window.innerWidth < 1024 && "Entrar"}
@@ -107,17 +111,19 @@ const Header = ({ fromNotFound }) => {
             </Link>
           ) : (
             !fromNotFound &&
-            user && (
+            user &&
+            !loading && (
               <Dropdown
+                placement='bottomRight'
                 overlay={MoreActionsRoom}
                 trigger={window.innerWidth < 1024 ? "click" : "hover"}
               >
-                <Button
-                  icon={<FeatherIcons icon='user' size={18} />}
-                  color={white}
-                  backgroundcolor={lightblue}
-                  onMouseEnter={() => setExpandLogin(true)}
-                  onMouseLeave={() => setExpandLogin(false)}
+                <Avatar
+                  style={{ cursor: "pointer" }}
+                  size={50}
+                  alt='Image'
+                  src={`${MontaUrlDominio()}${user?.imagePath}`}
+                  preview={false}
                 />
               </Dropdown>
             )

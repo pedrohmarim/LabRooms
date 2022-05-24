@@ -92,7 +92,7 @@ export const RoomTitle = styled.p`
   text-overflow: ellipsis;
   color: ${({ color }) => color};
   font-weight: bold;
-  margin: 0 20px 5px 0px;
+  margin: ${({ margin }) => margin};
   font-size: 15pt;
 `;
 

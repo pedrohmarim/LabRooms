@@ -103,8 +103,9 @@ const SwiperComp = ({ arrayToRender }) => {
     loop: true,
     effect: "slide",
     autoplay: {
-      delay: 2500,
+      delay: 4000,
       disableOnInteraction: false,
+      pauseOnMouseEnter: true,
     },
     centeredSlides: true,
     navigation: true,
@@ -115,7 +116,7 @@ const SwiperComp = ({ arrayToRender }) => {
   };
 
   return (
-    <Swiper slidesPerView='auto' freeMode grabCursor {...SwiperOpt}>
+    <Swiper slidesPerView='auto' freeMode grabCursor autoplay {...SwiperOpt}>
       {arrayToRender &&
         arrayToRender.map(
           ({
@@ -146,7 +147,10 @@ const SwiperComp = ({ arrayToRender }) => {
                     background={darkPallete.lightblueOpacity}
                     width={ownerName ? "220px" : "min-content"}
                   >
-                    <RoomTitle color={darkPallete.white}>
+                    <RoomTitle
+                      color={darkPallete.white}
+                      margin={itemScore ? "0 20px 5px 0px" : "0 0px 5px 0px"}
+                    >
                       {title || username}
                     </RoomTitle>
 

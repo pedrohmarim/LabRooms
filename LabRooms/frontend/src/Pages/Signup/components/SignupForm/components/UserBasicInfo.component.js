@@ -27,6 +27,7 @@ const UserBasicInfo = ({
   accountType,
 }) => {
   const [fileList, setFileList] = useState([]);
+  const [invalidExtension, setInvalidExtension] = useState(false);
 
   const styleInput = {
     borderRadius: "8px",
@@ -36,21 +37,7 @@ const UserBasicInfo = ({
   };
 
   const onChange = ({ fileList: newFileList }) => {
-    setFileList(newFileList);
-
-    const { status, name } = fileList;
-
-    if (status === "done") {
-      Notification.open({
-        type: "success",
-        message: `${name} file uploaded successfully.`,
-      });
-    } else if (status === "error") {
-      Notification.open({
-        type: "error",
-        message: `${name} file uploaded successfully.`,
-      });
-    }
+    !invalidExtension && setFileList(newFileList);
   };
 
   const dummyRequest = ({ file, onSuccess }) => {
@@ -78,6 +65,7 @@ const UserBasicInfo = ({
     const extension = nameSplit[nameSplit.length - 1];
 
     if (!isValidExtension(extension)) {
+      setInvalidExtension(true);
       Notification.open({
         type: "error",
         message: "Formato de Arquivo Inválido",
@@ -86,6 +74,7 @@ const UserBasicInfo = ({
     }
 
     if (!isValidFileSize(file.size, 3)) {
+      setInvalidExtension(true);
       Notification.open({
         type: "error",
         message: "Arquivos de imagem devem ser menores que 3MB.",
@@ -93,6 +82,7 @@ const UserBasicInfo = ({
       return false;
     }
 
+    setInvalidExtension(false);
     return file;
   }
 
