@@ -19,6 +19,7 @@ import {
   Progress,
   Row,
   Popover,
+  Tooltip,
 } from "../../antd_components";
 import {
   RoomItem,
@@ -30,23 +31,32 @@ import {
   StyledRowTags,
   CategorieProject,
   ProgressIcon,
-  ScoreTitle,
   ScoreList,
+  RoomTitleRecommendation,
+  StaticticSubtitle,
 } from "../../Pages/Home/components/Rooms/styles";
 
 SwiperCore.use([EffectCoverflow, Pagination, Autoplay, Navigation]);
 
 const SwiperComp = ({ arrayToRender }) => {
   const ItemScoreProgress = (
-    itemScore,
     totalSubMatches,
     priceScore,
     roomPrice,
     userPrice,
-    hourprice
+    hourprice,
+    itemScore
   ) => (
-    <Row style={{ marginRight: "10px" }} justify='center'>
+    <Row style={{ marginRight: "10px" }}>
+      <StaticticSubtitle color={darkPallete.white}>
+        Porcentagem de Recomendação:
+      </StaticticSubtitle>
+
       <Progress status='active' percent={itemScore} strokeColor='#24E500' />
+
+      <StaticticSubtitle color={darkPallete.white} margintop='5px'>
+        Avaliações:
+      </StaticticSubtitle>
 
       <Col span={24}>
         <Row align='middle'>
@@ -56,7 +66,7 @@ const SwiperComp = ({ arrayToRender }) => {
       </Col>
 
       <Col span={24}>
-        <Row align='middle' justify='start'>
+        <Row align='middle'>
           <FeatherIcons
             size={18}
             className='default-icon'
@@ -137,6 +147,8 @@ const SwiperComp = ({ arrayToRender }) => {
             roomPrice = false,
             userPrice = false,
             hourprice,
+            roomTitle,
+            roomId,
           }) => (
             <Col xs={12} sm={12} md={6} lg={4} xl={4} xxl={3} key={_id}>
               <SwiperSlide>
@@ -158,17 +170,39 @@ const SwiperComp = ({ arrayToRender }) => {
                       {itemScore && (
                         <Popover
                           content={ItemScoreProgress(
-                            itemScore,
                             totalSubMatches,
                             priceScore,
                             roomPrice,
                             userPrice,
-                            hourprice
+                            hourprice,
+                            itemScore
                           )}
                           title={
-                            <ScoreTitle color={darkPallete.white}>
-                              Nível de Recomendação
-                            </ScoreTitle>
+                            roomId &&
+                            roomTitle && (
+                              <Tooltip
+                                title='Visualizar Projeto'
+                                color={darkPallete.lightblue}
+                                placement='right'
+                              >
+                                <Link to={`view/project/${roomId}`}>
+                                  <CategorieProject
+                                    color={darkPallete.white}
+                                    align='middle'
+                                    justify='center'
+                                  >
+                                    <FeatherIcons icon={Icon} size={18} />
+
+                                    <RoomTitleRecommendation
+                                      color={darkPallete.white}
+                                      hovercolor={darkPallete.lightblue}
+                                    >
+                                      {roomTitle}
+                                    </RoomTitleRecommendation>
+                                  </CategorieProject>
+                                </Link>
+                              </Tooltip>
+                            )
                           }
                         >
                           <FeatherIcons icon='bar-chart' />

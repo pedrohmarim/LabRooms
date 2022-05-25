@@ -68,11 +68,8 @@ export const RoomItem = styled.div`
 `;
 
 export const CategorieProject = styled(Row)`
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   color: ${({ color }) => color};
-  margin: ${({ margin }) => margin};
+  text-align: center;
 `;
 
 export const RoomOwner = styled.p`
@@ -122,11 +119,28 @@ export const StyledCol = styled(Col)`
 
 export const ButtonText = styled.span`
   margin-left: 5px;
+  color: ${({ color }) => color};
 `;
 
-export const ScoreTitle = styled(Typography)`
+export const StaticticSubtitle = styled(Typography)`
+  float: left;
   color: ${({ color }) => color};
-  text-align: center;
+  margin-top: ${({ margintop }) => margintop};
+`;
+
+export const RoomTitleRecommendation = styled.p`
+  max-width: 80%;
+  margin: 5px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-left: 4px;
+  text-decoration: underline;
+  color: ${({ color }) => color};
+
+  &&:hover {
+    color: ${({ hovercolor }) => hovercolor};
+  }
 `;
 
 export const ScoreList = styled.span`

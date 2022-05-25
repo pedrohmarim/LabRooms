@@ -26,6 +26,8 @@ function handleUsersWithIcon(users, response) {
       totalSubMatches,
       priceScore,
       roomPrice,
+      roomTitle,
+      roomId,
     } = user;
 
     if (categoryId) {
@@ -43,6 +45,8 @@ function handleUsersWithIcon(users, response) {
           totalSubMatches,
           priceScore,
           roomPrice,
+          roomTitle,
+          roomId,
         });
 
         if (users.length === arrayWithIcon.length)
@@ -67,6 +71,8 @@ function handleUsersWithIcon(users, response) {
         totalSubMatches,
         priceScore,
         roomPrice,
+        roomTitle,
+        roomId,
       });
 
       if (users.length === arrayWithIcon.length)

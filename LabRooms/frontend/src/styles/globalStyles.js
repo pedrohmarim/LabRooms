@@ -111,4 +111,8 @@ export const GlobalStyles = createGlobalStyle`
   .ant-popover-title {
     border-color: rgba(191, 191, 191, 0.5);
   }
+
+  .ant-popover-inner {
+    max-width: 300px;
+  }
 `;

@@ -39,7 +39,7 @@ module.exports = async (rooms, users, recomendedRooms = false) => {
           !recomendedRooms ? roomSubCategories.length : userSubCategories.length
         }`;
 
-        itemScore = (subCategoriesScore + priceScore) / 2;
+        itemScore = ((subCategoriesScore + priceScore) / 2).toFixed(1);
 
         if (!recomendedRooms)
           itemScore >= 50 &&
@@ -49,6 +49,8 @@ module.exports = async (rooms, users, recomendedRooms = false) => {
               totalSubMatches,
               priceScore,
               roomPrice: room?.hourprice,
+              roomTitle: room?.title,
+              roomId: room?._id,
             });
         else
           itemScore >= 50 &&
