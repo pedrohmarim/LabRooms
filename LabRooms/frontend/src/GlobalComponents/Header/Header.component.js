@@ -119,7 +119,10 @@ const Header = ({ fromNotFound }) => {
                 trigger={window.innerWidth < 1024 ? "click" : "hover"}
               >
                 <Avatar
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                    border: "solid 1px rgba(255, 255, 255, 0.2)",
+                  }}
                   size={50}
                   alt='Image'
                   src={`${MontaUrlDominio()}${user?.imagePath}`}

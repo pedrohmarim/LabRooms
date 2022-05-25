@@ -19,6 +19,7 @@ import {
   Progress,
   Row,
   Popover,
+  Tabs,
   Tooltip,
 } from "../../antd_components";
 import {
@@ -39,20 +40,53 @@ import {
 SwiperCore.use([EffectCoverflow, Pagination, Autoplay, Navigation]);
 
 const SwiperComp = ({ arrayToRender }) => {
+  const { TabPane } = Tabs;
+
   const ItemScoreProgress = (
     totalSubMatches,
     priceScore,
     roomPrice,
     userPrice,
     hourprice,
-    itemScore
+    itemScore,
+    roomTitle,
+    roomId
   ) => (
-    <Row style={{ marginRight: "10px" }}>
-      <StaticticSubtitle color={darkPallete.white}>
-        Porcentagem de Recomendação:
-      </StaticticSubtitle>
+    <Row>
+      {roomId && (
+        <Col span={24}>
+          <Tooltip
+            title='Visualizar Projeto'
+            color={darkPallete.lightblue}
+            placement='right'
+          >
+            <Link to={`view/project/${roomId}`}>
+              <CategorieProject
+                color={darkPallete.white}
+                align='middle'
+                justify='center'
+              >
+                <RoomTitleRecommendation hovercolor={darkPallete.lightblue}>
+                  {roomTitle}
+                </RoomTitleRecommendation>
+              </CategorieProject>
+            </Link>
+          </Tooltip>
+        </Col>
+      )}
 
-      <Progress status='active' percent={itemScore} strokeColor='#24E500' />
+      <Col span={24}>
+        <StaticticSubtitle color={darkPallete.white}>
+          Porcentagem de Recomendação:
+        </StaticticSubtitle>
+      </Col>
+
+      <Progress
+        status='active'
+        percent={itemScore}
+        strokeColor='#24E500'
+        style={{ width: "95%" }}
+      />
 
       <StaticticSubtitle color={darkPallete.white} margintop='5px'>
         Avaliações:
@@ -142,135 +176,155 @@ const SwiperComp = ({ arrayToRender }) => {
             Icon,
             imagePath,
             itemScore,
+            scoreTabs,
+            hourprice,
             totalSubMatches,
             priceScore,
             roomPrice = false,
             userPrice = false,
-            hourprice,
-            roomTitle,
-            roomId,
           }) => (
             <Col xs={12} sm={12} md={6} lg={4} xl={4} xxl={3} key={_id}>
               <SwiperSlide>
-                <Link
+                {/* <Link
                   to={accountType ? `profile/${_id}` : `view/project/${_id}`}
+                > */}
+                <RoomItem
+                  background={darkPallete.lightblueOpacity}
+                  width={ownerName ? "220px" : "min-content"}
                 >
-                  <RoomItem
-                    background={darkPallete.lightblueOpacity}
-                    width={ownerName ? "220px" : "min-content"}
+                  <RoomTitle
+                    color={darkPallete.white}
+                    margin={
+                      scoreTabs?.length || itemScore
+                        ? "0 20px 5px 0px"
+                        : "0 0px 5px 0px"
+                    }
                   >
-                    <RoomTitle
-                      color={darkPallete.white}
-                      margin={itemScore ? "0 20px 5px 0px" : "0 0px 5px 0px"}
-                    >
-                      {title || username}
-                    </RoomTitle>
+                    {title || username}
+                  </RoomTitle>
 
-                    <ProgressIcon>
-                      {itemScore && (
-                        <Popover
-                          content={ItemScoreProgress(
-                            totalSubMatches,
-                            priceScore,
-                            roomPrice,
-                            userPrice,
-                            hourprice,
-                            itemScore
-                          )}
-                          title={
-                            roomId &&
-                            roomTitle && (
-                              <Tooltip
-                                title='Visualizar Projeto'
-                                color={darkPallete.lightblue}
-                                placement='right'
-                              >
-                                <Link to={`view/project/${roomId}`}>
-                                  <CategorieProject
-                                    color={darkPallete.white}
-                                    align='middle'
-                                    justify='center'
+                  <ProgressIcon>
+                    {(scoreTabs?.length || itemScore) && (
+                      <Popover
+                        content={
+                          scoreTabs?.length ? (
+                            <Tabs
+                              tabBarStyle={
+                                scoreTabs?.length > 1
+                                  ? {
+                                      height: "40px",
+                                      color: darkPallete.white,
+                                      marginBottom: "6px",
+                                    }
+                                  : {
+                                      display: "none",
+                                    }
+                              }
+                            >
+                              {scoreTabs.map(
+                                (
+                                  {
+                                    itemScore,
+                                    totalSubMatches,
+                                    priceScore,
+                                    roomPrice,
+                                    roomTitle,
+                                    roomId,
+                                  },
+                                  index
+                                ) => (
+                                  <TabPane
+                                    tab={scoreTabs?.length > 1 && index}
+                                    key={index}
                                   >
-                                    <FeatherIcons icon={Icon} size={18} />
-
-                                    <RoomTitleRecommendation
-                                      color={darkPallete.white}
-                                      hovercolor={darkPallete.lightblue}
-                                    >
-                                      {roomTitle}
-                                    </RoomTitleRecommendation>
-                                  </CategorieProject>
-                                </Link>
-                              </Tooltip>
-                            )
-                          }
-                        >
-                          <FeatherIcons icon='bar-chart' />
-                        </Popover>
-                      )}
-                    </ProgressIcon>
-
-                    {accountType && (
-                      <CategorieProject
-                        color={darkPallete.white}
-                        align='middle'
+                                    {ItemScoreProgress(
+                                      totalSubMatches,
+                                      priceScore,
+                                      roomPrice,
+                                      userPrice,
+                                      hourprice,
+                                      itemScore,
+                                      roomTitle,
+                                      roomId
+                                    )}
+                                  </TabPane>
+                                )
+                              )}
+                            </Tabs>
+                          ) : (
+                            <>
+                              {ItemScoreProgress(
+                                totalSubMatches,
+                                priceScore,
+                                roomPrice,
+                                userPrice,
+                                hourprice,
+                                itemScore
+                              )}
+                            </>
+                          )
+                        }
                       >
-                        <FeatherIcons icon={Icon} size={18} />
-                        <ButtonText>{CategorieTitle}</ButtonText>
-                      </CategorieProject>
+                        <FeatherIcons icon='bar-chart' />
+                      </Popover>
                     )}
+                  </ProgressIcon>
 
-                    <RoomOwner
-                      color={darkPallete.white}
-                      margin={!ownerName ? "0 0 8px 0" : "0 0 8px 30px"}
-                    >
-                      {ownerName || biography || "Biografia não informada"}
-                    </RoomOwner>
+                  {accountType && (
+                    <CategorieProject color={darkPallete.white} align='middle'>
+                      <FeatherIcons icon={Icon} size={18} />
+                      <ButtonText>{CategorieTitle}</ButtonText>
+                    </CategorieProject>
+                  )}
 
-                    {ownerName && (
-                      <RoomOwnerImg
-                        alt='Image'
-                        gap={2}
-                        src={`${MontaUrlDominio()}${imagePath}`}
-                        preview={false}
-                      />
-                    )}
+                  <RoomOwner
+                    color={darkPallete.white}
+                    margin={!ownerName ? "0 0 8px 0" : "0 0 8px 30px"}
+                  >
+                    {ownerName || biography || "Biografia não informada"}
+                  </RoomOwner>
 
-                    {!ownerName && (
-                      <RoomImage
-                        fallback={NotFound}
-                        src={`${MontaUrlDominio()}${imagePath}`}
-                        preview={false}
-                      />
-                    )}
+                  {ownerName && (
+                    <RoomOwnerImg
+                      alt='Image'
+                      gap={2}
+                      src={`${MontaUrlDominio()}${imagePath}`}
+                      preview={false}
+                    />
+                  )}
 
-                    {!accountType && (
-                      <CategorieProject
-                        color={darkPallete.white}
-                        align='middle'
-                      >
-                        <FeatherIcons icon={Icon} size={18} />
-                        <ButtonText>{CategorieTitle}</ButtonText>
-                      </CategorieProject>
-                    )}
+                  {!ownerName && (
+                    <RoomImage
+                      fallback={NotFound}
+                      src={`${MontaUrlDominio()}${imagePath}`}
+                      preview={false}
+                    />
+                  )}
 
-                    {ownerName && !newCategory ? (
+                  {!accountType && (
+                    <CategorieProject color={darkPallete.white} align='middle'>
+                      <FeatherIcons icon={Icon} size={18} />
+                      <ButtonText>{CategorieTitle}</ButtonText>
+                    </CategorieProject>
+                  )}
+
+                  {ownerName && !newCategory ? (
+                    <StyledRowTags align='middle'>
+                      {subCategories &&
+                        subCategories.map((data) => (
+                          <TagRender label={data} margin='10px 5px' />
+                        ))}
+                    </StyledRowTags>
+                  ) : (
+                    ownerName &&
+                    newCategory && (
                       <StyledRowTags align='middle'>
-                        {subCategories &&
-                          subCategories.map((data) => (
-                            <TagRender label={data} margin='10px 5px' />
-                          ))}
+                        <TagRender label={newCategory} margin='10px 5px' />
                       </StyledRowTags>
-                    ) : (
-                      ownerName &&
-                      newCategory && (
-                        <StyledRowTags align='middle'>
-                          <TagRender label={newCategory} margin='10px 5px' />
-                        </StyledRowTags>
-                      )
-                    )}
-                  </RoomItem>
-                </Link>
+                    )
+                  )}
+                </RoomItem>
+                {/* </Link> */}
               </SwiperSlide>
             </Col>
           )

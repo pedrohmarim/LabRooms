@@ -68,6 +68,7 @@ export const RoomItem = styled.div`
 `;
 
 export const CategorieProject = styled(Row)`
+  margin-top: 8px;
   color: ${({ color }) => color};
   text-align: center;
 `;
@@ -123,20 +124,15 @@ export const ButtonText = styled.span`
 `;
 
 export const StaticticSubtitle = styled(Typography)`
-  float: left;
   color: ${({ color }) => color};
-  margin-top: ${({ margintop }) => margintop};
 `;
 
 export const RoomTitleRecommendation = styled.p`
-  max-width: 80%;
-  margin: 5px 0;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  margin-left: 4px;
   text-decoration: underline;
-  color: ${({ color }) => color};
+  margin-bottom: 10px;
 
   &&:hover {
     color: ${({ hovercolor }) => hovercolor};

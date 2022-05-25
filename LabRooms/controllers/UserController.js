@@ -22,12 +22,11 @@ function handleUsersWithIcon(users, response) {
       biography,
       accountType,
       imagePath,
+      scoreTabs,
       itemScore,
       totalSubMatches,
       priceScore,
-      roomPrice,
-      roomTitle,
-      roomId,
+      userPrice,
     } = user;
 
     if (categoryId) {
@@ -41,19 +40,16 @@ function handleUsersWithIcon(users, response) {
           accountType,
           Icon,
           CategorieTitle: Title,
+          scoreTabs,
           itemScore,
           totalSubMatches,
           priceScore,
-          roomPrice,
-          roomTitle,
-          roomId,
+          userPrice,
         });
 
         if (users.length === arrayWithIcon.length)
           return response.json({
-            arrayWithIcon: arrayWithIcon.sort(function (a, b) {
-              return parseFloat(b.itemScore) - parseFloat(a.itemScore);
-            }),
+            arrayWithIcon,
             loading: false,
           });
       });
@@ -67,19 +63,16 @@ function handleUsersWithIcon(users, response) {
         accountType,
         Icon: "repeat",
         CategorieTitle: newCategory,
+        scoreTabs,
         itemScore,
         totalSubMatches,
         priceScore,
-        roomPrice,
-        roomTitle,
-        roomId,
+        userPrice,
       });
 
       if (users.length === arrayWithIcon.length)
         return response.json({
-          arrayWithIcon: arrayWithIcon.sort(function (a, b) {
-            return parseFloat(b.itemScore) - parseFloat(a.itemScore);
-          }),
+          arrayWithIcon,
           loading: false,
         });
     }

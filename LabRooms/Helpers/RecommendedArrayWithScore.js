@@ -41,10 +41,29 @@ module.exports = async (rooms, users, recomendedRooms = false) => {
 
         itemScore = ((subCategoriesScore + priceScore) / 2).toFixed(1);
 
-        if (!recomendedRooms)
-          itemScore >= 50 &&
+        if (itemScore < 50) return;
+
+        let multipleRecomendation = arrayScore.find(
+          (x) => x._id.toString() === user?._id.toString()
+        );
+
+        if (!recomendedRooms) {
+          if (!multipleRecomendation) {
             arrayScore.push({
               ...user?._doc,
+              scoreTabs: [
+                {
+                  itemScore,
+                  totalSubMatches,
+                  priceScore,
+                  roomPrice: room?.hourprice,
+                  roomTitle: room?.title,
+                  roomId: room?._id,
+                },
+              ],
+            });
+          } else {
+            multipleRecomendation.scoreTabs.push({
               itemScore,
               totalSubMatches,
               priceScore,
@@ -52,15 +71,15 @@ module.exports = async (rooms, users, recomendedRooms = false) => {
               roomTitle: room?.title,
               roomId: room?._id,
             });
-        else
-          itemScore >= 50 &&
-            arrayScore.push({
-              ...room?._doc,
-              itemScore,
-              totalSubMatches,
-              priceScore,
-              userPrice: user?.hourprice,
-            });
+          }
+        } else
+          arrayScore.push({
+            ...room?._doc,
+            itemScore,
+            totalSubMatches,
+            priceScore,
+            userPrice: user?.hourprice,
+          });
       }
     });
   });

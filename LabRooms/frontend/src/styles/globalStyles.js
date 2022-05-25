@@ -115,4 +115,12 @@ export const GlobalStyles = createGlobalStyle`
   .ant-popover-inner {
     max-width: 300px;
   }
+
+  .ant-tabs-tab + .ant-tabs-tab {
+    margin: 0 0 0 20px !important;
+  }
+
+  .ant-popover-inner-content {
+    padding: 5px 16px 12px 16px;
+  } 
 `;
