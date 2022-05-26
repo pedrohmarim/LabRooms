@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
@@ -40,6 +40,7 @@ import {
 SwiperCore.use([EffectCoverflow, Pagination, Autoplay, Navigation]);
 
 const SwiperComp = ({ arrayToRender }) => {
+  const [disabledItemClick, setDisabledItemClick] = useState(false);
   const { TabPane } = Tabs;
 
   const ItemScoreProgress = (
@@ -159,6 +160,13 @@ const SwiperComp = ({ arrayToRender }) => {
     },
   };
 
+  function handleCreateLink(accountType, _id) {
+    if (disabledItemClick) return "";
+
+    if (accountType) return `profile/${_id}`;
+    return `view/project/${_id}`;
+  }
+
   return (
     <Swiper slidesPerView='auto' freeMode grabCursor autoplay {...SwiperOpt}>
       {arrayToRender &&
@@ -185,146 +193,152 @@ const SwiperComp = ({ arrayToRender }) => {
           }) => (
             <Col xs={12} sm={12} md={6} lg={4} xl={4} xxl={3} key={_id}>
               <SwiperSlide>
-                {/* <Link
-                  to={accountType ? `profile/${_id}` : `view/project/${_id}`}
-                > */}
-                <RoomItem
-                  background={darkPallete.lightblueOpacity}
-                  width={ownerName ? "220px" : "min-content"}
-                >
-                  <RoomTitle
-                    color={darkPallete.white}
-                    margin={
-                      scoreTabs?.length || itemScore
-                        ? "0 20px 5px 0px"
-                        : "0 0px 5px 0px"
-                    }
+                <Link to={handleCreateLink(accountType, _id)}>
+                  <RoomItem
+                    background={darkPallete.lightblueOpacity}
+                    width={ownerName ? "220px" : "min-content"}
                   >
-                    {title || username}
-                  </RoomTitle>
+                    <RoomTitle
+                      color={darkPallete.white}
+                      margin={
+                        scoreTabs?.length || itemScore
+                          ? "0 20px 5px 0px"
+                          : "0 0px 5px 0px"
+                      }
+                    >
+                      {title || username}
+                    </RoomTitle>
 
-                  <ProgressIcon>
-                    {(scoreTabs?.length || itemScore) && (
-                      <Popover
-                        content={
-                          scoreTabs?.length ? (
-                            <Tabs
-                              tabBarStyle={
-                                scoreTabs?.length > 1
-                                  ? {
-                                      height: "40px",
-                                      color: darkPallete.white,
-                                      marginBottom: "6px",
-                                    }
-                                  : {
-                                      display: "none",
-                                    }
-                              }
-                            >
-                              {scoreTabs.map(
-                                (
-                                  {
-                                    itemScore,
-                                    totalSubMatches,
-                                    priceScore,
-                                    roomPrice,
-                                    roomTitle,
-                                    roomId,
-                                  },
-                                  index
-                                ) => (
-                                  <TabPane
-                                    tab={scoreTabs?.length > 1 && index}
-                                    key={index}
-                                  >
-                                    {ItemScoreProgress(
+                    <ProgressIcon>
+                      {(scoreTabs?.length || itemScore) && (
+                        <Popover
+                          onVisibleChange={(visible) =>
+                            setDisabledItemClick(visible)
+                          }
+                          content={
+                            scoreTabs?.length ? (
+                              <Tabs
+                                tabBarStyle={
+                                  scoreTabs?.length > 1
+                                    ? {
+                                        color: darkPallete.white,
+                                        marginBottom: "6px",
+                                      }
+                                    : {
+                                        display: "none",
+                                      }
+                                }
+                              >
+                                {scoreTabs.map(
+                                  (
+                                    {
+                                      itemScore,
                                       totalSubMatches,
                                       priceScore,
                                       roomPrice,
-                                      userPrice,
-                                      hourprice,
-                                      itemScore,
                                       roomTitle,
-                                      roomId
-                                    )}
-                                  </TabPane>
-                                )
-                              )}
-                            </Tabs>
-                          ) : (
-                            <>
-                              {ItemScoreProgress(
-                                totalSubMatches,
-                                priceScore,
-                                roomPrice,
-                                userPrice,
-                                hourprice,
-                                itemScore
-                              )}
-                            </>
-                          )
-                        }
+                                      roomId,
+                                    },
+                                    index
+                                  ) => (
+                                    <TabPane
+                                      tab={scoreTabs?.length > 1 && index + 1}
+                                      key={index}
+                                    >
+                                      {ItemScoreProgress(
+                                        totalSubMatches,
+                                        priceScore,
+                                        roomPrice,
+                                        userPrice,
+                                        hourprice,
+                                        itemScore,
+                                        roomTitle,
+                                        roomId
+                                      )}
+                                    </TabPane>
+                                  )
+                                )}
+                              </Tabs>
+                            ) : (
+                              <>
+                                {ItemScoreProgress(
+                                  totalSubMatches,
+                                  priceScore,
+                                  roomPrice,
+                                  userPrice,
+                                  hourprice,
+                                  itemScore
+                                )}
+                              </>
+                            )
+                          }
+                        >
+                          <FeatherIcons icon='bar-chart' />
+                        </Popover>
+                      )}
+                    </ProgressIcon>
+
+                    {accountType && (
+                      <CategorieProject
+                        color={darkPallete.white}
+                        align='middle'
                       >
-                        <FeatherIcons icon='bar-chart' />
-                      </Popover>
+                        <FeatherIcons icon={Icon} size={18} />
+                        <ButtonText>{CategorieTitle}</ButtonText>
+                      </CategorieProject>
                     )}
-                  </ProgressIcon>
 
-                  {accountType && (
-                    <CategorieProject color={darkPallete.white} align='middle'>
-                      <FeatherIcons icon={Icon} size={18} />
-                      <ButtonText>{CategorieTitle}</ButtonText>
-                    </CategorieProject>
-                  )}
+                    <RoomOwner
+                      color={darkPallete.white}
+                      margin={!ownerName ? "0 0 8px 0" : "0 0 8px 30px"}
+                    >
+                      {ownerName || biography || "Biografia não informada"}
+                    </RoomOwner>
 
-                  <RoomOwner
-                    color={darkPallete.white}
-                    margin={!ownerName ? "0 0 8px 0" : "0 0 8px 30px"}
-                  >
-                    {ownerName || biography || "Biografia não informada"}
-                  </RoomOwner>
+                    {ownerName && (
+                      <RoomOwnerImg
+                        alt='Image'
+                        gap={2}
+                        src={`${MontaUrlDominio()}${imagePath}`}
+                        preview={false}
+                      />
+                    )}
 
-                  {ownerName && (
-                    <RoomOwnerImg
-                      alt='Image'
-                      gap={2}
-                      src={`${MontaUrlDominio()}${imagePath}`}
-                      preview={false}
-                    />
-                  )}
+                    {!ownerName && (
+                      <RoomImage
+                        fallback={NotFound}
+                        src={`${MontaUrlDominio()}${imagePath}`}
+                        preview={false}
+                      />
+                    )}
 
-                  {!ownerName && (
-                    <RoomImage
-                      fallback={NotFound}
-                      src={`${MontaUrlDominio()}${imagePath}`}
-                      preview={false}
-                    />
-                  )}
+                    {!accountType && (
+                      <CategorieProject
+                        color={darkPallete.white}
+                        align='middle'
+                      >
+                        <FeatherIcons icon={Icon} size={18} />
+                        <ButtonText>{CategorieTitle}</ButtonText>
+                      </CategorieProject>
+                    )}
 
-                  {!accountType && (
-                    <CategorieProject color={darkPallete.white} align='middle'>
-                      <FeatherIcons icon={Icon} size={18} />
-                      <ButtonText>{CategorieTitle}</ButtonText>
-                    </CategorieProject>
-                  )}
-
-                  {ownerName && !newCategory ? (
-                    <StyledRowTags align='middle'>
-                      {subCategories &&
-                        subCategories.map((data) => (
-                          <TagRender label={data} margin='10px 5px' />
-                        ))}
-                    </StyledRowTags>
-                  ) : (
-                    ownerName &&
-                    newCategory && (
+                    {ownerName && !newCategory ? (
                       <StyledRowTags align='middle'>
-                        <TagRender label={newCategory} margin='10px 5px' />
+                        {subCategories &&
+                          subCategories.map((data) => (
+                            <TagRender label={data} margin='10px 5px' />
+                          ))}
                       </StyledRowTags>
-                    )
-                  )}
-                </RoomItem>
-                {/* </Link> */}
+                    ) : (
+                      ownerName &&
+                      newCategory && (
+                        <StyledRowTags align='middle'>
+                          <TagRender label={newCategory} margin='10px 5px' />
+                        </StyledRowTags>
+                      )
+                    )}
+                  </RoomItem>
+                </Link>
               </SwiperSlide>
             </Col>
           )

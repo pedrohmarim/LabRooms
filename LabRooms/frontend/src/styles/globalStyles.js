@@ -123,4 +123,8 @@ export const GlobalStyles = createGlobalStyle`
   .ant-popover-inner-content {
     padding: 5px 16px 12px 16px;
   } 
+
+  .ant-tabs-tab-btn {
+    padding: 0 22px
+  }
 `;
