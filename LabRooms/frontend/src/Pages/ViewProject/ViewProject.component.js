@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { darkPallete } from "../../styles/pallete";
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
-import Aside from "../../GlobalComponents/Aside/Aside.component";
+import Header from "../../GlobalComponents/Header/Header.component";
 import ViewProjectComponent from "./components/ViewProject.component";
 import { Loading } from "../../GlobalComponents/Loading/Loading.component";
 import { ChatContainer as ViewProjectContainer } from "../ChatRoom/ChatRoom.styled";
@@ -9,9 +9,10 @@ import { ModalButton } from "./ViewProject.component.styled";
 import Background from "../../assets/backStars.mp4";
 import ProfileSocials from "../UserProfile/components/ProfileSocials.component";
 import * as ChatRoomService from "../ChatRoom/services/ChatRoom.service";
-import * as CreateRoomService from "../CreateRoom/services/createroom.service";
 import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
+import Recaptcha from "../../GlobalComponents/Recaptcha/Recaptcha.component";
+import { StyledRow } from "../CreateRoom/CreateRoom.styled";
 import {
   Row,
   Col,
@@ -20,8 +21,7 @@ import {
   Modal,
   FeatherIcons,
 } from "../../antd_components";
-import Recaptcha from "../../GlobalComponents/Recaptcha/Recaptcha.component";
-import { StyledRow } from "../CreateRoom/CreateRoom.styled";
+import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
 
 export default function ViewProject() {
   document.getElementsByTagName("title")[0].innerText =
@@ -31,16 +31,25 @@ export default function ViewProject() {
   const params = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { user, getUserById, getCategoryById, categorie } =
-    useContext(UserContext);
-  const [currentRoom, setCurrentRoom] = useState();
-  const [disabledApplyBtn, setDisabledApplyBtn] = useState();
+  const {
+    user,
+    viewUser,
+    getUserById,
+    getCategoryById,
+    categorie,
+    loadPage,
+    handleVerifyApply,
+    currentRoom,
+    getRoomById,
+    disabledApplyBtn,
+    setDisabledApplyBtn,
+  } = useContext(UserContext);
+
   const [captcha, setCaptcha] = useState();
   const [captchaVisible, setCaptchaVisible] = useState();
   const [visible, setVisible] = useState(false);
   const [RoomCategoryData, setRoomCategoryData] = useState();
   const [loadingApply, setLoadingApply] = useState(false);
-  const [loadPage, setLoadPage] = useState(false);
   const token = Cookie.get("token");
   const { _id } = params;
 
@@ -49,57 +58,34 @@ export default function ViewProject() {
     recaptchaRef?.current.reset();
   }
 
-  useEffect(() => {
-    if (searchParams.get("token")) {
-      const urlToken = searchParams.get("token");
+  // useEffect(() => {
+  //   if (searchParams.get("token")) {
+  //     const urlToken = searchParams.get("token");
 
-      const dto = {
-        urlToken,
-        _id,
-      };
+  //     const dto = {
+  //       urlToken,
+  //       _id,
+  //     };
 
-      CreateRoomService.ValidateSharedLink(dto)
-        .then(({ data }) => {
-          const { _id } = data;
+  //     CreateRoomService.ValidateSharedLink(dto)
+  //       .then(({ data }) => {
+  //         const { _id } = data;
 
-          if (_id) {
-            ChatRoomService.getRoomById(_id).then(({ data }) => {
-              setLoadPage(true);
-              setCurrentRoom(data);
-            });
-          } else {
-            navigate("/notfound");
-          }
-        })
-        .catch(() => navigate("/notfound"));
-    } else {
-      ChatRoomService.getRoomById(_id)
-        .then(({ data }) => {
-          const { visible, owner } = data;
+  //         if (_id) {
+  //           ChatRoomService.getRoomById(_id).then(({ data }) => {
+  //             setLoadPage(true);
+  //             setCurrentRoom(data);
+  //           });
+  //         } else {
+  //           navigate("/notfound");
+  //         }
+  //       })
+  //       .catch(() => navigate("/notfound"));
+  //   } else {
 
-          if (!visible && token && user && user?._id !== owner)
-            navigate("/notfound");
-
-          if (!visible && !token) navigate("/notfound");
-
-          setCurrentRoom(data);
-          setLoadPage(true);
-        })
-        .catch(() => navigate("/notfound"));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?._id]);
-
-  useEffect(() => {
-    if (user && currentRoom && user?._id !== currentRoom?.owner) {
-      ChatRoomService.handleVerifyApply(user?._id, currentRoom?._id).then(
-        ({ data }) => {
-          const { applied } = data;
-          setDisabledApplyBtn(applied);
-        }
-      );
-    }
-  }, [user, currentRoom]);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [viewUser?._id]);
 
   function handleApply() {
     if (user?._id && token) {
@@ -133,6 +119,11 @@ export default function ViewProject() {
   }
 
   useEffect(() => {
+    getRoomById(_id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [_id]);
+
+  useEffect(() => {
     if (currentRoom) {
       const { categoryId, newCategory, owner } = currentRoom;
 
@@ -146,6 +137,11 @@ export default function ViewProject() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentRoom]);
+
+  useEffect(() => {
+    if (currentRoom && user && user?.accountType === TIPO_CADASTRO.FREELANCER)
+      handleVerifyApply(user?._id, currentRoom?.owner, currentRoom?._id);
+  }, [user, currentRoom, handleVerifyApply]);
 
   return (
     <>
@@ -211,7 +207,7 @@ export default function ViewProject() {
             <source src={Background} type='video/mp4' />
           </video>
 
-          <Aside darkPallete={darkPallete} />
+          <Header />
 
           <Row>
             <Col span={16}>
@@ -230,7 +226,7 @@ export default function ViewProject() {
 
             <Col span={8}>
               <Row justify='center' align='middle' style={{ height: "100vh" }}>
-                {user ? (
+                {viewUser ? (
                   <Card
                     style={{
                       maxWidth: "400px",
@@ -240,7 +236,7 @@ export default function ViewProject() {
                   >
                     <ProfileSocials
                       darkPallete={darkPallete}
-                      user={user}
+                      user={viewUser}
                       isViewProject
                       ownerId={currentRoom?.owner}
                     />

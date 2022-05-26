@@ -8,6 +8,8 @@ export const HeaderContainer = styled.div`
   z-index: 1100;
   width: 100%;
   transition: all 0.3s;
+  border-bottom: ${({ solidHeader }) =>
+    solidHeader && "solid 1px rgba(255, 255, 255, 0.2);"};
 `;
 
 export const MenuLabelItem = styled.div`

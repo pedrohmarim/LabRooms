@@ -1,12 +1,13 @@
 import React from "react";
 import { Button, Row, Tooltip } from "../../../antd_components";
 import { TIPO_CADASTRO } from "../../../Helpers/TipoCadastro";
+import { StyledRow } from "../../UserProfile/UserProfile.component.styled";
 
 const SignUpType = ({ setAccountType, darkPallete }) => {
   return (
     <Row justify='center'>
-      <Row
-        style={{ width: "100%", marginTop: "20px" }}
+      <StyledRow
+        style={{ marginTop: "20px" }}
         justify='space-around'
         align='middle'
       >
@@ -35,7 +36,7 @@ const SignUpType = ({ setAccountType, darkPallete }) => {
             Empresa
           </Button>
         </Tooltip>
-      </Row>
+      </StyledRow>
     </Row>
   );
 };

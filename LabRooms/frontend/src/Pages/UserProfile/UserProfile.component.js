@@ -8,10 +8,12 @@ import TabsContainer from "./components/TabsContainer.component";
 import Background from "../../assets/backStars.mp4";
 import { Row, Card, FormContainer } from "./UserProfile.component.styled";
 import { useNavigate } from "react-router-dom";
+import { Loading } from "../../GlobalComponents/Loading/Loading.component";
 
 export default function UserProfile() {
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Perfil";
-  const { getUserById, viewUser, viewMode, user } = useContext(UserContext);
+  const { getUserById, viewUser, viewMode, viewUserLoading } =
+    useContext(UserContext);
   const navigate = useNavigate();
   const params = useParams();
   const token = Cookie.get("token");
@@ -34,9 +36,7 @@ export default function UserProfile() {
 
   useEffect(() => {
     getUserById(_id);
-
-    // if (user && _id === user?._id && !viewUser) navigate("/notfound");
-  }, [_id, getUserById, navigate, user]);
+  }, [_id, getUserById, navigate]);
 
   return (
     <>
@@ -56,7 +56,13 @@ export default function UserProfile() {
           span={window.innerWidth > 1024 ? 6 : 24}
         >
           <Card bordered={false}>
-            <ProfileSocials darkPallete={darkPallete} user={viewUser} />
+            {!viewUserLoading && viewUser ? (
+              <ProfileSocials darkPallete={darkPallete} user={viewUser} />
+            ) : (
+              <>
+                {Loading(window.innerWidth < 1024 ? darkPallete.white : "#000")}
+              </>
+            )}
 
             {window.innerWidth < 1024 && (
               <TabsContainer

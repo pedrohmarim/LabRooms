@@ -125,6 +125,6 @@ export const GlobalStyles = createGlobalStyle`
   } 
 
   .ant-tabs-tab-btn {
-    padding: 0 22px
+    padding: 0 15px
   }
 `;

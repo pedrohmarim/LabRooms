@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { SocialList } from "./Tabs/sessions/SocialList.component";
+import { Row, Breadcrumb, Image, Col, Tooltip } from "../../../antd_components";
+import { MontaUrlDominio } from "../../../Helpers/UrlDominio";
 import {
   StyledBreadCrumb,
   StyledCol,
@@ -11,8 +13,6 @@ import {
   UserInfoBio,
   SocialIcon,
 } from "../UserProfile.component.styled";
-import { Row, Breadcrumb, Image, Col, Tooltip } from "../../../antd_components";
-import { MontaUrlDominio } from "../../../Helpers/UrlDominio";
 
 export default function ProfileSocials({
   darkPallete,
@@ -36,9 +36,7 @@ export default function ProfileSocials({
           />
 
           <StyledCol span={24}>
-            <UserInfoTitle level={4} isViewProject={isViewProject}>
-              {user?.username}
-            </UserInfoTitle>
+            <UserInfoTitle level={4}>{user?.username}</UserInfoTitle>
 
             {user?.biography && (
               <UserInfoBio color={darkPallete.white}>

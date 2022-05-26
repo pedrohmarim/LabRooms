@@ -16,6 +16,7 @@ import {
   PopConfirm,
   Notification,
   Dropdown,
+  Col,
   Menu,
 } from "../../../../antd_components";
 import NoProjectInfo from "../../../../GlobalComponents/NoProjectInfo/NoProjectInfo.component";
@@ -204,57 +205,57 @@ const CandidaciesTab = ({
 
   return (
     <Card bordered={false}>
-      <Form form={form}>
-        <Row justify='space-between' gutter={[10, 10]}>
-          {!hasntRooms && tabRooms?.array && !tabRooms.loading ? (
-            <HeaderTabRoomsCandidacies
-              roomId={roomId}
-              fromCandidacies
-              headerTitle='Meus Candidatos'
-              tabRooms={tabRooms}
-              handleFilterRoom={handleFilterRoom}
-              allRooms={allRooms}
-              darkPallete={darkPallete}
-            />
+      {!hasntRooms && tabRooms?.array && !tabRooms.loading ? (
+        <>
+          <Form form={form}>
+            <Row justify='space-between' gutter={[10, 10]}>
+              <HeaderTabRoomsCandidacies
+                roomId={roomId}
+                fromCandidacies
+                headerTitle='Meus Candidatos'
+                tabRooms={tabRooms}
+                handleFilterRoom={handleFilterRoom}
+                allRooms={allRooms}
+                darkPallete={darkPallete}
+              />
+            </Row>
+          </Form>
+
+          {hasntRooms ? (
+            <NoProjectInfo darkPallete={darkPallete} hasntRooms={hasntRooms} />
           ) : (
-            !tabRooms?.loading &&
-            !hasntRooms && (
-              <Row>
-                {Loading(
-                  window.innerWidth < 1024 ? darkPallete.white : "#000",
-                  "0 0 0 10px"
-                )}
-              </Row>
+            !showTable && (
+              <StyledRow align='middle' justify='center'>
+                <Col>
+                  <TitleStyled
+                    level={5}
+                    color={
+                      window.innerWidth < 1024 ? darkPallete.white : "#000"
+                    }
+                  >
+                    Selecione um Projeto para Exibir suas Candidaturas
+                  </TitleStyled>
+                </Col>
+              </StyledRow>
             )
           )}
-        </Row>
-      </Form>
 
-      {hasntRooms ? (
-        <NoProjectInfo darkPallete={darkPallete} hasntRooms={hasntRooms} />
+          {showTable && !hasntRooms && (
+            <Table
+              locale={{
+                emptyText: (
+                  <Row justify='center'>{responseGrid?.errorMessage}</Row>
+                ),
+              }}
+              size='middle'
+              dataSource={responseGrid?.formattedCandidacies}
+              columns={columns}
+              loading={loadingDataSource}
+            />
+          )}
+        </>
       ) : (
-        !showTable && (
-          <StyledRow align='middle' justify='center'>
-            <TitleStyled
-              level={5}
-              color={window.innerWidth < 1024 ? darkPallete.white : "#000"}
-            >
-              Selecione um Projeto para Visualizar suas Candidaturas
-            </TitleStyled>
-          </StyledRow>
-        )
-      )}
-
-      {showTable && !hasntRooms && (
-        <Table
-          locale={{
-            emptyText: <Row justify='center'>{responseGrid?.errorMessage}</Row>,
-          }}
-          size='middle'
-          dataSource={responseGrid?.formattedCandidacies}
-          columns={columns}
-          loading={loadingDataSource}
-        />
+        <>{Loading(window.innerWidth < 1024 ? darkPallete.white : "#000")}</>
       )}
     </Card>
   );

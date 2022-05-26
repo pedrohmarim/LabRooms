@@ -74,7 +74,7 @@ export default function RoomForm({
         destroyInactivePanel
         key={_id}
         header={
-          <Row justify='space-between'>
+          <Row style={{ width: "80%" }}>
             <TitleStyled level={5}>
               {!visible && (
                 <Tooltip

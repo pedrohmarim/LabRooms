@@ -35,7 +35,41 @@ export const UserProvider = ({ children }) => {
 
   const [categorie, setCategorie] = useState();
 
+  const [currentRoom, setCurrentRoom] = useState();
+  const [loadPage, setLoadPage] = useState(false);
+
+  const [disabledApplyBtn, setDisabledApplyBtn] = useState();
+
   const token = Cookie.get("token");
+
+  const handleVerifyApply = useCallback((userId, ownerRoomId, roomId) => {
+    if (userId !== ownerRoomId) {
+      HomeService.handleVerifyApply(userId, roomId).then(({ data }) => {
+        const { applied } = data;
+        setDisabledApplyBtn(applied);
+      });
+    }
+  }, []);
+
+  const getRoomById = useCallback(
+    (roomId) => {
+      HomeService.getRoomById(roomId)
+        .then(({ data }) => {
+          const { visible, owner } = data;
+
+          if (
+            (!visible && token && user?._id !== owner) ||
+            (!visible && !token)
+          )
+            setCurrentRoom(null);
+
+          setCurrentRoom(data);
+          setLoadPage(true);
+        })
+        .catch(() => setCurrentRoom(null));
+    },
+    [token, user]
+  );
 
   const getRoomsByOwnerId = useCallback(() => {
     if (user) {
@@ -77,6 +111,7 @@ export const UserProvider = ({ children }) => {
       if (user && _id === user?._id) {
         setViewUser(user);
         setIsViewMode(false);
+        setViewUserLoading(false);
       } else if ((user && _id !== user?._id) || !token) {
         HomeService.getUserById(_id).then(({ data }) => {
           if (data) {
@@ -168,10 +203,13 @@ export const UserProvider = ({ children }) => {
         setRecomendedRooms,
         setLoadingUsers,
         setUsers,
+        setDisabledApplyBtn,
         getUserById,
         getCategoryById,
         getRoomsByOwnerId,
         getRooms,
+        getRoomById,
+        handleVerifyApply,
         tabRooms,
         viewUserLoading,
         user,
@@ -190,6 +228,9 @@ export const UserProvider = ({ children }) => {
         viewMode,
         viewUser,
         categorie,
+        loadPage,
+        currentRoom,
+        disabledApplyBtn,
       }}
     >
       {children}

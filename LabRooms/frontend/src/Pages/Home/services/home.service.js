@@ -62,3 +62,20 @@ export async function getUserById(_id) {
     },
   });
 }
+
+export async function getRoomById(_id) {
+  return api.get("/getRoomById", {
+    headers: {
+      _id,
+    },
+  });
+}
+
+export async function handleVerifyApply(_id, roomId) {
+  return api.get("/verifyApply", {
+    headers: {
+      _id,
+      roomId,
+    },
+  });
+}

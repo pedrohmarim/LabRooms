@@ -335,12 +335,9 @@ const RoomsTab = ({
         ) : (
           !tabRooms?.loading &&
           !hasntRooms && (
-            <Row>
-              {Loading(
-                window.innerWidth < 1024 ? darkPallete.white : "#000",
-                "0 0 0 10px"
-              )}
-            </Row>
+            <>
+              {Loading(window.innerWidth < 1024 ? darkPallete.white : "#000")}
+            </>
           )
         )}
       </Row>

@@ -11,6 +11,7 @@ import UserPrice from "./sessions/UserPrice.component";
 import { Row, Notification } from "../../../../antd_components";
 import { TIPO_CADASTRO } from "../../../../Helpers/TipoCadastro";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
+import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 
 const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const [editMode, setEditMode] = useState(false);
@@ -105,7 +106,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
 
   return (
     <Card bordered={false}>
-      {user && categories && (
+      {user && categories ? (
         <FormStyled
           form={form}
           background={darkPallete.white}
@@ -166,6 +167,8 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
             </Row>
           )}
         </FormStyled>
+      ) : (
+        <>{Loading(window.innerWidth < 1024 ? darkPallete.white : "#000")}</>
       )}
     </Card>
   );

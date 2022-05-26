@@ -51,7 +51,7 @@ export const TitleStyled = styled(Title)`
 `;
 
 export const Layout = styled(LayoutStyled)`
-  margin: 10px 0 15px 100px;
+  margin: 90px 15px 20px 25px;
   background-color: transparent;
 `;
 

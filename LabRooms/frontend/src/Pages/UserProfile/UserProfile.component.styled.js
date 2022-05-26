@@ -17,6 +17,8 @@ export const Row = styled(RowStyled)`
 `;
 
 export const Card = styled(CardStyled)`
+  overflow-y: auto;
+  overflow-x: hidden;
   height: 100%;
 
   ::-webkit-scrollbar {

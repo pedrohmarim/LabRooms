@@ -1,9 +1,9 @@
 import React from "react";
-import { Row } from "../../antd_components";
+import { StyledRow } from "../../Pages/UserProfile/UserProfile.component.styled";
 import * as S from "./Loading.styled";
 
 export const Loading = (color, margin) => (
-  <Row align='middle'>
+  <StyledRow align='middle' justify='center'>
     <S.LoadingOutlined margin={margin} color={color} />
-  </Row>
+  </StyledRow>
 );

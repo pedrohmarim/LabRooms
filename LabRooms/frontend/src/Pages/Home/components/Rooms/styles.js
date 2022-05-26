@@ -119,6 +119,9 @@ export const StyledCol = styled(Col)`
 `;
 
 export const ButtonText = styled.span`
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   margin-left: 5px;
   color: ${({ color }) => color};
 `;
