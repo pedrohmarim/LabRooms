@@ -1,28 +1,17 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
-import Aside from "../../GlobalComponents/Aside/Aside.component";
 import { darkPallete } from "../../styles/pallete";
 import ProfileSocials from "./components/ProfileSocials.component";
 import TabsContainer from "./components/TabsContainer.component";
 import Background from "../../assets/backStars.mp4";
-import * as ChatRoomService from "../ChatRoom/services/ChatRoom.service";
-import {
-  ProfileContainer,
-  Row,
-  Card,
-  LeftFormContainer,
-  RightFormContainer,
-} from "./UserProfile.component.styled";
-import Header from "../../GlobalComponents/Header/Header.component";
+import { Row, Card, FormContainer } from "./UserProfile.component.styled";
+import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Perfil";
-  const { user } = useContext(UserContext);
-
-  const [viewUser, setViewUser] = useState();
-  const [viewMode, setIsViewMode] = useState(false);
+  const { getUserById, viewUser, viewMode, user } = useContext(UserContext);
   const navigate = useNavigate();
   const params = useParams();
   const token = Cookie.get("token");
@@ -43,24 +32,11 @@ export default function UserProfile() {
     if (candidaciesActive?.active) setActiveKey("3");
   }, [candidaciesActive]);
 
-  const getUserById = useCallback(() => {
-    if (user && _id === user?._id) {
-      setViewUser(user);
-    } else if ((user && _id !== user?._id) || !token) {
-      ChatRoomService.getUserById(_id).then(({ data }) => {
-        if (data) {
-          setViewUser(data);
-          setIsViewMode(true);
-        } else {
-          navigate("/notfound");
-        }
-      });
-    }
-  }, [_id, navigate, token, user]);
-
   useEffect(() => {
-    getUserById();
-  }, [getUserById]);
+    getUserById(_id);
+
+    // if (user && _id === user?._id && !viewUser) navigate("/notfound");
+  }, [_id, getUserById, navigate, user]);
 
   return (
     <>
@@ -73,78 +49,50 @@ export default function UserProfile() {
         <source src={Background} type='video/mp4' />
       </video>
 
-      <div
-        style={
-          window.innerWidth > 1024
-            ? {
-                display: "grid",
-                gridTemplateColumns: "auto 100%",
-                height: "100vh",
-              }
-            : null
-        }
-      >
-        {window.innerWidth > 1024 && (
-          <Aside darkPallete={darkPallete} SelectedItem={user && "2"} />
-        )}
+      <Row align='middle' justify='center' style={{ height: "100vh" }}>
+        <FormContainer
+          tabcolor={darkPallete.white}
+          padding='0 5px 0px 30px'
+          span={window.innerWidth > 1024 ? 6 : 24}
+        >
+          <Card bordered={false}>
+            <ProfileSocials darkPallete={darkPallete} user={viewUser} />
 
-        <ProfileContainer>
-          <Row>
-            {window.innerWidth > 1024 ? (
-              <>
-                <LeftFormContainer span={window.innerWidth > 1024 ? 6 : 24}>
-                  <Card bordered={false}>
-                    <ProfileSocials darkPallete={darkPallete} user={viewUser} />
-                  </Card>
-                </LeftFormContainer>
-
-                <RightFormContainer span={window.innerWidth > 1024 ? 18 : 24}>
-                  <TabsContainer
-                    candidaciesActive={candidaciesActive}
-                    setActiveKey={(value) => setActiveKey(value)}
-                    setCandidaciesActive={(value) =>
-                      setCandidaciesActive(value)
-                    }
-                    activeKey={activeKey}
-                    darkPallete={darkPallete}
-                    user={viewUser}
-                    navigate={navigate}
-                    token={token}
-                    viewMode={viewMode}
-                  />
-                </RightFormContainer>
-              </>
-            ) : (
-              <>
-                <Header />
-
-                <LeftFormContainer
-                  span={window.innerWidth > 1024 ? 6 : 24}
-                  tabcolor={darkPallete.white}
-                >
-                  <Card bordered={false}>
-                    <ProfileSocials darkPallete={darkPallete} user={viewUser} />
-
-                    <TabsContainer
-                      candidaciesActive={candidaciesActive}
-                      setActiveKey={(value) => setActiveKey(value)}
-                      setCandidaciesActive={(value) =>
-                        setCandidaciesActive(value)
-                      }
-                      activeKey={activeKey}
-                      darkPallete={darkPallete}
-                      user={viewUser}
-                      navigate={navigate}
-                      token={token}
-                      viewMode={viewMode}
-                    />
-                  </Card>
-                </LeftFormContainer>
-              </>
+            {window.innerWidth < 1024 && (
+              <TabsContainer
+                candidaciesActive={candidaciesActive}
+                setActiveKey={(value) => setActiveKey(value)}
+                setCandidaciesActive={(value) => setCandidaciesActive(value)}
+                activeKey={activeKey}
+                darkPallete={darkPallete}
+                user={viewUser}
+                navigate={navigate}
+                token={token}
+                viewMode={viewMode}
+              />
             )}
-          </Row>
-        </ProfileContainer>
-      </div>
+          </Card>
+        </FormContainer>
+
+        {window.innerWidth > 1024 && (
+          <FormContainer
+            padding='0 30px 0 5px'
+            span={window.innerWidth > 1024 ? 18 : 24}
+          >
+            <TabsContainer
+              candidaciesActive={candidaciesActive}
+              setActiveKey={(value) => setActiveKey(value)}
+              setCandidaciesActive={(value) => setCandidaciesActive(value)}
+              activeKey={activeKey}
+              darkPallete={darkPallete}
+              user={viewUser}
+              navigate={navigate}
+              token={token}
+              viewMode={viewMode}
+            />
+          </FormContainer>
+        )}
+      </Row>
     </>
   );
 }

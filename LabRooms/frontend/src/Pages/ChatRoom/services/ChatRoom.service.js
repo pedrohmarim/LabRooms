@@ -24,19 +24,3 @@ export async function handleVerifyApply(_id, roomId) {
     },
   });
 }
-
-export async function getCategoryById(_id) {
-  return api.get("/getCategoryById", {
-    headers: {
-      _id,
-    },
-  });
-}
-
-export async function getUserById(_id) {
-  return api.get("/getUserById", {
-    headers: {
-      _id,
-    },
-  });
-}

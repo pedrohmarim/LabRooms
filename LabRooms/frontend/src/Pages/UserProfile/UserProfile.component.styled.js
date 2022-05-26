@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import {
-  Layout,
   Row as RowStyled,
   Card as CardStyled,
   Col,
@@ -12,24 +11,12 @@ import {
 
 const { Title } = Typography;
 
-export const ProfileContainer = styled(Layout)`
-  margin: 25px 25px 25px 100px;
-  background-color: transparent;
-
-  @media screen and (max-width: 1024px) {
-    width: 100%;
-    margin: 0;
-  }
-`;
-
 export const Row = styled(RowStyled)`
   height: 100%;
   width: 100%;
 `;
 
 export const Card = styled(CardStyled)`
-  overflow-y: auto;
-  overflow-x: hidden;
   height: 100%;
 
   ::-webkit-scrollbar {
@@ -40,13 +27,20 @@ export const Card = styled(CardStyled)`
     background: rgba(0, 0, 0, 0.4);
     border-radius: 5px;
   }
+  .ant-card-head {
+    margin-bottom: 0;
+  }
 
   .ant-card-head-title {
     padding-top: 5px;
   }
 
   @media screen and (max-width: 1024px) {
-    overflow-y: hidden;
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 5px;
+    }
+
     overflow-x: hidden;
     height: 100%;
     background-color: transparent;
@@ -57,25 +51,19 @@ export const Card = styled(CardStyled)`
   }
 `;
 
-export const LeftFormContainer = styled(Col)`
-  height: 100%;
-  padding: 10px;
+export const FormContainer = styled(Col)`
+  height: 95vh;
   background-color: transparent;
+  padding: ${({ padding }) => padding};
 
   @media screen and (max-width: 1024px) {
     padding: 0px;
-    margin-top: 100px;
+    height: 100%;
   }
 
   .ant-tabs-nav-list {
     color: ${({ tabcolor }) => tabcolor} !important;
   }
-`;
-
-export const RightFormContainer = styled(Col)`
-  height: 100%;
-  background-color: transparent;
-  padding: 10px;
 `;
 
 export const RoomContainer = styled.div`

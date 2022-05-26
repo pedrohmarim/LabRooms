@@ -25,7 +25,7 @@ export default function ProfileSocials({
       {user && (
         <Row justify='center' gutter={[16, 16]}>
           <StyledBreadCrumb span={24}>
-            <Breadcrumb />
+            <Breadcrumb color={window.innerWidth < 1024 && darkPallete.white} />
           </StyledBreadCrumb>
 
           <Image

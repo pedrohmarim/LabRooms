@@ -31,13 +31,13 @@ export default function ViewProject() {
   const params = useParams();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, getUserById, getCategoryById, categorie } =
+    useContext(UserContext);
   const [currentRoom, setCurrentRoom] = useState();
   const [disabledApplyBtn, setDisabledApplyBtn] = useState();
   const [captcha, setCaptcha] = useState();
   const [captchaVisible, setCaptchaVisible] = useState();
   const [visible, setVisible] = useState(false);
-  const [roomOwner, setRoomOwner] = useState();
   const [RoomCategoryData, setRoomCategoryData] = useState();
   const [loadingApply, setLoadingApply] = useState(false);
   const [loadPage, setLoadPage] = useState(false);
@@ -137,17 +137,14 @@ export default function ViewProject() {
       const { categoryId, newCategory, owner } = currentRoom;
 
       if (!newCategory && categoryId) {
-        ChatRoomService.getCategoryById(categoryId).then(({ data }) => {
-          setRoomCategoryData(data);
-        });
+        getCategoryById(categoryId);
       } else if (newCategory && !categoryId) {
         setRoomCategoryData({ Icon: "repeat", Title: newCategory });
       }
 
-      ChatRoomService.getUserById(owner).then(({ data }) => {
-        setRoomOwner(data);
-      });
+      getUserById(owner);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentRoom]);
 
   return (
@@ -227,13 +224,13 @@ export default function ViewProject() {
                 setVisible={(value) => setVisible(value)}
                 currentRoom={currentRoom}
                 darkPallete={darkPallete}
-                roomCategoryData={RoomCategoryData}
+                roomCategoryData={categorie || RoomCategoryData}
               />
             </Col>
 
             <Col span={8}>
               <Row justify='center' align='middle' style={{ height: "100vh" }}>
-                {roomOwner ? (
+                {user ? (
                   <Card
                     style={{
                       maxWidth: "400px",
@@ -243,7 +240,7 @@ export default function ViewProject() {
                   >
                     <ProfileSocials
                       darkPallete={darkPallete}
-                      user={roomOwner}
+                      user={user}
                       isViewProject
                       ownerId={currentRoom?.owner}
                     />

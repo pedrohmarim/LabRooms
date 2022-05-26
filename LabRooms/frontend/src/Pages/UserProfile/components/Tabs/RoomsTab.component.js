@@ -1,6 +1,5 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useContext } from "react";
 import * as RoomService from "../../../CreateRoom/services/createroom.service";
-import * as ChatRoomService from "../../../ChatRoom/services/ChatRoom.service";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
 import RoomForm from "./RoomForm.component";
@@ -8,6 +7,7 @@ import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled
 import HeaderTabRoomsCandidacies from "../../../../GlobalComponents/HeaderTabRoomsCandidacies/HeaderTabRoomsCandidacies.component";
 import TagRender from "../../../../GlobalComponents/TagRender/TagRender.component";
 import { Card } from "../../UserProfile.component.styled";
+import { UserContext } from "../../../../Context/UserContext";
 import {
   Row,
   FeatherIcons,
@@ -34,9 +34,9 @@ const RoomsTab = ({
   navigate,
   setCandidaciesActive,
 }) => {
+  const { getCategoryById, categorie } = useContext(UserContext);
   const [newCategoryState, setNewCategory] = useState(false);
   const [showSubCategorie, setShowSubCategorie] = useState(false);
-  const [allSubCategories, setAllSubCategories] = useState();
   const [showConfirmButton, setShowConfirmButton] = useState({
     _id: null,
   });
@@ -132,11 +132,8 @@ const RoomsTab = ({
         value !== TIPO_CATEGORIA.CATEGORIA_CRIADA &&
         value !== TIPO_CATEGORIA.CATEGORIA_TODAS
       ) {
-        ChatRoomService.getCategoryById(value).then(({ data }) => {
-          const { SubCategories } = data;
-          setShowSubCategorie(true);
-          setAllSubCategories(SubCategories);
-        });
+        getCategoryById(value);
+        setShowSubCategorie(true);
       }
     }
 
@@ -295,7 +292,7 @@ const RoomsTab = ({
             _id={_id}
             CategorieTitle={CategorieTitle}
             subCategories={subCategories}
-            allSubCategories={allSubCategories}
+            allSubCategories={categorie?.SubCategories}
             tagRender={TagRender}
             showSubCategorie={showSubCategorie}
           />
@@ -308,19 +305,20 @@ const RoomsTab = ({
     _id,
     token,
     getRoomsByOwnerId,
+    getRooms,
     setCollapseDisabled,
+    getCategoryById,
     navigate,
     setCandidaciesActive,
+    viewMode,
     setRoomId,
     collapseDisabled,
     categories,
     newCategoryState,
-    viewMode,
     showConfirmButton,
     darkPallete,
-    allSubCategories,
+    categorie?.SubCategories,
     showSubCategorie,
-    getRooms,
   ]);
 
   return (

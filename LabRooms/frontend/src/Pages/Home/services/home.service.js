@@ -54,3 +54,11 @@ export async function getUsersByCategory(categoryId, userId) {
     },
   });
 }
+
+export async function getUserById(_id) {
+  return api.get("/getUserById", {
+    headers: {
+      _id,
+    },
+  });
+}

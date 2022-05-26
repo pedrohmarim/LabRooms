@@ -15,3 +15,11 @@ export async function UpdateUserInfo(dto, token) {
     },
   });
 }
+
+export async function getCategoryById(_id) {
+  return api.get("/getCategoryById", {
+    headers: {
+      _id,
+    },
+  });
+}

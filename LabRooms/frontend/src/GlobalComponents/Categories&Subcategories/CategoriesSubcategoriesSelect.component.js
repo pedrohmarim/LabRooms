@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { TIPO_CATEGORIA } from "../../Helpers/TipoCategoria";
-import * as ChatRoomService from "../../Pages/ChatRoom/services/ChatRoom.service";
 import { Select, Row, FeatherIcons, Typography } from "../../antd_components";
 import TagRender from "../TagRender/TagRender.component";
 import { FormItem } from "../../Pages/Signup/components/SignupForm/Signup.form.styled";
+import { UserContext } from "../../Context/UserContext";
 import {
   CategoryTitle,
   CategoryInfo,
@@ -23,7 +23,7 @@ const CategoriesSubcategoriesSelect = ({
   styleInput,
   setShowPrice,
 }) => {
-  const [subCategories, setSubCategories] = useState([]);
+  const { getCategoryById, categorie } = useContext(UserContext);
   const [hideNewCategoryInput, setHideNewCategoryInput] = useState(true);
   const [hideSubCategoriesInput, setHideSubCategoriesInput] = useState(true);
 
@@ -38,11 +38,8 @@ const CategoriesSubcategoriesSelect = ({
       }
 
     if (categoryIdFromUser) {
-      ChatRoomService.getCategoryById(categoryIdFromUser).then(({ data }) => {
-        const { SubCategories } = data;
-        setSubCategories(SubCategories);
-        setHideNewCategoryInput(true);
-      });
+      getCategoryById(categoryIdFromUser);
+      setHideNewCategoryInput(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -71,12 +68,9 @@ const CategoriesSubcategoriesSelect = ({
       value !== TIPO_CATEGORIA.CATEGORIA_CRIADA &&
       value !== TIPO_CATEGORIA.CATEGORIA_TODAS
     ) {
-      ChatRoomService.getCategoryById(value).then(({ data }) => {
-        const { SubCategories } = data;
-        setSubCategories(SubCategories);
-        setHideNewCategoryInput(true);
-        setHideSubCategoriesInput(false);
-      });
+      getCategoryById(value);
+      setHideNewCategoryInput(true);
+      setHideSubCategoriesInput(false);
     }
   }
 
@@ -166,7 +160,7 @@ const CategoriesSubcategoriesSelect = ({
             placeholder='Selecionar subcategorias'
             tagRender={TagRender}
             style={{ width: "100%" }}
-            options={subCategories}
+            options={categorie?.SubCategories}
           />
         </FormItem>
       )}

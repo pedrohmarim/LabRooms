@@ -25,7 +25,7 @@ const CreateRoomButton = ({ color, margin, backgroundcolor, tooltip }) => {
             color={tooltip || backgroundcolor}
           >
             <Button
-              margin={margin || "0 0 0 15px"}
+              margin={margin || (window.innerWidth > 1024 && "0 0 0 15px")}
               color={color}
               backgroundcolor={backgroundcolor}
               icon={<FeatherIcons icon='plus' size={20} />}

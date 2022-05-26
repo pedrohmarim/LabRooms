@@ -26,8 +26,15 @@ export const UserProvider = ({ children }) => {
   const [recomendedUsers, setRecomendedUsers] = useState();
   const [loadingRecomendedUsers, setLoadingRecomendedUsers] = useState(true);
 
+  const [viewUser, setViewUser] = useState();
+  const [viewUserLoading, setViewUserLoading] = useState(true);
+  const [viewMode, setIsViewMode] = useState(false);
+
   const [tabRooms, setTabRooms] = useState();
   const [categories, setCategories] = useState();
+
+  const [categorie, setCategorie] = useState();
+
   const token = Cookie.get("token");
 
   const getRoomsByOwnerId = useCallback(() => {
@@ -49,6 +56,13 @@ export const UserProvider = ({ children }) => {
     }
   }, [token, user]);
 
+  const getCategoryById = useCallback((_id) => {
+    setCategorie(null);
+    UserProfileService.getCategoryById(_id).then(({ data }) => {
+      if (data) setCategorie(data);
+    });
+  }, []);
+
   const getRooms = useCallback(() => {
     HomeService.getRooms().then(({ data }) => {
       const { arrayWithIcon, loading } = data;
@@ -56,6 +70,26 @@ export const UserProvider = ({ children }) => {
       setLoadingRooms(loading);
     });
   }, []);
+
+  const getUserById = useCallback(
+    (_id) => {
+      setViewUser(null);
+      if (user && _id === user?._id) {
+        setViewUser(user);
+        setIsViewMode(false);
+      } else if ((user && _id !== user?._id) || !token) {
+        HomeService.getUserById(_id).then(({ data }) => {
+          if (data) {
+            const { user, loading } = data;
+            setViewUserLoading(loading);
+            setViewUser(user);
+            setIsViewMode(true);
+          }
+        });
+      }
+    },
+    [token, user]
+  );
 
   useEffect(() => {
     getRoomsByOwnerId();
@@ -134,7 +168,12 @@ export const UserProvider = ({ children }) => {
         setRecomendedRooms,
         setLoadingUsers,
         setUsers,
+        getUserById,
+        getCategoryById,
+        getRoomsByOwnerId,
+        getRooms,
         tabRooms,
+        viewUserLoading,
         user,
         loading,
         rooms,
@@ -148,8 +187,9 @@ export const UserProvider = ({ children }) => {
         loadingUsers,
         allRooms,
         hasntRooms,
-        getRoomsByOwnerId,
-        getRooms,
+        viewMode,
+        viewUser,
+        categorie,
       }}
     >
       {children}

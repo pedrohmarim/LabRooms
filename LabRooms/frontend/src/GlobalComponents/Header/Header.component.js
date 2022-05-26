@@ -21,7 +21,7 @@ import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
 import { MontaUrlDominio } from "../../Helpers/UrlDominio";
 import { Loading } from "../Loading/Loading.component";
 
-const Header = ({ fromNotFound }) => {
+const Header = ({ fromNotFound, fromUserProfile }) => {
   const navigate = useNavigate();
   const [ExpandLogin, setExpandLogin] = useState();
   const [solidHeader, setSolidHeader] = useState(false);
@@ -78,7 +78,10 @@ const Header = ({ fromNotFound }) => {
   );
 
   return (
-    <HeaderContainer solidHeader={solidHeader}>
+    <HeaderContainer
+      solidHeader={solidHeader}
+      fromUserProfile={fromUserProfile}
+    >
       <StyledRow align='middle' justify='space-between'>
         <Link to='/'>
           <Image

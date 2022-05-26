@@ -290,21 +290,23 @@ module.exports = {
     const { _id } = request.headers;
 
     try {
-      const user = await UserModel.findOne({ _id });
+      const usermodel = await UserModel.findOne({ _id });
+
+      const user = {
+        ...usermodel._doc,
+        cpf: usermodel?.cpf ? AnonymizeCPF(usermodel?.cpf) : undefined,
+        cnpj: usermodel?.cnpj ? AnonymizeCNPJ(usermodel?.cnpj) : undefined,
+        email: AnonymizeEmail(usermodel?.email),
+        hashedPass: undefined,
+        createdAt: usermodel.createdAt.toLocaleString("pt-BR", {
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }),
+      };
 
       if (user) {
-        return response.json({
-          ...user._doc,
-          cpf: user?.cpf ? AnonymizeCPF(user?.cpf) : undefined,
-          cnpj: user?.cnpj ? AnonymizeCNPJ(user?.cnpj) : undefined,
-          email: AnonymizeEmail(user?.email),
-          hashedPass: undefined,
-          createdAt: user.createdAt.toLocaleString("pt-BR", {
-            year: "numeric",
-            month: "2-digit",
-            day: "2-digit",
-          }),
-        });
+        return response.json({ user, loading: false });
       }
     } catch {
       return response.json(null);
