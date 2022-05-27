@@ -21,7 +21,7 @@ const CategoriesSubcategoriesSelect = ({
   viewMode,
   newCategoryFromUser,
   styleInput,
-  setShowPrice,
+  setShowPrice = () => {},
 }) => {
   const { getCategoryById, categorie } = useContext(UserContext);
   const [hideNewCategoryInput, setHideNewCategoryInput] = useState(true);

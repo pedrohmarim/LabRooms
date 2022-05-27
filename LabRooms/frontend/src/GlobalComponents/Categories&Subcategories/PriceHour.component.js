@@ -50,7 +50,7 @@ const PriceHour = ({
         placeholder='Preço/Hora'
         decimalsLimit={2}
       />
-      ;
+      <></>
     </Form.Item>
   );
 };
