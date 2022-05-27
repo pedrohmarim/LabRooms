@@ -58,7 +58,7 @@ export const RoomCategory = styled.span`
   color: ${({ color }) => color};
 `;
 
-export const ViewProjectContainer = styled(Collapse)`
+export const ViewProjectContainer = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;

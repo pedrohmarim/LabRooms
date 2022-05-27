@@ -70,7 +70,6 @@ const SocialRegister = ({ editMode, styleInput }) => {
           >
             <Input
               disabled={!editMode}
-              Mask
               style={styleInput}
               placeholder='www.twitter.com/user'
               mask='111.111.111-11'

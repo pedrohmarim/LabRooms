@@ -237,7 +237,6 @@ const SocialRegister = ({
               tabIndex={viewMode && "-1"}
               className={viewMode && "disabled"}
               disabled={!editMode && !viewMode}
-              Mask
               autoComplete='off'
               mask='(11) 1111-1111'
               style={styleInput}
@@ -269,7 +268,6 @@ const SocialRegister = ({
               className={viewMode && "disabled"}
               tabIndex={viewMode && "-1"}
               disabled={!editMode && !viewMode}
-              Mask
               autoComplete='off'
               mask='(11) 11111-1111'
               style={styleInput}

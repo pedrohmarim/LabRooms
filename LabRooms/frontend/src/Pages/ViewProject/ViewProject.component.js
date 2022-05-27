@@ -132,9 +132,13 @@ export default function ViewProject() {
     if (currentRoom) {
       const urlToken = searchParams.get("token");
 
-      if (currentRoom?.owner === user?._id) return;
+      if (
+        currentRoom?.owner === user?._id ||
+        (currentRoom?.visible && !urlToken)
+      )
+        return;
 
-      if (urlToken && !currentRoom?.visible && currentRoom?.owner !== user?._id)
+      if (urlToken && !currentRoom?.visible)
         handleValidateSharedLink(_id, urlToken);
       else navigate("/notfound");
     }

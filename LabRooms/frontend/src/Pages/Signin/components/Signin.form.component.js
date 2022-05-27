@@ -102,7 +102,7 @@ const SigninForm = ({ darkPallete }) => {
           style={styleInput}
           allowClear
           prefix={<FeatherIcons icon='lock' size={15} />}
-          iconrRender={(visible) =>
+          iconRender={(visible) =>
             visible ? (
               <FeatherIcons icon='eyeoff' size={15} />
             ) : (
