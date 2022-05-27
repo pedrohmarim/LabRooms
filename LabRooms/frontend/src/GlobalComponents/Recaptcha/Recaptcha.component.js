@@ -5,7 +5,7 @@ const Recaptcha = ({ verifyCallback }, ref) => {
   return (
     <RecaptchaComponent
       ref={ref}
-      sitekey='6LdT2PgfAAAAADxyXKVCFLqGxbFSYz8M_I7pv4wA'
+      sitekey='6LeXNPQfAAAAAGCN_3jeXYmlS_cvMlK5_4tMqh2w'
       render='explicit'
       verifyCallback={verifyCallback}
     />
