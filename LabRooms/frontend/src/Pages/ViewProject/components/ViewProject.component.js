@@ -7,16 +7,14 @@ import { StyledRowTags } from "../../Home/components/Rooms/styles";
 import { StyledButton } from "../../UserProfile/UserProfile.component.styled";
 import { TIPO_CADASTRO } from "../../../Helpers/TipoCadastro";
 import {
-  Layout,
-  RoomCategory,
-  CategoryText,
-} from "../../ChatRoom/components/styles";
-import {
   HeaderStyled,
   ProjectTitle,
   ProjectDescription,
   HourPriceContainer,
   Price,
+  Layout,
+  RoomCategory,
+  CategoryText,
 } from "../ViewProject.component.styled";
 
 export default function ViewProject({

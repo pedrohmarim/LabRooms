@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useContext } from "react";
-import * as RoomService from "../../../CreateRoom/services/createroom.service";
+import * as RoomService from "../../../CreateRoom/services/CreateRoom.service";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
 import RoomForm from "./RoomForm.component";

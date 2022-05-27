@@ -4,17 +4,18 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import Header from "../../GlobalComponents/Header/Header.component";
 import ViewProjectComponent from "./components/ViewProject.component";
 import { Loading } from "../../GlobalComponents/Loading/Loading.component";
-import { ChatContainer as ViewProjectContainer } from "../ChatRoom/ChatRoom.styled";
-import { ModalButton } from "./ViewProject.component.styled";
 import Background from "../../assets/backStars.mp4";
 import ProfileSocials from "../UserProfile/components/ProfileSocials.component";
-import * as ChatRoomService from "../ChatRoom/services/ChatRoom.service";
 import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
 import Recaptcha from "../../GlobalComponents/Recaptcha/Recaptcha.component";
 import { StyledRow } from "../CreateRoom/CreateRoom.styled";
 import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
-import * as CreateRoomService from "../CreateRoom/services/createroom.service";
+import * as CreateRoomService from "../CreateRoom/services/CreateRoom.service";
+import {
+  ModalButton,
+  ViewProjectContainer,
+} from "./ViewProject.component.styled";
 import {
   Row,
   Col,
@@ -72,7 +73,7 @@ export default function ViewProject() {
         captcha,
       };
 
-      ChatRoomService.handleApply(dto, token).then(({ data }) => {
+      CreateRoomService.handleApply(dto, token).then(({ data }) => {
         const { loading, message, success } = data;
 
         Notification.open({

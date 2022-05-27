@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Layout, Typography } from "antd";
+import { Layout as LayoutStyled, Typography, Collapse } from "antd";
 
-const { Header } = Layout;
+const { Header } = LayoutStyled;
 
 export const HeaderStyled = styled(Header)`
   background-color: transparent;
@@ -40,4 +40,37 @@ export const Price = styled.span`
   padding: 5px;
   border: solid 1px #fff;
   background-color: rgba(191, 191, 191, 0.3);
+`;
+
+export const Layout = styled(LayoutStyled)`
+  margin: 90px 15px 20px 25px;
+  background-color: transparent;
+`;
+
+export const CategoryText = styled.span`
+  margin-left: 5px;
+`;
+
+export const RoomCategory = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: ${({ color }) => color};
+`;
+
+export const ViewProjectContainer = styled(Collapse)`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: transparent;
+
+  .ant-collapse-arrow {
+    color: #fff;
+    font-size: 16pt !important;
+  }
+
+  .ant-collapse-item {
+    margin-right: 15px !important;
+    border-color: rgba(191, 191, 191, 0.7);
+  }
 `;

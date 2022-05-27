@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
-import * as CreateRoomService from "../services/createroom.service";
+import * as CreateRoomService from "../services/CreateRoom.service";
 import { FormItem } from "../../Signup/components/SignupForm/Signup.form.styled";
 import CategoriesSubcategoriesSelect from "../../../GlobalComponents/Categories&Subcategories/CategoriesSubcategoriesSelect.component";
 import Recaptcha from "../../../GlobalComponents/Recaptcha/Recaptcha.component";

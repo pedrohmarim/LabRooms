@@ -40,6 +40,14 @@ export async function DeleteRoom(_id, token) {
   );
 }
 
+export async function handleApply(dto, token) {
+  return api.post("/apply", dto, {
+    headers: {
+      Authorization: token,
+    },
+  });
+}
+
 export async function CreateSharedLink(_id, token) {
   return api.post(
     "/createSharedLink",
