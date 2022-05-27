@@ -359,17 +359,14 @@ module.exports = {
         `process.env.JWT_KEY_SHAREROOM_${_id}`
       );
 
-      if (decoded) {
-        const { _id } = decoded;
-
+      if (decoded?._id) {
         return response.json({
-          status: 200,
-          _id,
+          authorized: true,
         });
       }
     } catch {
       return response.json({
-        _id: undefined,
+        authorized: false,
       });
     }
   },

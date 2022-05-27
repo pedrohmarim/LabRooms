@@ -193,6 +193,7 @@ export const UserProvider = ({ children }) => {
   return (
     <UserContext.Provider
       value={{
+        setLoadPage,
         setUser,
         setLoadingRooms,
         setRooms,

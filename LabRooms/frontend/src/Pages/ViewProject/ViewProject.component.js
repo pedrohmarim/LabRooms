@@ -13,6 +13,8 @@ import { UserContext } from "../../Context/UserContext";
 import Cookie from "js-cookie";
 import Recaptcha from "../../GlobalComponents/Recaptcha/Recaptcha.component";
 import { StyledRow } from "../CreateRoom/CreateRoom.styled";
+import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
+import * as CreateRoomService from "../CreateRoom/services/createroom.service";
 import {
   Row,
   Col,
@@ -21,7 +23,6 @@ import {
   Modal,
   FeatherIcons,
 } from "../../antd_components";
-import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
 
 export default function ViewProject() {
   document.getElementsByTagName("title")[0].innerText =
@@ -43,6 +44,7 @@ export default function ViewProject() {
     getRoomById,
     disabledApplyBtn,
     setDisabledApplyBtn,
+    setLoadPage,
   } = useContext(UserContext);
 
   const [captcha, setCaptcha] = useState();
@@ -57,35 +59,6 @@ export default function ViewProject() {
     setCaptcha(null);
     recaptchaRef?.current.reset();
   }
-
-  // useEffect(() => {
-  //   if (searchParams.get("token")) {
-  //     const urlToken = searchParams.get("token");
-
-  //     const dto = {
-  //       urlToken,
-  //       _id,
-  //     };
-
-  //     CreateRoomService.ValidateSharedLink(dto)
-  //       .then(({ data }) => {
-  //         const { _id } = data;
-
-  //         if (_id) {
-  //           ChatRoomService.getRoomById(_id).then(({ data }) => {
-  //             setLoadPage(true);
-  //             setCurrentRoom(data);
-  //           });
-  //         } else {
-  //           navigate("/notfound");
-  //         }
-  //       })
-  //       .catch(() => navigate("/notfound"));
-  //   } else {
-
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [viewUser?._id]);
 
   function handleApply() {
     if (user?._id && token) {
@@ -119,24 +92,53 @@ export default function ViewProject() {
   }
 
   useEffect(() => {
-    getRoomById(_id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [_id]);
-
-  useEffect(() => {
-    if (currentRoom) {
+    if (currentRoom?._id !== _id) {
+      setLoadPage(false);
+      getRoomById(_id);
+    } else {
       const { categoryId, newCategory, owner } = currentRoom;
+
+      getUserById(owner);
 
       if (!newCategory && categoryId) {
         getCategoryById(categoryId);
       } else if (newCategory && !categoryId) {
         setRoomCategoryData({ Icon: "repeat", Title: newCategory });
       }
-
-      getUserById(owner);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentRoom]);
+  }, [currentRoom?.owner]);
+
+  function handleValidateSharedLink(_id, urlToken) {
+    const dto = {
+      urlToken,
+      _id,
+    };
+
+    CreateRoomService.ValidateSharedLink(dto)
+      .then(({ data }) => {
+        const { authorized } = data;
+
+        if (!authorized) navigate("/notfound");
+      })
+      .catch(() => {
+        navigate("/notfound");
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }
+
+  useEffect(() => {
+    if (currentRoom) {
+      const urlToken = searchParams.get("token");
+
+      if (currentRoom?.owner === user?._id) return;
+
+      if (urlToken && !currentRoom?.visible && currentRoom?.owner !== user?._id)
+        handleValidateSharedLink(_id, urlToken);
+      else navigate("/notfound");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentRoom, user, _id]);
 
   useEffect(() => {
     if (currentRoom && user && user?.accountType === TIPO_CADASTRO.FREELANCER)
