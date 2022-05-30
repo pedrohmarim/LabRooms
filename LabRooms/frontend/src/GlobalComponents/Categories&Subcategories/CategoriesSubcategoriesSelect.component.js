@@ -47,10 +47,7 @@ const CategoriesSubcategoriesSelect = ({
   function handleSelectChange(value) {
     setShowPrice(true);
 
-    form.setFieldsValue({
-      subCategories: [],
-      hourprice: undefined,
-    });
+    form.setFieldsValue({ subCategories: [] });
 
     if (
       value === TIPO_CATEGORIA.CATEGORIA_OUTRAS ||

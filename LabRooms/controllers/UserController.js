@@ -24,7 +24,6 @@ function handleUsersWithIcon(users, response) {
       imagePath,
       scoreTabs,
       itemScore,
-      totalSubMatches,
       priceScore,
       userPrice,
     } = user;
@@ -42,7 +41,6 @@ function handleUsersWithIcon(users, response) {
           CategorieTitle: Title,
           scoreTabs,
           itemScore,
-          totalSubMatches,
           priceScore,
           userPrice,
         });
@@ -65,7 +63,6 @@ function handleUsersWithIcon(users, response) {
         CategorieTitle: newCategory,
         scoreTabs,
         itemScore,
-        totalSubMatches,
         priceScore,
         userPrice,
       });

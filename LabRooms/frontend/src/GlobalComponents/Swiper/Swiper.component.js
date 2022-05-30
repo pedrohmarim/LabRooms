@@ -202,8 +202,8 @@ const SwiperComp = ({ arrayToRender }) => {
                       color={darkPallete.white}
                       margin={
                         scoreTabs?.length || itemScore
-                          ? "0 20px 5px 0px"
-                          : "0 0px 5px 0px"
+                          ? "0 20px 0 0px"
+                          : "0 0px 0 0px"
                       }
                     >
                       {title || username}
