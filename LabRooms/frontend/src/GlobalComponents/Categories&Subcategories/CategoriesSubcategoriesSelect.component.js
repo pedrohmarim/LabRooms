@@ -118,7 +118,10 @@ const CategoriesSubcategoriesSelect = ({
                   </Row>
                 </Select.Option>
               ))}
-          <Select.Option key={11} value={11}>
+          <Select.Option
+            key={TIPO_CATEGORIA.CATEGORIA_OUTRAS}
+            value={TIPO_CATEGORIA.CATEGORIA_OUTRAS}
+          >
             <Row align='middle' justify='start'>
               <FeatherIcons icon='repeat' size={15} />
               <CategoryTitle>

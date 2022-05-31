@@ -89,15 +89,22 @@ const UserBasicInfo = ({
   return (
     <>
       <FormItem
-        label='Nome completo'
+        label={
+          accountType === TIPO_CADASTRO.FREELANCER ? "Nome Completo" : "Empresa"
+        }
         name='username'
         rules={[{ required: true, message: "Campo obrigatório." }]}
       >
         <Input
+          maxLength={100}
           style={styleInput}
           allowClear
           prefix={<FeatherIcons icon='user' size={15} />}
-          placeholder='Nome completo'
+          placeholder={
+            accountType === TIPO_CADASTRO.FREELANCER
+              ? "Nome Completo"
+              : "Nome da Empresa"
+          }
         />
       </FormItem>
 
@@ -112,6 +119,7 @@ const UserBasicInfo = ({
         validateStatus={validateInput?.field === "email" ? "error" : null}
       >
         <Input
+          maxLength={100}
           style={styleInput}
           allowClear
           prefix={<FeatherIcons icon='mail' size={15} />}
@@ -186,6 +194,7 @@ const UserBasicInfo = ({
         ]}
       >
         <Input.Password
+          maxLength={100}
           style={styleInput}
           allowClear
           prefix={<FeatherIcons icon='lock' size={15} />}
@@ -221,6 +230,7 @@ const UserBasicInfo = ({
         ]}
       >
         <Input.Password
+          maxLength={100}
           style={styleInput}
           allowClear
           prefix={<FeatherIcons icon='lock' size={15} />}

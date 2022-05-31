@@ -56,17 +56,26 @@ const SocialRegister = ({
             name='username'
             label={
               <Typography>
-                <b>Nome Completo</b>
+                <b>
+                  {accountType === TIPO_CADASTRO.FREELANCER
+                    ? "Nome Completo"
+                    : "Empresa"}
+                </b>
               </Typography>
             }
           >
             <Input
+              maxLength={100}
               className={viewMode && "disabled"}
               tabIndex={viewMode && "-1"}
               readOnly={viewMode}
               disabled={!editMode && !viewMode}
               style={styleInput}
-              placeholder='Nome Completo'
+              placeholder={
+                accountType === TIPO_CADASTRO.FREELANCER
+                  ? "Nome Completo"
+                  : "Nome da Empresa"
+              }
             />
           </Form.Item>
         </Col>
@@ -89,6 +98,7 @@ const SocialRegister = ({
             }
           >
             <Input
+              maxLength={100}
               className={viewMode && "disabled"}
               tabIndex={viewMode && "-1"}
               readOnly={viewMode}
@@ -204,6 +214,7 @@ const SocialRegister = ({
             }
           >
             <Input
+              maxLength={200}
               tabIndex={viewMode && "-1"}
               className={viewMode && "disabled"}
               readOnly={viewMode}
