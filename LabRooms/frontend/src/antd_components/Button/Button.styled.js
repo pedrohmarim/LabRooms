@@ -5,7 +5,7 @@ export const Button = styled(AntDesignButton)`
   color: ${({ color }) => color} !important;
   background-color: ${({ backgroundcolor }) => backgroundcolor};
   border: none;
-  outline: none;
+  outline: none !important;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
   margin: ${({ margin }) => margin};

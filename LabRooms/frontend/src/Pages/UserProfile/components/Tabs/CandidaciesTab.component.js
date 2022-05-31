@@ -6,6 +6,8 @@ import * as CandidaciesService from "../../services/Candidacies.service";
 import { ModalButton } from "../../../ViewProject/ViewProject.component.styled";
 import { Link } from "react-router-dom";
 import { TitleStyled } from "../../../Home/components/Rooms/styles";
+import NoProjectInfo from "../../../../GlobalComponents/NoProjectInfo/NoProjectInfo.component";
+import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
 import {
   Row,
   Form,
@@ -19,8 +21,6 @@ import {
   Col,
   Menu,
 } from "../../../../antd_components";
-import NoProjectInfo from "../../../../GlobalComponents/NoProjectInfo/NoProjectInfo.component";
-import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
 
 const CandidaciesTab = ({
   darkPallete,

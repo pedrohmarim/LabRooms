@@ -215,6 +215,9 @@ const SwiperComp = ({ arrayToRender }) => {
                           onVisibleChange={(visible) =>
                             setDisabledItemClick(visible)
                           }
+                          overlayInnerStyle={{
+                            backgroundColor: darkPallete.backgroundBlue,
+                          }}
                           content={
                             scoreTabs?.length ? (
                               <Tabs

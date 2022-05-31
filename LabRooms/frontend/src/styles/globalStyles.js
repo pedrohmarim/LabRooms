@@ -104,10 +104,6 @@ export const GlobalStyles = createGlobalStyle`
     color: #fff;
   }
 
-  .ant-popover-inner {
-    background-color: #131926;
-  }
-  
   .ant-popover-title {
     border-color: rgba(191, 191, 191, 0.5);
   }

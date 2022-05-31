@@ -31,16 +31,16 @@ const SocialRegister = ({
           <StyledCol span={24} marginbottom='0 0 15px 0'>
             <Row justify='space-between'>
               <Title level={4}>Informações Pessoais</Title>
-              <Tooltip
-                color={darkPallete.lightblue}
-                title='Editar Perfil'
-                defaultVisible
-              >
+              <Tooltip color={darkPallete.lightblue} title='Editar Perfil'>
                 <StyledButton
+                  icon={
+                    <FeatherIcons icon='edit' className='iconMarginRight' />
+                  }
                   backgroundcolor='transparent'
-                  icon={<FeatherIcons icon='edit' />}
                   onClick={() => setEditMode(true)}
-                />
+                >
+                  Editar Perfil
+                </StyledButton>
               </Tooltip>
             </Row>
           </StyledCol>

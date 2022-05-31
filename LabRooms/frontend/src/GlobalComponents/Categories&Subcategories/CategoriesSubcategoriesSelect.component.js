@@ -4,11 +4,11 @@ import { Select, Row, FeatherIcons, Typography } from "../../antd_components";
 import TagRender from "../TagRender/TagRender.component";
 import { FormItem } from "../../Pages/Signup/components/SignupForm/Signup.form.styled";
 import { UserContext } from "../../Context/UserContext";
+import { StyledInput } from "../../Pages/CreateRoom/CreateRoom.styled";
 import {
   CategoryTitle,
   CategoryInfo,
 } from "../../Pages/CreateRoom/CreateRoom.styled";
-import { StyledInput } from "../../Pages/CreateRoom/CreateRoom.styled";
 
 const CategoriesSubcategoriesSelect = ({
   categoryIdFromUser,

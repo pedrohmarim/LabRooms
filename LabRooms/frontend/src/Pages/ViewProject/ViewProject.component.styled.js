@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Layout as LayoutStyled, Typography, Collapse } from "antd";
+import { Layout as LayoutStyled, Typography } from "antd";
 
 const { Header } = LayoutStyled;
 
