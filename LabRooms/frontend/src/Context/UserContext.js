@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect, useCallback } from "react";
 import Cookie from "js-cookie";
+import { Notification } from "../antd_components/";
 import * as HomeService from "../Pages/Home/services/home.service";
 import * as CreateRoomService from "../Pages/CreateRoom/services/CreateRoom.service";
 import * as UserProfileService from "../Pages/UserProfile/services/UserProfile.service";
@@ -42,6 +43,15 @@ export const UserProvider = ({ children }) => {
   const [disabledApplyBtn, setDisabledApplyBtn] = useState();
 
   const token = Cookie.get("token");
+
+  function handleExpiredSession(message) {
+    Cookie.remove("token");
+
+    Notification.open({
+      type: "error",
+      message,
+    });
+  }
 
   const handleVerifyApply = useCallback((userId, ownerRoomId, roomId) => {
     if (userId !== ownerRoomId) {
@@ -133,10 +143,15 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      HomeService.getCurrentUser(token).then(({ data }) => {
-        setUser(data);
-        setLoading(false);
-      });
+      HomeService.getCurrentUser(token)
+        .then(({ data }) => {
+          setUser(data);
+          setLoading(false);
+        })
+        .catch(({ response }) => {
+          const { status, data } = response;
+          if (status === 403) handleExpiredSession(data?.message);
+        });
     } else {
       setUser(null);
       setLoading(false);

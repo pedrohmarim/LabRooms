@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     next();
   } catch (error) {
     return res.status(403).json({
-      message: "Não Autorizado",
+      message: "Sessão expirada",
     });
   }
 };

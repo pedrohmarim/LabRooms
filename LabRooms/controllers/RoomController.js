@@ -83,7 +83,7 @@ module.exports = {
 
     // 1 - TIPO_CADASTRO = FREELANCER
     if (user?.accountType === 1)
-      return response.status(403).json({
+      return response.status(401).json({
         message: "Não Autorizado.",
       });
 
