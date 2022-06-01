@@ -94,7 +94,6 @@ export const UserProvider = ({ children }) => {
           } else {
             setHasntRooms(null);
             setTabRooms({ array: arrayWithIcon, loading });
-            setAllRooms(arrayWithIcon);
           }
         });
       }
@@ -111,6 +110,7 @@ export const UserProvider = ({ children }) => {
   const getRooms = useCallback(() => {
     HomeService.getRooms().then(({ data }) => {
       const { arrayWithIcon, loading } = data;
+      setAllRooms(arrayWithIcon);
       setRooms(arrayWithIcon);
       setLoadingRooms(loading);
     });
