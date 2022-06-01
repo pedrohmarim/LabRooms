@@ -18,6 +18,7 @@ export const UserProvider = ({ children }) => {
   const [loadingRooms, setLoadingRooms] = useState(true);
 
   const [users, setUsers] = useState();
+  const [allUsers, setAllUsers] = useState();
   const [loadingUsers, setLoadingUsers] = useState(true);
 
   const [recomendedRooms, setRecomendedRooms] = useState();
@@ -156,6 +157,8 @@ export const UserProvider = ({ children }) => {
     if (!token) {
       HomeService.getUsers(undefined).then(({ data }) => {
         const { arrayWithIcon, loading } = data;
+
+        setAllUsers(arrayWithIcon);
         setUsers(arrayWithIcon);
         setLoadingUsers(loading);
       });
@@ -166,6 +169,8 @@ export const UserProvider = ({ children }) => {
     if (user && token) {
       HomeService.getUsers(user?._id).then(({ data }) => {
         const { arrayWithIcon, loading } = data;
+
+        setAllUsers(arrayWithIcon);
         setUsers(arrayWithIcon);
         setLoadingUsers(loading);
       });
@@ -174,6 +179,7 @@ export const UserProvider = ({ children }) => {
         HomeService.getRecomendedRooms(user?.categoryId, token).then(
           ({ data }) => {
             const { arrayWithIcon, loading } = data;
+
             setRecomendedRooms(arrayWithIcon);
             setLoadingRecomendedRooms(loading);
           }
@@ -183,6 +189,7 @@ export const UserProvider = ({ children }) => {
       if (user?.accountType === TIPO_CADASTRO.EMPRESA) {
         HomeService.getRecomendedUsers(user?._id, token).then(({ data }) => {
           const { arrayWithIcon, loading } = data;
+
           setRecomendedUsers(arrayWithIcon);
           setLoadingRecomendedUsers(loading);
         });
@@ -212,6 +219,7 @@ export const UserProvider = ({ children }) => {
         getRoomById,
         handleVerifyApply,
         tabRooms,
+        allUsers,
         viewUserLoading,
         user,
         loading,

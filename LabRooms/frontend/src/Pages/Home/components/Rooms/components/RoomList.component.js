@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Row, FeatherIcons, Col } from "../../../../../antd_components";
 import * as HomeService from "../../../services/home.service";
 import { UserContext } from "../../../../../Context/UserContext";
@@ -15,8 +15,15 @@ const RoomList = ({
   userId,
   loadingArray,
 }) => {
-  const { setLoadingRooms, setRooms, categories, setUsers, setLoadingUsers } =
-    useContext(UserContext);
+  const {
+    setLoadingRooms,
+    setRooms,
+    categories,
+    setUsers,
+    setLoadingUsers,
+    allRooms,
+    allUsers,
+  } = useContext(UserContext);
 
   function handleFilterRoom(categoryId) {
     switch (arrayType) {
@@ -44,6 +51,12 @@ const RoomList = ({
         break;
     }
   }
+
+  useEffect(() => {
+    setRooms(allRooms);
+    setUsers(allUsers);
+  }, [allRooms, allUsers, setRooms, setUsers]);
+
   return (
     <>
       <Row align='middle' justify='space-between'>
