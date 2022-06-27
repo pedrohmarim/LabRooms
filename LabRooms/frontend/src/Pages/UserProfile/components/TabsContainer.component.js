@@ -79,7 +79,6 @@ export default function TabUserInfo({
                   darkPallete={darkPallete}
                   handleFilterRoom={handleFilterRoom}
                   categories={categories}
-                  allRooms={allRooms}
                   setRoomId={setRoomId}
                   _id={_id}
                   tabRooms={tabRooms}
@@ -96,7 +95,6 @@ export default function TabUserInfo({
                   token={token}
                   hasntRooms={hasntRooms}
                   tabRooms={tabRooms}
-                  allRooms={allRooms}
                 />
               </TabPane>
             </>

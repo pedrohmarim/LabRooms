@@ -76,7 +76,7 @@ const CategoriesSubcategoriesSelect = ({
       <FormItem
         label={labelMainCategory}
         name='category'
-        rules={[{ required: true, message: "Campo obrigatório." }]}
+        rules={!viewMode && [{ required: true, message: "Campo obrigatório." }]}
       >
         <Select
           disabled={fromUserProfile && !editMode && !viewMode}

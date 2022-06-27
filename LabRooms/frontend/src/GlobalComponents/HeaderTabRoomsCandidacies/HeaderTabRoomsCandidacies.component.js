@@ -18,7 +18,6 @@ const HeaderTabRoomsCandidacies = ({
   darkPallete,
   handleFilterRoom,
   tabRooms,
-  allRooms,
   headerTitle,
   fromCandidacies,
 }) => {
@@ -63,8 +62,8 @@ const HeaderTabRoomsCandidacies = ({
                 </Select.Option>
               )}
 
-              {allRooms &&
-                allRooms.map(({ title, _id, Icon }) => (
+              {tabRooms &&
+                tabRooms?.array.map(({ title, _id, Icon }) => (
                   <Select.Option key={_id} value={_id}>
                     <FeatherIcons
                       icon={Icon}

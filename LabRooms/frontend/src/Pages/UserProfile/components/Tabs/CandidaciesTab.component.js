@@ -27,7 +27,6 @@ const CandidaciesTab = ({
   token,
   hasntRooms,
   tabRooms,
-  allRooms,
   roomId,
 }) => {
   const [form] = Form.useForm();
@@ -215,7 +214,6 @@ const CandidaciesTab = ({
                 headerTitle='Meus Candidatos'
                 tabRooms={tabRooms}
                 handleFilterRoom={handleFilterRoom}
-                allRooms={allRooms}
                 darkPallete={darkPallete}
               />
             </Row>

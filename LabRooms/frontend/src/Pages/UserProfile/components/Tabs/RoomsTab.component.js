@@ -26,7 +26,6 @@ const RoomsTab = ({
   darkPallete,
   handleFilterRoom,
   categories,
-  allRooms,
   setRoomId,
   _id,
   tabRooms,
@@ -329,7 +328,6 @@ const RoomsTab = ({
             headerTitle='Meus Projetos'
             tabRooms={tabRooms}
             handleFilterRoom={handleFilterRoom}
-            allRooms={allRooms}
             darkPallete={darkPallete}
           />
         ) : (
