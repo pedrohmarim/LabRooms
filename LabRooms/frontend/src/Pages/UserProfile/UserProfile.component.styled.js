@@ -112,6 +112,12 @@ export const TitleStyled = styled(Title)`
   align-items: center;
 `;
 
+export const EllipsisTitle = styled.div`
+  @media screen and (max-width: 1024px) {
+    width: ${({ width }) => width};
+  }
+`;
+
 export const CategoryInfo = styled.i`
   color: gray;
   margin-left: 4px;

@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
 import { RoomContainer } from "../../UserProfile.component.styled";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
-import { TitleStyled, CategoryInfo } from "../../UserProfile.component.styled";
 import { CategoryTitle } from "../../../CreateRoom/CreateRoom.styled";
 import { ButtonText } from "../../../Home/components/Rooms/styles";
+import {
+  TitleStyled,
+  CategoryInfo,
+  EllipsisTitle,
+} from "../../UserProfile.component.styled";
 import {
   Select,
   Form,
@@ -74,7 +78,7 @@ export default function RoomForm({
         destroyInactivePanel
         key={_id}
         header={
-          <Row style={{ width: "80%" }}>
+          <EllipsisTitle width={`${window.innerWidth - 150}px`}>
             <TitleStyled level={5}>
               {!visible && (
                 <Tooltip
@@ -86,7 +90,7 @@ export default function RoomForm({
               )}
               <ButtonText>{title}</ButtonText>
             </TitleStyled>
-          </Row>
+          </EllipsisTitle>
         }
         extra={
           <Tooltip title='Mais Opções' color={darkPallete.lightblue}>

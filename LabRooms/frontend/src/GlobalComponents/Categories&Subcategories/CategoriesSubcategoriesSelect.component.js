@@ -137,7 +137,9 @@ const CategoriesSubcategoriesSelect = ({
         <FormItem
           label='Subcategorias'
           name='subCategories'
-          rules={[{ required: true, message: "Campo obrigatório." }]}
+          rules={
+            !viewMode && [{ required: true, message: "Campo obrigatório." }]
+          }
         >
           <Select
             tabIndex={viewMode && "-1"}
@@ -171,7 +173,9 @@ const CategoriesSubcategoriesSelect = ({
           <FormItem
             label={viewMode ? "Categoria" : "Nova Categoria"}
             name='newCategory'
-            rules={[{ required: true, message: "Campo obrigatório." }]}
+            rules={
+              !viewMode && [{ required: true, message: "Campo obrigatório." }]
+            }
           >
             <StyledInput
               style={viewMode ? styleInput : null}

@@ -84,6 +84,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
       });
     });
   }
+
   useEffect(() => {
     form.setFieldsValue({
       username: user?.username,

@@ -52,7 +52,7 @@ export default function ProfileSocials({
           {Object.keys(user?.socials).length > 0 && (
             <Col span={24}>
               <Row justify='center'>
-                {SocialList(user?.socials).map(
+                {SocialList(user?.socials, isViewProject).map(
                   (item) =>
                     item.link && (
                       <SocialIcon

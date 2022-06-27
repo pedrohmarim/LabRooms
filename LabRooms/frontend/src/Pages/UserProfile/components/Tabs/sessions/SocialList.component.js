@@ -7,13 +7,10 @@ import {
   GithubFilled,
 } from "@ant-design/icons";
 
-export const SocialList = ({
-  facebook,
-  instagram,
-  twitter,
-  linkedin,
-  github,
-}) => {
+export const SocialList = (
+  { facebook, instagram, twitter, linkedin, github },
+  isViewProject
+) => {
   const socialsArray = [
     {
       icon: <FacebookFilled style={{ color: "#1877F2" }} />,
@@ -36,7 +33,13 @@ export const SocialList = ({
       tooltip: "LinkedIn",
     },
     {
-      icon: <GithubFilled style={{ color: "#333" }} />,
+      icon: (
+        <GithubFilled
+          style={{
+            color: isViewProject || window.innerWidth > 1024 ? "#333" : "#fff",
+          }}
+        />
+      ),
       link: github,
       tooltip: "Github",
     },

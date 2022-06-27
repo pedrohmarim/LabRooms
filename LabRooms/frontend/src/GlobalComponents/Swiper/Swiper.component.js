@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/swiper-bundle.min.css";
-import "swiper/swiper.min.css";
 import TagRender from "../TagRender/TagRender.component";
+import "swiper/css";
 import { darkPallete } from "../../styles/pallete";
 import { Link } from "react-router-dom";
 import NotFound from "../../assets/image_notfound.png";
@@ -152,7 +151,7 @@ const SwiperComp = ({ arrayToRender }) => {
       disableOnInteraction: false,
       pauseOnMouseEnter: true,
     },
-    centeredSlides: true,
+    centeredSlides: false,
     navigation: true,
     freeMode: true,
     pagination: {
