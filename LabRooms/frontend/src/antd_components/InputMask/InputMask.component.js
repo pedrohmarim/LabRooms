@@ -1,3 +1,3 @@
-import MaskedInput from 'antd-mask-input';
+import MaskedInput from "react-input-mask";
 
 export default MaskedInput;

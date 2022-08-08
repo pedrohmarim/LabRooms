@@ -23,6 +23,7 @@ const SocialRegister = ({
   setEditMode,
 }) => {
   const { Title } = Typography;
+  const regexRemoveBarra = /[^a-z0-9]/gi;
 
   return (
     <>
@@ -141,7 +142,7 @@ const SocialRegister = ({
                   disabled={!editMode && !viewMode}
                   style={styleInput}
                   placeholder='CPF'
-                  mask='111.111.111-11'
+                  mask='999.999.999-99'
                 />
               ) : (
                 <Input
@@ -185,7 +186,7 @@ const SocialRegister = ({
                   disabled={!editMode && !viewMode}
                   style={styleInput}
                   placeholder='CNPJ'
-                  mask='11.111.111/1111-11'
+                  mask='99.999.999/9999-99'
                 />
               ) : (
                 <Input
@@ -249,7 +250,7 @@ const SocialRegister = ({
               className={viewMode && "disabled"}
               disabled={!editMode && !viewMode}
               autoComplete='off'
-              mask='(11) 1111-1111'
+              mask='(99) 9999-9999'
               style={styleInput}
               placeholder='Telefone Fixo'
             />
@@ -262,7 +263,10 @@ const SocialRegister = ({
             rules={[
               () => ({
                 validator(_, value) {
-                  if (!value || validateBr.celular(value)) {
+                  if (
+                    !value ||
+                    validateBr.celular(value.replace(regexRemoveBarra, ""))
+                  ) {
                     return Promise.resolve();
                   }
                   return Promise.reject(new Error("Celular Inválido."));
@@ -280,7 +284,7 @@ const SocialRegister = ({
               tabIndex={viewMode && "-1"}
               disabled={!editMode && !viewMode}
               autoComplete='off'
-              mask='(11) 11111-1111'
+              mask='(99) 99999-9999'
               style={styleInput}
               placeholder='Celular'
             />

@@ -22,8 +22,10 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const styleInput = {
     color: "gray",
     marginTop: "-1px",
-    border: viewMode && "none",
-    borderBottom: viewMode && "solid 1px rgba(0, 0, 0, 0.1)",
+    width: "100%",
+    padding: "3px",
+    border: viewMode ? "none" : "1px solid lightgray",
+    outline: "none",
   };
 
   function handleSubmit(values) {
@@ -85,26 +87,6 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
     });
   }
 
-  useEffect(() => {
-    form.setFieldsValue({
-      username: user?.username,
-      email: user?.email,
-      cpf: user?.cpf || undefined,
-      cnpj: user?.cnpj || undefined,
-      category: user?.categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
-      newCategory: user?.newCategory,
-      subCategories: user?.subCategories || undefined,
-      phone: user?.phone,
-      celphone: user?.celphone,
-      biography: user?.biography,
-      facebook: user?.socials?.facebook,
-      instagram: user?.socials?.instagram,
-      twitter: user?.socials?.twitter,
-      linkedin: user?.socials?.linkedin,
-      github: user?.socials?.github,
-    });
-  }, [form, user]);
-
   return (
     <Card bordered={false}>
       {user && categories ? (
@@ -113,6 +95,23 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
           background={darkPallete.white}
           onFinish={handleSubmit}
           layout='vertical'
+          initialValues={{
+            username: user?.username,
+            email: user?.email,
+            cpf: user?.cpf || undefined,
+            cnpj: user?.cnpj || undefined,
+            category: user?.categoryId || TIPO_CATEGORIA.CATEGORIA_CRIADA,
+            newCategory: user?.newCategory,
+            subCategories: user?.subCategories || undefined,
+            phone: user?.phone,
+            celphone: user?.celphone,
+            biography: user?.biography,
+            facebook: user?.socials?.facebook,
+            instagram: user?.socials?.instagram,
+            twitter: user?.socials?.twitter,
+            linkedin: user?.socials?.linkedin,
+            github: user?.socials?.github,
+          }}
         >
           <PersonalInfo
             accountType={user?.accountType}
