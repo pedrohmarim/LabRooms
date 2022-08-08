@@ -26,6 +26,9 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
     padding: "3px",
     border: viewMode ? "none" : "1px solid lightgray",
     outline: "none",
+    borderBottom: viewMode
+      ? "solid 1px rgba(0, 0, 0, 0.1)"
+      : "solid 1px lightgray",
   };
 
   function handleSubmit(values) {
