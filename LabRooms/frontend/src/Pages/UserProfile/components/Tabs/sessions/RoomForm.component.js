@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
-import { RoomContainer } from "../../UserProfile.component.styled";
-import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
-import { CategoryTitle } from "../../../CreateRoom/CreateRoom.styled";
-import { ButtonText } from "../../../Home/components/Rooms/styles";
+import { RoomContainer } from "../../../UserProfile.component.styled";
+import { TIPO_CATEGORIA } from "../../../../../Helpers/TipoCategoria";
+import { CategoryTitle } from "../../../../CreateRoom/CreateRoom.styled";
+import { ButtonText } from "../../../../Home/components/Rooms/styles";
 import {
   TitleStyled,
   CategoryInfo,
   EllipsisTitle,
-} from "../../UserProfile.component.styled";
+} from "../../../UserProfile.component.styled";
 import {
   Select,
   Form,
@@ -21,8 +21,8 @@ import {
   BraftEditor,
   Dropdown,
   Collapse,
-} from "../../../../antd_components";
-import PriceHour from "../../../../GlobalComponents/Categories&Subcategories/PriceHour.component";
+} from "../../../../../antd_components";
+import PriceHour from "../../../../../GlobalComponents/Categories&Subcategories/PriceHour.component";
 
 export default function RoomForm({
   MoreActionsRoom,

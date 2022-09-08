@@ -204,3 +204,9 @@ export const SocialContainer = styled(Typography)`
   align-items: center;
   display: flex;
 `;
+
+export const CardItem = styled(Row)`
+  background-color: white;
+  overflow: auto;
+  width: fit-content !important;
+`;

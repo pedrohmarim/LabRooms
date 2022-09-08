@@ -42,6 +42,8 @@ export const UserProvider = ({ children }) => {
 
   const [disabledApplyBtn, setDisabledApplyBtn] = useState();
 
+  const [dashboardUsers, setDashboardUsers] = useState([]);
+
   const token = Cookie.get("token");
 
   function handleExpiredSession(message) {
@@ -115,6 +117,15 @@ export const UserProvider = ({ children }) => {
       setLoadingRooms(loading);
     });
   }, []);
+
+  const getDashboardUsers = useCallback(
+    (userIds) => {
+      HomeService.getDashboardUsers(userIds, token).then(({ data }) =>
+        setDashboardUsers(data)
+      );
+    },
+    [token]
+  );
 
   const getUserById = useCallback(
     (_id) => {
@@ -233,6 +244,7 @@ export const UserProvider = ({ children }) => {
         getRooms,
         getRoomById,
         handleVerifyApply,
+        getDashboardUsers,
         tabRooms,
         allUsers,
         viewUserLoading,
@@ -255,6 +267,7 @@ export const UserProvider = ({ children }) => {
         loadPage,
         currentRoom,
         disabledApplyBtn,
+        dashboardUsers,
       }}
     >
       {children}

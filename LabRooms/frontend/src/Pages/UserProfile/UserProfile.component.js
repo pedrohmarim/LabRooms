@@ -21,6 +21,7 @@ export default function UserProfile() {
 
   const [searchParams] = useSearchParams();
   const [candidaciesActive, setCandidaciesActive] = useState(false);
+  const [dashboardActive, setDashboardActive] = useState(false);
 
   const [activeKey, setActiveKey] = useState();
 
@@ -33,6 +34,10 @@ export default function UserProfile() {
   useEffect(() => {
     if (candidaciesActive?.active) setActiveKey("3");
   }, [candidaciesActive]);
+
+  useEffect(() => {
+    if (dashboardActive?.active) setActiveKey("4");
+  }, [dashboardActive]);
 
   useEffect(() => {
     getUserById(_id);
@@ -69,6 +74,7 @@ export default function UserProfile() {
                 candidaciesActive={candidaciesActive}
                 setActiveKey={(value) => setActiveKey(value)}
                 setCandidaciesActive={(value) => setCandidaciesActive(value)}
+                setDashboardActive={(value) => setDashboardActive(value)}
                 activeKey={activeKey}
                 darkPallete={darkPallete}
                 user={viewUser}
@@ -87,8 +93,10 @@ export default function UserProfile() {
           >
             <TabsContainer
               candidaciesActive={candidaciesActive}
+              dashboardActive={dashboardActive}
               setActiveKey={(value) => setActiveKey(value)}
               setCandidaciesActive={(value) => setCandidaciesActive(value)}
+              setDashboardActive={(value) => setDashboardActive(value)}
               activeKey={activeKey}
               darkPallete={darkPallete}
               user={viewUser}

@@ -71,6 +71,11 @@ router.get("/validateSharedLink", RoomController.handleValidateSharedLink);
 
 router.post("/apply", checkAuth, CandidaciesController.handleApply);
 router.get("/verifyApply", CandidaciesController.handleVerifyApply);
+router.get(
+  "/getDashboardUsers",
+  checkAuth,
+  CandidaciesController.handleDashboardUsers
+);
 router.delete(
   "/deleteCandidacieById",
   checkAuth,

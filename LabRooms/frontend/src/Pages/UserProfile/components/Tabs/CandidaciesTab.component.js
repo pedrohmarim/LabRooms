@@ -28,11 +28,22 @@ const CandidaciesTab = ({
   hasntRooms,
   tabRooms,
   roomId,
+  setDashboardActive,
 }) => {
   const [form] = Form.useForm();
   const [responseGrid, setResponseGrid] = useState();
   const [showTable, setShowTable] = useState(false);
   const [loadingDataSource, setLoadingDataSource] = useState();
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+
+  const onSelectChange = (newSelectedRowKeys) =>
+    setSelectedRowKeys(newSelectedRowKeys);
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
+  };
 
   const handleFilterRoom = useCallback(
     (roomId) => {
@@ -68,6 +79,19 @@ const CandidaciesTab = ({
     );
   }
 
+  function handleConfirmSelectedCandidacies() {
+    if (selectedRowKeys.length === 0) {
+      Notification.open({
+        type: "info",
+        message: "Selecione ao menos um candidato para prosseguir.",
+      });
+
+      return;
+    }
+
+    setDashboardActive({ active: true, selectedRowKeys });
+  }
+
   const TableActions = (value) => (
     <Menu>
       <Link
@@ -92,15 +116,6 @@ const CandidaciesTab = ({
           </Row>
         </Menu.Item>
       </Link>
-
-      <Link to='#'>
-        <Menu.Item key='3'>
-          <Row align='middle'>
-            <FeatherIcons icon='message-circle' size={15} />
-            <MenuLabelItem>Mensagem</MenuLabelItem>
-          </Row>
-        </Menu.Item>
-      </Link>
     </Menu>
   );
 
@@ -109,17 +124,11 @@ const CandidaciesTab = ({
       title: "Nome",
       dataIndex: "username",
       key: "username",
-      render(value) {
-        return <>{value}</>;
-      },
     },
     {
       title: "E-mail",
       dataIndex: "email",
       key: "email",
-      render(value) {
-        return <>{value}</>;
-      },
     },
     {
       title: "Habilidade Principal",
@@ -136,7 +145,7 @@ const CandidaciesTab = ({
     },
     {
       title: "Ações",
-      dataIndex: "userId",
+      dataIndex: "key",
       align: "center",
       key: "Excluir",
       fixed: "right",
@@ -144,7 +153,7 @@ const CandidaciesTab = ({
       render: (value, dataIndex) => {
         return (
           <Button.Group>
-            <Tooltip title='Aceitar Candidato'>
+            <Tooltip title='Aceitar Candidato' color={darkPallete.lightblue}>
               <PopConfirm
                 placement='topLeft'
                 title='Deseja realmente Aceitar?'
@@ -166,7 +175,10 @@ const CandidaciesTab = ({
               </PopConfirm>
             </Tooltip>
 
-            <Tooltip title='Rejeitar Candidato. Está Ação Irá excluir o Registro deste Candidato.'>
+            <Tooltip
+              title='Rejeitar Candidato. Está Ação Irá excluir o Registro deste Candidato.'
+              color={darkPallete.lightblue}
+            >
               <PopConfirm
                 placement='topLeft'
                 title='Deseja realmente Excluir?'
@@ -179,15 +191,15 @@ const CandidaciesTab = ({
               >
                 <Button
                   type='ghost'
+                  shape='circle'
                   icon={
                     <FeatherIcons icon='x' size={18} className='alert-icon' />
                   }
-                  shape='circle'
                 />
               </PopConfirm>
             </Tooltip>
 
-            <Tooltip title='Mais Opções'>
+            <Tooltip title='Mais Opções' color={darkPallete.lightblue}>
               <Dropdown overlay={TableActions(value)} placement='bottomRight'>
                 <Button
                   type='ghost'
@@ -239,17 +251,30 @@ const CandidaciesTab = ({
           )}
 
           {showTable && !hasntRooms && (
-            <Table
-              locale={{
-                emptyText: (
-                  <Row justify='center'>{responseGrid?.errorMessage}</Row>
-                ),
-              }}
-              size='middle'
-              dataSource={responseGrid?.formattedCandidacies}
-              columns={columns}
-              loading={loadingDataSource}
-            />
+            <>
+              <Table
+                locale={{
+                  emptyText: (
+                    <Row justify='center'>{responseGrid?.errorMessage}</Row>
+                  ),
+                }}
+                size='middle'
+                dataSource={responseGrid?.formattedCandidacies}
+                columns={columns}
+                loading={loadingDataSource}
+                rowSelection={rowSelection}
+              />
+
+              <Row justify='end'>
+                <Button
+                  color={darkPallete.white}
+                  backgroundcolor={darkPallete.lightblue}
+                  onClick={handleConfirmSelectedCandidacies}
+                >
+                  Confirmar
+                </Button>
+              </Row>
+            </>
           )}
         </>
       ) : (

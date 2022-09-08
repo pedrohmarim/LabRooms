@@ -4,6 +4,7 @@ import { Tabs } from "../../../antd_components";
 import UserInfoTab from "./Tabs/UserInfoTab.component";
 import RoomsTab from "./Tabs/RoomsTab.component";
 import CandidaciesTab from "./Tabs/CandidaciesTab.component";
+import DashboardTab from "./Tabs/DashboardTab.component";
 import { UserContext } from "../../../Context/UserContext";
 import { TIPO_CADASTRO } from "../../../Helpers/TipoCadastro";
 import { TIPO_CATEGORIA } from "../../../Helpers/TipoCategoria";
@@ -16,7 +17,9 @@ export default function TabUserInfo({
   viewMode,
   activeKey,
   setCandidaciesActive,
+  setDashboardActive,
   candidaciesActive,
+  dashboardActive,
   setActiveKey,
 }) {
   const [_id, setRoomId] = useState(null);
@@ -90,12 +93,17 @@ export default function TabUserInfo({
 
               <TabPane tab='Candidatos' key='3'>
                 <CandidaciesTab
+                  setDashboardActive={setDashboardActive}
                   roomId={candidaciesActive?.roomId}
                   darkPallete={darkPallete}
                   token={token}
                   hasntRooms={hasntRooms}
                   tabRooms={tabRooms}
                 />
+              </TabPane>
+
+              <TabPane tab='Dashboard' key='4'>
+                <DashboardTab dashboardActive={dashboardActive} />
               </TabPane>
             </>
           )}

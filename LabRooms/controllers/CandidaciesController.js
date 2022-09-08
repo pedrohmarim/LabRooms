@@ -15,8 +15,7 @@ function returnFormattedCandidacies(candidacies, response) {
           CategoriesModel.findOne({ _id: categoryId }).then(
             ({ Icon, Title }) => {
               formattedCandidacies.push({
-                candidacieId: user?._id,
-                userId: _id,
+                key: _id,
                 username,
                 email,
                 skill: {
@@ -32,8 +31,7 @@ function returnFormattedCandidacies(candidacies, response) {
           );
         } else if (newCategory) {
           formattedCandidacies.push({
-            candidacieId: user?._id,
-            userId: _id,
+            key: _id,
             username,
             email,
             skill: {
@@ -158,6 +156,33 @@ module.exports = {
       return response.json({ applied: false });
     } catch {
       return response.json({ applied: false });
+    }
+  },
+
+  async handleDashboardUsers(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { usersids } = request.headers;
+
+      const result = await UserModel.find({
+        _id: { $in: usersids.split(",") },
+      });
+
+      const dashBoardUsers = [];
+
+      result.forEach(({ _id, username, email, cpf, celphone, hourprice }) => {
+        dashBoardUsers.push({
+          _id,
+          username,
+          email,
+          cpf,
+          celphone,
+          hourprice,
+        });
+      });
+
+      return response.json(dashBoardUsers);
     }
   },
 };

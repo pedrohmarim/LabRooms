@@ -2,12 +2,13 @@ import React, { useState, useMemo, useContext } from "react";
 import * as RoomService from "../../../CreateRoom/services/CreateRoom.service";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import { TIPO_CATEGORIA } from "../../../../Helpers/TipoCategoria";
-import RoomForm from "./RoomForm.component";
+import RoomForm from "./sessions/RoomForm.component";
 import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
 import HeaderTabRoomsCandidacies from "../../../../GlobalComponents/HeaderTabRoomsCandidacies/HeaderTabRoomsCandidacies.component";
 import TagRender from "../../../../GlobalComponents/TagRender/TagRender.component";
 import { Card } from "../../UserProfile.component.styled";
 import { UserContext } from "../../../../Context/UserContext";
+import NoProjectInfo from "../../../../GlobalComponents/NoProjectInfo/NoProjectInfo.component";
 import {
   Row,
   FeatherIcons,
@@ -15,7 +16,6 @@ import {
   Menu,
   PopConfirm,
 } from "../../../../antd_components";
-import NoProjectInfo from "../../../../GlobalComponents/NoProjectInfo/NoProjectInfo.component";
 
 const RoomsTab = ({
   setCollapseDisabled,
