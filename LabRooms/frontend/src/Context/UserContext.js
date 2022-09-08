@@ -42,7 +42,7 @@ export const UserProvider = ({ children }) => {
 
   const [disabledApplyBtn, setDisabledApplyBtn] = useState();
 
-  const [dashboardUsers, setDashboardUsers] = useState([]);
+  const [dashboardUsers, setDashboardUsers] = useState({});
 
   const token = Cookie.get("token");
 
@@ -120,9 +120,21 @@ export const UserProvider = ({ children }) => {
 
   const getDashboardUsers = useCallback(
     (userIds) => {
-      HomeService.getDashboardUsers(userIds, token).then(({ data }) =>
-        setDashboardUsers(data)
+      HomeService.getDashboardUsers(userIds, user._id, token).then(({ data }) =>
+        setDashboardUsers({ columns: data.columns, _id: data._id })
       );
+    },
+    [token, user]
+  );
+
+  const updateDashBoard = useCallback(
+    (updatedDashBoard, dashboardId) => {
+      const dto = {
+        updatedDashBoard,
+        _id: dashboardId,
+      };
+
+      HomeService.updateDashboard(dto, token);
     },
     [token]
   );
@@ -245,6 +257,8 @@ export const UserProvider = ({ children }) => {
         getRoomById,
         handleVerifyApply,
         getDashboardUsers,
+        setDashboardUsers,
+        updateDashBoard,
         tabRooms,
         allUsers,
         viewUserLoading,

@@ -76,6 +76,11 @@ router.get(
   checkAuth,
   CandidaciesController.handleDashboardUsers
 );
+router.post(
+  "/updateDashboardUsers",
+  checkAuth,
+  CandidaciesController.updateDashboardUsers
+);
 router.delete(
   "/deleteCandidacieById",
   checkAuth,

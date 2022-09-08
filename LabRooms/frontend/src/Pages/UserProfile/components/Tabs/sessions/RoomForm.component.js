@@ -3,6 +3,7 @@ import { RoomContainer } from "../../../UserProfile.component.styled";
 import { TIPO_CATEGORIA } from "../../../../../Helpers/TipoCategoria";
 import { CategoryTitle } from "../../../../CreateRoom/CreateRoom.styled";
 import { ButtonText } from "../../../../Home/components/Rooms/styles";
+import PriceHour from "../../../../../GlobalComponents/Categories&Subcategories/PriceHour.component";
 import {
   TitleStyled,
   CategoryInfo,
@@ -22,7 +23,6 @@ import {
   Dropdown,
   Collapse,
 } from "../../../../../antd_components";
-import PriceHour from "../../../../../GlobalComponents/Categories&Subcategories/PriceHour.component";
 
 export default function RoomForm({
   MoreActionsRoom,

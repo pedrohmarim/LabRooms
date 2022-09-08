@@ -1,6 +1,7 @@
 const CandidaciesModel = require("../models/CandidaciesModel");
 const CategoriesModel = require("../models/CategoriesModel");
 const UserModel = require("../models/UserModel");
+const DashBoardModel = require("../models/DashBoardModel");
 const VerifyCaptcha = require("../Helpers/VerifyCaptcha");
 
 function returnFormattedCandidacies(candidacies, response) {
@@ -163,26 +164,86 @@ module.exports = {
     const { _id } = request.body.decoded;
 
     if (_id) {
-      const { usersids } = request.headers;
+      const { usersids, requestid } = request.headers;
 
-      const result = await UserModel.find({
-        _id: { $in: usersids.split(",") },
+      const existeDashBoard = await DashBoardModel.find({
+        dashBoardOwner: requestid,
       });
 
-      const dashBoardUsers = [];
-
-      result.forEach(({ _id, username, email, cpf, celphone, hourprice }) => {
-        dashBoardUsers.push({
-          _id,
-          username,
-          email,
-          cpf,
-          celphone,
-          hourprice,
+      if (existeDashBoard) {
+        return response.json(existeDashBoard[0]);
+      } else {
+        const result = await UserModel.find({
+          _id: { $in: usersids.split(",") },
         });
-      });
 
-      return response.json(dashBoardUsers);
+        const dashboardUsers = [];
+        const cards = [];
+
+        result.forEach(
+          ({ _id, username, email, cpf, celphone, hourprice, categoryId }) => {
+            cards.push({
+              id: _id,
+              title: username,
+              description: email,
+            });
+          }
+        );
+
+        dashboardUsers.push(
+          {
+            id: "first_column",
+            title: "Candidatos",
+            cards,
+          },
+          {
+            id: "second_column",
+            title: "Fase Inicial",
+            cards: [],
+          },
+          {
+            id: "third_column",
+            title: "Fase do meio",
+            cards: [],
+          },
+          {
+            id: "fourth_column",
+            title: "Fase final",
+            cards: [],
+          }
+        );
+
+        DashBoardModel.create({
+          dashBoardOwner: requestid,
+          columns: dashboardUsers,
+        }).then((doc) => response.json({ columns: doc.columns, _id: doc._id }));
+      }
+    }
+  },
+
+  async updateDashboardUsers(request, response) {
+    const { _id } = request.body.decoded;
+
+    if (_id) {
+      const { updatedDashBoard } = request.body;
+
+      DashBoardModel.findByIdAndUpdate(
+        { _id: updatedDashBoard._id },
+        { columns: updatedDashBoard.columns },
+        { new: true },
+        function (err) {
+          if (err) {
+            return response.json({
+              message: "Erro ao atualizar informações.",
+            });
+          } else {
+            response.json({
+              message: "Informações atualizadas com sucesso.",
+              status: 200,
+            });
+          }
+        }
+      );
     }
   },
 };

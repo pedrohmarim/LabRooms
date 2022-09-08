@@ -12,11 +12,20 @@ export async function getRooms() {
   return api.get("/getRooms");
 }
 
-export async function getDashboardUsers(usersIds, token) {
+export async function getDashboardUsers(usersIds, userId, token) {
   return api.get("/getDashboardUsers", {
     headers: {
       Authorization: token,
       usersIds,
+      requestId: userId,
+    },
+  });
+}
+
+export async function updateDashboard(dto, token) {
+  return api.post("/updateDashboardUsers", dto, {
+    headers: {
+      Authorization: token,
     },
   });
 }
