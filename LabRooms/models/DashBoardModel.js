@@ -1,7 +1,7 @@
 const { model, Schema } = require("mongoose");
 
 const DashBoardModel = new Schema({
-  dashBoardOwner: {
+  roomId: {
     type: String,
     required: true,
   },

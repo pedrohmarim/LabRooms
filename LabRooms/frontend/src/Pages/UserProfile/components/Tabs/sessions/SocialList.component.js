@@ -9,7 +9,8 @@ import {
 
 export const SocialList = (
   { facebook, instagram, twitter, linkedin, github },
-  isViewProject
+  isViewProject,
+  screenSize
 ) => {
   const socialsArray = [
     {
@@ -36,7 +37,7 @@ export const SocialList = (
       icon: (
         <GithubFilled
           style={{
-            color: isViewProject || window.innerWidth > 1024 ? "#333" : "#fff",
+            color: isViewProject || screenSize > 1024 ? "#333" : "#fff",
           }}
         />
       ),

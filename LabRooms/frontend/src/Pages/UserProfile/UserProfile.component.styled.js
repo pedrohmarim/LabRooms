@@ -194,6 +194,7 @@ export const StyledOption = styled.span`
 
 export const StyledRow = styled(Row)`
   width: 100%;
+  text-align: center;
 `;
 
 export const StyledSocial = styled.span`

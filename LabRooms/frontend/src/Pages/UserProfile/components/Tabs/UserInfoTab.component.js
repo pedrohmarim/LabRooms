@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Card } from "../../UserProfile.component.styled";
 import { UserContext } from "../../../../Context/UserContext";
 import { FormStyled } from "../../UserProfile.component.styled";
@@ -16,7 +16,7 @@ import { Loading } from "../../../../GlobalComponents/Loading/Loading.component"
 const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
   const [editMode, setEditMode] = useState(false);
   const [invalidInfo, setInvalidInfo] = useState(false);
-  const { setUser, categories } = useContext(UserContext);
+  const { setUser, categories, screenSize } = useContext(UserContext);
   const [form] = FormStyled.useForm();
 
   const styleInput = {
@@ -142,6 +142,7 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
               />
 
               <UserPrice
+                screenSize={screenSize?.dynamicWidth}
                 form={form}
                 userPrice={user?.hourprice}
                 darkPallete={darkPallete}
@@ -153,7 +154,11 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
           )}
 
           {!viewMode && (
-            <SocialRegister editMode={editMode} styleInput={styleInput} />
+            <SocialRegister
+              editMode={editMode}
+              styleInput={styleInput}
+              screenSize={screenSize?.dynamicWidth}
+            />
           )}
 
           {editMode && (
@@ -171,7 +176,11 @@ const UserInfoTab = ({ darkPallete, user, token, viewMode }) => {
           )}
         </FormStyled>
       ) : (
-        <>{Loading(window.innerWidth < 1024 ? darkPallete.white : "#000")}</>
+        <>
+          {Loading(
+            screenSize?.dynamicWidth < 1024 ? darkPallete.white : "#000"
+          )}
+        </>
       )}
     </Card>
   );

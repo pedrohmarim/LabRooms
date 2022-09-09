@@ -12,12 +12,12 @@ export async function getRooms() {
   return api.get("/getRooms");
 }
 
-export async function getDashboardUsers(usersIds, userId, token) {
+export async function getDashboardUsers(usersIds, roomId, token) {
   return api.get("/getDashboardUsers", {
     headers: {
       Authorization: token,
       usersIds,
-      requestId: userId,
+      roomId,
     },
   });
 }

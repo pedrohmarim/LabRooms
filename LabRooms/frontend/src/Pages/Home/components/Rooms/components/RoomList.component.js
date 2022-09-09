@@ -23,6 +23,7 @@ const RoomList = ({
     setLoadingUsers,
     allRooms,
     allUsers,
+    screenSize,
   } = useContext(UserContext);
 
   function handleFilterRoom(categoryId) {
@@ -63,7 +64,7 @@ const RoomList = ({
         <TitleStyled
           level={3}
           color={pallete.white}
-          margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+          margintop={screenSize?.dynamicWidth < 1024 ? "15px" : "20px"}
         >
           <FeatherIcons icon='check-circle' size={28} />
           {loadingArray ? (
@@ -77,7 +78,7 @@ const RoomList = ({
 
         {(arrayType === TIPO_HOMEARRAY.PROJETOS_RECENTES ||
           arrayType === TIPO_HOMEARRAY.USUARIOS_DISPONIVEIS) && (
-          <Col span={window.innerWidth > 1024 ? 3 : 24}>
+          <Col span={screenSize?.dynamicWidth > 1024 ? 3 : 24}>
             <HandleFilter
               handleFilterRoom={handleFilterRoom}
               categories={categories}
@@ -95,7 +96,7 @@ const RoomList = ({
             <TitleStyled
               level={4}
               color={pallete.white}
-              margintop={window.innerWidth < 1024 ? "15px" : "20px"}
+              margintop={screenSize?.dynamicWidth < 1024 ? "15px" : "20px"}
             >
               {arrayType} não Foram Encontrados.
             </TitleStyled>

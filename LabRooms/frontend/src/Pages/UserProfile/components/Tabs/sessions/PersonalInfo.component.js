@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../../../../Context/UserContext";
 import { StyledCol, StyledButton } from "../../../UserProfile.component.styled";
 import { validateBr } from "js-brasil";
 import {
@@ -24,6 +25,7 @@ const SocialRegister = ({
 }) => {
   const { Title } = Typography;
   const regexRemoveBarra = /[^a-z0-9]/gi;
+  const { screenSize } = useContext(UserContext);
 
   return (
     <>
@@ -48,8 +50,8 @@ const SocialRegister = ({
         </Row>
       )}
 
-      <Row gutter={window.innerWidth < 1024 ? 0 : [16, 16]}>
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+      <Row gutter={screenSize?.dynamicWidth < 1024 ? 0 : [16, 16]}>
+        <Col span={screenSize?.dynamicWidth < 1024 ? 24 : 8}>
           <Form.Item
             rules={
               !viewMode && [{ required: true, message: "Campo obrigatório." }]
@@ -81,7 +83,7 @@ const SocialRegister = ({
           </Form.Item>
         </Col>
 
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+        <Col span={screenSize?.dynamicWidth < 1024 ? 24 : 8}>
           <Form.Item
             help={invalidInfo?.field === "email" ? invalidInfo.message : null}
             validateStatus={invalidInfo?.field === "email" ? "error" : null}
@@ -111,7 +113,7 @@ const SocialRegister = ({
         </Col>
 
         {accountType === TIPO_CADASTRO.FREELANCER ? (
-          <Col span={window.innerWidth < 1024 ? 24 : 8}>
+          <Col span={screenSize?.dynamicWidth < 1024 ? 24 : 8}>
             <Form.Item
               help={invalidInfo?.field === "cpf" ? invalidInfo.message : null}
               validateStatus={invalidInfo?.field === "cpf" ? "error" : null}
@@ -155,7 +157,7 @@ const SocialRegister = ({
             </Form.Item>
           </Col>
         ) : (
-          <Col span={window.innerWidth < 1024 ? 24 : 8}>
+          <Col span={screenSize?.dynamicWidth < 1024 ? 24 : 8}>
             <Form.Item
               help={invalidInfo?.field === "cnpj" ? invalidInfo.message : null}
               validateStatus={invalidInfo?.field === "cnpj" ? "error" : null}
@@ -202,10 +204,10 @@ const SocialRegister = ({
       </Row>
 
       <Row
-        gutter={window.innerWidth < 1024 ? 0 : [16, 16]}
+        gutter={screenSize?.dynamicWidth < 1024 ? 0 : [16, 16]}
         justify='space-between'
       >
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+        <Col span={screenSize?.dynamicWidth < 1024 ? 24 : 8}>
           <Form.Item
             name='biography'
             label={
@@ -226,7 +228,7 @@ const SocialRegister = ({
           </Form.Item>
         </Col>
 
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+        <Col span={screenSize?.dynamicWidth < 1024 ? 24 : 8}>
           <Form.Item
             name='phone'
             rules={[
@@ -257,7 +259,7 @@ const SocialRegister = ({
           </Form.Item>
         </Col>
 
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+        <Col span={screenSize?.dynamicWidth < 1024 ? 24 : 8}>
           <Form.Item
             name='celphone'
             rules={[

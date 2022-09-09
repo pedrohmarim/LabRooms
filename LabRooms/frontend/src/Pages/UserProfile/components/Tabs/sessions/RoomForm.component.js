@@ -27,6 +27,7 @@ import {
 export default function RoomForm({
   MoreActionsRoom,
   handleOtherCategories,
+  screenSize,
   Icon,
   handleSubmit,
   darkPallete,
@@ -78,7 +79,7 @@ export default function RoomForm({
         destroyInactivePanel
         key={_id}
         header={
-          <EllipsisTitle width={`${window.innerWidth - 150}px`}>
+          <EllipsisTitle width={`${screenSize - 150}px`}>
             <TitleStyled level={5}>
               {!visible && (
                 <Tooltip

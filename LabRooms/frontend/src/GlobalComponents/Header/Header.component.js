@@ -27,7 +27,7 @@ const Header = ({ fromNotFound, fromUserProfile }) => {
   const [solidHeader, setSolidHeader] = useState(false);
   const { lightblue, white } = darkPallete;
 
-  const { user, loading } = useContext(UserContext);
+  const { user, loading, screenSize } = useContext(UserContext);
 
   useEffect(() => {
     const scrollListener = () => {
@@ -97,8 +97,8 @@ const Header = ({ fromNotFound, fromUserProfile }) => {
           {!fromNotFound && user === null && !loading ? (
             <Link to='/signin'>
               <Tooltip
-                title={window.innerWidth < 1024 && "Entrar"}
-                defaultVisible={window.innerWidth < 1024}
+                title={screenSize?.dynamicWidth < 1024 && "Entrar"}
+                defaultVisible={screenSize?.dynamicWidth < 1024}
                 color={darkPallete.lightblue}
               >
                 <Button
@@ -119,7 +119,7 @@ const Header = ({ fromNotFound, fromUserProfile }) => {
               <Dropdown
                 placement='bottomRight'
                 overlay={MoreActionsRoom}
-                trigger={window.innerWidth < 1024 ? "click" : "hover"}
+                trigger={screenSize?.dynamicWidth < 1024 ? "click" : "hover"}
               >
                 <Avatar
                   style={{

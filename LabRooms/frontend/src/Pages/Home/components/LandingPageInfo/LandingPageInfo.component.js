@@ -2,8 +2,8 @@ import React from "react";
 import { InfoContainer, StyledTitle } from "./styles";
 import SearchInput from "../../../../GlobalComponents/SearchInput/SearchInput.component";
 
-const LandingPageInfo = ({ pallete, intoRooms }) => (
-  <InfoContainer span={window.innerWidth > 1024 ? 8 : 20}>
+const LandingPageInfo = ({ pallete, intoRooms, screenSize }) => (
+  <InfoContainer span={screenSize > 1024 ? 8 : 20}>
     <StyledTitle color={pallete.white}>Conecte-se com o mundo</StyledTitle>
 
     <StyledTitle level={3} color={pallete.white} marginbottom='15px'>

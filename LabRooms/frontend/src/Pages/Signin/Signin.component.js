@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 import Background from "../../assets/backStars.mp4";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/logo1.png";
@@ -18,6 +19,7 @@ import {
 } from "../../antd_components";
 
 export default function Signin() {
+  const { screenSize } = useContext(UserContext);
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Entrar";
 
   return (
@@ -26,16 +28,19 @@ export default function Signin() {
         loop
         autoPlay
         muted
-        id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
+        id={
+          screenSize?.dynamicWidth < 1024 ? "video-form-mobile" : "video-form"
+        }
       >
         <source src={Background} type='video/mp4' />
       </video>
+
       <CenterForm>
         <Link to='/'>
           <Image src={Logo} alt='Logo' height={100} preview={false} />
         </Link>
         <SignFormContainer
-          width={window.innerWidth > 1024 ? "40%" : "90%"}
+          width={screenSize?.dynamicWidth > 1024 ? "40%" : "90%"}
           title={
             <FormHeader>
               <TitleStyled level={3}>Entrar</TitleStyled>
@@ -50,6 +55,7 @@ export default function Signin() {
           <FormHeader margin='0 0 20px 0'>
             <Breadcrumb />
           </FormHeader>
+
           <SigninForm darkPallete={darkPallete} />
         </SignFormContainer>
       </CenterForm>

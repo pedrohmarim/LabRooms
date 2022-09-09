@@ -33,7 +33,7 @@ const RoomsTab = ({
   navigate,
   setCandidaciesActive,
 }) => {
-  const { getCategoryById, categorie } = useContext(UserContext);
+  const { getCategoryById, categorie, screenSize } = useContext(UserContext);
   const [newCategoryState, setNewCategory] = useState(false);
   const [showSubCategorie, setShowSubCategorie] = useState(false);
   const [showConfirmButton, setShowConfirmButton] = useState({
@@ -272,6 +272,7 @@ const RoomsTab = ({
           hourprice,
         }) => (
           <RoomForm
+            screenSize={screenSize?.dynamicWidth}
             collapseDisabled={collapseDisabled}
             handleOtherCategories={handleOtherCategories}
             MoreActionsRoom={MoreActionsRoom}
@@ -318,6 +319,7 @@ const RoomsTab = ({
     darkPallete,
     categorie?.SubCategories,
     showSubCategorie,
+    screenSize,
   ]);
 
   return (
@@ -334,7 +336,9 @@ const RoomsTab = ({
           !tabRooms?.loading &&
           !hasntRooms && (
             <>
-              {Loading(window.innerWidth < 1024 ? darkPallete.white : "#000")}
+              {Loading(
+                screenSize?.dynamicWidth < 1024 ? darkPallete.white : "#000"
+              )}
             </>
           )
         )}

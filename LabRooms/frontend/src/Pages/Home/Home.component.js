@@ -22,6 +22,7 @@ export default function Home() {
     loadingRecomendedUsers,
     users,
     loadingUsers,
+    screenSize,
   } = useContext(UserContext);
 
   const [searchValue, setSearchValue] = useState();
@@ -43,12 +44,15 @@ export default function Home() {
 
       <Container>
         <LandingPageInfofrom
+          screenSize={screenSize?.dynamicWidth}
           pallete={darkPallete}
           intoRooms={handleScrollToRooms}
         />
         <video loop autoPlay muted id='video-container'>
           <source
-            src={window.innerWidth > 1024 ? Background : BackgroundMobile}
+            src={
+              screenSize?.dynamicWidth > 1024 ? Background : BackgroundMobile
+            }
             type='video/mp4'
           />
         </video>

@@ -46,6 +46,7 @@ export default function ViewProject() {
     disabledApplyBtn,
     setDisabledApplyBtn,
     setLoadPage,
+    screenSize,
   } = useContext(UserContext);
 
   const [captcha, setCaptcha] = useState();
@@ -209,7 +210,11 @@ export default function ViewProject() {
             loop
             autoPlay
             muted
-            id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
+            id={
+              screenSize?.dynamicWidth < 1024
+                ? "video-form-mobile"
+                : "video-form"
+            }
           >
             <source src={Background} type='video/mp4' />
           </video>

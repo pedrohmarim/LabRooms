@@ -21,7 +21,7 @@ function returnFormattedCandidacies(candidacies, response) {
                 email,
                 skill: {
                   Icon,
-                  Title,
+                  CategorieTitle: Title,
                 },
                 roomId,
               });
@@ -125,22 +125,18 @@ module.exports = {
     if (_id) {
       const { _id } = request.headers;
 
-      CandidaciesModel.findByIdAndRemove(
-        { _id },
-        { new: true },
-        function (err) {
-          if (err) {
-            return response.json({
-              message: "Erro ao Excluir Candidato.",
-            });
-          } else {
-            response.json({
-              message: "Candidato Excluído com Sucesso.",
-              success: true,
-            });
-          }
-        }
-      );
+      CandidaciesModel.deleteOne({ userIdToApply: _id })
+        .then(() =>
+          response.json({
+            message: "Candidato Excluído com Sucesso.",
+            success: true,
+          })
+        )
+        .catch(() =>
+          response.json({
+            message: "Erro ao Excluir Candidato.",
+          })
+        );
     }
   },
 
@@ -164,14 +160,22 @@ module.exports = {
     const { _id } = request.body.decoded;
 
     if (_id) {
-      const { usersids, requestid } = request.headers;
+      const { usersids, roomid } = request.headers;
 
-      const existeDashBoard = await DashBoardModel.find({
-        dashBoardOwner: requestid,
-      });
-
-      if (existeDashBoard) {
-        return response.json(existeDashBoard[0]);
+      if (usersids === "null" || usersids === "undefined") {
+        DashBoardModel.findOne({
+          roomId: roomid,
+        })
+          .then(({ columns, roomId, _id }) => {
+            if (_id) {
+              return response.json({
+                columns,
+                roomId,
+                _id,
+              });
+            }
+          })
+          .catch(() => response.json());
       } else {
         const result = await UserModel.find({
           _id: { $in: usersids.split(",") },
@@ -180,15 +184,13 @@ module.exports = {
         const dashboardUsers = [];
         const cards = [];
 
-        result.forEach(
-          ({ _id, username, email, cpf, celphone, hourprice, categoryId }) => {
-            cards.push({
-              id: _id,
-              title: username,
-              description: email,
-            });
-          }
-        );
+        result.forEach(({ _id, username, email }) => {
+          cards.push({
+            id: _id,
+            title: username,
+            description: email,
+          });
+        });
 
         dashboardUsers.push(
           {
@@ -214,9 +216,15 @@ module.exports = {
         );
 
         DashBoardModel.create({
-          dashBoardOwner: requestid,
+          roomId: roomid,
           columns: dashboardUsers,
-        }).then((doc) => response.json({ columns: doc.columns, _id: doc._id }));
+        }).then((doc) =>
+          response.json({
+            columns: doc.columns,
+            _id: doc._id,
+            roomId: doc.roomId,
+          })
+        );
       }
     }
   },

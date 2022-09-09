@@ -3,7 +3,7 @@ import { StyledCol } from "../../../UserProfile.component.styled";
 import { Row, Typography, Col } from "../../../../../antd_components";
 import PriceHour from "../../../../../GlobalComponents/Categories&Subcategories/PriceHour.component";
 
-const UserPrice = ({ editMode, viewMode, form, userPrice }) => {
+const UserPrice = ({ editMode, viewMode, form, userPrice, screenSize }) => {
   const { Title } = Typography;
 
   return (
@@ -16,8 +16,8 @@ const UserPrice = ({ editMode, viewMode, form, userPrice }) => {
         </StyledCol>
       </Row>
 
-      <Row gutter={window.innerWidth < 1024 ? 0 : [16, 16]}>
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+      <Row gutter={screenSize < 1024 ? 0 : [16, 16]}>
+        <Col span={screenSize < 1024 ? 24 : 8}>
           <PriceHour
             editMode={editMode}
             viewMode={viewMode}

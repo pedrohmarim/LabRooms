@@ -6,7 +6,7 @@ import { Button, FeatherIcons, Tooltip } from "../../antd_components";
 import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
 
 const CreateRoomButton = ({ color, margin, backgroundcolor, tooltip }) => {
-  const { user } = useContext(UserContext);
+  const { user, screenSize } = useContext(UserContext);
   const [accountType, setAccountType] = useState();
 
   useEffect(() => {
@@ -25,7 +25,9 @@ const CreateRoomButton = ({ color, margin, backgroundcolor, tooltip }) => {
             color={tooltip || backgroundcolor}
           >
             <Button
-              margin={margin || (window.innerWidth > 1024 && "0 0 0 15px")}
+              margin={
+                margin || (screenSize?.dynamicWidth > 1024 && "0 0 0 15px")
+              }
               color={color}
               backgroundcolor={backgroundcolor}
               icon={<FeatherIcons icon='plus' size={20} />}

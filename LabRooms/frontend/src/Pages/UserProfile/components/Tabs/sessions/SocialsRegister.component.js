@@ -8,7 +8,7 @@ import {
   Input,
 } from "../../../../../antd_components";
 
-const SocialRegister = ({ editMode, styleInput }) => {
+const SocialRegister = ({ editMode, styleInput, screenSize }) => {
   const { Title } = Typography;
 
   return (
@@ -21,8 +21,8 @@ const SocialRegister = ({ editMode, styleInput }) => {
         </StyledCol>
       </Row>
 
-      <Row gutter={window.innerWidth < 1024 ? 0 : [16, 16]}>
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+      <Row gutter={screenSize < 1024 ? 0 : [16, 16]}>
+        <Col span={screenSize < 1024 ? 24 : 8}>
           <Form.Item
             name='facebook'
             rules={[{ type: "url", message: "URL inválida." }]}
@@ -40,7 +40,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
           </Form.Item>
         </Col>
 
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+        <Col span={screenSize < 1024 ? 24 : 8}>
           <Form.Item
             name='instagram'
             rules={[{ type: "url", message: "URL inválida." }]}
@@ -58,7 +58,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
           </Form.Item>
         </Col>
 
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+        <Col span={screenSize < 1024 ? 24 : 8}>
           <Form.Item
             rules={[{ type: "url", message: "URL inválida." }]}
             name='twitter'
@@ -78,8 +78,8 @@ const SocialRegister = ({ editMode, styleInput }) => {
         </Col>
       </Row>
 
-      <Row gutter={window.innerWidth < 1024 ? 0 : [16, 16]}>
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+      <Row gutter={screenSize < 1024 ? 0 : [16, 16]}>
+        <Col span={screenSize < 1024 ? 24 : 8}>
           <Form.Item
             name='linkedin'
             rules={[{ type: "url", message: "URL inválida." }]}
@@ -97,7 +97,7 @@ const SocialRegister = ({ editMode, styleInput }) => {
           </Form.Item>
         </Col>
 
-        <Col span={window.innerWidth < 1024 ? 24 : 8}>
+        <Col span={screenSize < 1024 ? 24 : 8}>
           <Form.Item
             name='github'
             rules={[{ type: "url", message: "URL inválida." }]}

@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
 import { Input, FormItem } from "./searchInput.styled";
 import { Tooltip, FeatherIcons, Form } from "../../antd_components";
 
@@ -12,18 +13,24 @@ const SearchInput = ({
   title = "Pesquisar Por Palavra Chave",
   placeholder = "Pesquisar",
 }) => {
+  const { screenSize } = useContext(UserContext);
+
   return searchValue ? (
     <Form initialValues={{ roomSearchInput: searchValue }}>
       <Tooltip
         color={color}
         title={title}
         placement='bottomLeft'
-        defaultVisible={window.innerWidth < 1024 && fromLandingPage}
+        defaultVisible={screenSize?.dynamicWidth < 1024 && fromLandingPage}
       >
         <FormItem
           name='roomSearchInput'
           style={{ marginBottom: 0 }}
-          width={window.innerWidth < 1024 ? window.innerWidth - 50 : 375}
+          width={
+            screenSize?.dynamicWidth < 1024
+              ? screenSize?.dynamicWidth - 50
+              : 375
+          }
         >
           <Input
             background={background}
@@ -42,7 +49,7 @@ const SearchInput = ({
       color={color}
       title={title}
       placement='bottomLeft'
-      defaultVisible={window.innerWidth < 1024 && fromLandingPage}
+      defaultVisible={screenSize?.dynamicWidth < 1024 && fromLandingPage}
     >
       <Input
         allowClear

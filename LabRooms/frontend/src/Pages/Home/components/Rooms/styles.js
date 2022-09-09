@@ -46,6 +46,7 @@ export const TitleStyled = styled(Title)`
   color: ${({ color }) => color} !important;
   display: flex;
   align-items: center;
+  text-align: center;
 `;
 
 export const RoomItem = styled.div`

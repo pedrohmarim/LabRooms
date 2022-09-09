@@ -103,7 +103,12 @@ export default function TabUserInfo({
               </TabPane>
 
               <TabPane tab='Dashboard' key='4'>
-                <DashboardTab dashboardActive={dashboardActive} />
+                <DashboardTab
+                  setDashboardActive={setDashboardActive}
+                  dashboardActive={dashboardActive}
+                  darkPallete={darkPallete}
+                  tabRooms={tabRooms}
+                />
               </TabPane>
             </>
           )}

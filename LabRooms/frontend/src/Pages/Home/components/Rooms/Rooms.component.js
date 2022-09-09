@@ -21,6 +21,7 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
     loadingRecomendedUsers,
     users,
     loadingUsers,
+    screenSize,
   } = userContext;
 
   return (
@@ -28,13 +29,13 @@ const Rooms = ({ pallete, searchValue, userContext }) => {
       <BackTop pallete={pallete} />
 
       <Row justify='space-between' align='middle'>
-        <StyledCol span={window.innerWidth > 1024 ? 21 : 24}>
+        <StyledCol span={screenSize?.dynamicWidth > 1024 ? 21 : 24}>
           <SearchInput
             background={pallete.white}
             onSearch={() => console.log("faz req pro back")}
             searchValue={searchValue}
             color={pallete.lightblue}
-            width={window.innerWidth > 1024 ? "25%" : "100%"}
+            width={screenSize?.dynamicWidth > 1024 ? "25%" : "100%"}
           />
 
           {user && !loading ? (

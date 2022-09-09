@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../Context/UserContext";
+import CreateRoomButton from "../CreateRoomButton/CreateRoomButton.component";
 import {
   FeatherIcons,
   Select,
@@ -12,7 +14,6 @@ import {
   StyledOption,
   UserInfoTitle,
 } from "../../Pages/UserProfile/UserProfile.component.styled";
-import CreateRoomButton from "../CreateRoomButton/CreateRoomButton.component";
 
 const HeaderTabRoomsCandidacies = ({
   darkPallete,
@@ -21,9 +22,11 @@ const HeaderTabRoomsCandidacies = ({
   headerTitle,
   fromCandidacies,
 }) => {
+  const { screenSize } = useContext(UserContext);
+
   return (
     <>
-      <Col span={window.innerWidth > 1024 ? 18 : 24}>
+      <Col span={screenSize?.dynamicWidth > 1024 ? 18 : 24}>
         <Row justify='space-between'>
           <UserInfoTitle level={4}>
             {headerTitle} {!fromCandidacies && `(${tabRooms?.array.length})`}
@@ -38,7 +41,7 @@ const HeaderTabRoomsCandidacies = ({
         </Row>
       </Col>
 
-      <Col span={window.innerWidth > 1024 ? 6 : 24}>
+      <Col span={screenSize?.dynamicWidth > 1024 ? 6 : 24}>
         <Tooltip
           color={darkPallete.lightblue}
           placement='top'

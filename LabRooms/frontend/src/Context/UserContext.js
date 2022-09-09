@@ -9,6 +9,23 @@ import { TIPO_CADASTRO } from "../Helpers/TipoCadastro";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  const [screenSize, getDimension] = useState({
+    dynamicWidth: window.innerWidth,
+  });
+
+  const setDimension = () =>
+    getDimension({
+      dynamicWidth: window.innerWidth,
+    });
+
+  useEffect(() => {
+    window.addEventListener("resize", setDimension);
+
+    return () => {
+      window.removeEventListener("resize", setDimension);
+    };
+  }, [screenSize]);
+
   const [hasntRooms, setHasntRooms] = useState();
   const [allRooms, setAllRooms] = useState();
 
@@ -119,12 +136,23 @@ export const UserProvider = ({ children }) => {
   }, []);
 
   const getDashboardUsers = useCallback(
-    (userIds) => {
-      HomeService.getDashboardUsers(userIds, user._id, token).then(({ data }) =>
-        setDashboardUsers({ columns: data.columns, _id: data._id })
-      );
+    (userIds, roomId) => {
+      HomeService.getDashboardUsers(userIds, roomId, token).then(({ data }) => {
+        if (data.message) {
+          setDashboardUsers({
+            message: data.message,
+            description: data.description,
+          });
+        } else {
+          setDashboardUsers({
+            columns: data.columns,
+            _id: data._id,
+            roomId: data.roomId,
+          });
+        }
+      });
     },
-    [token, user]
+    [token]
   );
 
   const updateDashBoard = useCallback(
@@ -259,6 +287,7 @@ export const UserProvider = ({ children }) => {
         getDashboardUsers,
         setDashboardUsers,
         updateDashBoard,
+        screenSize,
         tabRooms,
         allUsers,
         viewUserLoading,

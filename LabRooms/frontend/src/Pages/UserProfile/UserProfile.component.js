@@ -12,7 +12,7 @@ import { Loading } from "../../GlobalComponents/Loading/Loading.component";
 
 export default function UserProfile() {
   document.getElementsByTagName("title")[0].innerText = "LabRooms | Perfil";
-  const { getUserById, viewUser, viewMode, viewUserLoading } =
+  const { getUserById, viewUser, viewMode, viewUserLoading, screenSize } =
     useContext(UserContext);
   const navigate = useNavigate();
   const params = useParams();
@@ -49,7 +49,9 @@ export default function UserProfile() {
         loop
         autoPlay
         muted
-        id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
+        id={
+          screenSize?.dynamicWidth < 1024 ? "video-form-mobile" : "video-form"
+        }
       >
         <source src={Background} type='video/mp4' />
       </video>
@@ -58,18 +60,20 @@ export default function UserProfile() {
         <FormContainer
           tabcolor={darkPallete.white}
           padding='0 5px 0px 30px'
-          span={window.innerWidth > 1024 ? 6 : 24}
+          span={screenSize?.dynamicWidth > 1024 ? 6 : 24}
         >
           <Card bordered={false}>
             {!viewUserLoading && viewUser ? (
               <ProfileSocials darkPallete={darkPallete} user={viewUser} />
             ) : (
               <>
-                {Loading(window.innerWidth < 1024 ? darkPallete.white : "#000")}
+                {Loading(
+                  screenSize?.dynamicWidth < 1024 ? darkPallete.white : "#000"
+                )}
               </>
             )}
 
-            {window.innerWidth < 1024 && (
+            {screenSize?.dynamicWidth < 1024 && (
               <TabsContainer
                 candidaciesActive={candidaciesActive}
                 setActiveKey={(value) => setActiveKey(value)}
@@ -86,10 +90,10 @@ export default function UserProfile() {
           </Card>
         </FormContainer>
 
-        {window.innerWidth > 1024 && (
+        {screenSize?.dynamicWidth > 1024 && (
           <FormContainer
             padding='0 30px 0 5px'
-            span={window.innerWidth > 1024 ? 18 : 24}
+            span={screenSize?.dynamicWidth > 1024 ? 18 : 24}
           >
             <TabsContainer
               candidaciesActive={candidaciesActive}

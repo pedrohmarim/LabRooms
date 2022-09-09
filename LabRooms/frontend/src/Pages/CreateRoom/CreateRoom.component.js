@@ -21,7 +21,7 @@ import {
 import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
 
 export default function CreateRoom() {
-  const { user, getRoomsByOwnerId } = useContext(UserContext);
+  const { user, getRoomsByOwnerId, screenSize } = useContext(UserContext);
   const navigate = useNavigate();
 
   document.getElementsByTagName("title")[0].innerText =
@@ -42,7 +42,11 @@ export default function CreateRoom() {
             loop
             autoPlay
             muted
-            id={window.innerWidth < 1024 ? "video-form-mobile" : "video-form"}
+            id={
+              screenSize?.dynamicWidth < 1024
+                ? "video-form-mobile"
+                : "video-form"
+            }
           >
             <source src={Background} type='video/mp4' />
           </video>
@@ -51,7 +55,7 @@ export default function CreateRoom() {
               <Image src={Logo} alt='Logo' height={100} preview={false} />
             </Link>
             <SignFormContainer
-              width={window.innerWidth > 1024 ? "40%" : "90%"}
+              width={screenSize?.dynamicWidth > 1024 ? "40%" : "90%"}
               title={
                 <FormHeader>
                   <TitleStyled level={3}>Criar Projeto</TitleStyled>

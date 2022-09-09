@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../../../Context/UserContext";
 import { Link } from "react-router-dom";
 import { SocialList } from "./Tabs/sessions/SocialList.component";
 import { Row, Breadcrumb, Image, Col, Tooltip } from "../../../antd_components";
@@ -20,12 +21,15 @@ export default function ProfileSocials({
   isViewProject,
   ownerId,
 }) {
+  const { screenSize } = useContext(UserContext);
   return (
     <>
       {user && (
         <Row justify='center' gutter={[16, 16]}>
           <StyledBreadCrumb span={24}>
-            <Breadcrumb color={window.innerWidth < 1024 && darkPallete.white} />
+            <Breadcrumb
+              color={screenSize?.dynamicWidth < 1024 && darkPallete.white}
+            />
           </StyledBreadCrumb>
 
           <Image
@@ -52,7 +56,7 @@ export default function ProfileSocials({
           {Object.keys(user?.socials).length > 0 && (
             <Col span={24}>
               <Row justify='center'>
-                {SocialList(user?.socials, isViewProject).map(
+                {SocialList(user?.socials, isViewProject, screenSize).map(
                   (item) =>
                     item.link && (
                       <SocialIcon

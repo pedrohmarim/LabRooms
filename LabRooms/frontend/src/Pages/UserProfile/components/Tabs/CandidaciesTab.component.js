@@ -1,4 +1,5 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useEffect, useCallback, useState, useContext } from "react";
+import { UserContext } from "../../../../Context/UserContext";
 import { Card, StyledRow } from "../../UserProfile.component.styled";
 import { Loading } from "../../../../GlobalComponents/Loading/Loading.component";
 import HeaderTabRoomsCandidacies from "../../../../GlobalComponents/HeaderTabRoomsCandidacies/HeaderTabRoomsCandidacies.component";
@@ -7,7 +8,6 @@ import { ModalButton } from "../../../ViewProject/ViewProject.component.styled";
 import { Link } from "react-router-dom";
 import { TitleStyled } from "../../../Home/components/Rooms/styles";
 import NoProjectInfo from "../../../../GlobalComponents/NoProjectInfo/NoProjectInfo.component";
-import { MenuLabelItem } from "../../../../GlobalComponents/Header/Header.styled";
 import {
   Row,
   Form,
@@ -17,9 +17,7 @@ import {
   Tooltip,
   PopConfirm,
   Notification,
-  Dropdown,
   Col,
-  Menu,
 } from "../../../../antd_components";
 
 const CandidaciesTab = ({
@@ -30,9 +28,11 @@ const CandidaciesTab = ({
   roomId,
   setDashboardActive,
 }) => {
+  const { screenSize } = useContext(UserContext);
   const [form] = Form.useForm();
   const [responseGrid, setResponseGrid] = useState();
   const [showTable, setShowTable] = useState(false);
+  const [selectedRoomId, setSelectedRoomId] = useState();
   const [loadingDataSource, setLoadingDataSource] = useState();
 
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -47,6 +47,7 @@ const CandidaciesTab = ({
 
   const handleFilterRoom = useCallback(
     (roomId) => {
+      setSelectedRoomId(roomId);
       setShowTable(true);
       setLoadingDataSource(true);
       CandidaciesService.getCandidaciesByRoomId(roomId, token).then(
@@ -83,41 +84,21 @@ const CandidaciesTab = ({
     if (selectedRowKeys.length === 0) {
       Notification.open({
         type: "info",
-        message: "Selecione ao menos um candidato para prosseguir.",
+        message:
+          "Selecione ao menos um candidato para prosseguir para o dashboard.",
       });
 
       return;
     }
 
-    setDashboardActive({ active: true, selectedRowKeys });
+    setDashboardActive({ active: true, selectedRowKeys, selectedRoomId });
+
+    selectedRowKeys.forEach((userId) => {
+      CandidaciesService.deleteCandidacieById(userId, token);
+
+      handleFilterRoom(roomId);
+    });
   }
-
-  const TableActions = (value) => (
-    <Menu>
-      <Link
-        to={{
-          pathname: `/profile/${value}`,
-          search: "fromCandidacies=true",
-        }}
-      >
-        <Menu.Item key='1'>
-          <Row align='middle'>
-            <FeatherIcons icon='eye' size={15} />
-            <MenuLabelItem>Ver Perfil</MenuLabelItem>
-          </Row>
-        </Menu.Item>
-      </Link>
-
-      <Link to='#'>
-        <Menu.Item key='2'>
-          <Row align='middle'>
-            <FeatherIcons icon='mail' size={15} />
-            <MenuLabelItem>E-mail</MenuLabelItem>
-          </Row>
-        </Menu.Item>
-      </Link>
-    </Menu>
-  );
 
   const columns = [
     {
@@ -134,11 +115,11 @@ const CandidaciesTab = ({
       title: "Habilidade Principal",
       dataIndex: "skill",
       key: "skill",
-      render({ Icon, Title }) {
+      render({ Icon, CategorieTitle }) {
         return (
           <Row align='middle'>
             <FeatherIcons icon={Icon} size={15} />
-            <ModalButton>{Title}</ModalButton>
+            <ModalButton>{CategorieTitle}</ModalButton>
           </Row>
         );
       },
@@ -150,67 +131,59 @@ const CandidaciesTab = ({
       key: "Excluir",
       fixed: "right",
       width: 100,
-      render: (value, dataIndex) => {
-        return (
-          <Button.Group>
-            <Tooltip title='Aceitar Candidato' color={darkPallete.lightblue}>
-              <PopConfirm
-                placement='topLeft'
-                title='Deseja realmente Aceitar?'
-                onConfirm={() => {}}
-                okText='Sim'
-                cancelText='Não'
-              >
-                <Button
-                  type='ghost'
-                  icon={
-                    <FeatherIcons
-                      icon='check'
-                      size={18}
-                      className='confirm-icon'
-                    />
-                  }
-                  shape='circle'
-                />
-              </PopConfirm>
-            </Tooltip>
-
-            <Tooltip
-              title='Rejeitar Candidato. Está Ação Irá excluir o Registro deste Candidato.'
-              color={darkPallete.lightblue}
+      render: (value, dataIndex) => (
+        <Button.Group>
+          <Tooltip title='Ver Perfil' color={darkPallete.lightblue}>
+            <Link
+              to={{
+                pathname: `/profile/${value}`,
+                search: "fromCandidacies=true",
+              }}
             >
-              <PopConfirm
-                placement='topLeft'
-                title='Deseja realmente Excluir?'
-                onConfirm={() => {
-                  handleDeleteCandidate(dataIndex?.candidacieId);
-                  handleFilterRoom(dataIndex?.roomId);
-                }}
-                okText='Sim'
-                cancelText='Não'
-              >
-                <Button
-                  type='ghost'
-                  shape='circle'
-                  icon={
-                    <FeatherIcons icon='x' size={18} className='alert-icon' />
-                  }
-                />
-              </PopConfirm>
-            </Tooltip>
+              <Button
+                type='ghost'
+                shape='circle'
+                icon={<FeatherIcons icon='eye' size={18} />}
+              />
+            </Link>
+          </Tooltip>
 
-            <Tooltip title='Mais Opções' color={darkPallete.lightblue}>
-              <Dropdown overlay={TableActions(value)} placement='bottomRight'>
-                <Button
-                  type='ghost'
-                  shape='circle'
-                  icon={<FeatherIcons icon='more-vertical' size={18} />}
-                />
-              </Dropdown>
-            </Tooltip>
-          </Button.Group>
-        );
-      },
+          <Tooltip title='Enviar E-mail' color={darkPallete.lightblue}>
+            <Link to='#'>
+              <Button
+                type='ghost'
+                shape='circle'
+                icon={<FeatherIcons icon='mail' size={18} />}
+              />
+            </Link>
+          </Tooltip>
+
+          <Tooltip
+            placement='left'
+            title='Rejeitar Candidato. Está Ação Irá excluir o Registro deste Candidato.'
+            color={darkPallete.lightblue}
+          >
+            <PopConfirm
+              placement='topLeft'
+              title='Deseja realmente Excluir?'
+              onConfirm={() => {
+                handleDeleteCandidate(value);
+                handleFilterRoom(dataIndex?.roomId);
+              }}
+              okText='Sim'
+              cancelText='Não'
+            >
+              <Button
+                type='ghost'
+                shape='circle'
+                icon={
+                  <FeatherIcons icon='x' size={18} className='alert-icon' />
+                }
+              />
+            </PopConfirm>
+          </Tooltip>
+        </Button.Group>
+      ),
     },
   ];
 
@@ -221,7 +194,6 @@ const CandidaciesTab = ({
           <Form form={form}>
             <Row justify='space-between' gutter={[10, 10]}>
               <HeaderTabRoomsCandidacies
-                roomId={roomId}
                 fromCandidacies
                 headerTitle='Meus Candidatos'
                 tabRooms={tabRooms}
@@ -240,7 +212,9 @@ const CandidaciesTab = ({
                   <TitleStyled
                     level={5}
                     color={
-                      window.innerWidth < 1024 ? darkPallete.white : "#000"
+                      screenSize?.dynamicWidth < 1024
+                        ? darkPallete.white
+                        : "#000"
                     }
                   >
                     Selecione um Projeto para Exibir suas Candidaturas
@@ -278,7 +252,11 @@ const CandidaciesTab = ({
           )}
         </>
       ) : (
-        <>{Loading(window.innerWidth < 1024 ? darkPallete.white : "#000")}</>
+        <>
+          {Loading(
+            screenSize?.dynamicWidth < 1024 ? darkPallete.white : "#000"
+          )}
+        </>
       )}
     </Card>
   );
