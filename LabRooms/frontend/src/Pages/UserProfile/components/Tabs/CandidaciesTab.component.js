@@ -239,15 +239,17 @@ const CandidaciesTab = ({
                 rowSelection={rowSelection}
               />
 
-              <Row justify='end'>
-                <Button
-                  color={darkPallete.white}
-                  backgroundcolor={darkPallete.lightblue}
-                  onClick={handleConfirmSelectedCandidacies}
-                >
-                  Confirmar
-                </Button>
-              </Row>
+              {responseGrid?.formattedCandidacies && (
+                <Row justify='end'>
+                  <Button
+                    color={darkPallete.white}
+                    backgroundcolor={darkPallete.lightblue}
+                    onClick={handleConfirmSelectedCandidacies}
+                  >
+                    Confirmar
+                  </Button>
+                </Row>
+              )}
             </>
           )}
         </>

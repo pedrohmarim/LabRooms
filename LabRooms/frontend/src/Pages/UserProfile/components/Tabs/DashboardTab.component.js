@@ -5,8 +5,19 @@ import "@lourenci/react-kanban/dist/styles.css";
 import { TitleStyled } from "../../../Home/components/Rooms/styles";
 import { UserContext } from "../../../../Context/UserContext";
 import HeaderTabRoomsCandidacies from "../../../../GlobalComponents/HeaderTabRoomsCandidacies/HeaderTabRoomsCandidacies.component";
-import { Row, Form } from "../../../../antd_components";
-import { Card } from "../../UserProfile.component.styled";
+import {
+  Card,
+  DashboardCard,
+  CategorySpan,
+} from "../../UserProfile.component.styled";
+import { Link } from "react-router-dom";
+import {
+  Row,
+  Form,
+  Col,
+  FeatherIcons,
+  Tooltip,
+} from "../../../../antd_components";
 
 const DashboardTab = ({
   dashboardActive,
@@ -61,7 +72,43 @@ const DashboardTab = ({
       </Form>
 
       {dashboardUsers?.columns?.length > 0 ? (
-        <Board onCardDragEnd={handleCardMove} disableColumnDrag>
+        <Board
+          onCardDragEnd={handleCardMove}
+          disableColumnDrag
+          renderCard={({ title, id, category, icon }) => (
+            <DashboardCard gutter={[0, 2]}>
+              <Col span={24}>
+                <Row align='middle' justify='space-between'>
+                  <Col span={22}>{title}</Col>
+
+                  <Col span={2}>
+                    <Tooltip title='Ver Perfil' color={darkPallete.lightblue}>
+                      <Link
+                        to={{
+                          pathname: `/profile/${id}`,
+                          search: "fromCandidacies=true",
+                        }}
+                      >
+                        <FeatherIcons
+                          icon='eye'
+                          size={20}
+                          className='clickableIcon'
+                        />
+                      </Link>
+                    </Tooltip>
+                  </Col>
+                </Row>
+              </Col>
+
+              <Col>
+                <Row align='middle'>
+                  <FeatherIcons icon={icon} size={16} className='colorgray' />
+                  <CategorySpan>{category}</CategorySpan>
+                </Row>
+              </Col>
+            </DashboardCard>
+          )}
+        >
           {dashboardUsers}
         </Board>
       ) : (

@@ -184,12 +184,26 @@ module.exports = {
         const dashboardUsers = [];
         const cards = [];
 
-        result.forEach(({ _id, username, email }) => {
-          cards.push({
-            id: _id,
-            title: username,
-            description: email,
-          });
+        result.forEach(({ _id, username, categoryId, newCategory }) => {
+          if (categoryId) {
+            CategoriesModel.findOne({ _id: categoryId }).then(
+              ({ Icon, Title }) => {
+                cards.push({
+                  id: _id,
+                  title: username,
+                  icon: Icon,
+                  category: Title,
+                });
+              }
+            );
+          } else if (newCategory) {
+            cards.push({
+              id: _id,
+              title: username,
+              icon: "repeat",
+              category: newCategory,
+            });
+          }
         });
 
         dashboardUsers.push(

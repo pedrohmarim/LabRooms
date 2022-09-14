@@ -6,6 +6,9 @@ import { ButtonText } from "../../Pages/Home/components/Rooms/styles";
 import { HeaderContainer, MenuLabelItem, StyledRow } from "./Header.styled";
 import { Link, useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
+import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
+import { MontaUrlDominio } from "../../Helpers/UrlDominio";
+import { Loading } from "../Loading/Loading.component";
 import {
   Row,
   Col,
@@ -17,9 +20,6 @@ import {
   Dropdown,
   Tooltip,
 } from "../../antd_components";
-import { TIPO_CADASTRO } from "../../Helpers/TipoCadastro";
-import { MontaUrlDominio } from "../../Helpers/UrlDominio";
-import { Loading } from "../Loading/Loading.component";
 
 const Header = ({ fromNotFound, fromUserProfile }) => {
   const navigate = useNavigate();

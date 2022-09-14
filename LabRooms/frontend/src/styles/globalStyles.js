@@ -63,6 +63,15 @@ export const GlobalStyles = createGlobalStyle`
   .iconMarginRight {
     margin-right: 4px;
   }
+
+  .clickableIcon {
+    cursor: pointer;
+    margin-top: 4px;
+  }
+
+  .colorgray {
+    color: gray
+  }
   
   .default-icon {
     margin-right: 5px;

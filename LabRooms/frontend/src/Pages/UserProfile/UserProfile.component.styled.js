@@ -211,3 +211,18 @@ export const CardItem = styled(Row)`
   overflow: auto;
   width: fit-content !important;
 `;
+
+export const DashboardCard = styled(Row)`
+  background-color: white;
+  padding: 10px;
+  border-radius: 5px;
+  min-width: 220px;
+  max-width: 220px;
+  margin-top: 15px;
+`;
+
+export const CategorySpan = styled.span`
+  font-size: 10pt;
+  margin-left: 5px;
+  color: gray;
+`;

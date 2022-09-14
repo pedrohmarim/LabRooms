@@ -23,7 +23,7 @@ export default function UserProfile() {
   const [candidaciesActive, setCandidaciesActive] = useState(false);
   const [dashboardActive, setDashboardActive] = useState(false);
 
-  const [activeKey, setActiveKey] = useState();
+  const [activeKey, setActiveKey] = useState("1");
 
   useEffect(() => {
     if (searchParams.get("projects")) setActiveKey("2");
